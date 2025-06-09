@@ -36,7 +36,7 @@ on:
     branches:
       - '**'
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.url || github.run_id }}
   cancel-in-progress: true
