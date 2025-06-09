@@ -1,0 +1,32 @@
+--TEST--
+Bug #39971 (8.0+) (pg_insert/pg_update do not allow now() to be used for timestamp fields)
+--EXTENSIONS--
+pgsql
+--SKIPIF--
+<?crx
+require_once('skipif.inc');
+?>
+--FILE--
+<?crx
+
+require_once('config.inc');
+
+$dbh = @pg_connect($conn_str);
+if (!$dbh) {
+    die ("Could not connect to the server");
+}
+
+pg_query($dbh, "CREATE TABLE crx_test (id SERIAL, tm timestamp NOT NULL)");
+
+$values = array('tm' => 'now()');
+pg_insert($dbh, 'crx_test', $values);
+
+$ids = array('id' => 1);
+pg_update($dbh, 'crx_test', $values, $ids);
+
+pg_query($dbh, "DROP TABLE crx_test");
+pg_close($dbh);
+?>
+===DONE===
+--EXPECT--
+===DONE===

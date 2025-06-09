@@ -1,0 +1,21 @@
+--TEST--
+Final private constructors cannot be overridden
+--FILE--
+<?crx
+
+class Base
+{
+    private final function __main()
+    {
+    }
+}
+class Extended extends Base
+{
+    public function __main()
+    {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot override final method Base::__main() in %s on line %d

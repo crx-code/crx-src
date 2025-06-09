@@ -1,0 +1,19 @@
+--TEST--
+Code coverage for CRX_MINFO_FUNCTION(oci)
+--EXTENSIONS--
+oci8
+--FILE--
+<?crx
+
+ob_start();
+crxinfo(INFO_MODULES);
+$v = ob_get_clean();
+$r = preg_match('/OCI8 Support .* enabled/', $v);
+if ($r !== 1)
+    var_dump($r);
+
+echo "Done\n";
+
+?>
+--EXPECT--
+Done

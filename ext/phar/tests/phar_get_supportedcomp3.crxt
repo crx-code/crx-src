@@ -1,0 +1,18 @@
+--TEST--
+Crxa::getSupportedCompression() (zlib only)
+--EXTENSIONS--
+crxa
+zlib
+--SKIPIF--
+<?crx if (extension_loaded("bz2")) die("skip bz2 is available"); ?>
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+var_dump(Crxa::getSupportedCompression());
+?>
+--EXPECT--
+array(1) {
+  [0]=>
+  string(2) "GZ"
+}

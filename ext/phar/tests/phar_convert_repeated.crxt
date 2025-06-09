@@ -1,0 +1,145 @@
+--TEST--
+Crxa::convertToZip|Tar|Crxa() repeated (crxa_based archives)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+echo "=================== new Crxa() =======================\n";
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToTar() =====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::TAR);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToZip() =====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::ZIP);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToCrxa() ====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::CRXA, Crxa::NONE, '.2.crxa');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump(strlen($crxa->getStub()));
+var_dump($crxa->getAlias());
+
+echo "================= convertToZip() =====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::ZIP, Crxa::NONE, '.2.crxa.zip');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToTar() =====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::TAR, Crxa::NONE, '2.crxa.tar');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToZip() =====================\n";
+
+$crxa = $crxa->convertToExecutable(Crxa::ZIP, Crxa::NONE, '3.crxa.zip');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.2.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.2.2.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.2.2.3.crxa.zip');
+?>
+--EXPECTF--
+=================== new Crxa() =======================
+bool(true)
+bool(false)
+bool(false)
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+string(3) "hio"
+================= convertToTar() =====================
+bool(false)
+bool(true)
+bool(false)
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+string(%d) "%scrxa_convert_repeated.crxa.tar"
+================= convertToZip() =====================
+bool(false)
+bool(false)
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+NULL
+================= convertToCrxa() ====================
+bool(true)
+bool(false)
+bool(false)
+int(6641)
+NULL
+================= convertToZip() =====================
+bool(false)
+bool(false)
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+NULL
+================= convertToTar() =====================
+bool(false)
+bool(true)
+bool(false)
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+NULL
+================= convertToZip() =====================
+bool(false)
+bool(false)
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+NULL

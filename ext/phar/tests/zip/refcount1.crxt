@@ -1,0 +1,66 @@
+--TEST--
+Crxa: test that refcounting avoids problems with deleting a file zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$alias = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa->setStub("<?crx __HALT_COMPILER(); ?>");
+$crxa->setAlias('hio');
+
+$files = array();
+
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+
+foreach ($files as $n => $file) {
+    $crxa[$n] = $file;
+}
+$crxa->stopBuffering();
+
+$fp = fopen($alias . '/b/c.crx', 'wb');
+fwrite($fp, "extra");
+fclose($fp);
+echo "===CLOSE===\n";
+$b = fopen($alias . '/b/c.crx', 'rb');
+$a = $crxa['b/c.crx'];
+var_dump($a);
+var_dump(fread($b, 20));
+rewind($b);
+echo "===UNLINK===\n";
+unlink($alias . '/b/c.crx');
+var_dump($a);
+var_dump(fread($b, 20));
+include $alias . '/b/c.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip'); ?>
+--EXPECTF--
+===CLOSE===
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.zip/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%d) "c.crx"
+}
+string(5) "extra"
+===UNLINK===
+
+Warning: unlink(): crxa error: "b/c.crx" in crxa "%srefcount1.crxa.zip", has open file pointers, cannot unlink in %srefcount1.crx on line %d
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.zip/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%s) "c.crx"
+}
+string(5) "extra"
+extra

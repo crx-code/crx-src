@@ -1,0 +1,20 @@
+--TEST--
+Crxa front controller mime type unknown int
+--INI--
+default_charset=UTF-8
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller12.crx
+REQUEST_URI=/frontcontroller12.crx/a.crx
+PATH_INFO=/a.crx
+--FILE_EXTERNAL--
+files/frontcontroller6.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECTF--
+Fatal error: Uncaught CrxaException: Unknown mime type specifier used, only Crxa::CRX, Crxa::CRXS and a mime type string are allowed in %sfrontcontroller12.crx:2
+Stack trace:
+#0 %sfrontcontroller12.crx(2): Crxa::webCrxa('whatever', 'index.crx', NULL, Array)
+#1 {main}
+  thrown in %sfrontcontroller12.crx on line 2

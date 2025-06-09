@@ -1,0 +1,18 @@
+--TEST--
+Bug #51421 (Abstract __main constructor argument list not enforced)
+--FILE--
+<?crx
+
+class ExampleClass {}
+
+abstract class TestInterface {
+    abstract public function __main(ExampleClass $var);
+}
+
+class Test extends TestInterface {
+    public function __main() {}
+}
+
+?>
+--EXPECTF--
+Fatal error: Declaration of Test::__main() must be compatible with TestInterface::__main(ExampleClass $var) in %s on line %d

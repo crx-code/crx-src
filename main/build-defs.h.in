@@ -1,0 +1,39 @@
+/*
+   +----------------------------------------------------------------------+
+   | Copyright (c) The CRX Group                                          |
+   +----------------------------------------------------------------------+
+   | This source file is subject to version 3.01 of the CRX license,      |
+   | that is bundled with this package in the file LICENSE, and is        |
+   | available through the world-wide-web at the following url:           |
+   | https://www.crx.net/license/3_01.txt                                 |
+   | If you did not receive a copy of the CRX license and are unable to   |
+   | obtain it through the world-wide-web, please send a note to          |
+   | license@crx.net so we can mail you a copy immediately.               |
+   +----------------------------------------------------------------------+
+   | Author: Stig Sæther Bakken <ssb@crx.net>                             |
+   +----------------------------------------------------------------------+
+*/
+
+#define CONFIGURE_COMMAND "@CONFIGURE_COMMAND@"
+#define CRX_ODBC_CFLAGS	"@ODBC_CFLAGS@"
+#define CRX_ODBC_LFLAGS		"@ODBC_LFLAGS@"
+#define CRX_ODBC_LIBS		"@ODBC_LIBS@"
+#define CRX_ODBC_TYPE		"@ODBC_TYPE@"
+#define CRX_OCI8_DIR			"@OCI8_DIR@"
+#define CRX_OCI8_ORACLE_VERSION		"@OCI8_ORACLE_VERSION@"
+#define CRX_PROG_SENDMAIL	"@PROG_SENDMAIL@"
+#define PEAR_INSTALLDIR         "@EXPANDED_PEAR_INSTALLDIR@"
+#define CRX_INCLUDE_PATH	"@INCLUDE_PATH@"
+#define CRX_EXTENSION_DIR       "@EXPANDED_EXTENSION_DIR@"
+#define CRX_PREFIX              "@prefix@"
+#define CRX_BINDIR              "@EXPANDED_BINDIR@"
+#define CRX_SBINDIR             "@EXPANDED_SBINDIR@"
+#define CRX_MANDIR              "@EXPANDED_MANDIR@"
+#define CRX_LIBDIR              "@EXPANDED_LIBDIR@"
+#define CRX_DATADIR             "@EXPANDED_DATADIR@"
+#define CRX_SYSCONFDIR          "@EXPANDED_SYSCONFDIR@"
+#define CRX_LOCALSTATEDIR       "@EXPANDED_LOCALSTATEDIR@"
+#define CRX_CONFIG_FILE_PATH    "@EXPANDED_CRX_CONFIG_FILE_PATH@"
+#define CRX_CONFIG_FILE_SCAN_DIR    "@EXPANDED_CRX_CONFIG_FILE_SCAN_DIR@"
+#define CRX_SHLIB_SUFFIX        "@SHLIB_DL_SUFFIX_NAME@"
+#define CRX_SHLIB_EXT_PREFIX    ""

@@ -1,0 +1,41 @@
+--TEST--
+Crxa: attempt to create a Crxa with relative path
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+chdir(__DIR__);
+try {
+    $p = new Crxa('crxa_create_in_cwd.crxa');
+    $p['file1.txt'] = 'hi';
+    var_dump(strlen($p->getStub()));
+    $p->setStub("<?crx
+spl_autoload_register(function(\$class) {
+    include 'crxa://' . str_replace('_', '/', \$class);
+});
+Crxa::mapCrxa('crxa_create_in_cwd.crxa');
+include 'crxa://crxa_create_in_cwd.crxa/startup.crx';
+__HALT_COMPILER();
+?>");
+    var_dump($p->getStub());
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/crxa_create_in_cwd.crxa');
+?>
+--EXPECTF--
+int(6641)
+string(%d) "<?crx
+spl_autoload_register(function($class) {
+    include 'crxa://' . str_replace('_', '/', $class);
+});
+Crxa::mapCrxa('crxa_create_in_cwd.crxa');
+include 'crxa://crxa_create_in_cwd.crxa/startup.crx';
+__HALT_COMPILER(); ?>
+"

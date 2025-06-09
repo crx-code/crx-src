@@ -1,0 +1,27 @@
+--TEST--
+GHSA-jqcx-ccgc-xwhv (Buffer overflow and overread in crxa_dir_read())
+--SKIPIF--
+<?crx if (!extension_loaded("crxa")) die("skip"); ?>
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = new Crxa(__DIR__. '/GHSA-jqcx-ccgc-xwhv.crxa');
+$crxa->startBuffering();
+$crxa->addFromString(str_repeat('A', CRX_MAXPATHLEN - 1), 'This is the content of file 1.');
+$crxa->addFromString(str_repeat('B', CRX_MAXPATHLEN - 1).'C', 'This is the content of file 2.');
+$crxa->stopBuffering();
+
+$handle = opendir('crxa://' . __DIR__ . '/GHSA-jqcx-ccgc-xwhv.crxa');
+var_dump(strlen(readdir($handle)));
+// Must not be a string of length CRX_MAXPATHLEN+1
+var_dump(readdir($handle));
+closedir($handle);
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__. '/GHSA-jqcx-ccgc-xwhv.crxa');
+?>
+--EXPECTF--
+int(%d)
+bool(false)

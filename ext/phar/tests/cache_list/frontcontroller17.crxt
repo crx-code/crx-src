@@ -1,0 +1,17 @@
+--TEST--
+Crxa front controller mime type unknown [cache_list]
+--INI--
+crxa.cache_list={PWD}/frontcontroller17.crx
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller17.crx
+REQUEST_URI=/frontcontroller17.crx/fronk.gronk
+PATH_INFO=/fronk.gronk
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa
+--EXPECTHEADERS--
+Content-type: application/octet-stream
+Content-length: 4
+--EXPECT--
+hio3

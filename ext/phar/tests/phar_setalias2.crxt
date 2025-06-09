@@ -1,0 +1,46 @@
+--TEST--
+Crxa::setAlias() error
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+echo $crxa->getAlias() . "\n";
+$crxa->setAlias('test');
+echo $crxa->getAlias() . "\n";
+$b = $crxa;
+$crxa = new Crxa(__DIR__ . '/notcrxa.crxa');
+try {
+    $crxa->setAlias('test');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    $b = new Crxa(__DIR__ . '/nope.crxa', 0, 'test');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECTF--
+hio
+test
+alias "test" is already used for archive "%scrxa_setalias2.crxa.crx" and cannot be used for other archives
+alias "test" is already used for archive "%scrxa_setalias2.crxa.crx" cannot be overloaded with "%snope.crxa"

@@ -1,0 +1,14 @@
+--TEST--
+Crxa: copy-on-write test 8 [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite8.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE_EXTERNAL--
+files/write8.crxa
+--EXPECTF--
+string(%s) "%scopyonwrite8.crxa.crx"
+hi
+ok

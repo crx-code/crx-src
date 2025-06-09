@@ -1,0 +1,24 @@
+--TEST--
+crxinfo() CGI
+--POST--
+dummy=x
+--FILE--
+<?crx
+var_dump(crxinfo());
+
+echo "--\n";
+var_dump(crxinfo(0));
+
+echo "--\n";
+var_dump(crxinfo(INFO_LICENSE));
+
+?>
+--EXPECTF--
+<!DOCTYPE %s>
+%a</html>bool(true)
+--
+<!DOCTYPE %s>
+%a</html>bool(true)
+--
+<!DOCTYPE %s>
+%a</html>bool(true)

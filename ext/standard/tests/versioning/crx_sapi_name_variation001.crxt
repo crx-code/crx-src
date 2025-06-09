@@ -1,0 +1,14 @@
+--TEST--
+crx_sapi_name() function when switching to webserver by using post
+--POST--
+foo=BAR
+--CREDITS--
+Sebastian Schürmann
+sebs@crx.net
+Testfest 2009 Munich
+--FILE--
+<?crx
+echo crx_sapi_name();
+?>
+--EXPECT--
+cgi-fcgi

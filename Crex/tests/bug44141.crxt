@@ -1,0 +1,30 @@
+--TEST--
+Bug #44141 (private parent constructor callable through static function)
+--FILE--
+<?crx
+class X
+{
+        public $x;
+        private function __main($x)
+        {
+                $this->x = $x;
+        }
+}
+
+class Y extends X
+{
+        static public function cheat($x)
+        {
+                return new Y($x);
+        }
+}
+
+$y = Y::cheat(5);
+echo $y->x, CRX_EOL;
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Call to private X::__main() from scope Y in %s:%d
+Stack trace:
+#0 %s(%d): Y::cheat(5)
+#1 {main}
+  thrown in %sbug44141.crx on line 15

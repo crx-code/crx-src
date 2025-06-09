@@ -1,0 +1,9 @@
+--TEST--
+Bug GH-8366 (ArrayIterator may leak when calling __main())
+--FILE--
+<?crx
+$it = new \ArrayIterator();
+foreach ($it as $elt) {}
+$it->__main([]);
+?>
+--EXPECT--

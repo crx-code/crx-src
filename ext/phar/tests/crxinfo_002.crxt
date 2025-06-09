@@ -1,0 +1,41 @@
+--TEST--
+Crxa: crxinfo display 2
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (in_array("OpenSSL", $arr)) die("skip openssl support enabled");
+?>
+--INI--
+crxa.readonly=1
+crxa.require_hash=1
+crxa.cache_list=
+--FILE--
+<?crx
+crxinfo(INFO_MODULES);
+?>
+--EXPECTF--
+%a
+Crxa
+
+Crxa: CRX Archive support => enabled
+Crxa API version => 1.1.1
+Crxa-based crxa archives => enabled
+Tar-based crxa archives => enabled
+ZIP-based crxa archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+OpenSSL support => disabled (install ext/openssl)
+
+
+Crxa based on pear/CRX_Archive, original concept by Davey Shafik.
+Crxa fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) %d-%d Tim Kientzle.
+Directive => Local Value => Master Value
+crxa.cache_list => no value => no value
+crxa.readonly => On => On
+crxa.require_hash => On => On
+%a

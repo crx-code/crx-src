@@ -1,0 +1,17 @@
+--TEST--
+Crxa front controller alternate index file zip-based
+--INI--
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+--ENV--
+SCRIPT_NAME=/frontcontroller7.crxa.crx
+REQUEST_URI=/frontcontroller7.crxa.crx/
+PATH_INFO=/
+--FILE_EXTERNAL--
+files/frontcontroller2.crxa.zip
+--EXPECTHEADERS--
+Status: 301 Moved Permanently
+Location: /frontcontroller7.crxa.crx/a.crx
+--EXPECT--

@@ -1,0 +1,14 @@
+--TEST--
+Suspend outside fiber
+--FILE--
+<?crx
+
+$value = Fiber::suspend(1);
+
+?>
+--EXPECTF--
+Fatal error: Uncaught FiberError: Cannot suspend outside of a fiber in %ssuspend-outside-fiber.crx:%d
+Stack trace:
+#0 %ssuspend-outside-fiber.crx(%d): Fiber::suspend(1)
+#1 {main}
+  thrown in %ssuspend-outside-fiber.crx on line %d

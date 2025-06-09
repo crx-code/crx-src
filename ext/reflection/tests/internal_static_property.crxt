@@ -1,0 +1,14 @@
+--TEST--
+ReflectionProperty::get/setValue() on internal static property
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$rp = new ReflectionProperty('_CrexTestClass', '_StaticProp');
+$rp->setValue(new _CrexTestClass(), 42);
+var_dump($rp->getValue());
+
+?>
+--EXPECT--
+int(42)

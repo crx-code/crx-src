@@ -1,0 +1,72 @@
+--TEST--
+rewriter handles form and fieldset tags correctly
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--INI--
+session.use_cookies=0
+session.use_only_cookies=0
+session.use_strict_mode=0
+session.cache_limiter=
+session.use_trans_sid=1
+url_rewriter.tags="a=href,area=href,frame=src,input=src,form=,fieldset="
+session.name=CRXSESSID
+session.serialize_handler=crx
+session.save_handler=files
+--FILE--
+<?crx
+
+error_reporting(E_ALL);
+ini_set('session.trans_sid_hosts', 'crx.net');
+$_SERVER['HTTP_HOST'] = 'crx.net';
+
+session_id("test021");
+session_start();
+?>
+<form action="//bad.net/do.crx">
+<fieldset>
+<form action="//crx.net/do.crx">
+<fieldset>
+<?crx
+
+ob_flush();
+
+ini_set("url_rewriter.tags", "a=href,area=href,frame=src,input=src,form=");
+
+?>
+<form action="../do.crx">
+<fieldset>
+<?crx
+
+ob_flush();
+
+ini_set("url_rewriter.tags", "a=href,area=href,frame=src,input=src,form=fakeentry");
+
+?>
+<form action="/do.crx">
+<fieldset>
+<?crx
+
+ob_flush();
+
+ini_set("url_rewriter.tags", "a=href,fieldset=,area=href,frame=src,input=src");
+
+?>
+<form action="/foo/do.crx">
+<fieldset>
+<?crx
+
+session_destroy();
+?>
+--EXPECT--
+<form action="//bad.net/do.crx">
+<fieldset>
+<form action="//crx.net/do.crx"><input type="hidden" name="CRXSESSID" value="test021" />
+<fieldset>
+<form action="../do.crx"><input type="hidden" name="CRXSESSID" value="test021" />
+<fieldset>
+<form action="/do.crx"><input type="hidden" name="CRXSESSID" value="test021" />
+<fieldset>
+<form action="/foo/do.crx"><input type="hidden" name="CRXSESSID" value="test021" />
+<fieldset>

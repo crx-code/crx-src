@@ -1,0 +1,21 @@
+--TEST--
+__HALT_COMPILER(); 2 files
+--FILE--
+<?crx
+$text = "<?crx echo 'test'; var_dump(__COMPILER_HALT_OFFSET__); __HALT_COMPILER(); ?>
+hi there";
+file_put_contents(__DIR__ . '/test1.crx', $text);
+$text = "<?crx echo 'test2'; var_dump(__COMPILER_HALT_OFFSET__); __HALT_COMPILER(); ?>
+hi there 2";
+file_put_contents(__DIR__ . '/test2.crx', $text);
+include __DIR__ . '/test1.crx';
+include __DIR__ . '/test2.crx';
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/test1.crx');
+unlink(__DIR__ . '/test2.crx');
+?>
+--EXPECT--
+testint(73)
+test2int(74)

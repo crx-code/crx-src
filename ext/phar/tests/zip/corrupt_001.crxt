@@ -1,0 +1,20 @@
+--TEST--
+Crxa: corrupted zip (count mismatch)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/count1.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    new CrxaData(__DIR__ . '/files/count2.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: corrupt zip archive, conflicting file count in end of central directory record in zip-based crxa "%scount1.zip"
+crxa error: corrupt zip archive, conflicting file count in end of central directory record in zip-based crxa "%scount2.zip"

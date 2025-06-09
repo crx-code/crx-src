@@ -1,0 +1,14 @@
+--TEST--
+Crxa::mapCrxa truncated manifest (manifest length truncated)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+Crxa::mapCrxa('hio');
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+__HALT_COMPILER(); ?>
+--EXPECTF--
+internal corruption of crxa "%s" (truncated manifest at manifest length)

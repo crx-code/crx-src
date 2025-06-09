@@ -1,0 +1,17 @@
+--TEST--
+crx_ini_loaded_file() function
+--FILE--
+<?crx
+    $inifile = __DIR__.DIRECTORY_SEPARATOR.'loaded.ini';
+    $crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+    $code = '"var_dump(crx_ini_loaded_file());"';
+
+    // No ini file
+    passthru($crx.' -n -r '.$code);
+
+    // Specified ini file
+    passthru($crx.' -c '.escapeshellarg($inifile).' -r '.$code);
+?>
+--EXPECTREGEX--
+bool\(false\)
+string\(\d+\) ".*[\/\\]loaded\.ini"

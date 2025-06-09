@@ -1,0 +1,11 @@
+--TEST--
+SplDoublyLinkedList getIteratorMode
+--CREDITS--
+CRXNW Testfest 2009 - Lorna Mitchell
+--FILE--
+<?crx
+$list = new SplDoublyLinkedList();
+var_dump($list->current());
+?>
+--EXPECT--
+NULL

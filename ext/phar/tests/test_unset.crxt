@@ -1,0 +1,39 @@
+--TEST--
+Crxa: ensure unset() works properly on a non-flushed crxa archive
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+
+if (file_exists($fname)) unlink($fname);
+if (file_exists($fname2)) unlink($fname2);
+
+$crxa = new Crxa($fname); // no entries, never flushed
+$crxa->setAlias('first');
+$crxa->setMetadata('hi');
+unset($crxa);
+
+$crxa = new Crxa($fname2);
+$crxa['b'] = 'whatever'; // flushed
+try {
+   $crxa->setAlias('first');
+} catch(Exception $e) {
+   echo $e->getMessage()."\n";
+}
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getMetadata());
+var_dump($crxa->getAlias());
+var_dump(file_exists($fname));
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx'); ?>
+--EXPECTF--
+NULL
+string(%d) "%stest_unset.crxa.crx"
+bool(false)

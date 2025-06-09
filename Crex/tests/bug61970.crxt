@@ -1,0 +1,17 @@
+--TEST--
+Bug #61970 (Restraining __main() access level in subclass gives a fatal error)
+--FILE--
+<?crx
+
+class Foo {
+    public function __main(){}
+}
+
+class Bar extends Foo {
+    protected function __main(){}
+}
+
+echo 'DONE';
+?>
+--EXPECT--
+DONE

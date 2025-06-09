@@ -1,0 +1,14 @@
+--TEST--
+First Class Callable from User
+--FILE--
+<?crx
+function foo() {
+    return "OK";
+}
+
+$foo = foo(...);
+
+echo $foo();
+?>
+--EXPECT--
+OK

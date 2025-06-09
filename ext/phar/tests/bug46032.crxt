@@ -1,0 +1,35 @@
+--TEST--
+Crxa: bug #46032: CrxaData::__main wrong memory read
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx if (getenv('SKIP_SLOW_TESTS')) die('skip'); ?>
+--FILE--
+<?crx
+
+$a = __DIR__ .'/mytest';
+
+try {
+    new crxa($a);
+} catch (exception $e) { }
+
+var_dump($a);
+
+try {
+    new crxa($a);
+} catch (exception $e) { }
+
+var_dump($a);
+
+new crxadata('0000000000000000000');
+?>
+===DONE===
+--EXPECTF--
+string(%d) "%smytest"
+string(%d) "%smytest"
+
+Fatal error: Uncaught UnexpectedValueException: Cannot create crxa '0000000000000000000', file extension (or combination) not recognised or the directory does not exist in %sbug46032.crx:%d
+Stack trace:
+#0 %sbug46032.crx(%d): CrxaData->__main('000000000000000...')
+#1 {main}
+  thrown in %sbug46032.crx on line %d

@@ -1,0 +1,14 @@
+--TEST--
+Bug #78335: Static properties containing cycles report as leak (internal class variant)
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$foo = [&$foo];
+_CrexTestClass::$_StaticProp = $foo;
+
+?>
+===DONE===
+--EXPECT--
+===DONE===

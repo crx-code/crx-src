@@ -1,0 +1,32 @@
+--TEST--
+std handles can be deliberately closed 001
+--SKIPIF--
+<?crx
+if (crx_sapi_name() != "cli") {
+	die("skip CLI only");
+}
+if (CRX_OS_FAMILY == 'Windows') {
+	die("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+print "STDIN:\n";
+fclose(STDIN);
+var_dump(@fopen('crx://stdin', 'r'));
+
+print "STDERR:\n";
+fclose(STDERR);
+var_dump(@fopen('crx://stderr', 'a'));
+
+print "STDOUT:\n";
+fclose(STDOUT);
+// not printed if stdout is closed
+var_dump(@fopen('crx://stdout', 'a'));
+?>
+--EXPECT--
+STDIN:
+bool(false)
+STDERR:
+bool(false)
+STDOUT:

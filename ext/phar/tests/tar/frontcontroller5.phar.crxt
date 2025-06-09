@@ -1,0 +1,14 @@
+--TEST--
+Crxa front controller index.crx relocate tar-based
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller5.crxa.crx
+REQUEST_URI=/frontcontroller5.crxa.crx/
+PATH_INFO=/
+--FILE_EXTERNAL--
+files/frontcontroller.crxa.tar
+--EXPECTHEADERS--
+Status: 301 Moved Permanently
+Location: /frontcontroller5.crxa.crx/index.crx
+--EXPECT--

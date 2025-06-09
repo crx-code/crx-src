@@ -1,0 +1,57 @@
+--TEST--
+Crxa: test edge cases of readfile() function interception
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+Crxa::interceptFileFuncs();
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+
+chdir(__DIR__);
+file_put_contents($fname, "blah\n");
+file_put_contents("readfile_edgecases.txt", "test\n");
+readfile($fname);
+unlink($fname);
+mkdir($pname . '/oops');
+file_put_contents($pname . '/foo/hi', '<?crx
+readfile("foo/" . basename(__FILE__));
+$context = stream_context_create();
+readfile("readfile_edgecases.txt");
+set_include_path("' . addslashes(__DIR__) . '");
+readfile("readfile_edgecases.txt", true);
+readfile("./hi", 0, $context);
+readfile("../oops");
+?>
+');
+include $pname . '/foo/hi';
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/readfile_edgecases.txt'); ?>
+--EXPECTF--
+blah
+<?crx
+readfile("foo/" . basename(__FILE__));
+$context = stream_context_create();
+readfile("readfile_edgecases.txt");
+set_include_path("%stests");
+readfile("readfile_edgecases.txt", true);
+readfile("./hi", 0, $context);
+readfile("../oops");
+?>
+test
+test
+<?crx
+readfile("foo/" . basename(__FILE__));
+$context = stream_context_create();
+readfile("readfile_edgecases.txt");
+set_include_path("%stests");
+readfile("readfile_edgecases.txt", true);
+readfile("./hi", 0, $context);
+readfile("../oops");
+?>
+
+Warning: readfile(crxa://%sreadfile_edgecases.crxa.crx/oops): Failed to open stream: crxa error: path "oops" is a directory in crxa://%sreadfile_edgecases.crxa.crx/foo/hi on line %d

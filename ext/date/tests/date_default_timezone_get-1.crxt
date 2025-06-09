@@ -1,0 +1,18 @@
+--TEST--
+date_default_timezone_get() function [1]
+--SKIPIF--
+<?crx
+    if(substr(CRX_OS, 0, 3) == 'WIN') die("skip on windows");
+?>
+--INI--
+date.timezone=
+--FILE--
+<?crx
+    putenv('TZ=');
+    echo date_default_timezone_get(), "\n";
+    echo date('e'), "\n";
+?>
+--EXPECT--
+Warning: CRX Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+UTC
+UTC

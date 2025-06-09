@@ -1,0 +1,12 @@
+--TEST--
+Incorrect DCE of FREE
+--FILE--
+<?crx
+function foo() {
+  $a = $r[] = $r = []&$y;
+  list(&$y)=$a;
+}
+?>
+DONE
+--EXPECT--
+DONE

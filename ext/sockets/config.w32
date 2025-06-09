@@ -1,0 +1,16 @@
+// vim:ft=javascript
+
+ARG_ENABLE("sockets", "SOCKETS support", "no");
+
+if (CRX_SOCKETS != "no") {
+	if (CHECK_LIB("ws2_32.lib", "sockets", CRX_SOCKETS)
+	&& CHECK_LIB("Iphlpapi.lib", "sockets", CRX_SOCKETS)
+	&& CHECK_HEADER_ADD_INCLUDE("winsock.h", "CFLAGS_SOCKETS")) {
+		EXTENSION('sockets', 'sockets.c multicast.c conversions.c sockaddr_conv.c sendrecvmsg.c', CRX_SOCKETS_SHARED, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+		AC_DEFINE('HAVE_SOCKETS', 1);
+		CRX_INSTALL_HEADERS("ext/sockets", "crx_sockets.h windows_common.h");
+		ADD_FLAG("CFLAGS_SOCKETS", "/D CRX_SOCKETS_EXPORTS=1");
+	} else {
+		WARNING("sockets not enabled; libraries and headers not found");
+	}
+}

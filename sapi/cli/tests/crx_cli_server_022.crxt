@@ -1,0 +1,45 @@
+--TEST--
+Check CRX file body is executed
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start(<<<'CRX'
+header('Bar-Foo: Foo');
+echo "Hello world\n";
+var_dump(true);
+CRX
+);
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+if(fwrite($fp, <<<HEADER
+GET / HTTP/1.1
+Host: {$host}
+Foo-Bar: Bar
+
+
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+    }
+}
+
+fclose($fp);
+?>
+--EXPECTF--
+HTTP/1.1 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: %s
+Bar-Foo: Foo
+Content-type: text/html; charset=UTF-8
+
+Hello world
+bool(true)

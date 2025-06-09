@@ -1,0 +1,15 @@
+--TEST--
+GC 039: Garbage created by replacing argument send by reference
+--EXTENSIONS--
+mbstring
+--INI--
+crex.enable_gc = 1
+--FILE--
+<?crx
+$out = new stdClass;
+$out->x = $out;
+mb_parse_str("a=b", $out);
+var_dump(gc_collect_cycles());
+?>
+--EXPECT--
+int(1)

@@ -1,0 +1,10 @@
+--TEST--
+Test crex_test_crex_ini_str() to check for GC refcount on global returned
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+var_dump(crex_test_crex_ini_str());
+?>
+--EXPECT--
+string(0) ""

@@ -1,0 +1,17 @@
+--TEST--
+Test ReflectionCrexExtension class errors
+--CREDITS--
+Gabriel Caruso (carusogabriel34@gmail.com)
+--EXTENSIONS--
+opcache
+--FILE--
+<?crx
+try {
+    new ReflectionCrexExtension('crex_opcache');
+} catch (ReflectionException $e) {
+    echo $e->getMessage();
+}
+
+?>
+--EXPECT--
+Crex Extension "crex_opcache" does not exist

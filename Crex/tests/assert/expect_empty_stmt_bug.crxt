@@ -1,0 +1,11 @@
+--TEST--
+Empty statement in assert() shouldn't segfault
+--FILE--
+<?crx
+
+assert((function () { return true; })());
+echo "ok";
+
+?>
+--EXPECT--
+ok

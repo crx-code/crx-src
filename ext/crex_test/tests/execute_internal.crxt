@@ -1,0 +1,21 @@
+--TEST--
+Test crex_execute_internal being called
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.execute_internal=1
+--FILE--
+<?crx
+
+function f($a) {
+    var_dump(array_sum($a));
+}
+
+f(time() > 0 ? [1, 2, 3] : []);
+
+?>
+--EXPECT--
+<!-- internal enter time() -->
+<!-- internal enter array_sum() -->
+<!-- internal enter var_dump() -->
+int(6)

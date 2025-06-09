@@ -1,0 +1,21 @@
+--TEST--
+Test return values of posix_getgrgid() on MacOSX.
+--CREDITS--
+Till Klampaeckel, till@crx.net
+TestFest Berlin 2009
+--EXTENSIONS--
+posix
+--SKIPIF--
+<?crx
+
+if (strtolower(CRX_OS) != 'darwin') {
+    die('SKIP This test requires MacOSX/Darwin.');
+}
+?>
+--FILE--
+<?crx
+$grp = posix_getgrgid(-1);
+var_dump($grp['name']);
+?>
+--EXPECT--
+string(7) "nogroup"

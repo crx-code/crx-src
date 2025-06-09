@@ -1,0 +1,14 @@
+--TEST--
+CRX bug #77247 (heap buffer overflow in crxa_detect_crxa_fname_ext)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+var_dump(new Crxa('a/.b', 0,'test.crxa'));
+} catch(UnexpectedValueException $e) {
+    echo "OK";
+}
+?>
+--EXPECT--
+OK

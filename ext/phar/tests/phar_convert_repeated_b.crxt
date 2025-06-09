@@ -1,0 +1,113 @@
+--TEST--
+CrxaData::convertToZip|Tar|Crxa() repeated (crxadata_based archives)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.zip';
+
+echo "=================== new CrxaData() ==================\n";
+$crxa = new CrxaData($fname);
+$crxa['a'] = 'a';
+$crxa['b'] = 'b';
+$crxa['c'] = 'c';
+
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToTar() =====================\n";
+
+$crxa = $crxa->convertToData(Crxa::TAR);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToZip() =====================\n";
+
+$crxa = $crxa->convertToData(Crxa::ZIP, Crxa::NONE, '.1.zip');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToCrxa() ====================\n";
+
+try {
+    $crxa = $crxa->convertToExecutable(Crxa::CRXA);
+    var_dump($crxa->isFileFormat(Crxa::CRXA));
+    var_dump($crxa->isFileFormat(Crxa::TAR));
+    var_dump($crxa->isFileFormat(Crxa::ZIP));
+    var_dump(strlen($crxa->getStub()));
+    var_dump($crxa->getAlias());
+} catch(Exception $e) {
+    echo $e->getMessage()."\n";
+}
+
+echo "================ convertToTar(GZ) ====================\n";
+
+$crxa = $crxa->convertToData(Crxa::TAR, Crxa::GZ, '.2.tar');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+var_dump($crxa->getAlias());
+
+echo "================= convertToCrxa() ====================\n";
+
+try {
+    $crxa = $crxa->convertToExecutable(Crxa::CRXA);
+    var_dump($crxa->isFileFormat(Crxa::CRXA));
+    var_dump($crxa->isFileFormat(Crxa::TAR));
+    var_dump($crxa->isFileFormat(Crxa::ZIP));
+    var_dump(strlen($crxa->getStub()));
+    var_dump($crxa->getAlias());
+} catch(Exception $e) {
+    echo $e->getMessage()."\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.2.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.zip');
+?>
+--EXPECT--
+=================== new CrxaData() ==================
+bool(false)
+bool(false)
+bool(true)
+string(0) ""
+NULL
+================= convertToTar() =====================
+bool(false)
+bool(true)
+bool(false)
+string(0) ""
+NULL
+================= convertToZip() =====================
+bool(false)
+bool(false)
+bool(true)
+string(0) ""
+NULL
+================= convertToCrxa() ====================
+Cannot write out executable crxa archive, crxa is read-only
+================ convertToTar(GZ) ====================
+bool(false)
+bool(true)
+bool(false)
+string(0) ""
+NULL
+================= convertToCrxa() ====================
+Cannot write out executable crxa archive, crxa is read-only

@@ -1,0 +1,32 @@
+--TEST--
+Bug #62672 (Error on serialize of ArrayObject)
+--FILE--
+<?crx
+
+class ObjA
+{
+    private $_varA;
+
+    public function __main(Iterator $source)
+    {
+        $this->_varA = $source;
+    }
+}
+
+class ObjB extends ObjA
+{
+    private $_varB;
+
+    public function __main(ArrayObject $keys)
+    {
+        $this->_varB = $keys;
+        parent::__main($keys->getIterator());
+    }
+}
+
+$obj = new ObjB(new ArrayObject());
+
+var_dump($obj == unserialize(serialize($obj)));
+?>
+--EXPECT--
+bool(true)

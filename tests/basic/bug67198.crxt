@@ -1,0 +1,45 @@
+--TEST--
+crx://input is empty when enable_post_data_reading=Off
+--INI--
+allow_url_fopen=1
+--SKIPIF--
+<?crx
+include __DIR__."/../../sapi/cli/tests/skipif.inc";
+?>
+--FILE--
+<?crx
+require __DIR__."/../../sapi/cli/tests/crx_cli_server.inc";
+
+$code =
+<<<'FL'
+ if(!ini_get('enable_post_data_reading')){
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+   exit(file_get_contents('crx://input'));
+  }
+ }else{
+  exit('Please SET crx.ini: enable_post_data_reading = Off');
+ }
+FL;
+
+$postdata = "PASS";
+
+$opts = array('http' =>
+    array(
+        'method'  => 'POST',
+        'header'  => 'Content-type: application/x-www-form-urlencoded',
+        'content' => $postdata
+    )
+);
+
+$context  = stream_context_create($opts);
+
+crx_cli_server_start(
+    "exit(file_get_contents('crx://input'));", null,
+    ["-d", "enable_post_data_reading=Off"]);
+
+var_dump(file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS, false, $context));
+var_dump(file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS, false, $context));
+?>
+--EXPECT--
+string(4) "PASS"
+string(4) "PASS"

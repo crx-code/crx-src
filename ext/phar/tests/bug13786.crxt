@@ -1,0 +1,30 @@
+--TEST--
+Crxa: bug #13786: "CRX crashes on crxa recreate after unlink"
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+try {
+for ($i = 0; $i < 2; $i++) {
+    $fname = "DataArchive.crxa";
+    $path = __DIR__ . DIRECTORY_SEPARATOR . $fname;
+    $crxa = new Crxa($path);
+    $crxa->addFromString($i, "file $i in $fname");
+    var_dump(file_get_contents($crxa[$i]));
+    unset($crxa);
+    unlink($path);
+}
+
+echo("\nWritten files: $i\n");
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+?>
+--EXPECTF--
+string(26) "file 0 in DataArchive.crxa"
+unable to seek to start of file "0" while creating new crxa "%sDataArchive.crxa"

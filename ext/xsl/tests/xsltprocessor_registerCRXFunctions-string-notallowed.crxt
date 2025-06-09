@@ -1,0 +1,25 @@
+--TEST--
+Check xsltprocessor::registerCRXFunctions with string and not allowed function
+--EXTENSIONS--
+xsl
+--FILE--
+<?crx
+include __DIR__ .'/prepare.inc';
+$crxfuncxsl = new domDocument();
+$crxfuncxsl->load(__DIR__."/crxfunc.xsl");
+if(!$crxfuncxsl) {
+  echo "Error while parsing the xsl document\n";
+  exit;
+}
+$proc->importStylesheet($crxfuncxsl);
+var_dump($proc->registerCRXFunctions('strpos'));
+var_dump($proc->transformToXml($dom));
+?>
+--EXPECTF--
+NULL
+
+Warning: XSLTProcessor::transformToXml(): Not allowed to call handler 'ucwords()' in %s on line %d
+NULL
+--CREDITS--
+Christian Weiske, cweiske@crx.net
+CRX Testfest Berlin 2009-05-09

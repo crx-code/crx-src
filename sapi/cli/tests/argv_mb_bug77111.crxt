@@ -1,0 +1,40 @@
+--TEST--
+Bug #77111 crx-win.exe corrupts unicode symbols from cli parameters
+--SKIPIF--
+<?crx
+include "skipif.inc";
+
+if (strtoupper(substr(CRX_OS, 0, 3)) !== 'WIN') {
+    die("skip this test is for Windows platforms only");
+}
+
+$crx = dirname(getenv('TEST_CRX_EXECUTABLE')) . DIRECTORY_SEPARATOR . "crx-win.exe";
+if (!file_exists($crx)) {
+    die("skip crx-win.exe doesn't exist");
+}
+
+?>
+--FILE--
+<?crx
+
+$crx = dirname(getenv('TEST_CRX_EXECUTABLE')) . DIRECTORY_SEPARATOR . "crx-win.exe";
+
+$out_fl = __DIR__ . "\\argv_bug77111.txt";
+
+$argv_fl = __DIR__ . DIRECTORY_SEPARATOR . "argv_bug77111_test.crx";
+file_put_contents($argv_fl, "<?crx file_put_contents('$out_fl', implode(' ', array_slice(\$argv, 1))); ?>");
+
+`$crx -n $argv_fl Ästhetik Æstetik Esthétique Estética Эстетика`;
+var_dump(file_get_contents($out_fl));
+
+?>
+--CLEAN--
+<?crx
+$out_fl = __DIR__ . "\\argv_bug77111.txt";
+$argv_fl = __DIR__ . DIRECTORY_SEPARATOR . "argv_bug77111_test.crx";
+unlink($argv_fl);
+unlink($out_fl);
+?>
+--EXPECT--
+string(57) "Ästhetik Æstetik Esthétique Estética Эстетика"
+

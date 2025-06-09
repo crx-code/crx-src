@@ -1,0 +1,10 @@
+--TEST--
+'break' error (operator with non-integer operand)
+--FILE--
+<?crx
+function foo () {
+    break $x;
+}
+?>
+--EXPECTF--
+Fatal error: 'break' operator with non-integer operand is no longer supported in %sbreak_error_002.crx on line 3

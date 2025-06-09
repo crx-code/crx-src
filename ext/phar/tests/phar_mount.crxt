@@ -1,0 +1,61 @@
+--TEST--
+Crxa: Crxa::mount
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = dirname(__FILE__) . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$fname2 = dirname(__FILE__) . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+
+$a = new Crxa($fname);
+$a['index.crx'] = '<?crx
+Crxa::mount("testit", "' . addslashes(__FILE__) . '");
+try {
+Crxa::mount("testit", "' . addslashes(__FILE__) . '");
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+Crxa::mount("' . addslashes($pname) . '/testit1", "' . addslashes(__FILE__) . '");
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+?>';
+$a->setStub('<?crx
+set_include_path("crxa://" . __FILE__);
+include "index.crx";
+__HALT_COMPILER();');
+Crxa::mount($pname . '/testit1', __FILE__);
+include $fname;
+// test copying of a crxa with mounted entries
+$b = $a->convertToExecutable(Crxa::TAR);
+$b->setStub('<?crx
+set_include_path("crxa://" . __FILE__);
+include "index.crx";
+__HALT_COMPILER();');
+try {
+include $fname2;
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+Crxa::mount($pname . '/oops', '/home/oops/../../etc/passwd:');
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+Crxa::mount($pname . '/testit2', $pname . '/testit1');
+echo substr($a['testit2']->getContent(),0, 50),"\n";
+?>
+--CLEAN--
+<?crx unlink(dirname(__FILE__) . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(dirname(__FILE__) . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECTF--
+Mounting of testit to %scrxa_mount.crx within crxa %scrxa_mount.crxa.crx failed
+Can only mount internal paths within a crxa archive, use a relative path instead of "crxa://%scrxa_mount.crxa.crx/testit1"
+Mounting of testit to %scrxa_mount.crx within crxa %scrxa_mount.crxa.tar failed
+Mounting of /oops to /home/oops/../../etc/passwd: within crxa %scrxa_mount.crxa.crx failed
+<?crx
+$fname = dirname(__FILE__) . '/' . basename(

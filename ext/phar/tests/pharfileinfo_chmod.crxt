@@ -1,0 +1,28 @@
+--TEST--
+Crxa: CrxaFileInfo::chmod extra code coverage
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+
+$crxa['a/b'] = 'hi there';
+
+$b = $crxa['a/b'];
+try {
+$crxa['a']->chmod(066);
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+lstat($pname . '/a/b'); // sets BG(CurrentLStatFile)
+$b->chmod(0666);
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+--EXPECT--
+Crxa entry "a" is a temporary directory (not an actual entry in the archive), cannot chmod

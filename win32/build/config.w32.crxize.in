@@ -1,0 +1,145 @@
+// vim:ft=javascript
+// "Master" config file; think of it as a configure.ac
+// equivalent.
+
+ARG_WITH("verbosity", "Output verbosity, 0-2.", "1");
+setup_verbosity();
+
+ARG_WITH("toolset", "Toolset to use for the compilation, give: vs, clang, icc. " +
+		"The only recommended and supported toolset for production use " +
+		"is Visual Studio. Use others at your own risk.", "vs");
+toolset_option_handle()
+
+var CRX_CYGWIN="notset";
+
+toolset_setup_compiler();
+
+HOST_ARCH = toolset_host_arch();
+TARGET_ARCH = toolset_target_arch();
+// for compatible only
+X64 = TARGET_ARCH != 'x86';
+toolset_setup_arch();
+
+toolset_setup_linker();
+toolset_setup_project_tools();
+
+// stick objects somewhere outside of the source tree
+ARG_ENABLE('object-out-dir', 'Alternate location for binary objects during build', '');
+object_out_dir_option_handle();
+
+ARG_ENABLE('debug', 'Compile with debugging symbols', CRX_DEBUG);
+ARG_ENABLE('debug-pack', 'Release binaries with external debug symbols (--enable-debug must not be specified)', 'no');
+if (CRX_DEBUG == "yes" && CRX_DEBUG_PACK == "yes") {
+	ERROR("Use of both --enable-debug and --enable-debug-pack not allowed.");
+}
+
+if (CRX_PREFIX == '') {
+	CRX_PREFIX = "C:\\crx";
+	if (CRX_DEBUG == "yes")
+		CRX_PREFIX += "\\debug";
+}
+DEFINE('CRX_PREFIX', CRX_PREFIX);
+
+DEFINE("BASE_INCLUDES", "/I " + CRX_DIR + "/include /I " + CRX_DIR + "/include/main /I " + CRX_DIR + "/include/Crex /I " + CRX_DIR + "/include/TSRM /I " + CRX_DIR + "/include/ext ");
+
+toolset_setup_common_cflags();
+
+ARG_WITH('prefix', 'CRX installation prefix', CRX_PREFIX);
+ARG_WITH('mp', 'Tell Visual Studio use up to [n,auto,disable] processes for compilation', 'auto');
+var CRX_MP_DISABLED = true;
+if (VS_TOOLSET && CRX_MP != 'disable') {
+		// no from disable-all
+		if(CRX_MP == 'auto' || CRX_MP == 'no') {
+			 ADD_FLAG('CFLAGS', ' /MP ');
+			CRX_MP_DISABLED = false;
+		} else {
+			if(parseInt(CRX_MP) != 0) {
+				ADD_FLAG('CFLAGS', ' /MP'+ CRX_MP +' ');
+				CRX_MP_DISABLED = false;
+			} else {
+				STDOUT.WriteLine('WARNING: Invalid argument for MP: ' + CRX_MP);
+			}
+		}
+}
+
+/* For snapshot builders, where can we find the additional
+ * files that make up the snapshot template? */
+ARG_WITH("snapshot-template", "Path to snapshot builder template dir", "no");
+
+// General link flags
+toolset_setup_common_ldlags();
+
+// General libs
+toolset_setup_common_libs();
+
+// Set some debug/release specific options
+toolset_setup_build_mode();
+
+setup_zts_stuff();
+
+if (MODE_CRXIZE) {
+	DEFINE("CRXDLL", CRX_DLL);
+	DEFINE("CRXLIB", CRX_DLL_LIB);
+}
+
+// Find the crx_build dir - it contains headers and libraries
+// that we need
+ARG_WITH('crx-build', 'Path to where you extracted the development libraries (http://wiki.crx.net/internals/windows/libs). Assumes that it is a sibling of this source dir (..\\deps) if not specified', 'no');
+crx_build_option_handle();
+
+ARG_WITH('extra-includes', 'Extra include path to use when building everything', '');
+ARG_WITH('extra-libs', 'Extra library path to use when linking everything', '');
+
+var crx_usual_include_suspects = CRX_CRX_BUILD+"\\include";
+var crx_usual_lib_suspects = CRX_CRX_BUILD+"\\lib";
+
+ADD_FLAG("CFLAGS", '/I "' + crx_usual_include_suspects + '" ');
+ADD_FLAG("LDFLAGS", '/libpath:"\\"' + crx_usual_lib_suspects + '\\"" ');
+ADD_FLAG("ARFLAGS", '/libpath:"\\"' + crx_usual_lib_suspects + '\\"" ');
+
+probe_basic_headers();
+add_extra_dirs();
+
+//DEFINE("CRX_BUILD", CRX_CRX_BUILD);
+
+STDOUT.WriteBlankLines(1);
+STDOUT.WriteLine("Build dir: " + get_define('BUILD_DIR'));
+STDOUT.WriteLine("CRX Core:  " + get_define('CRXDLL') + " and " + get_define('CRXLIB'));
+
+/* XXX inspect this for other toolsets */
+//AC_DEFINE('CREX_DVAL_TO_LVAL_CAST_OK', 1);
+
+AC_DEFINE('HAVE_STRNLEN', 1);
+
+STDOUT.WriteBlankLines(1);
+
+if (CRX_SNAPSHOT_TEMPLATE == "no") {
+	/* default is as a sibling of the crx_build dir */
+	if (FSO.FolderExists(CRX_CRX_BUILD + "\\template")) {
+		CRX_SNAPSHOT_TEMPLATE = FSO.GetAbsolutePathName(CRX_CRX_BUILD + "\\template");
+	} else if (FSO.FolderExists(CRX_CRX_BUILD + "\\..\\template")) {
+		CRX_SNAPSHOT_TEMPLATE = FSO.GetAbsolutePathName(CRX_CRX_BUILD + "\\..\\template");
+	}
+}
+
+DEFINE('SNAPSHOT_TEMPLATE', CRX_SNAPSHOT_TEMPLATE);
+
+AC_DEFINE("CRX_DIR", CRX_DIR);
+DEFINE("CRX_DIR", CRX_DIR);
+
+ARG_WITH("codegen-arch", "Architecture for code generation", "no");
+toolset_setup_codegen_arch();
+
+ARG_ENABLE("test-ini", "Enable automatic crx.ini generation. The test.ini will be put \
+		into the build dir and used to automatically load the shared extensions.", "no");
+
+ARG_WITH("test-ini-ext-exclude", "Comma separated list of shared extensions to \
+		be excluded from the test.ini", "no");
+
+ARG_ENABLE("native-intrinsics", "Comma separated list of intrinsic optimizations to enable. \
+	Available optimization names are sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2. \
+	SSE and SSE2 are enabled by default. The best optimization specified will \
+	automatically enable all the older optimizations. Note, that the produced binary \
+	might not work properly, if the optimizations are not available on the target \
+	processor.", "no");
+toolset_setup_intrinsic_cflags();

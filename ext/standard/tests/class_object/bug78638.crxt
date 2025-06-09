@@ -1,0 +1,9 @@
+--TEST--
+FR: #78638 (__CRX_Incomplete_Class should be final)
+--FILE--
+<?crx
+$c = new class('bar') extends __CRX_Incomplete_Class {
+};
+?>
+--EXPECTF--
+Fatal error: Class __CRX_Incomplete_Class@anonymous cannot extend final class __CRX_Incomplete_Class in %s on line %d

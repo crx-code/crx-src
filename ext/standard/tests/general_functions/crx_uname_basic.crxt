@@ -1,0 +1,30 @@
+--TEST--
+Test crx_uname() function - basic test
+--FILE--
+<?crx
+
+echo "*** Testing crx_uname() - basic test\n";
+
+var_dump(crx_uname());
+
+echo "\n-- Try all the defined mode's --\n";
+
+var_dump(crx_uname('a'));
+var_dump(crx_uname('s'));
+var_dump(crx_uname('n'));
+var_dump(crx_uname('r'));
+var_dump(crx_uname('v'));
+var_dump(crx_uname('m'));
+
+?>
+--EXPECTF--
+*** Testing crx_uname() - basic test
+string(%d) "%s"
+
+-- Try all the defined mode's --
+string(%d) "%s"
+string(%d) "%s"
+string(%d) "%s"
+string(%d) "%s"
+string(%d) "%s"
+string(%d) "%s"

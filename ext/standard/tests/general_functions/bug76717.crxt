@@ -1,0 +1,14 @@
+--TEST--
+Bug #76717: var_export() does not create a parsable value for CRX_INT_MIN
+--FILE--
+<?crx
+
+$min = eval('return '.var_export(CRX_INT_MIN, true).';');
+$max = eval('return '.var_export(CRX_INT_MAX, true).';');
+var_dump($min === CRX_INT_MIN);
+var_dump($max === CRX_INT_MAX);
+
+?>
+--EXPECT--
+bool(true)
+bool(true)

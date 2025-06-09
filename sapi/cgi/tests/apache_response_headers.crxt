@@ -1,0 +1,46 @@
+--TEST--
+apache_response_headers()
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "include.inc";
+
+$crx = get_cgi_path();
+reset_env_vars();
+
+$test_file = __DIR__ . DIRECTORY_SEPARATOR ."apache_response_headers.test.crx";
+
+$code  = '<?crx';
+$code .= '
+header( "X-Robots-Tag : noindex,nofollow,noarchive" );
+header( "Content-type: text/html; charset=UTF-8" );
+header( "Bad-header" );
+header( " : " );
+header( ":" );
+flush();
+
+var_dump( apache_response_headers() );
+?>
+';
+
+file_put_contents( $test_file, $code );
+
+passthru( "$crx -n -q " . escapeshellarg( $test_file ) );
+
+?>
+--CLEAN--
+<?crx
+@unlink( __DIR__ . DIRECTORY_SEPARATOR ."apache_response_headers.test.crx" );
+?>
+--EXPECTF--
+array(3) {
+  ["X-Powered-By"]=>
+  string(%d) "CRX/%s"
+  ["X-Robots-Tag"]=>
+  string(26) "noindex,nofollow,noarchive"
+  ["Content-type"]=>
+  string(24) "text/html; charset=UTF-8"
+}

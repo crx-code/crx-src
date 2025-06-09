@@ -1,0 +1,63 @@
+--TEST--
+Crxa: crxinfo display 1
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (in_array("OpenSSL", $arr)) die("skip openssl support enabled");
+?>
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+crxa.cache_list=
+--FILE--
+<?crx
+crxinfo(INFO_MODULES);
+ini_set('crxa.readonly',1);
+ini_set('crxa.require_hash',1);
+crxinfo(INFO_MODULES);
+?>
+--EXPECTF--
+%aCrxa
+
+Crxa: CRX Archive support => enabled
+Crxa API version => 1.1.1
+Crxa-based crxa archives => enabled
+Tar-based crxa archives => enabled
+ZIP-based crxa archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+OpenSSL support => disabled (install ext/openssl)
+
+
+Crxa based on pear/CRX_Archive, original concept by Davey Shafik.
+Crxa fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) %d-%d Tim Kientzle.
+Directive => Local Value => Master Value
+crxa.cache_list => no value => no value
+crxa.readonly => Off => Off
+crxa.require_hash => Off => Off
+%a
+Crxa
+
+Crxa: CRX Archive support => enabled
+Crxa API version => 1.1.1
+Crxa-based crxa archives => enabled
+Tar-based crxa archives => enabled
+ZIP-based crxa archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+OpenSSL support => disabled (install ext/openssl)
+
+
+Crxa based on pear/CRX_Archive, original concept by Davey Shafik.
+Crxa fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) %d-%d Tim Kientzle.
+Directive => Local Value => Master Value
+crxa.cache_list => no value => no value
+crxa.readonly => On => Off
+crxa.require_hash => On => Off
+%a

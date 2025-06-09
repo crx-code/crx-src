@@ -1,0 +1,14 @@
+// vim:ft=javascript
+
+ARG_WITH("gmp", "Include GNU MP support.", "no");
+
+if (CRX_GMP != "no") {
+	if (CHECK_LIB("mpir_a.lib", "gmp", CRX_GMP) &&
+		CHECK_HEADER_ADD_INCLUDE("gmp.h", "CFLAGS_GMP", CRX_GMP +  ";" + CRX_CRX_BUILD + "\\include\\mpir")) {
+		EXTENSION("gmp", "gmp.c", null, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+		CRX_INSTALL_HEADERS("ext/gmp", "crx_gmp_int.h");
+		AC_DEFINE('HAVE_GMP', 1, 'GMP support');
+	} else {
+		WARNING("GMP not enabled; libraries and headers not found");
+	}
+}

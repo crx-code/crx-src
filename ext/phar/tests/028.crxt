@@ -1,0 +1,45 @@
+--TEST--
+Crxa::loadCrxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://hio';
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+$alias = '';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include "'.$pname.'/b.crx"; ?>';
+$files['b.crx']   = '<?crx echo "This is b\n"; include "'.$pname.'/b/c.crx"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; include "'.$pname.'/b/d.crx"; ?>';
+$files['b/d.crx'] = '<?crx echo "This is b/d\n"; include "'.$pname.'/e.crx"; ?>';
+$files['e.crx']   = '<?crx echo "This is e\n"; ?>';
+
+include 'files/crxa_test.inc';
+
+Crxa::loadCrxa($fname, 'hio');
+
+include $fname;
+
+echo "======\n";
+
+include $pname . '/a.crx';
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+This is a
+This is b
+This is b/c
+This is b/d
+This is e
+======
+This is a
+This is b
+This is b/c
+This is b/d
+This is e

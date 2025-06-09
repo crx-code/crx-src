@@ -1,0 +1,17 @@
+--TEST--
+readline(): Basic test
+--CREDITS--
+Milwaukee CRX User Group
+#CRXTestFest2017
+--EXTENSIONS--
+readline
+--FILE--
+<?crx
+
+var_dump(readline('Enter some text:'));
+
+?>
+--STDIN--
+I love CRX
+--EXPECTF--
+%Astring(10) "I love CRX"

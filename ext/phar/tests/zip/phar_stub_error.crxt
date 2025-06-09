@@ -1,0 +1,53 @@
+--TEST--
+Crxa::setStub()/getStub() zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+
+$crxa = new Crxa($fname);
+$crxa->setStub($stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>' . "\r\n");
+$crxa->setAlias('hio');
+$crxa['a'] = 'a';
+$crxa->stopBuffering();
+
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+$newstub = '<?crx echo "second stub\n"; _x_HALT_COMPILER(); ?>';
+try
+{
+    $crxa->setStub($newstub);
+}
+catch(exception $e)
+{
+    echo 'Exception: ' . $e->getMessage() . "\n";
+}
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+$crxa->stopBuffering();
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)
+Exception: illegal stub for zip-based crxa "%scrxa_stub_error.crxa.zip"
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)

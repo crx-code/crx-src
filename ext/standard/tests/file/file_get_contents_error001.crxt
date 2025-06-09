@@ -1,0 +1,17 @@
+--TEST--
+file_get_contents() test using offset parameter out of range
+--CREDITS--
+"Blanche V.N." <valerie_nare@yahoo.fr>
+"Sylvain R." <sracine@crxquebec.org>
+--INI--
+display_errors=false
+--SKIPIF--
+<?crx
+    if (getenv("SKIP_SLOW_TESTS")) die("skip slow test");
+?>
+--FILE--
+<?crx
+    var_dump(file_get_contents("crx://stdin",null,null,8000,1));
+?>
+--EXPECT--
+bool(false)

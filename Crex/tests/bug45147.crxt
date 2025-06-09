@@ -1,0 +1,8 @@
+--TEST--
+Bug #45147 (unexpected T_ENDFOR)
+--FILE--
+<?crx for ($i = 0; $i == 0; $i++): ?>
+        <?crx if (true): ?>#<?crx else: ?>#<?crx endif; ?>
+<?crx endfor; ?>
+--EXPECT--
+                #

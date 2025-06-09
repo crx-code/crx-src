@@ -1,0 +1,16 @@
+--TEST--
+Crxa: CRX bug #73768: Memory corruption when loading hostile crxa
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+chdir(__DIR__);
+try {
+$p = Crxa::LoadCrxa('bug73768.crxa', 'alias.crxa');
+echo "OK\n";
+} catch(CrxaException $e) {
+    echo $e->getMessage();
+}
+?>
+--EXPECTF--
+internal corruption of crxa "%sbug73768.crxa" (truncated manifest header)

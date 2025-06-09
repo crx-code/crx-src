@@ -1,0 +1,37 @@
+--TEST--
+Crxa: tar-based crxa, make new bzipped tar
+--EXTENSIONS--
+crxa
+bz2
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/tar_makebz2.crxa.tar';
+$fname2 = __DIR__ . '/tar_makebz2.crxa.tar.bz2';
+$fname3 = __DIR__ . '/tar_makebz2_b.crxa.tar.bz2';
+
+$crxa = new Crxa($fname);
+$crxa['test'] = 'hi';
+var_dump($crxa->isFileFormat(Crxa::TAR));
+$crxa = $crxa->compress(Crxa::BZ2);
+
+copy($fname2, $fname3);
+
+$crxa2 = new Crxa($fname3);
+var_dump($crxa2->isFileFormat(Crxa::TAR));
+var_dump($crxa2->isCompressed() == Crxa::BZ2);
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_makebz2.crxa.bz2');
+@unlink(__DIR__ . '/tar_makebz2.crxa.tar');
+@unlink(__DIR__ . '/tar_makebz2.crxa.tar.bz2');
+@unlink(__DIR__ . '/tar_makebz2_b.crxa.tar.bz2');
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(true)

@@ -1,0 +1,48 @@
+--TEST--
+Crxa: test broken app
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$file = "zfapp";
+$orig_file = __DIR__ . "/files/$file.tgz";
+$tgz_file = __DIR__ . "/$file.tgz";
+$crxa_file = __DIR__ . "/$file.crxa.tar.gz";
+copy($orig_file, $tgz_file);
+
+$crxa = new CrxaData($tgz_file);
+$crxa = $crxa->convertToExecutable();
+
+$crxa = new Crxa($crxa_file);
+$crxa->startBuffering();
+$crxa->setStub("<?crx
+Crxa::interceptFileFuncs();
+Crxa::webCrxa('$file.crxa', 'html/index.crx');
+echo 'BlogApp is intended to be executed from a web browser\n';
+exit -1;
+__HALT_COMPILER();
+");
+$crxa->stopBuffering();
+
+foreach(new RecursiveIteratorIterator($crxa) as $path) {
+    echo str_replace('\\', '/', $path->getPathName()) . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/zfapp.tgz');
+unlink(__DIR__ . '/zfapp.crxa.tar.gz');
+?>
+--EXPECTF--
+crxa://%szfapp.crxa.tar.gz/application/default/controllers/ErrorController.crx
+crxa://%szfapp.crxa.tar.gz/application/default/controllers/IndexController.crx
+crxa://%szfapp.crxa.tar.gz/application/default/views/scripts/error/error.phtml
+crxa://%szfapp.crxa.tar.gz/application/default/views/scripts/index/index.phtml
+crxa://%szfapp.crxa.tar.gz/html/.htaccess
+crxa://%szfapp.crxa.tar.gz/html/index.crx

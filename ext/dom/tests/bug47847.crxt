@@ -1,0 +1,29 @@
+--TEST--
+Bug #47847 (importNode loses the namespace of an XML element)
+--EXTENSIONS--
+dom
+--XFAIL--
+See https://github.com/crx/crx-src/pull/12308
+--FILE--
+<?crx
+$fromdom = new DOMDocument();
+$fromdom->loadXML(<<<XML
+<?xml version="1.0"?>
+<ns:container xmlns:ns="http://crx.net">
+<ns:inner xmlns="http://crx.net">
+<ns:WATCH-MY-NAMESPACE xmlns=""/>
+</ns:inner>
+</ns:container>
+XML);
+
+$aDOM = new DOMDocument();
+$imported = $aDOM->importNode($fromdom->documentElement->firstElementChild, true);
+$aDOM->appendChild($imported);
+
+echo $aDOM->saveXML();
+?>
+--EXPECT--
+<?xml version="1.0"?>
+<ns:inner xmlns="http://crx.net" xmlns:ns="http://crx.net">
+<ns:WATCH-MY-NAMESPACE xmlns=""/>
+</ns:inner>

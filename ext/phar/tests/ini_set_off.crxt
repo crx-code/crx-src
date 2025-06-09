@@ -1,0 +1,83 @@
+--TEST--
+Crxa: test ini_set with readonly and require_hash disabled
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+var_dump(ini_set('crxa.require_hash', 1));
+var_dump(ini_set('crxa.readonly', 1));
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+ini_set('crxa.require_hash', 0);
+ini_set('crxa.readonly', 0);
+var_dump(Crxa::canWrite());
+?>
+yes
+<?crx
+var_dump(ini_set('crxa.require_hash', 'yes'));
+var_dump(ini_set('crxa.readonly', 'yes'));
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+var_dump(Crxa::canWrite());
+ini_set('crxa.require_hash', 0);
+ini_set('crxa.readonly', 0);
+?>
+on
+<?crx
+var_dump(ini_set('crxa.require_hash', 'on'));
+var_dump(ini_set('crxa.readonly', 'on'));
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+var_dump(Crxa::canWrite());
+ini_set('crxa.require_hash', 0);
+ini_set('crxa.readonly', 0);
+?>
+true
+<?crx
+var_dump(ini_set('crxa.require_hash', 'true'));
+var_dump(ini_set('crxa.readonly', 'true'));
+var_dump(Crxa::canWrite());
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+?>
+0
+<?crx
+var_dump(ini_set('crxa.require_hash', 0));
+var_dump(ini_set('crxa.readonly', 0));
+var_dump(Crxa::canWrite());
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+?>
+--EXPECT--
+string(1) "0"
+string(1) "0"
+string(1) "1"
+string(1) "1"
+bool(true)
+yes
+string(1) "0"
+string(1) "0"
+string(3) "yes"
+string(3) "yes"
+bool(false)
+on
+string(1) "0"
+string(1) "0"
+string(2) "on"
+string(2) "on"
+bool(false)
+true
+string(1) "0"
+string(1) "0"
+bool(false)
+string(4) "true"
+string(4) "true"
+0
+string(4) "true"
+string(4) "true"
+bool(true)
+string(1) "0"
+string(1) "0"

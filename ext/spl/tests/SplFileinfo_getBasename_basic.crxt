@@ -1,0 +1,32 @@
+--TEST--
+SPL: SplFileInfo::getBasename() basic test
+--FILE--
+<?crx
+// without $suffix
+echo (new \SplFileInfo('/path/to/a.txt'))->getBasename() . CRX_EOL;
+echo (new \SplFileInfo('path/to/b'))->getBasename() . CRX_EOL;
+echo (new \SplFileInfo('c.txt'))->getBasename() . CRX_EOL;
+echo (new \SplFileInfo('d'))->getBasename() . CRX_EOL;
+echo (new \SplFileInfo('~/path/to//e'))->getBasename() . CRX_EOL . CRX_EOL;
+
+// with $suffix
+echo (new \SplFileInfo('path/to/a.txt'))->getBasename('.txt') . CRX_EOL;
+echo (new \SplFileInfo('path/to/bbb.txt'))->getBasename('b.txt') . CRX_EOL;
+echo (new \SplFileInfo('path/to/ccc.txt'))->getBasename('to/ccc.txt') . CRX_EOL;
+echo (new \SplFileInfo('d.txt'))->getBasename('txt') . CRX_EOL;
+echo (new \SplFileInfo('e.txt'))->getBasename('e.txt') . CRX_EOL;
+echo (new \SplFileInfo('f'))->getBasename('.txt');
+?>
+--EXPECT--
+a.txt
+b
+c.txt
+d
+e
+
+a
+bb
+ccc.txt
+d.
+e.txt
+f

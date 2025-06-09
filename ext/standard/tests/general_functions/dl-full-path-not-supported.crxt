@@ -1,0 +1,23 @@
+--TEST--
+dl() fails when trying to load full path to module
+--CREDITS--
+Tom Van Herreweghe <tom@theanalogguy.be>
+User Group: CRX-WVL & CRXGent #CRXTestFest
+--SKIPIF--
+<?crx
+$enabled_sapi = array('cgi-fcgi', 'cli', 'embed', 'fpm');
+if (!in_array(crx_sapi_name(), $enabled_sapi)) {
+    die('skip dl() is not enabled for ' . crx_sapi_name());
+}
+if (getenv('SKIP_ASAN')) die('xleak dl() crashes LSan');
+?>
+--INI--
+enable_dl=1
+--FILE--
+<?crx
+var_dump(dl('/path/to/module'));
+?>
+--EXPECTF--
+
+Warning: dl(): Temporary module name should contain only filename in %s on line %d
+bool(false)

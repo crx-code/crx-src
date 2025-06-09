@@ -1,0 +1,12 @@
+--TEST--
+crxversion test
+--FILE--
+<?crx
+
+print crxversion();
+print "\n";
+print crxversion('standard');
+?>
+--EXPECTF--
+%s
+%s

@@ -1,0 +1,19 @@
+--TEST--
+Aborted yield during object instantiation
+--FILE--
+<?crx
+
+class Foo {
+    public function __main() {}
+}
+
+function gen() {
+    $x = new Foo(yield);
+}
+
+gen()->rewind();
+
+?>
+===DONE===
+--EXPECT--
+===DONE===

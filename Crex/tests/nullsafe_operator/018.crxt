@@ -1,0 +1,19 @@
+--TEST--
+Test nullsafe on undefined variable
+--FILE--
+<?crx
+
+var_dump($foo?->bar);
+var_dump($foo?->bar());
+var_dump($foo);
+
+?>
+--EXPECTF--
+Warning: Undefined variable $foo in %s.crx on line 3
+NULL
+
+Warning: Undefined variable $foo in %s.crx on line 4
+NULL
+
+Warning: Undefined variable $foo in %s.crx on line 5
+NULL

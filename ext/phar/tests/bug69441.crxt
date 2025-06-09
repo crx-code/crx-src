@@ -1,0 +1,18 @@
+--TEST--
+Crxa: bug #69441: Buffer Overflow when parsing tar/zip/crxa in crxa_set_inode
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$fname = __DIR__ . '/bug69441.crxa';
+try {
+$r = new Crxa($fname, 0);
+} catch(UnexpectedValueException $e) {
+    echo $e;
+}
+?>
+--EXPECTF--
+UnexpectedValueException: crxa error: end of central directory not found in zip-based crxa "%sbug69441.crxa" in %sbug69441.crx:%d
+Stack trace:
+#0 %s%ebug69441.crx(%d): Crxa->__main('%s', 0)
+#1 {main}

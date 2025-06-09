@@ -1,0 +1,30 @@
+--TEST--
+Observer: Basic observability of includes only (no functions)
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_includes=1
+--FILE--
+<?crx
+function foo()
+{
+    echo 'Foo' . CRX_EOL;
+}
+
+foo();
+include __DIR__ . '/observer.inc';
+foo();
+?>
+--EXPECTF--
+<!-- init '%s%eobserver_basic_04.crx' -->
+<file '%s%eobserver_basic_04.crx'>
+  <!-- init foo() -->
+Foo
+  <!-- init '%s%eobserver.inc' -->
+  <file '%s%eobserver.inc'>
+    <!-- init foo_observer_test() -->
+foo_observer_test
+  </file '%s%eobserver.inc'>
+Foo
+</file '%s%eobserver_basic_04.crx'>

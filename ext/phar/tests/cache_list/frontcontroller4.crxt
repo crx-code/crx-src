@@ -1,0 +1,15 @@
+--TEST--
+Crxa front controller index.crx relocate (no /) [cache_list]
+--INI--
+crxa.cache_list={PWD}/frontcontroller4.crx
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller4.crx
+REQUEST_URI=/frontcontroller4.crx
+--FILE_EXTERNAL--
+files/frontcontroller.crxa
+--EXPECTHEADERS--
+Status: 301 Moved Permanently
+Location: /frontcontroller4.crx/index.crx
+--EXPECT--

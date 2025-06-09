@@ -1,0 +1,13 @@
+--TEST--
+051: Name conflict and compile-time constants (crx name)
+--FILE--
+<?crx
+namespace test\ns1;
+
+function foo($x = INI_ALL) {
+    var_dump($x);
+}
+foo();
+?>
+--EXPECT--
+int(7)

@@ -1,0 +1,41 @@
+--TEST--
+Stack limit 012 - Stack limit exhaustion during unwinding
+--SKIPIF--
+<?crx
+if (!function_exists('crex_test_crex_call_stack_get')) die("skip crex_test_crex_call_stack_get() is not available");
+?>
+--EXTENSIONS--
+crex_test
+--INI--
+crex.max_allowed_stack_size=128K
+--FILE--
+<?crx
+
+var_dump(crex_test_crex_call_stack_get());
+
+function replace() {
+    return preg_replace_callback('#.#', function () {
+        try {
+            replace();
+        } finally {
+            require __DIR__ . '/stack_limit_012.inc';
+        }
+    }, 'x');
+}
+
+replace();
+
+?>
+--EXPECTF--
+array(4) {
+  ["base"]=>
+  string(%d) "0x%x"
+  ["max_size"]=>
+  string(%d) "0x%x"
+  ["position"]=>
+  string(%d) "0x%x"
+  ["EG(stack_limit)"]=>
+  string(%d) "0x%x"
+}
+
+Fatal error: Maximum call stack size of %d bytes reached during compilation. Try splitting expression in %s on line %d

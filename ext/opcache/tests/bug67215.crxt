@@ -1,0 +1,28 @@
+--TEST--
+Bug #67215 (crx-cgi work with opcache, may be segmentation fault happen)
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+--EXTENSIONS--
+opcache
+--FILE--
+<?crx
+
+$file_c = __DIR__ . "/bug67215.c.crx";
+$file_p = __DIR__ . "/bug67215.p.crx";
+file_put_contents($file_c, "<?crx require '$file_p'; class c extends p {} ?>");
+file_put_contents($file_p, '<?crx class p { protected $var = ""; } ?>');
+require $file_c;
+$a = new c();
+require $file_c;
+?>
+--CLEAN--
+<?crx
+$file_c = __DIR__ . "/bug67215.c.crx";
+$file_p = __DIR__ . "/bug67215.p.crx";
+unlink($file_c);
+unlink($file_p);
+?>
+--EXPECTF--
+Fatal error: Cannot declare class p, because the name is already in use in %sbug67215.p.crx on line %d

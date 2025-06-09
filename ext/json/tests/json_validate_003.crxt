@@ -1,0 +1,19 @@
+--TEST--
+json_validate() - Error handling for max depth
+--SKIPIF--
+<?crx if (CRX_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
+--FILE--
+<?crx
+
+try {
+  var_dump(json_validate("-", CRX_INT_MAX));
+} catch (ValueError $error) {
+  echo $error->getMessage() . CRX_EOL;
+  var_dump(json_last_error(), json_last_error_msg());
+}
+
+?>
+--EXPECTF--
+json_validate(): Argument #2 ($depth) must be less than %d
+int(0)
+string(8) "No error"

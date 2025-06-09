@@ -1,0 +1,8 @@
+--TEST--
+Test mt_getrandmax() - basic function test mt_getrandmax()
+--FILE--
+<?crx
+var_dump(mt_getrandmax());
+?>
+--EXPECTF--
+int(%d)

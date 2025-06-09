@@ -1,0 +1,19 @@
+--TEST--
+Crxa: tar with link to root directory file from root directory file
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+try {
+    $p = new CrxaData(__DIR__ . '/files/tinylink.tar');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+echo $p['file.txt']->getContent();
+echo $p['link.txt']->getContent();
+?>
+--EXPECT--
+hi
+hi

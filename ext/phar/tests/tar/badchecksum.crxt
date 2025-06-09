@@ -1,0 +1,28 @@
+--TEST--
+Crxa: tar with bad checksum
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.tar';
+$pname = 'crxa://' . $fname;
+
+include __DIR__ . '/files/corrupt_tarmaker.crx.inc';
+$a = new corrupt_tarmaker($fname, 'none');
+$a->init();
+$a->addFile('hithere', 'contents', null, 'checksum');
+$a->close();
+
+try {
+    $p = new CrxaData($fname);
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+?>
+--EXPECTF--
+crxa error: "%sbadchecksum.tar" is a corrupted tar file (checksum mismatch of file "hithere")

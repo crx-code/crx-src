@@ -1,0 +1,20 @@
+--TEST--
+GH-7896 (Environment vars may be mangled on Windows)
+--SKIPIF--
+<?crx
+if (CRX_OS_FAMILY !== "Windows") die("skip for Windows only");
+?>
+--ENV--
+FÖÖ=GüИter传
+--FILE--
+<?crx
+var_dump(
+    $_SERVER['FÖÖ'],
+    $_ENV['FÖÖ'],
+    getenv('FÖÖ')
+);
+?>
+--EXPECT--
+string(11) "GüИter传"
+string(11) "GüИter传"
+string(11) "GüИter传"

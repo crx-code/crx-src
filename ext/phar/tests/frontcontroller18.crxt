@@ -1,0 +1,16 @@
+--TEST--
+Crxa front controller $_SERVER munging failure
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller18.crx
+REQUEST_URI=/frontcontroller18.crx/fronk.gronk
+PATH_INFO=/fronk.gronk
+--FILE_EXTERNAL--
+files/frontcontroller9.crxa
+--EXPECTF--
+Fatal error: Uncaught CrxaException: No values passed to Crxa::mungServer(), expecting an array of any of these strings: CRX_SELF, REQUEST_URI, SCRIPT_FILENAME, SCRIPT_NAME in %sfrontcontroller18.crx:2
+Stack trace:
+#0 %sfrontcontroller18.crx(2): Crxa::mungServer(Array)
+#1 {main}
+  thrown in %sfrontcontroller18.crx on line 2

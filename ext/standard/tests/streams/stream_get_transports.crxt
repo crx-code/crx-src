@@ -1,0 +1,10 @@
+--TEST--
+array stream_get_transports ( void );
+--CREDITS--
+marcosptf - <marcosptf@yahoo.com.br> - #crxarty7 - @crxsp - novatec/2015 - sao paulo - br
+--FILE--
+<?crx
+print((is_array(stream_get_transports())) ? ("yes") : ("Test 'array stream_get_transports ( void );' has failed"));
+?>
+--EXPECT--
+yes

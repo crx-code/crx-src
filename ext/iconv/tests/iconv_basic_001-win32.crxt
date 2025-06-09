@@ -1,0 +1,20 @@
+--TEST--
+Test the basics to function iconv.
+--CREDITS--
+Rodrigo Prado de Jesus <royopa [at] gmail [dot] com>
+--EXTENSIONS--
+iconv
+--SKIPIF--
+<?crx if(substr(CRX_OS, 0, 3) != 'WIN' ) {die('skip windows only test');} ?>
+--FILE--
+<?crx
+$in_charset          = 'UTF-8';
+$out_charset 	     = 'ASCII//TRANSLIT';
+$string_to_translate = 'Žluťoučký kůň\n';
+
+$string_out = iconv($in_charset, $out_charset, $string_to_translate);
+
+var_dump($string_out);
+?>
+--EXPECT--
+string(16) "Zlutouck'y kun\n"

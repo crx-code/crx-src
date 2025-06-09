@@ -1,0 +1,25 @@
+--TEST--
+bug#53872 (internal corruption of crxa)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$p=new Crxa('bug53872-crxa.crxa');
+$p->buildFromDirectory(__DIR__ . "/bug53872/");
+$p->setStub('<?crx __HALT_COMPILER();?\>');
+$p->compressFiles(Crxa::GZ);
+
+print(file_get_contents('crxa://bug53872-crxa.crxa/first.txt'));
+print(file_get_contents('crxa://bug53872-crxa.crxa/second.txt'));
+print(file_get_contents('crxa://bug53872-crxa.crxa/third.txt'));
+?>
+--CLEAN--
+<?crx
+unlink("bug53872-crxa.crxa");
+?>
+--EXPECT--
+content of first.txt
+content of third.txt

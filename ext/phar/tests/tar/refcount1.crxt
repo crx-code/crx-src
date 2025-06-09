@@ -1,0 +1,70 @@
+--TEST--
+Crxa: test that refcounting avoids problems with deleting a file tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://' . $fname;
+
+$tar = new tarmaker($fname, 'none');
+$tar->init();
+$tar->addFile('.crxa/stub.crx', "<?crx __HALT_COMPILER(); ?>");
+
+$files = array();
+
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+$files['.crxa/alias.txt'] = 'hio';
+
+foreach ($files as $n => $file) {
+    $tar->addFile($n, $file);
+}
+
+$tar->close();
+
+$fp = fopen($alias . '/b/c.crx', 'wb');
+fwrite($fp, "extra");
+fclose($fp);
+echo "===CLOSE===\n";
+$crxa = new Crxa($fname);
+$b = fopen($alias . '/b/c.crx', 'rb');
+$a = $crxa['b/c.crx'];
+var_dump($a);
+var_dump(fread($b, 20));
+rewind($b);
+echo "===UNLINK===\n";
+unlink($alias . '/b/c.crx');
+var_dump($a);
+var_dump(fread($b, 20));
+include $alias . '/b/c.crx';
+
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECTF--
+===CLOSE===
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.tar/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%d) "c.crx"
+}
+string(5) "extra"
+===UNLINK===
+
+Warning: unlink(): crxa error: "b/c.crx" in crxa "%srefcount1.crxa.tar", has open file pointers, cannot unlink in %srefcount1.crx on line %d
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.tar/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%s) "c.crx"
+}
+string(5) "extra"
+extra

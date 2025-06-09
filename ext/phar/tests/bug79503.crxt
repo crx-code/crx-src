@@ -1,0 +1,14 @@
+--TEST--
+Bug #79503 (Memory leak on duplicate metadata)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new Crxa(__DIR__ . '/bug79503.crxa');
+} catch (UnexpectedValueException $ex) {
+    echo $ex->getMessage();
+}
+?>
+--EXPECTF--
+crxa error: tar-based crxa "%s%ebug79503.crxa" has invalid metadata in magic file ".crxa/.metadata.bin"

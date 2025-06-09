@@ -1,0 +1,29 @@
+--TEST--
+use_trans_sid should not affect SID
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--INI--
+session.use_trans_sid=1
+session.use_cookies=0
+session.use_only_cookies=0
+session.use_strict_mode=0
+session.cache_limiter=
+arg_separator.output=&
+session.name=CRXSESSID
+session.serialize_handler=crx
+session.save_handler=files
+--FILE--
+<?crx
+error_reporting(E_ALL);
+
+session_id("test015");
+session_start();
+?>
+<a href="/link?<?crx echo SID; ?>">
+<?crx
+session_destroy();
+?>
+--EXPECT--
+<a href="/link?CRXSESSID=test015&CRXSESSID=test015">

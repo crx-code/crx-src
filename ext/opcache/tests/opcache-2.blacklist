@@ -1,0 +1,6 @@
+/path/to/bar
+; wildcard and relative entries
+blacklist.inc
+./current.crx
+/tmp/path/?nocache.inc
+/tmp/path/*/somedir

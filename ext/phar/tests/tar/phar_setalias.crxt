@@ -1,0 +1,48 @@
+--TEST--
+Crxa::setAlias() tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.copy.crxa.tar';
+
+$crxa = new Crxa($fname);
+$crxa->setStub('<?crx echo "first stub\n"; __HALT_COMPILER(); ?>');
+$crxa->setAlias('hio');
+
+$files = array();
+
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+foreach ($files as $n => $file) {
+    $crxa[$n] = $file;
+}
+
+$crxa->stopBuffering();
+
+echo $crxa->getAlias() . "\n";
+$crxa->setAlias('test');
+echo $crxa->getAlias() . "\n";
+
+copy($fname, $fname2);
+$crxa->setAlias('unused');
+$a = new Crxa($fname2);
+echo $a->getAlias() . "\n";
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.copy.crxa.tar');
+?>
+--EXPECT--
+hio
+test
+test

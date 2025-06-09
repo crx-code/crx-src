@@ -1,0 +1,38 @@
+--TEST--
+ZE2 The new constructor/destructor is called
+--FILE--
+<?crx
+
+class early {
+    function __main() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+}
+
+class late {
+    function __main() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+}
+
+$t = new early();
+$t->__main();
+unset($t);
+$t = new late();
+//unset($t); delay to end of script
+
+echo "Done\n";
+?>
+--EXPECT--
+early::__main
+early::__main
+early::__destruct
+late::__main
+Done
+late::__destruct

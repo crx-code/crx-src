@@ -1,0 +1,31 @@
+--TEST--
+Crxa: include and parser error
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$crxaconfig = 3;
+
+require_once 'files/crxa_oo_test.inc';
+
+Crxa::loadCrxa($fname);
+
+$pname = 'crxa://' . $fname . '/a.crx';
+
+var_dump(file_get_contents($pname));
+require $pname;
+
+?>
+===DONE===
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/031.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+string(25) "<?crx echo new new class;"
+
+Parse error: %s in crxa://%s031.crxa.crx/a.crx on line %d

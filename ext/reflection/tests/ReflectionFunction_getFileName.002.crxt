@@ -1,0 +1,38 @@
+--TEST--
+ReflectionFunction::getFileName()
+--CREDITS--
+Robin Fernandes <robinf@crx.net>
+Steve Seear <stevseea@crx.net>
+--FILE--
+<?crx
+
+/**
+ * my doc comment
+ */
+function foo () {
+    static $c;
+    static $a = 1;
+    static $b = "hello";
+    $d = 5;
+}
+
+/***
+ * not a doc comment
+ */
+function bar () {}
+
+
+function dumpFuncInfo($name) {
+    $funcInfo = new ReflectionFunction($name);
+    var_dump($funcInfo->getFileName());
+}
+
+dumpFuncInfo('foo');
+dumpFuncInfo('bar');
+dumpFuncInfo('extract');
+
+?>
+--EXPECTF--
+string(%d) "%sReflectionFunction_getFileName.002.crx"
+string(%d) "%sReflectionFunction_getFileName.002.crx"
+bool(false)

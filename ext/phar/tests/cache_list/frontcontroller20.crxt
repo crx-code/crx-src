@@ -1,0 +1,18 @@
+--TEST--
+Crxa front controller $_SERVER munging failure 3 [cache_list]
+--INI--
+crxa.cache_list={PWD}/frontcontroller20.crx
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller20.crx
+REQUEST_URI=/frontcontroller20.crx/
+PATH_INFO=/
+--FILE_EXTERNAL--
+files/frontcontroller11.crxa
+--EXPECTF--
+Fatal error: Uncaught CrxaException: Non-string value passed to Crxa::mungServer(), expecting an array of any of these strings: CRX_SELF, REQUEST_URI, SCRIPT_FILENAME, SCRIPT_NAME in %sfrontcontroller20.crx:2
+Stack trace:
+#0 %sfrontcontroller20.crx(2): Crxa::mungServer(Array)
+#1 {main}
+  thrown in %sfrontcontroller20.crx on line 2

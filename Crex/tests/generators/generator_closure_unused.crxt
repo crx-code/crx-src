@@ -1,0 +1,9 @@
+--TEST--
+Closures can be unused generators
+--FILE--
+<?crx
+(function(){yield;})();
+echo "ok\n";
+?>
+--EXPECT--
+ok

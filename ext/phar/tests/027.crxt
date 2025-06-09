@@ -1,0 +1,92 @@
+--TEST--
+Crxa: crxa:// opendir
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; require \''.$pname.'/b.crx\'; ?>';
+$files['b.crx']   = '<?crx echo "This is b\n"; require \''.$pname.'/b/c.crx\'; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; require \''.$pname.'/b/d.crx\'; ?>';
+$files['b/d.crx'] = '<?crx echo "This is b/d\n"; require \''.$pname.'/e.crx\'; ?>';
+$files['e.crx']   = '<?crx echo "This is e\n"; ?>';
+
+include 'files/crxa_test.inc';
+
+function dump($crxa, $base)
+{
+    var_dump(str_replace(__DIR__, '*', $crxa) . $base);
+    $dir = opendir($crxa . $base);
+    if ($base == '/')
+    {
+        $base = '';
+    }
+    while (false !== ($entry = readdir($dir))) {
+        $entry = $base . '/' . $entry;
+        var_dump($entry);
+        var_dump(is_dir($crxa . $entry));
+        if (is_dir($crxa . $entry))
+        {
+            dump($crxa, $entry);
+        }
+    }
+}
+
+dump($pname, '/');
+
+$a = opendir($pname);
+// this may stop working in future versions, but is here for code coverage purposes
+echo "fseek on dir handle\n";
+var_dump(fseek($a, 0, SEEK_END), ftell($a));
+var_dump(fseek($a, -1), ftell($a));
+var_dump(fseek($a, 1), ftell($a));
+echo "fwrite on dir handle\n";
+var_dump(fwrite($a, 'hi'));
+var_dump(fstat($a));
+closedir($a);
+echo "opendir edge cases\n";
+var_dump(opendir("crxa://"));
+var_dump(opendir("crxa://foo.crxa/hi"));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+string(%d) "crxa://*/027.crxa.crx/"
+string(6) "/a.crx"
+bool(false)
+string(2) "/b"
+bool(true)
+string(%d) "crxa://*/027.crxa.crx/b"
+string(8) "/b/c.crx"
+bool(false)
+string(8) "/b/d.crx"
+bool(false)
+string(6) "/b.crx"
+bool(false)
+string(6) "/e.crx"
+bool(false)
+fseek on dir handle
+int(0)
+int(4)
+int(-1)
+int(4)
+int(0)
+int(1)
+fwrite on dir handle
+bool(false)
+bool(false)
+opendir edge cases
+
+Warning: opendir(crxa://): Failed to open directory: crxa error: no directory in "crxa://", must have at least crxa:/// for root directory (always use full path to a new crxa)
+crxa url "crxa://" is unknown in %s027.crx on line %d
+bool(false)
+
+Warning: opendir(crxa://foo.crxa/hi): Failed to open directory: crxa error: invalid url or non-existent crxa "crxa://foo.crxa/hi"
+crxa url "crxa://foo.crxa/hi" is unknown in %s027.crx on line %d
+bool(false)

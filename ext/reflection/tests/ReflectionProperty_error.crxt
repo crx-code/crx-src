@@ -1,0 +1,31 @@
+--TEST--
+Test ReflectionProperty class errors.
+--FILE--
+<?crx
+
+class C {
+    public static $p;
+}
+
+try {
+    new ReflectionProperty();
+} catch (TypeError $re) {
+    echo "Ok - ".$re->getMessage().CRX_EOL;
+}
+try {
+    new ReflectionProperty('C::p');
+} catch (TypeError $re) {
+    echo "Ok - ".$re->getMessage().CRX_EOL;
+}
+
+try {
+    new ReflectionProperty('C', 'p', 'x');
+} catch (TypeError $re) {
+    echo "Ok - ".$re->getMessage().CRX_EOL;
+}
+
+?>
+--EXPECT--
+Ok - ReflectionProperty::__main() expects exactly 2 arguments, 0 given
+Ok - ReflectionProperty::__main() expects exactly 2 arguments, 1 given
+Ok - ReflectionProperty::__main() expects exactly 2 arguments, 3 given

@@ -1,0 +1,155 @@
+--TEST--
+Crxa - test specific manifest length
+--INI--
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+
+$files = array(
+    "lib/widgets/Widgets.crx",
+    "lib/events/FormBeginEventArgs.crx",
+    "lib/events/FormEndEventArgs.crx",
+    "lib/Core.crx",
+    "lib/database/MySqlDatabase.crx",
+    "lib/utils/DateUtil.crx",
+    "js/global.js",
+    "files/_emptyDirectory",
+    "files/search/schema.xml",
+    "vendor/Fusonic/Linq/Internal/WhereIterator.crx",
+    "vendor/Fusonic/Linq/Internal/SelectManyIterator.crx",
+    "vendor/Fusonic/Linq/Internal/SelectIterator.crx",
+    "vendor/Fusonic/Linq/Internal/DiffIterator.crx",
+    "vendor/Fusonic/Linq/Internal/GroupIterator.crx",
+    "vendor/Fusonic/Linq/Internal/DistinctIterator.crx",
+    "vendor/Fusonic/Linq/Internal/LinqHelper.crx",
+    "vendor/Fusonic/Linq/Internal/OrderIterator.crx",
+    "vendor/Fusonic/Linq/Internal/IntersectIterator.crx",
+    "vendor/Fusonic/Linq/GroupedLinq.crx",
+    "vendor/Fusonic/Linq.crx",
+    "vendor/Fusonic/UI/Widgets/Forms/FormBegin.crx",
+    "vendor/Fusonic/UI/Widgets/Forms/FormSectionBuilder.crx",
+    "vendor/Fusonic/UI/Widgets/Forms/AutoSelect.crx",
+    "vendor/Fusonic/UI/Widgets/Forms/ControlGroup.crx",
+    "vendor/Fusonic/UI/Widgets/Forms/FormEnd.crx",
+    "vendor/Fusonic/UI/Widgets/WidgetBase.crx",
+    "modules/calendar/ajax/calendarGetInvitedUsersContentAjaxHandler.crx",
+    "modules/calendar/js/calendarAppointmentForm.js",
+    "modules/calendar/misc/calendarAppointment.crx",
+    "modules/calendar/pages/forms/calendarAppointmentForm.crx",
+    "modules/calendar/setup/config.xml",
+    "modules/cmt/js/cmtMicroCommentsWidget.js",
+    "modules/cmt/setup/config.xml",
+    "modules/meta/misc/metaContentHelper.crx",
+    "modules/meta/setup/config.xml",
+    "modules/brd/misc/brdPostStreamFormatter.crx",
+    "modules/brd/misc/brdPost.crx",
+    "modules/brd/setup/config/streamContents.xml",
+    "modules/brd/setup/resources/lang/en.xml",
+    "modules/brd/setup/resources/lang/de.xml",
+    "modules/brd/setup/config.xml",
+    "modules/auth/misc/authLoginService.crx",
+    "modules/auth/setup/config.xml",
+    "modules/bwd/cache/bwdWordCacheCreator.crx",
+    "modules/bwd/bwd.crx",
+    "modules/bwd/setup/config.xml",
+    "modules/nws/templates/pages/forms/nwsNewsForm.tpl",
+    "modules/nws/templates/pages/nwsShowNewsPage.tpl",
+    "modules/nws/pages/forms/nwsNewsForm.crx",
+    "modules/nws/pages/nwsShowNewsPage.crx",
+    "modules/nws/setup/config.xml",
+    "modules/gmp/cache/gmpMarkersCacheCreator.crx",
+    "modules/gmp/select/gmpMapContentSelect.crx",
+    "modules/gmp/templates/gmpShowAppointmentPage.tpl",
+    "modules/gmp/templates/gmpShowLinkPage.tpl",
+    "modules/gmp/setup/config.xml",
+    "modules/mul/cache/mulVideoPortalCacheCreator.crx",
+    "modules/mul/misc/mulPermissionHelper.crx",
+    "modules/mul/templates/widgets/mulFileEmbedWidget_Video_Flv.tpl",
+    "modules/mul/setup/config/mulUploadVideoPortalMatches.xml",
+    "modules/mul/setup/config.xml",
+    "modules/cat/select/catCategorySelect.crx",
+    "modules/cat/misc/catCategory.crx",
+    "modules/cat/templates/pages/forms/catCategoryForm.tpl",
+    "modules/cat/pages/forms/catEditCategoryForm.crx",
+    "modules/cat/pages/forms/catAddCategoryForm.crx",
+    "modules/cat/setup/config.xml",
+    "modules/sty/events/styPageShowEventHandler.crx",
+    "modules/sty/misc/styBox.crx",
+    "modules/sty/templates/pages/forms/styLayoutForm.tpl",
+    "modules/sty/templates/pages/forms/styBoxForm.tpl",
+    "modules/sty/templates/pages/forms/styVariantForm.tpl",
+    "modules/sty/setup/resources/lang/en.xml",
+    "modules/sty/setup/resources/lang/de.xml",
+    "modules/sty/setup/config.xml",
+    "modules/reg/misc/regRegistrationHelper.crx",
+    "modules/reg/setup/config.xml",
+    "modules/not/misc/notEmailNotificationProvider.crx",
+    "modules/not/setup/config.xml",
+    "modules/styfusonic/setup/config.xml",
+    "modules/sys/ajax/sysUserAutoSuggestSelectAjaxHandler.crx",
+    "modules/sys/js/sysUserAutoSuggestSelect.js",
+    "modules/sys/select/sysPermissionSelect.crx",
+    "modules/sys/misc/sysHtaccessConfigWriter.crx",
+    "modules/sys/misc/sysUserRepository.crx",
+    "modules/sys/setup/resources/lang/en.xml",
+    "modules/sys/setup/resources/lang/de.xml",
+    "modules/sys/setup/config.xml",
+    "modules/igr/boxes/igrGreatestEntriesBoxTab.crx",
+    "modules/igr/boxes/igrTopRatedEntriesBoxTab.crx",
+    "modules/igr/setup/config.xml",
+    "modules/rat/ajax/ratRateAjaxHandler.crx",
+    "modules/rat/ajax/ratUnlikeAjaxHandler.crx",
+    "modules/rat/setup/config.xml",
+    "modules/search/select/searchModuleSelect.crx",
+    "modules/search/select/searchOrderSelect.crx",
+    "modules/search/misc/searchResultFormatter.crx",
+    "modules/search/misc/searchProviderSolr.crx",
+    "modules/search/misc/searchProviderLucene.crx",
+    "modules/search/misc/searchResultItem.crx",
+    "modules/search/misc/searchProviderBase.crx",
+    "modules/search/misc/searchIProvider.crx",
+    "modules/search/templates/misc/searchResultFormatter.tpl",
+    "modules/search/templates/pages/searchIndexPage.tpl",
+    "modules/search/templates/pages/forms/searchSearchForm.tpl",
+    "modules/search/pages/forms/searchSearchForm.crx",
+    "modules/search/css/searchResultFormatter.css",
+    "modules/search/setup/config/sysSettings.xml",
+    "modules/search/setup/resources/lang/en.xml",
+    "modules/search/setup/resources/lang/de.xml",
+    "modules/search/setup/config.xml",
+    "style/Fusonic/40components.css",
+    "style/_emptyDirectory",
+    "index.crx",
+//	"a", // This will make the test pass
+);
+
+// Create Crxa with the filenames above
+$crxa = new Crxa(__DIR__ . "/bug65028.crxa");
+foreach($files as $file)
+{
+    $crxa->addFromString($file, "");
+}
+
+// Copy crxa
+copy(__DIR__ . "/bug65028.crxa", __DIR__ . "/bug65028-copy.crxa");
+
+// Open crxa
+try
+{
+    $crxa = new Crxa(__DIR__ . "/bug65028-copy.crxa");
+    echo "No exception thrown.\n";
+}
+catch(UnexpectedValueException $ex)
+{
+    echo "Exception thrown: " . $ex->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . "/bug65028.crxa");
+@unlink(__DIR__ . "/bug65028-copy.crxa");
+?>
+--EXPECT--
+No exception thrown.

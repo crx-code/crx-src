@@ -1,0 +1,134 @@
+--TEST--
+Crxa object: iterator & entries
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+$crxa->setInfoClass('SplFileInfo');
+foreach($crxa as $name => $ent)
+{
+    var_dump(str_replace(str_replace('\\', '/', __DIR__), '*', $name));
+    var_dump($ent->getFilename());
+    var_dump($ent->getSize());
+    var_dump($ent->getType());
+    var_dump($ent->isWritable());
+    var_dump($ent->isReadable());
+    var_dump($ent->isExecutable());
+    var_dump($ent->isFile());
+    var_dump($ent->isDir());
+    var_dump($ent->isLink());
+    var_dump($ent->getCTime());
+    var_dump($ent->getMTime());
+    var_dump($ent->getATime());
+}
+
+echo "==RECURSIVE==\n";
+
+$crxa = new Crxa($fname);
+foreach(new RecursiveIteratorIterator($crxa) as $name => $ent)
+{
+    var_dump(str_replace(str_replace('\\', '/', __DIR__), '*', $name));
+    var_dump(str_replace('\\', '/', $ent->getFilename()));
+    var_dump($ent->getCompressedSize());
+    var_dump($ent->isCRCChecked());
+    var_dump($ent->isCRCChecked() ? $ent->getCRC32() : NULL);
+    var_dump($ent->getCrxaFlags());
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_002.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%ca.crx"
+string(5) "a.crx"
+int(32)
+string(4) "file"
+bool(false)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+bool(false)
+int(%d)
+int(%d)
+int(%d)
+string(37) "crxa://*/files/crxa_oo_002.crxa.crx%cb"
+string(1) "b"
+int(0)
+string(3) "dir"
+bool(false)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+int(%d)
+int(%d)
+int(%d)
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%cb.crx"
+string(5) "b.crx"
+int(32)
+string(4) "file"
+bool(false)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+bool(false)
+int(%d)
+int(%d)
+int(%d)
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%ce.crx"
+string(5) "e.crx"
+int(32)
+string(4) "file"
+bool(false)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+bool(false)
+int(%d)
+int(%d)
+int(%d)
+==RECURSIVE==
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%ca.crx"
+string(5) "a.crx"
+int(32)
+bool(false)
+NULL
+int(0)
+string(43) "crxa://*/files/crxa_oo_002.crxa.crx/b%cc.crx"
+string(5) "c.crx"
+int(34)
+bool(false)
+NULL
+int(0)
+string(43) "crxa://*/files/crxa_oo_002.crxa.crx/b%cd.crx"
+string(5) "d.crx"
+int(34)
+bool(false)
+NULL
+int(0)
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%cb.crx"
+string(5) "b.crx"
+int(32)
+bool(false)
+NULL
+int(0)
+string(41) "crxa://*/files/crxa_oo_002.crxa.crx%ce.crx"
+string(5) "e.crx"
+int(32)
+bool(false)
+NULL
+int(0)

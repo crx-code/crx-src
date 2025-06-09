@@ -1,0 +1,240 @@
+--TEST--
+Test semi-reserved words as class constants
+--FILE--
+<?crx
+
+class Obj
+{
+    const EMPTY = 'empty';
+    const CALLABLE = 'callable';
+    const TRAIT = 'trait';
+    const EXTENDS = 'extends';
+    const IMPLEMENTS = 'implements';
+    const STATIC = 'static';
+    const ABSTRACT = 'abstract';
+    const FINAL = 'final';
+    const PUBLIC = 'public';
+    const PROTECTED = 'protected';
+    const PRIVATE = 'private';
+    const CONST = 'const';
+    const ENDDECLARE = 'enddeclare';
+    const ENDFOR = 'endfor';
+    const ENDFOREACH = 'endforeach';
+    const ENDIF = 'endif';
+    const ENDWHILE = 'endwhile';
+    const AND = 'and';
+    const GLOBAL = 'global';
+    const GOTO = 'goto';
+    const INSTANCEOF = 'instanceof';
+    const INSTEADOF = 'insteadof';
+    const INTERFACE = 'interface';
+    const NAMESPACE = 'namespace';
+    const NEW = 'new';
+    const OR = 'or';
+    const XOR = 'xor';
+    const TRY = 'try';
+    const USE = 'use';
+    const VAR = 'var';
+    const EXIT = 'exit';
+    const LIST = 'list';
+    const CLONE = 'clone';
+    const INCLUDE = 'include';
+    const INCLUDE_ONCE = 'include_once';
+    const THROW = 'throw';
+    const ARRAY = 'array';
+    const PRINT = 'print';
+    const ECHO = 'echo';
+    const REQUIRE = 'require';
+    const REQUIRE_ONCE = 'require_once';
+    const RETURN = 'return';
+    const ELSE = 'else';
+    const ELSEIF = 'elseif';
+    const DEFAULT = 'default';
+    const BREAK = 'break';
+    const CONTINUE = 'continue';
+    const SWITCH = 'switch';
+    const YIELD = 'yield';
+    const FUNCTION = 'function';
+    const FN = 'fn';
+    const IF = 'if';
+    const ENDSWITCH = 'endswitch';
+    const FINALLY = 'finally';
+    const FOR = 'for';
+    const FOREACH = 'foreach';
+    const DECLARE = 'declare';
+    const CASE = 'case';
+    const DO = 'do';
+    const WHILE = 'while';
+    const AS = 'as';
+    const CATCH = 'catch';
+    const DIE = 'die';
+    const SELF = 'self';
+    const PARENT = 'parent';
+    const ISSET = 'isset';
+    const UNSET = 'unset';
+    const __CLASS__ = '__CLASS__';
+    const __TRAIT__ = '__TRAIT__';
+    const __FUNCTION__ = '__FUNCTION__';
+    const __METHOD__ = '__METHOD__';
+    const __LINE__ = '__LINE__';
+    const __FILE__ = '__FILE__';
+    const __DIR__ = '__DIR__';
+    const __NAMESPACE__ = '__NAMESPACE__';
+}
+
+echo Obj::EMPTY, CRX_EOL;
+echo Obj::CALLABLE, CRX_EOL;
+echo Obj::TRAIT, CRX_EOL;
+echo Obj::EXTENDS, CRX_EOL;
+echo Obj::IMPLEMENTS, CRX_EOL;
+echo Obj::STATIC, CRX_EOL;
+echo Obj::ABSTRACT, CRX_EOL;
+echo Obj::FINAL, CRX_EOL;
+echo Obj::PUBLIC, CRX_EOL;
+echo Obj::PROTECTED, CRX_EOL;
+echo Obj::PRIVATE, CRX_EOL;
+echo Obj::CONST, CRX_EOL;
+echo Obj::ENDDECLARE, CRX_EOL;
+echo Obj::ENDFOR, CRX_EOL;
+echo Obj::ENDFOREACH, CRX_EOL;
+echo Obj::ENDIF, CRX_EOL;
+echo Obj::ENDWHILE, CRX_EOL;
+echo Obj::AND, CRX_EOL;
+echo Obj::GLOBAL, CRX_EOL;
+echo Obj::GOTO, CRX_EOL;
+echo Obj::INSTANCEOF, CRX_EOL;
+echo Obj::INSTEADOF, CRX_EOL;
+echo Obj::INTERFACE, CRX_EOL;
+echo Obj::NAMESPACE, CRX_EOL;
+echo Obj::NEW, CRX_EOL;
+echo Obj::OR, CRX_EOL;
+echo Obj::XOR, CRX_EOL;
+echo Obj::TRY, CRX_EOL;
+echo Obj::USE, CRX_EOL;
+echo Obj::VAR, CRX_EOL;
+echo Obj::EXIT, CRX_EOL;
+echo Obj::LIST, CRX_EOL;
+echo Obj::CLONE, CRX_EOL;
+echo Obj::INCLUDE, CRX_EOL;
+echo Obj::INCLUDE_ONCE, CRX_EOL;
+echo Obj::THROW, CRX_EOL;
+echo Obj::ARRAY, CRX_EOL;
+echo Obj::PRINT, CRX_EOL;
+echo Obj::ECHO, CRX_EOL;
+echo Obj::REQUIRE, CRX_EOL;
+echo Obj::REQUIRE_ONCE, CRX_EOL;
+echo Obj::RETURN, CRX_EOL;
+echo Obj::ELSE, CRX_EOL;
+echo Obj::ELSEIF, CRX_EOL;
+echo Obj::DEFAULT, CRX_EOL;
+echo Obj::BREAK, CRX_EOL;
+echo Obj::CONTINUE, CRX_EOL;
+echo Obj::SWITCH, CRX_EOL;
+echo Obj::YIELD, CRX_EOL;
+echo Obj::FUNCTION, CRX_EOL;
+echo Obj::FN, CRX_EOL;
+echo Obj::IF, CRX_EOL;
+echo Obj::ENDSWITCH, CRX_EOL;
+echo Obj::FINALLY, CRX_EOL;
+echo Obj::FOR, CRX_EOL;
+echo Obj::FOREACH, CRX_EOL;
+echo Obj::DECLARE, CRX_EOL;
+echo Obj::CASE, CRX_EOL;
+echo Obj::DO, CRX_EOL;
+echo Obj::WHILE, CRX_EOL;
+echo Obj::AS, CRX_EOL;
+echo Obj::CATCH, CRX_EOL;
+echo Obj::DIE, CRX_EOL;
+echo Obj::SELF, CRX_EOL;
+echo Obj::PARENT, CRX_EOL;
+echo Obj::ISSET, CRX_EOL;
+echo Obj::UNSET, CRX_EOL;
+echo Obj::__CLASS__, CRX_EOL;
+echo Obj::__TRAIT__, CRX_EOL;
+echo Obj::__FUNCTION__, CRX_EOL;
+echo Obj::__METHOD__, CRX_EOL;
+echo Obj::__LINE__, CRX_EOL;
+echo Obj::__FILE__, CRX_EOL;
+echo Obj::__DIR__, CRX_EOL;
+echo Obj::__NAMESPACE__, CRX_EOL;
+
+echo "\nDone\n";
+?>
+--EXPECT--
+empty
+callable
+trait
+extends
+implements
+static
+abstract
+final
+public
+protected
+private
+const
+enddeclare
+endfor
+endforeach
+endif
+endwhile
+and
+global
+goto
+instanceof
+insteadof
+interface
+namespace
+new
+or
+xor
+try
+use
+var
+exit
+list
+clone
+include
+include_once
+throw
+array
+print
+echo
+require
+require_once
+return
+else
+elseif
+default
+break
+continue
+switch
+yield
+function
+fn
+if
+endswitch
+finally
+for
+foreach
+declare
+case
+do
+while
+as
+catch
+die
+self
+parent
+isset
+unset
+__CLASS__
+__TRAIT__
+__FUNCTION__
+__METHOD__
+__LINE__
+__FILE__
+__DIR__
+__NAMESPACE__
+
+Done

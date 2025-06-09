@@ -1,0 +1,19 @@
+--TEST--
+Crxa: tar with relative link to subdirectory file from subdirectory file
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+try {
+    $p = new CrxaData(__DIR__ . '/files/subdirlink.tar');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+echo $p['hi/test.txt']->getContent();
+echo $p['hi/link.txt']->getContent();
+?>
+--EXPECT--
+hi
+hi

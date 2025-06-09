@@ -1,0 +1,70 @@
+--TEST--
+Crxa::startBuffering()/setStub()/stopBuffering() zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$p = new Crxa(__DIR__ . '/crxa_begin_setstub_commit.crxa.zip', 0, 'crxa_begin_setstub_commit.crxa');
+var_dump($p->isFileFormat(Crxa::ZIP));
+//var_dump($p->getStub());
+var_dump($p->isBuffering());
+$p->startBuffering();
+var_dump($p->isBuffering());
+$p['a.crx'] = '<?crx var_dump("Hello");';
+$p->setStub('<?crx var_dump("First"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>');
+include 'crxa://crxa_begin_setstub_commit.crxa/a.crx';
+var_dump($p->getStub());
+$p['b.crx'] = '<?crx var_dump("World");';
+$p->setStub('<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER();');
+include 'crxa://crxa_begin_setstub_commit.crxa/b.crx';
+var_dump($p->getStub());
+$p->stopBuffering();
+echo "===COMMIT===\n";
+var_dump($p->isBuffering());
+include 'crxa://crxa_begin_setstub_commit.crxa/a.crx';
+include 'crxa://crxa_begin_setstub_commit.crxa/b.crx';
+var_dump($p->getStub());
+
+// add portion to test setting stub from resource
+file_put_contents(__DIR__ . '/myfakestub.crx', '<?crx var_dump("First resource"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>');
+$a = fopen(__DIR__ . '/myfakestub.crx', 'rb');
+$p->setStub($a);
+var_dump($p->getStub());
+$c = strlen('<?crx var_dump("First resource"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>');
+file_put_contents(__DIR__ . '/myfakestub.crx', '<?crx var_dump("First resource"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>' . 'extra stuff');
+fseek($a, 0);
+$p->setStub($a, $c);
+var_dump($p->getStub());
+fclose($a);
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/crxa_begin_setstub_commit.crxa.zip');
+unlink(__DIR__ . '/myfakestub.crx');
+?>
+--EXPECTF--
+bool(true)
+bool(false)
+bool(true)
+string(5) "Hello"
+string(%d) "<?crx var_dump("First"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+string(5) "World"
+string(%d) "<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+===COMMIT===
+bool(false)
+string(5) "Hello"
+string(5) "World"
+string(%d) "<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+string(%d) "<?crx var_dump("First resource"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+string(%d) "<?crx var_dump("First resource"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"

@@ -1,0 +1,28 @@
+--TEST--
+Bug #71248 (Wrong interface is enforced)
+--FILE--
+<?crx
+class Hint1 { }
+class Hint2 { }
+
+abstract class Base {
+    public function __main(Hint1 $x) { }
+}
+
+interface Iface {
+    public function __main(Hint1 $x);
+}
+
+class Foo extends Base implements Iface {
+}
+
+$code = <<<'CRX'
+abstract class Bar extends Base {
+    public function __main(Hint2 $x) { }
+}
+CRX;
+eval($code);
+?>
+OK
+--EXPECT--
+OK

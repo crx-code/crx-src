@@ -1,0 +1,16 @@
+--TEST--
+shadowing a global core constant with a local version
+--FILE--
+<?crx
+
+require 'includes/foo_crx_version.inc';
+
+use const foo\CRX_VERSION;
+
+var_dump(CRX_VERSION);
+echo "Done\n";
+
+?>
+--EXPECT--
+int(42)
+Done

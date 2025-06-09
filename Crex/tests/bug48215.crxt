@@ -1,0 +1,34 @@
+--TEST--
+Bug #48215 - parent::method() calls __main
+--FILE--
+<?crx
+class A
+{
+    public function __main() {
+        echo __METHOD__ . "\n";
+    }
+    protected function A()
+    {
+        echo __METHOD__ . "\n";
+    }
+}
+class B extends A
+{
+    public function __main() {
+        echo __METHOD__ . "\n";
+        parent::__main();
+    }
+    public function A()
+    {
+        echo __METHOD__ . "\n";
+        parent::A();
+    }
+}
+$b = new B();
+$b->A();
+?>
+--EXPECT--
+B::__main
+A::__main
+B::A
+A::A

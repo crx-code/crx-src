@@ -1,0 +1,15 @@
+--TEST--
+DirectoryIterator: Test empty value to DirectoryIterator constructor
+--CREDITS--
+Havard Eide <nucleuz@gmail.com>
+#CRXTestFest2009 Norway 2009-06-09 \o/
+--FILE--
+<?crx
+try {
+    $it = new DirectoryIterator("");
+} catch (\ValueError $e) {
+    echo $e->getMessage() . \CRX_EOL;
+}
+?>
+--EXPECT--
+DirectoryIterator::__main(): Argument #1 ($directory) cannot be empty

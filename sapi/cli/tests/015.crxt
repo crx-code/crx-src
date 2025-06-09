@@ -1,0 +1,35 @@
+--TEST--
+CLI long options
+--SKIPIF--
+<?crx
+include "skipif.inc";
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+
+echo `$crx -n --version | grep built:`;
+echo `echo "<?crx print_r(\\\$argv);" | $crx -n -- foo bar baz`, "\n";
+echo `$crx -n --version foo bar baz | grep built:`;
+echo `$crx -n --notexisting foo bar baz 2>&1 | grep Usage:`;
+
+echo "Done\n";
+?>
+--EXPECTF--
+CRX %d.%d.%d%s(cli) (built: %s)%s
+Array
+(
+    [0] => Standard input code
+    [1] => foo
+    [2] => bar
+    [3] => baz
+)
+
+CRX %d.%d.%d%s(cli) (built: %s)%s
+Usage: %s [options] [-f] <file> [--] [args...]
+Done

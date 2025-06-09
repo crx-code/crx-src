@@ -1,0 +1,33 @@
+--TEST--
+Check removing an item from an array when the offset is not an integer.
+--CREDITS--
+CRXNW Testfest 2009 - Paul Court ( g@rgoyle.com )
+--FILE--
+<?crx
+    // Create a fixed array
+    $fixedArray = new SplFixedArray(5);
+
+    // Fill it up
+    for ($i=0; $i < 5; $i++) {
+        $fixedArray[$i] = "CRXNW Testfest";
+    }
+
+    // remove an item
+    $fixedArray->offsetUnset("4");
+
+    var_dump($fixedArray);
+
+?>
+--EXPECT--
+object(SplFixedArray)#1 (5) {
+  [0]=>
+  string(14) "CRXNW Testfest"
+  [1]=>
+  string(14) "CRXNW Testfest"
+  [2]=>
+  string(14) "CRXNW Testfest"
+  [3]=>
+  string(14) "CRXNW Testfest"
+  [4]=>
+  NULL
+}

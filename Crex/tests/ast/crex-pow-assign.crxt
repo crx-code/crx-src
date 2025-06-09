@@ -1,0 +1,15 @@
+--TEST--
+CREX_POW_ASSIGN
+--INI--
+crex.assertions=1
+--FILE--
+<?crx
+
+try {
+    assert(false && ($a **= 2));
+} catch (AssertionError $e) {
+    echo 'assert(): ', $e->getMessage(), ' failed', CRX_EOL;
+}
+?>
+--EXPECT--
+assert(): assert(false && ($a **= 2)) failed

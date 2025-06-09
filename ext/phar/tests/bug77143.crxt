@@ -1,0 +1,18 @@
+--TEST--
+CRX bug #77143: Heap Buffer Overflow (READ: 4) in crxa_parse_crxafile
+--INI--
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+chdir(__DIR__);
+try {
+var_dump(new Crxa('bug77143.crxa',0,'project.crxa'));
+echo "OK\n";
+} catch(UnexpectedValueException $e) {
+    echo $e->getMessage();
+}
+?>
+--EXPECTF--
+internal corruption of crxa "%sbug77143.crxa" (truncated manifest header)

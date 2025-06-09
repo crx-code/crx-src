@@ -1,0 +1,38 @@
+--TEST--
+Test for bug 52013 about Crxa::decompressFiles().
+--DESCRIPTION--
+Test for a bug where Crxa::decompressFiles() mistakenly throws BadMethodCallException.
+http://bugs.crx.net/bug.crx?id=52013
+--CREDITS--
+Frederic Hardy frederic.hardy@mageekbox.net
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+open_basedir=
+--FILE--
+<?crx
+mkdir(__DIR__ . '/testdir');
+file_put_contents(__DIR__ . '/testdir/1.crx', str_repeat(' ', 1455));
+
+$crxa = new Crxa(__DIR__ . '/compressed.crxa');
+$crxa->buildFromDirectory(__DIR__ . '/testdir', '/\.crx$/');
+$crxa->setSignatureAlgorithm(Crxa::SHA1);
+$crxa->compressFiles(Crxa::GZ);
+$crxa->decompressFiles();
+
+echo 'ok';
+?>
+--CLEAN--
+<?crx
+if (is_file(__DIR__ . '/testdir/1.crx'))
+  unlink(__DIR__ . '/testdir/1.crx');
+if (is_dir(__DIR__ . '/testdir'))
+  rmdir(__DIR__ . '/testdir');
+if (is_file(__DIR__ . '/compressed.crxa'))
+  unlink(__DIR__ . '/compressed.crxa');
+?>
+--EXPECT--
+ok

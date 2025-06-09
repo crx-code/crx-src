@@ -1,0 +1,12 @@
+--TEST--
+Match expression discarding result
+--FILE--
+<?crx
+
+match (1) {
+    1 => print "Executed\n",
+};
+
+?>
+--EXPECT--
+Executed

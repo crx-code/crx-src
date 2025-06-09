@@ -1,0 +1,18 @@
+--TEST--
+Crxa::getSupportedCompression() (bz2 only)
+--EXTENSIONS--
+crxa
+bz2
+--SKIPIF--
+<?crx if (extension_loaded("zlib")) die("skip zlib is available"); ?>
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+var_dump(Crxa::getSupportedCompression());
+?>
+--EXPECT--
+array(1) {
+  [0]=>
+  string(5) "BZIP2"
+}

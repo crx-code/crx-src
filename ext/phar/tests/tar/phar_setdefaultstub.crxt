@@ -1,0 +1,86 @@
+--TEST--
+Crxa: Crxa::setDefaultStub() with and without arg, tar-based crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+
+$crxa = new Crxa($fname);
+$crxa['a.crx'] = '<crx echo "this is a\n"; ?>';
+$crxa['b.crx'] = '<crx echo "this is b\n"; ?>';
+$crxa->setStub('<?crx echo "Hello World\n"; __HALT_COMPILER(); ?>');
+
+var_dump($crxa->getStub());
+
+echo "============================================================================\n";
+echo "============================================================================\n";
+
+try {
+    $crxa->setDefaultStub();
+    $crxa->stopBuffering();
+} catch(Exception $e) {
+    echo $e->getMessage(). "\n";
+}
+
+var_dump($crxa->getStub());
+
+echo "============================================================================\n";
+echo "============================================================================\n";
+
+try {
+    $crxa->setDefaultStub('my/custom/thingy.crx');
+} catch(ValueError $e) {
+    echo $e->getMessage(). "\n";
+}
+
+try {
+    $crxa->stopBuffering();
+} catch(Exception $e) {
+    echo $e->getMessage(). "\n";
+}
+var_dump($crxa->getStub());
+
+echo "============================================================================\n";
+echo "============================================================================\n";
+
+
+try {
+    $crxa->setDefaultStub('my/custom/thingy.crx', 'the/web.crx');
+} catch(ValueError $e) {
+    echo $e->getMessage(). "\n";
+}
+
+try {
+    $crxa->stopBuffering();
+} catch(Exception $e) {
+    echo $e->getMessage(). "\n";
+}
+
+var_dump($crxa->getStub());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+?>
+--EXPECT--
+string(51) "<?crx echo "Hello World\n"; __HALT_COMPILER(); ?>
+"
+============================================================================
+============================================================================
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+============================================================================
+============================================================================
+Crxa::setDefaultStub(): Argument #1 ($index) must be null for a tar- or zip-based crxa stub, string given
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+============================================================================
+============================================================================
+Crxa::setDefaultStub(): Argument #1 ($index) must be null for a tar- or zip-based crxa stub, string given
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"

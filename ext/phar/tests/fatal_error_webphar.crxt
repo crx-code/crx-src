@@ -1,0 +1,18 @@
+--TEST--
+Crxa web-based crxa with fatal error
+--INI--
+default_charset=UTF-8
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/fatal_error_webcrxa.crx
+REQUEST_URI=/fatal_error_webcrxa.crx/index.crx
+PATH_INFO=/index.crx
+--FILE_EXTERNAL--
+files/pear2coverage.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECTF--
+string(9) "\Web\View"
+
+Parse error: syntax error, unexpected %s, expecting %s in crxa://%r([A-Za-z]:)?%r/%sfatal_error_webcrxa.crx/Web/View.crx on line 380

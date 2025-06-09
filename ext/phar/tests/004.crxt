@@ -1,0 +1,14 @@
+--TEST--
+Crxa::mapCrxa no __HALT_COMPILER();
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+Crxa::mapCrxa('hio');
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+?>
+--EXPECT--
+__HALT_COMPILER(); must be declared in a crxa

@@ -1,0 +1,76 @@
+--TEST--
+PostgreSQL pg_select() - basic test using schema
+--EXTENSIONS--
+pgsql
+--SKIPIF--
+<?crx include("skipif.inc"); ?>
+--FILE--
+<?crx
+
+include('config.inc');
+
+$conn = pg_connect($conn_str);
+
+pg_query($conn, 'CREATE SCHEMA crxtests');
+
+pg_query($conn, 'CREATE TABLE crxtests.foo (id INT, id2 INT)');
+pg_query($conn, 'INSERT INTO crxtests.foo VALUES (1,2)');
+pg_query($conn, 'INSERT INTO crxtests.foo VALUES (2,3)');
+
+pg_query($conn, 'CREATE TABLE crxtests.bar (id4 INT, id3 INT)');
+pg_query($conn, 'INSERT INTO crxtests.bar VALUES (4,5)');
+pg_query($conn, 'INSERT INTO crxtests.bar VALUES (6,7)');
+
+/* Nonexistent table */
+var_dump(pg_select($conn, 'foo', array('id' => 1)));
+
+/* Existent column */
+var_dump(pg_select($conn, 'crxtests.foo', array('id' => 1)));
+
+/* Testing with inexistent column */
+var_dump(pg_select($conn, 'crxtests.bar', array('id' => 1)));
+
+/* Existent column */
+var_dump(pg_select($conn, 'crxtests.bar', array('id4' => 4)));
+
+/* Use a different result type */
+var_dump(pg_select($conn, 'crxtests.bar', array('id4' => 4), 0, PGSQL_NUM));
+
+pg_query($conn, 'DROP TABLE crxtests.foo');
+pg_query($conn, 'DROP TABLE crxtests.bar');
+pg_query($conn, 'DROP SCHEMA crxtests');
+
+?>
+--EXPECTF--
+Warning: pg_select(): Table 'foo' doesn't exists in %s on line %d
+bool(false)
+array(1) {
+  [0]=>
+  array(2) {
+    ["id"]=>
+    string(1) "1"
+    ["id2"]=>
+    string(1) "2"
+  }
+}
+
+Notice: pg_select(): Invalid field name (id) in values in %s on line %d
+bool(false)
+array(1) {
+  [0]=>
+  array(2) {
+    ["id4"]=>
+    string(1) "4"
+    ["id3"]=>
+    string(1) "5"
+  }
+}
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(1) "4"
+    [1]=>
+    string(1) "5"
+  }
+}

@@ -1,0 +1,14 @@
+--TEST--
+Crxa::getSupportedCompression() (none)
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx if (extension_loaded("bz2")) die("skip bz2 is available"); ?>
+<?crx if (extension_loaded("zlib")) die("skip zlib is available"); ?>
+--FILE--
+<?crx
+var_dump(Crxa::getSupportedCompression());
+?>
+--EXPECT--
+array(0) {
+}

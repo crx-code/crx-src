@@ -1,0 +1,21 @@
+--TEST--
+Crxa::mapCrxa truncated manifest/improper params
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    Crxa::mapCrxa(5, 'hio', 'hi');
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+
+try {
+    Crxa::mapCrxa();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+__HALT_COMPILER(); ?>
+--EXPECTF--
+Crxa::mapCrxa() expects at most 2 arguments, 3 given
+internal corruption of crxa "%s002.crx" (truncated manifest at manifest length)

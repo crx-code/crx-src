@@ -1,0 +1,19 @@
+--TEST--
+ZE2 A class constructor must keep the signature of an interface
+--FILE--
+<?crx
+interface constr
+{
+    function __main();
+}
+
+class implem implements constr
+{
+    function __main($a)
+    {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Declaration of implem::__main($a) must be compatible with constr::__main() in %s on line %d

@@ -1,0 +1,56 @@
+--TEST--
+Bug #64931 (crxa_add_file is too restrictive on filename)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+
+echo "Test\n";
+
+@unlink(__DIR__."/bug64931.crxa");
+$crxa = new Crxa(__DIR__."/bug64931.crxa");
+$crxa->addFile(__DIR__."/src/.crxaignore", ".crxaignore");
+try {
+    $crxa->addFile(__DIR__."/src/.crxaignore", ".crxa/gotcha");
+} catch (Exception $e) {
+    echo "CAUGHT: ". $e->getMessage() ."\n";
+}
+
+try {
+    $crxa->addFromString(".crxa", "gotcha");
+} catch (Exception $e) {
+    echo "CAUGHT: ". $e->getMessage() ."\n";
+}
+
+try {
+    $crxa->addFromString(".crxa//", "gotcha");
+} catch (Exception $e) {
+    echo "CAUGHT: ". $e->getMessage() ."\n";
+}
+
+try {
+    $crxa->addFromString(".crxa\\", "gotcha");
+} catch (Exception $e) {
+    echo "CAUGHT: ". $e->getMessage() ."\n";
+}
+
+try {
+    $crxa->addFromString(".crxa\0", "gotcha");
+} catch (ValueError $e) {
+    echo "CAUGHT: ". $e->getMessage() ."\n";
+}
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__."/bug64931.crxa");
+?>
+--EXPECT--
+Test
+CAUGHT: Cannot create any files in magic ".crxa" directory
+CAUGHT: Cannot create any files in magic ".crxa" directory
+CAUGHT: Cannot create any files in magic ".crxa" directory
+CAUGHT: Cannot create any files in magic ".crxa" directory
+CAUGHT: Crxa::addFromString(): Argument #1 ($localName) must not contain any null bytes

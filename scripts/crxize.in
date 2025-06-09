@@ -1,0 +1,211 @@
+#!/bin/sh
+
+# Variable declaration
+prefix='@prefix@'
+datarootdir='@datarootdir@'
+exec_prefix="`eval echo @exec_prefix@`"
+crxdir="`eval echo @libdir@`/build"
+includedir="`eval echo @includedir@`/crx"
+builddir="`pwd`"
+SED="@SED@"
+
+FILES_BUILD="crx.m4 shtool libtool.m4 ax_check_compile_flag.m4 ax_gcc_func_attribute.m4 crx_cxx_compile_stdcxx.m4 pkg.m4 \
+    config.guess config.sub ltmain.sh Makefile.global gen_stub.crx"
+FILES="run-tests*.crx"
+CLEAN_FILES="$FILES *.o *.lo *.la .libs/ build/ modules/ \
+	config.nice configure configure.ac \
+	config.h config.h.in conftest* libtool config.cache autom4te.cache/ \
+	config.log config.status Makefile Makefile.fragments Makefile.objects confdefs.h \
+	run-tests*.crx tests/*.diff tests/*.exp tests/*.log tests/*.out tests/*.crx"
+
+# function declaration
+crxize_usage()
+{
+  echo "Usage: $0 [--clean|--help|--version|-v]"
+}
+
+crxize_no_configm4()
+{
+  if test $@ -eq 1; then
+    clean=" --clean"
+  fi
+
+  echo "Cannot find config.m4. "
+  echo "Make sure that you run '$0$clean' in the top level source directory of the module"
+  echo
+}
+
+crxize_clean()
+{
+  echo "Cleaning.."
+  for i in $CLEAN_FILES; do
+    if test -f "$i"; then
+      rm -f $i
+    elif test -d "$i"; then
+      rm -rf $i
+    fi
+  done
+}
+
+crxize_check_configm4()
+{
+  if test ! -r config.m4; then
+     crxize_no_configm4 $@
+    exit 1
+  fi
+
+}
+
+crxize_get_api_numbers()
+{
+  # extracting API NOs:
+  CRX_API_VERSION=`grep '#define CRX_API_VERSION' $includedir/main/crx.h|$SED 's/#define CRX_API_VERSION//'`
+  CREX_MODULE_API_NO=`grep '#define CREX_MODULE_API_NO' $includedir/Crex/crex_modules.h|$SED 's/#define CREX_MODULE_API_NO//'`
+  CREX_EXTENSION_API_NO=`grep '#define CREX_EXTENSION_API_NO' $includedir/Crex/crex_extensions.h|$SED 's/#define CREX_EXTENSION_API_NO//'`
+}
+
+crxize_print_api_numbers()
+{
+  crxize_get_api_numbers
+  echo "Configuring for:"
+  echo "CRX Api Version:        "$CRX_API_VERSION
+  echo "Crex Module Api No:     "$CREX_MODULE_API_NO
+  echo "Crex Extension Api No:  "$CREX_EXTENSION_API_NO
+}
+
+crxize_check_build_files()
+{
+  if test ! -d "$crxdir"; then
+    cat <<EOF
+Cannot find build files at '$crxdir'. Please check your CRX installation.
+
+EOF
+    exit 1
+  fi
+
+  case "$crxdir" in
+  *\ * | *\	*)
+    cat <<EOF
+Invalid source path '$crxdir'. Whitespace is not allowed in source path.
+
+EOF
+    exit 1;;
+  esac
+
+  case "$builddir" in
+  *\ * | *\	*)
+    cat <<EOF
+Invalid build path '$builddir'. Whitespace is not allowed in build path.
+
+EOF
+      exit 1;;
+  esac
+}
+
+crxize_check_shtool()
+{
+  test -x "$builddir/build/shtool" || chmod +x "$builddir/build/shtool"
+
+  if test ! -x "$builddir/build/shtool"; then
+    cat <<EOF
+shtool at '$builddir/build/shtool' does not exist or is not executable.
+Make sure that the file exists and is executable and then rerun this script.
+
+EOF
+    exit 1
+  else
+    crx_shtool=$builddir/build/shtool
+  fi
+}
+
+crxize_check_autotools()
+{
+  test -z "$CRX_AUTOCONF" && CRX_AUTOCONF=autoconf
+  test -z "$CRX_AUTOHEADER" && CRX_AUTOHEADER=autoheader
+
+  if test ! -x "$CRX_AUTOCONF" && test ! -x "`$crx_shtool path $CRX_AUTOCONF`"; then
+    cat <<EOF
+Cannot find autoconf. Please check your autoconf installation and the
+\$CRX_AUTOCONF environment variable. Then, rerun this script.
+
+EOF
+    exit 1
+  fi
+  if test ! -x "$CRX_AUTOHEADER" && test ! -x "`$crx_shtool path $CRX_AUTOHEADER`"; then
+    cat <<EOF
+Cannot find autoheader. Please check your autoconf installation and the
+\$CRX_AUTOHEADER environment variable. Then, rerun this script.
+
+EOF
+    exit 1
+  fi
+}
+
+crxize_copy_files()
+{
+  test -d build || mkdir build
+
+  (cd "$crxdir" && cp $FILES_BUILD "$builddir"/build)
+  (cd "$crxdir" && cp $FILES "$builddir")
+}
+
+crxize_replace_prefix()
+{
+  $SED \
+  -e "s#@prefix@#$prefix#" \
+  < "$crxdir/crxize.m4" > configure.ac
+}
+
+crxize_autotools()
+{
+  # Remove aclocal.m4 if present. It is automatically included by autoconf but
+  # not used by the CRX build system since CRX 7.4.
+  rm -f aclocal.m4
+
+  $CRX_AUTOCONF   || exit 1
+  $CRX_AUTOHEADER || exit 1
+}
+
+# Main script
+
+case "$1" in
+  # Cleanup
+  --clean)
+    crxize_check_configm4 1
+    crxize_clean
+    exit 0
+    ;;
+
+  # Usage
+  --help)
+    crxize_usage
+    exit 0
+    ;;
+
+  # Version
+  --version|-v)
+    crxize_print_api_numbers
+    exit 0
+  ;;
+
+  # Default
+  *)
+     crxize_check_configm4 0
+
+     crxize_check_build_files
+
+     crxize_print_api_numbers
+
+     crxize_copy_files
+
+     crxize_replace_prefix
+
+     crxize_check_shtool
+
+     crxize_check_autotools
+
+     crxize_autotools
+     ;;
+esac
+
+exit 0

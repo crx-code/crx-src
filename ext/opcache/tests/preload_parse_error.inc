@@ -1,0 +1,2 @@
+<?crx
+parse error

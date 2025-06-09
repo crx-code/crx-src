@@ -1,0 +1,27 @@
+--TEST--
+using invalid combinations of cmdline options
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+include "include.inc";
+
+$crx = get_cgi_path();
+reset_env_vars();
+
+var_dump(`$crx -n -a -f "wrong"`);
+var_dump(`$crx -n -f "wrong" -a`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(51) "Interactive mode enabled
+
+No input file specified.
+"
+string(51) "Interactive mode enabled
+
+No input file specified.
+"
+Done

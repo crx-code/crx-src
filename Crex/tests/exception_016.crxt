@@ -1,0 +1,19 @@
+--TEST--
+Exceptions on improper usage of $this
+--FILE--
+<?crx
+try {
+    $this->foo();
+} catch (Error $e) {
+    echo "\nException: " . $e->getMessage() . " in " , $e->getFile() . " on line " . $e->getLine() . "\n";
+}
+
+$this->foo();
+?>
+--EXPECTF--
+Exception: Using $this when not in object context in %sexception_016.crx on line %d
+
+Fatal error: Uncaught Error: Using $this when not in object context in %sexception_016.crx:%d
+Stack trace:
+#0 {main}
+  thrown in %sexception_016.crx on line %d

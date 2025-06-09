@@ -1,0 +1,19 @@
+--TEST--
+Test exception doesn't cause RSHUTDOWN bypass, variation 0
+--INI--
+crex.assertions=1
+--FILE--
+<?crx
+
+define ("XXXXX", 1);
+assert(false);
+
+?>
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECTF--
+Fatal error: Uncaught AssertionError: assert(false) in %sexception_011.crx:%d
+Stack trace:
+#0 %sexception_011.crx(%d): assert(false, 'assert(false)')
+#1 {main}
+  thrown in %sexception_011.crx on line %d

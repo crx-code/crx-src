@@ -1,0 +1,18 @@
+--TEST--
+redefining constructor (__main first)
+--INI--
+error_reporting=8191
+--FILE--
+<?crx
+
+class test {
+    function __main() {
+    }
+    function test() {
+    }
+}
+
+echo "Done\n";
+?>
+--EXPECT--
+Done

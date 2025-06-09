@@ -1,0 +1,56 @@
+--TEST--
+Crxa::compressFiles(Crxa::GZ) zip format
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$pname = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa['a'] = 'a';
+$crxa['b'] = 'b';
+$crxa['c'] = 'c';
+
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+
+$crxa->compressFiles(Crxa::GZ);
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed(Crxa::BZ2));
+var_dump($crxa['a']->isCompressed(Crxa::GZ));
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed(Crxa::BZ2));
+var_dump($crxa['b']->isCompressed(Crxa::GZ));
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['b']->isCompressed(Crxa::BZ2));
+var_dump($crxa['c']->isCompressed(Crxa::GZ));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx');
+?>
+--EXPECT--
+string(1) "a"
+bool(false)
+string(1) "b"
+bool(false)
+string(1) "c"
+bool(false)
+string(1) "a"
+bool(false)
+bool(true)
+string(1) "b"
+bool(false)
+bool(true)
+string(1) "c"
+bool(false)
+bool(true)

@@ -1,0 +1,28 @@
+--TEST--
+Bug #81048 (crxinfo(INFO_VARIABLES) "Array to string conversion")
+--FILE--
+<?crx
+
+$_ENV = [];
+$_SERVER = ['foo' => ['bar' => ['baz' => 'qux']]];
+
+array_walk_recursive($_SERVER, function($value, $key) {
+    // NOP
+});
+
+crxinfo(INFO_VARIABLES);
+?>
+--EXPECT--
+crxinfo()
+
+CRX Variables
+
+Variable => Value
+$_SERVER['foo'] => Array
+(
+    [bar] => Array
+        (
+            [baz] => qux
+        )
+
+)

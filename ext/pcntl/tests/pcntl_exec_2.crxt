@@ -1,0 +1,28 @@
+--TEST--
+pcntl_exec() 2
+--EXTENSIONS--
+pcntl
+--SKIPIF--
+<?crx
+
+if (!getenv("TEST_CRX_EXECUTABLE") || !is_executable(getenv("TEST_CRX_EXECUTABLE"))) die("skip TEST_CRX_EXECUTABLE not set");
+
+?>
+--FILE--
+<?crx
+if (getenv("PCNTL_EXEC_TEST_IS_CHILD")) {
+    var_dump(getenv("FOO"));
+    exit;
+}
+echo "ok\n";
+pcntl_exec(getenv("TEST_CRX_EXECUTABLE"), array('-n', __FILE__), array(
+    "PCNTL_EXEC_TEST_IS_CHILD" => "1",
+    "FOO" => "BAR",
+    1 => "long")
+);
+
+echo "nok\n";
+?>
+--EXPECT--
+ok
+string(3) "BAR"

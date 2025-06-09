@@ -1,0 +1,13 @@
+--TEST--
+Internal static methods should not be confused with global functions
+--EXTENSIONS--
+opcache
+crex_test
+--FILE--
+<?crx
+
+var_dump(is_bool(_CrexTestClass::is_object()));
+
+?>
+--EXPECT--
+bool(false)

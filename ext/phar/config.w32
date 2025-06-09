@@ -1,0 +1,40 @@
+// vim:ft=javascript
+
+ARG_ENABLE("crxa", "disable crxa support", "yes");
+ARG_ENABLE("crxa-native-ssl", "enable crxa with native OpenSSL support", "no");
+
+if (CRX_CRXA_NATIVE_SSL != "no") {
+	CRX_CRXA = CRX_CRXA_NATIVE_SSL;
+}
+
+if (CRX_CRXA != "no") {
+	EXTENSION("crxa", "dirstream.c func_interceptors.c crxa.c crxa_object.c crxa_path_check.c stream.c tar.c util.c zip.c", CRX_CRXA_SHARED, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+	if (CRX_CRXA_SHARED || (CRX_CRXA_NATIVE_SSL_SHARED && CRX_SNAPSHOT_BUILD == "no")) {
+		ADD_FLAG("CFLAGS_CRXA", "/D COMPILE_DL_CRXA ");
+	}
+	if (CRX_CRXA_NATIVE_SSL != "no") {
+		if (CHECK_LIB("libeay32st.lib", "crxa")) {
+			/* We don't really need GDI for this, but there's no
+			way to avoid linking it in the static openssl build */
+			ADD_FLAG("LIBS_CRXA", "libeay32st.lib gdi32.lib");
+			if (CRX_DEBUG == "no") {
+				/* Silence irrelevant-to-us warning in release builds */
+				ADD_FLAG("LDFLAGS_CRXA", "/IGNORE:4089 ");
+			}
+			AC_DEFINE('CRXA_HAVE_OPENSSL', 1);
+			STDOUT.WriteLine('        Native OpenSSL support in Crxa enabled');
+		} else {
+			WARNING('Could not enable native OpenSSL support in Crxa');
+		}
+	} else {
+		if (CRX_OPENSSL != "no" && !CRX_OPENSSL_SHARED && !CRX_CRXA_SHARED) {
+			AC_DEFINE('CRXA_HAVE_OPENSSL', 1);
+			STDOUT.WriteLine('        Native OpenSSL support in Crxa enabled');
+		} else {
+			STDOUT.WriteLine('        Native OpenSSL support in Crxa disabled');
+		}
+	}
+	ADD_EXTENSION_DEP('crxa', 'spl', true);
+
+	ADD_MAKEFILE_FRAGMENT();
+}

@@ -1,0 +1,21 @@
+--TEST--
+Observer: Basic eval observability
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+--FILE--
+<?crx
+echo eval("return 'Foo eval' . CRX_EOL;");
+echo 'DONE' . CRX_EOL;
+?>
+--EXPECTF--
+<!-- init '%s%eobserver_eval_%d.crx' -->
+<file '%s%eobserver_eval_%d.crx'>
+  <!-- init '%s%eobserver_eval_%d.crx(%d) : eval()'d code' -->
+  <file '%s%eobserver_eval_%d.crx(%d) : eval()'d code'>
+  </file '%s%eobserver_eval_%d.crx(%d) : eval()'d code'>
+Foo eval
+DONE
+</file '%s%eobserver_eval_%d.crx'>

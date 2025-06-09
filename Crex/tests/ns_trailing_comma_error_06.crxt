@@ -1,0 +1,8 @@
+--TEST--
+Unmixed group use declarations mustn't allow more than one comma
+--FILE--
+<?crx
+use const Baz\{Foo,,};
+?>
+--EXPECTF--
+Parse error: syntax error, unexpected token ",", expecting "}" in %s on line %d

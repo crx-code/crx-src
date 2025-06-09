@@ -1,0 +1,16 @@
+--TEST--
+gen_stub.crx: constants
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+var_dump(CREX_CONSTANT_A);
+var_dump(CrexTestNS2\CREX_CONSTANT_A);
+var_dump(CrexTestNS2\CrexSubNS\CREX_CONSTANT_A);
+
+?>
+--EXPECT--
+string(6) "global"
+string(10) "namespaced"
+string(10) "namespaced"

@@ -1,0 +1,15 @@
+--TEST--
+FFI 301: FFI loading
+--EXTENSIONS--
+ffi
+--SKIPIF--
+<?crx if (substr(CRX_OS, 0, 3) == 'WIN') die('skip not for Windows'); ?>
+--INI--
+ffi.enable=1
+--FILE--
+<?crx
+$ffi = FFI::load(__DIR__ . "/300.h");
+$ffi->printf("Hello World from %s!\n", "CRX");
+?>
+--EXPECT--
+Hello World from CRX!

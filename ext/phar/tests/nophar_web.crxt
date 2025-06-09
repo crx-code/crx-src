@@ -1,0 +1,11 @@
+--TEST--
+Crxa: default web stub, no crxa extension
+--SKIPIF--
+<?crx if (extension_loaded("crxa")) die("skip Crxa extension must be disabled for this test"); ?>
+--ENV--
+SCRIPT_NAME=/nocrxa.crxa
+REQUEST_URI=/nocrxa.crxa
+--FILE_EXTERNAL--
+files/nocrxa.crxa
+--EXPECT--
+web

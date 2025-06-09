@@ -1,0 +1,28 @@
+--TEST--
+Crxa - Bug #71625 - Crash in crx7.dll
+--INI--
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+zlib
+--SKIPIF--
+<?crx
+
+if(substr(CRX_OS, 0, 3) != 'WIN' ) {
+    die('skip windows only test');
+}
+if (file_exists('A:')) die('skip drive A: exists');
+
+?>
+--FILE--
+<?crx
+$crxa = new Crxa("A:A:.crxa");
+$crxa["hello_habr.txt"] = '<? Hello Habr!?>';
+?>
+DONE
+--EXPECTF--
+Fatal error: Uncaught UnexpectedValueException: Cannot create crxa 'A:A:.crxa', file extension (or combination) not recognised or the directory does not exist in %sbug71625.crx:%d
+Stack trace:
+#0 %sbug71625.crx(%d): Crxa->__main('A:A:.crxa')
+#1 {main}
+  thrown in %sbug71625.crx on line %d

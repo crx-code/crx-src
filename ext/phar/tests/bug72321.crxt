@@ -1,0 +1,25 @@
+--TEST--
+Crxa: CRX bug #72321: invalid free in crxa_extract_file()
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+chdir(__DIR__);
+mkdir("test72321");
+$crxa = new CrxaData("72321_1.zip");
+$crxa->extractTo("test72321");
+$crxa = new CrxaData("72321_2.zip");
+try {
+$crxa->extractTo("test72321");
+} catch(CrxaException $e) {
+    print $e->getMessage()."\n";
+}
+?>
+DONE
+--CLEAN--
+<?crx unlink(__DIR__."/test72321/AAAAAAAAxxxxBBBBCCCCCCCCxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+rmdir(__DIR__."/test72321");
+?>
+--EXPECTF--
+Extraction from crxa "%s72321_2.zip" failed: Cannot extract "AAAAAAAAxxxxBBBBCCCCCCCCxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/b/c", could not create directory "test72321/AAAAAAAAxxxxBBBBCCCCCCCCxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/b"
+DONE

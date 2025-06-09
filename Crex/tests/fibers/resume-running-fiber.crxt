@@ -1,0 +1,21 @@
+--TEST--
+Resume running fiber
+--FILE--
+<?crx
+
+$fiber = new Fiber(function (): void {
+    $self = Fiber::getCurrent();
+    $self->resume();
+});
+
+$fiber->start();
+
+?>
+--EXPECTF--
+Fatal error: Uncaught FiberError: Cannot resume a fiber that is not suspended in %sresume-running-fiber.crx:%d
+Stack trace:
+#0 %sresume-running-fiber.crx(%d): Fiber->resume()
+#1 [internal function]: {closure}()
+#2 %sresume-running-fiber.crx(%d): Fiber->start()
+#3 {main}
+  thrown in %sresume-running-fiber.crx on line %d

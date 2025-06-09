@@ -1,0 +1,4 @@
+<?crx
+
+function baz() {
+}

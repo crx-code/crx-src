@@ -1,0 +1,12 @@
+--TEST--
+Bug #79797 (Use of freed hash key in the crxa_parse_zipfile function)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.cache_list={PWD}/bug79797.crxa
+--FILE--
+<?crx
+echo "done\n";
+?>
+--EXPECT--
+done

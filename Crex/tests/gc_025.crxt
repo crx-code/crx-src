@@ -1,0 +1,13 @@
+--TEST--
+GC 025: Automatic GC on request shutdown
+--INI--
+crex.enable_gc=1
+--FILE--
+<?crx
+$a = array(array());
+$a[0][0] =& $a[0];
+unset($a);
+echo "ok\n"
+?>
+--EXPECT--
+ok

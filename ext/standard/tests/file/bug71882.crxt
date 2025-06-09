@@ -1,0 +1,13 @@
+--TEST--
+Bug #71882 (Negative ftruncate() on crx://memory exhausts memory)
+--FILE--
+<?crx
+$fd = fopen("crx://memory", "w+");
+try {
+    var_dump(ftruncate($fd, -1));
+} catch (\ValueError $e) {
+    echo $e->getMessage() . \CRX_EOL;
+}
+?>
+--EXPECT--
+ftruncate(): Argument #2 ($size) must be greater than or equal to 0

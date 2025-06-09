@@ -1,0 +1,46 @@
+--TEST--
+Crxa::loadCrxa ignoring alias
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include \''.$pname.'/b.crx\'; ?>';
+$files['b.crx']   = '<?crx echo "This is b\n"; include \''.$pname.'/b/c.crx\'; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; include \''.$pname.'/b/d.crx\'; ?>';
+$files['b/d.crx'] = '<?crx echo "This is b/d\n"; include \''.$pname.'/e.crx\'; ?>';
+$files['e.crx']   = '<?crx echo "This is e\n"; ?>';
+$files['.crxa/test'] = '<?crx bad boy ?>';
+
+include 'files/crxa_test.inc';
+
+Crxa::loadCrxa($fname);
+
+require $pname . '/a.crx';
+
+$p = new Crxa($fname);
+var_dump(isset($p['.crxa/test']));
+try {
+$p['.crxa/test'];
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECT--
+This is a
+This is b
+This is b/c
+This is b/d
+This is e
+bool(false)
+Cannot directly get any files or directories in magic ".crxa" directory

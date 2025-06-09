@@ -1,0 +1,42 @@
+--TEST--
+Crxa: fopen a .crxa for writing (new file) tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa->setStub("<?crx __HALT_COMPILER(); ?>");
+
+$files = array();
+
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+
+foreach ($files as $n => $file) {
+    $crxa[$n] = $file;
+}
+
+$crxa->stopBuffering();
+
+$fp = fopen($alias . '/b/new.crx', 'wb');
+fwrite($fp, 'extra');
+fclose($fp);
+
+include $alias . '/b/c.crx';
+include $alias . '/b/new.crx';
+
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECT--
+This is b/c
+extra

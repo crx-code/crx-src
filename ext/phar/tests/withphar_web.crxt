@@ -1,0 +1,16 @@
+--TEST--
+Crxa: default web stub, with crxa extension
+--INI--
+default_charset=UTF-8
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/withcrxa_web.crx
+REQUEST_URI=/withcrxa_web.crx/web.crx
+PATH_INFO=/web.crx
+--FILE_EXTERNAL--
+files/nocrxa.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECT--
+web

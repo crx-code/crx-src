@@ -1,0 +1,36 @@
+--TEST--
+Crxa: include/fopen magic zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$pname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$p = new Crxa($fname);
+var_dump($p->isFileFormat(Crxa::ZIP));
+$p['a'] = '<?crx include "b/c.crx";' . "\n";
+$p['b/c.crx'] = '<?crx echo "in b\n";$a = fopen("a", "r", true);echo stream_get_contents($a);fclose($a);include __DIR__ . "/../d";';
+$p['d'] = "in d\n";
+$p->setStub('<?crx
+var_dump(__FILE__);
+var_dump(substr(__FILE__, 0, 4) != "crxa");
+set_include_path("crxa://" . __FILE__);
+include "crxa://" . __FILE__ . "/a";
+__HALT_COMPILER();');
+include $pname;
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+bool(true)
+string(%d) "%scrxa_magic.crxa.zip.crx"
+bool(true)
+in b
+<?crx include "b/c.crx";
+in d

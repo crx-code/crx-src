@@ -1,0 +1,55 @@
+--TEST--
+Crxa: CrxaFileInfo::__main
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+
+try {
+file_put_contents($fname, 'blah');
+$a = new CrxaFileInfo($pname . '/oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+unlink($fname);
+}
+
+try {
+$a = new CrxaFileInfo(array());
+} catch (TypeError $e) {
+echo $e->getMessage() . "\n";
+}
+
+$a = new Crxa($fname);
+$a['a'] = 'hi';
+$b = $a['a'];
+
+try {
+$a = new CrxaFileInfo($pname . '/oops/I/do/not/exist');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+try {
+$b->__main('oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+try {
+$a = new CrxaFileInfo(__FILE__);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+--EXPECTF--
+Cannot open crxa file 'crxa://%scrxafileinfo_construct.crxa/oops': internal corruption of crxa "%scrxafileinfo_construct.crxa" (truncated entry)
+CrxaFileInfo::__main(): Argument #1 ($filename) must be of type string, array given
+Cannot access crxa file entry '%s' in archive '%s'
+Cannot call constructor twice
+'%s' is not a valid crxa archive URL (must have at least crxa://filename.crxa)

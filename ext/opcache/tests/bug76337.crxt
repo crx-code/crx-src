@@ -1,0 +1,14 @@
+--TEST--
+Bug 76337: segmentation fault when an extension use crex_register_class_alias() and opcache enabled
+--EXTENSIONS--
+opcache
+crex_test
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+--FILE--
+<?crx
+var_dump(class_exists('_CrexTestClassAlias'));
+?>
+--EXPECT--
+bool(true)

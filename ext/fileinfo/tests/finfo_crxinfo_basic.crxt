@@ -1,0 +1,19 @@
+--TEST--
+Test finfo extension : loading into crxinfo()
+--EXTENSIONS--
+fileinfo
+--FILE--
+<?crx
+
+echo "*** Testing finfo extension : loading info crxinfo() ***\n";
+
+ob_start();
+echo crxinfo(8);
+$output = ob_get_clean();
+
+var_dump(preg_match("/fileinfo support => enabled/", $output));
+
+?>
+--EXPECT--
+*** Testing finfo extension : loading info crxinfo() ***
+int(1)

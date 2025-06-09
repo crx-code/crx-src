@@ -1,0 +1,14 @@
+--TEST--
+Bug #69227 (Use after free in zval_scan caused by spl_object_storage_get_gc)
+--INI--
+crex.enable_gc=1
+--FILE--
+<?crx
+
+$s = new SplObjectStorage();
+$s->attach($s);
+gc_collect_cycles();
+echo "ok";
+?>
+--EXPECT--
+ok

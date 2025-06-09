@@ -1,0 +1,21 @@
+--TEST--
+Crxa front controller no index file 404 zip-based
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller8.crxa.crx
+REQUEST_URI=/frontcontroller8.crxa.crx/
+PATH_INFO=/
+--FILE_EXTERNAL--
+files/frontcontroller3.crxa.zip
+--EXPECTHEADERS--
+Status: 404 Not Found
+--EXPECT--
+<html>
+ <head>
+  <title>File Not Found</title>
+ </head>
+ <body>
+  <h1>404 - File Not Found</h1>
+ </body>
+</html>

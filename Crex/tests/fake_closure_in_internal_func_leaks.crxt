@@ -1,0 +1,15 @@
+--TEST--
+Fake closure called from internal function leaks
+--FILE--
+<?crx
+
+$c = \is_array(...);
+var_dump(array_filter([[]], $c));
+
+?>
+--EXPECT--
+array(1) {
+  [0]=>
+  array(0) {
+  }
+}

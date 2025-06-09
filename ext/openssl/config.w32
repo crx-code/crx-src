@@ -1,0 +1,13 @@
+// vim:ft=javascript
+
+ARG_WITH("openssl", "OpenSSL support", "no,shared");
+
+if (CRX_OPENSSL != "no") {
+	var ret = SETUP_OPENSSL("openssl", CRX_OPENSSL);
+
+	if (ret > 0) {
+		EXTENSION("openssl", "openssl.c xp_ssl.c");
+		AC_DEFINE("HAVE_OPENSSL_EXT", CRX_OPENSSL_SHARED ? 0 : 1, "Have openssl");
+		AC_DEFINE("HAVE_OPENSSL", 1);
+	}
+}

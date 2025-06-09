@@ -1,0 +1,13 @@
+--TEST--
+CLI: stderr is available in mshutdown
+--SKIPIF--
+<?crx if (crx_sapi_name() != "cli") die('skip cli test only'); ?>
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.print_stderr_mshutdown=1
+--FILE--
+==DONE==
+--EXPECTF--
+==DONE==
+[crex-test] MSHUTDOWN

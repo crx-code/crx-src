@@ -1,0 +1,25 @@
+--TEST--
+Crxa: a non-executable zip with no stub named .crxa.zip
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+detect_unicode=0
+crex.multibyte=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$pname = 'crxa://' . $fname;
+
+copy(__DIR__ . '/files/zip.zip', $fname);
+include $fname;
+?>
+===DONE===
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+Warning: include(crxa://%snotcrxa.crxa.zip/.crxa/stub.crx): Failed to open stream: '%snotcrxa.crxa.zip' is not a crxa archive. Use CrxaData::__main() for a standard zip or tar archive in %snotcrxa.crx on line %d
+PK%a

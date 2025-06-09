@@ -1,0 +1,14 @@
+--TEST--
+Crxa front controller with unknown extension mime type
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller26.crx
+REQUEST_URI=/frontcontroller26.crx/unknown.ext
+PATH_INFO=/unknown.ext
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa
+--EXPECTHEADERS--
+Content-type: application/octet-stream
+--EXPECT--
+<?crx var_dump("hi");

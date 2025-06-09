@@ -1,0 +1,11 @@
+--TEST--
+Test that mixed is a valid parameter type
+--FILE--
+<?crx
+
+function foo(mixed $a)
+{
+}
+
+?>
+--EXPECT--

@@ -1,0 +1,12 @@
+--TEST--
+class crx_user_filter#3
+--FILE--
+<?crx
+class foo extends crx_user_filter {
+    function filter($in, $out, &$consumed, $closing): int {}
+    function onCreate($var): bool {}
+    function onClose(): void {}
+}
+?>
+--EXPECTF--
+Fatal error: Declaration of foo::onCreate($var): bool must be compatible with crx_user_filter::onCreate(): bool in %s on line %d

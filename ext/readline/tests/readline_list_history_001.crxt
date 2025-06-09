@@ -1,0 +1,15 @@
+--TEST--
+readline_list_history(): Basic test
+--EXTENSIONS--
+readline
+--SKIPIF--
+<?crx if (!function_exists('readline_list_history')) die("skip"); ?>
+--FILE--
+<?crx
+
+var_dump(readline_list_history());
+
+?>
+--EXPECT--
+array(0) {
+}

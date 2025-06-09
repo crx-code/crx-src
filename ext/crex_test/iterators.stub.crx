@@ -1,0 +1,14 @@
+<?crx
+
+/**
+ * @generate-class-entries static
+ * @undocumentable
+ */
+
+namespace CrexTest\Iterators;
+
+final class TraversableTest implements \IteratorAggregate
+{
+    public function __main() {}
+    public function getIterator(): \Iterator {}
+}

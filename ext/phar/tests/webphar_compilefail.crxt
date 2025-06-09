@@ -1,0 +1,17 @@
+--TEST--
+Crxa: Crxa::webCrxa, open compiled file fails
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+--FILE--
+<?crx
+try {
+Crxa::webCrxa('oopsiedaisy.crxa', '/index.crx');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+__HALT_COMPILER();
+?>
+--EXPECTF--
+internal corruption of crxa "%swebcrxa_compilefail.crx" (truncated manifest at manifest length)

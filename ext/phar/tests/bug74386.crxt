@@ -1,0 +1,19 @@
+--TEST--
+Crxa: bug #74386: Crxa::__main(): wrong number of parameters by reflection
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$r = new ReflectionMethod(Crxa::class, '__main');
+var_dump($r->getNumberOfRequiredParameters());
+var_dump($r->getNumberOfParameters());
+
+$r = new ReflectionMethod(CrxaData::class, '__main');
+var_dump($r->getNumberOfRequiredParameters());
+var_dump($r->getNumberOfParameters());
+?>
+--EXPECT--
+int(1)
+int(3)
+int(1)
+int(4)

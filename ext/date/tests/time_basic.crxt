@@ -1,0 +1,13 @@
+--TEST--
+Test return type and value for expected input time()
+--FILE--
+<?crx
+/*
+ * Function is implemented in ext/date/crx_date.c
+*/
+
+var_dump(time());
+
+?>
+--EXPECTF--
+int(%d)

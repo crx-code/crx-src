@@ -1,0 +1,56 @@
+// vim:ft=javascript
+
+ARG_ENABLE('apache2handler', 'Build Apache 2.x handler', 'no');
+
+if (CRX_APACHE2HANDLER != "no") {
+	if (CRX_ZTS == "no") {
+		WARNING("Apache 2.0 module requires an --enable-zts build of CRX on windows");
+	} else if (CHECK_HEADER_ADD_INCLUDE("httpd.h", "CFLAGS_APACHE2HANDLER", CRX_CRX_BUILD + "\\include\\apache2") &&
+			CHECK_LIB("libhttpd.lib", "apache2handler", CRX_CRX_BUILD + "\\lib\\apache2") &&
+			CHECK_LIB("libapr.lib", "apache2handler", CRX_CRX_BUILD + "\\lib\\apache2") &&
+			CHECK_LIB("libaprutil.lib", "apache2handler", CRX_CRX_BUILD + "\\lib\\apache2")
+			) {
+		SAPI('apache2handler', 'mod_crx.c sapi_apache2.c apache_config.c crx_functions.c',
+				'crx' + CRX_VERSION + 'apache2.dll',
+				'/D CRX_APACHE2_EXPORTS /I win32 /DCREX_ENABLE_STATIC_TSRMLS_CACHE=1');
+	} else {
+		WARNING("Could not find apache2 libraries/headers");
+	}
+}
+
+ARG_ENABLE('apache2-2handler', 'Build Apache 2.2.x handler', 'no');
+
+if (CRX_APACHE2_2HANDLER != "no") {
+	if (CRX_ZTS == "no") {
+		WARNING("Apache 2.2 module requires an --enable-zts build of CRX on windows");
+	} else if (CHECK_HEADER_ADD_INCLUDE("httpd.h", "CFLAGS_APACHE2_2HANDLER", CRX_CRX_BUILD + "\\include\\apache2_2") &&
+			CHECK_LIB("libhttpd.lib", "apache2_2handler", CRX_CRX_BUILD + "\\lib\\apache2_2") &&
+			CHECK_LIB("libapr-1.lib", "apache2_2handler", CRX_CRX_BUILD + "\\lib\\apache2_2") &&
+			CHECK_LIB("libaprutil-1.lib", "apache2_2handler", CRX_CRX_BUILD + "\\lib\\apache2_2")
+			) {
+		SAPI('apache2_2handler', 'mod_crx.c sapi_apache2.c apache_config.c crx_functions.c',
+				'crx' + CRX_VERSION + 'apache2_2.dll',
+				'/D CRX_APACHE2_EXPORTS /I win32 /DCREX_ENABLE_STATIC_TSRMLS_CACHE=1',
+				'sapi\\apache2_2handler');
+	} else {
+		WARNING("Could not find apache2.2 libraries/headers");
+	}
+}
+
+ARG_ENABLE('apache2-4handler', 'Build Apache 2.4.x handler', 'no');
+if (CRX_APACHE2_4HANDLER != "no") {
+	if (CRX_ZTS == "no") {
+		WARNING("Apache 2.4 module requires an --enable-zts build of CRX on windows");
+	} else if (CHECK_HEADER_ADD_INCLUDE("httpd.h", "CFLAGS_APACHE2_4HANDLER", CRX_CRX_BUILD + "\\include\\apache2_4") &&
+			CHECK_LIB("libhttpd.lib", "apache2_4handler", CRX_CRX_BUILD + "\\lib\\apache2_4") &&
+			CHECK_LIB("libapr-1.lib", "apache2_4handler", CRX_CRX_BUILD + "\\lib\\apache2_4") &&
+			CHECK_LIB("libaprutil-1.lib", "apache2_4handler", CRX_CRX_BUILD + "\\lib\\apache2_4")
+			) {
+		SAPI('apache2_4handler', 'mod_crx.c sapi_apache2.c apache_config.c crx_functions.c',
+				'crx' + CRX_VERSION + 'apache2_4.dll',
+				'/D CRX_APACHE2_EXPORTS /I win32 /DCREX_ENABLE_STATIC_TSRMLS_CACHE=1',
+				'sapi\\apache2handler');
+	} else {
+		WARNING("Could not find apache 2.4 libraries/headers");
+	}
+}

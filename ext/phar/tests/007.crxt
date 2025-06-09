@@ -1,0 +1,14 @@
+--TEST--
+Crxa::mapCrxa manifest too big
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+Crxa::mapCrxa('hio');
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+__HALT_COMPILER(); ?>~~~~
+--EXPECTF--
+manifest cannot be larger than 100 MB in crxa "%s"

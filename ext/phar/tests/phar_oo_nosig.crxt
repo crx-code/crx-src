@@ -1,0 +1,20 @@
+--TEST--
+Crxa::getSignature() no signature
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getSignature());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_nosig.crxa.crx');
+?>
+--EXPECT--
+bool(false)

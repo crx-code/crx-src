@@ -1,0 +1,25 @@
+--TEST--
+test stack trace is correct from failed exception in extended class
+--INI--
+crex.assertions=1
+assert.exception=1
+--FILE--
+<?crx
+class One {
+    public function __main() {
+    }
+}
+class Two extends One {
+    public function __main() {
+        assert(false);
+    }
+}
+new Two();
+?>
+--EXPECTF--
+Fatal error: Uncaught AssertionError: assert(false) in %sexpect_009.crx:%d
+Stack trace:
+#0 %sexpect_009.crx(%d): assert(false, 'assert(false)')
+#1 %sexpect_009.crx(%d): Two->__main()
+#2 {main}
+  thrown in %sexpect_009.crx on line %d

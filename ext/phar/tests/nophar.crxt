@@ -1,0 +1,12 @@
+--TEST--
+Crxa: crxa run without ext/crxa with default stub
+--SKIPIF--
+<?crx if (extension_loaded("crxa")) die("skip Crxa extension must be disabled for this test"); ?>
+--FILE--
+<?crx
+include __DIR__ . '/files/nocrxa.crxa';
+?>
+--EXPECT--
+in b
+<?crx include "b/c.crx";
+in d

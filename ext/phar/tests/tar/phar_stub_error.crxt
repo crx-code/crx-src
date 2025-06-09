@@ -1,0 +1,53 @@
+--TEST--
+Crxa::setStub()/getStub() tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+
+$crxa = new Crxa($fname);
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>' ."\r\n";
+$crxa->setStub($stub);
+$crxa->setAlias('hio');
+$crxa['a'] = 'a';
+$crxa->stopBuffering();
+
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+$newstub = '<?crx echo "second stub\n"; _x_HALT_COMPILER(); ?>';
+
+try {
+    $crxa->setStub($newstub);
+} catch(exception $e) {
+    echo 'Exception: ' . $e->getMessage() . "\n";
+}
+
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+$crxa->stopBuffering();
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)
+Exception: illegal stub for tar-based crxa "%scrxa_stub_error.crxa.tar"
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)
+string(50) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+"
+bool(true)

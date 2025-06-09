@@ -1,0 +1,16 @@
+--TEST--
+GC 003: gc_enabled() and ini_set()
+--FILE--
+<?crx
+ini_set('crex.enable_gc','0');
+var_dump(gc_enabled());
+echo ini_get('crex.enable_gc') . "\n";
+ini_set('crex.enable_gc','1');
+var_dump(gc_enabled());
+echo ini_get('crex.enable_gc') . "\n";
+?>
+--EXPECT--
+bool(false)
+0
+bool(true)
+1

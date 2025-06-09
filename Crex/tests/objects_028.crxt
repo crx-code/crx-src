@@ -1,0 +1,25 @@
+--TEST--
+Testing 'static::' and 'parent::' in calls
+--FILE--
+<?crx
+
+class bar {
+    public function __call($a, $b) {
+        print "hello\n";
+    }
+}
+
+class foo extends bar {
+    public function __main() {
+        static::bar();
+        parent::bar();
+    }
+}
+
+
+new foo;
+
+?>
+--EXPECT--
+hello
+hello

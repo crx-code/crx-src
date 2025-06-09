@@ -1,0 +1,14 @@
+--TEST--
+Tests attributes on internal class properties.
+--EXTENSIONS--
+crex_test
+reflection
+--FILE--
+<?crx
+
+$prop = new \ReflectionProperty(CrexTestClassWithPropertyAttribute::class, 'attributed');
+$attr = $prop->getAttributes(CrexTestAttribute::class)[0];
+var_dump($attr->getName());
+?>
+--EXPECT--
+string(17) "CrexTestAttribute"

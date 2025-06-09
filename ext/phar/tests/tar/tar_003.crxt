@@ -1,0 +1,68 @@
+--TEST--
+Crxa: tar-based crxa, valid 1
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+
+$fname = __DIR__ . '/tar_003.crxa.tar';
+$alias = 'crxa://' . $fname;
+
+$tar = new tarmaker($fname, 'none');
+$tar->init();
+$tar->addFile('.crxa/stub.crx', "<?crx // tar-based crxa archive stub file\n__HALT_COMPILER();");
+$tar->addFile('tar_003.crxt', $g = fopen(__FILE__, 'r'));
+$tar->addFile('internal/file/here', "hi there!\n");
+$tar->mkDir('internal/dir');
+$tar->mkDir('dir');
+$tar->close();
+
+fclose($g);
+
+echo file_get_contents($alias . '/internal/file/here');
+
+try {
+$tar = opendir($alias . '/');
+} catch (Exception $e) {
+echo $e->getMessage()."\n";
+}
+
+while (false !== ($v = readdir($tar))) {
+    echo (is_file($alias . '/' . $v) ? "file\n" : "dir\n");
+    echo $v . "\n";
+}
+closedir($tar);
+
+/* ensure none of the dir tar files were freed */
+echo "second round\n";
+$tar = opendir($alias . '/');
+while (false !== ($v = readdir($tar))) {
+    echo (is_file($alias . '/' . $v) ? "file\n" : "dir\n");
+    echo $v . "\n";
+}
+closedir($tar);
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_003.crxa.tar');
+?>
+--EXPECT--
+hi there!
+dir
+dir
+dir
+internal
+file
+tar_003.crxt
+second round
+dir
+dir
+dir
+internal
+file
+tar_003.crxt

@@ -1,0 +1,22 @@
+--TEST--
+version string
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+include "include.inc";
+
+$crx = get_cgi_path();
+reset_env_vars();
+
+var_dump(`$crx -n -v`);
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(%d) "CRX %s (cgi%s (built: %s
+Copyright (c) The CRX Group
+Crex Engine v%s, Copyright (c) Crex Technologies
+"
+Done

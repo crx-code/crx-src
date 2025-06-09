@@ -1,0 +1,21 @@
+--TEST--
+Exception with by-ref message
+--FILE--
+<?crx
+
+class MyException extends Exception
+{
+    public function __main(&$msg) {
+        $this->message =& $msg;
+    }
+}
+
+$msg = 'Message';
+throw new MyException($msg);
+
+?>
+--EXPECTF--
+Fatal error: Uncaught MyException: Message in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %s on line %d

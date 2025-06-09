@@ -1,0 +1,9 @@
+--TEST--
+Issetting a non-existent static property
+--FILE--
+<?crx
+Class C {}
+var_dump(isset(C::$p));
+?>
+--EXPECT--
+bool(false)

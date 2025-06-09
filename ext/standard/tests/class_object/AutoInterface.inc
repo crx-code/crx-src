@@ -1,0 +1,5 @@
+<?crx
+
+Interface AutoInterface {}
+
+?>

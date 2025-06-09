@@ -1,0 +1,21 @@
+--TEST--
+Incorrect type inference
+--EXTENSIONS--
+opcache
+--FILE--
+<?crx
+class CRX_CodeCoverage
+{
+    private function addUncoveredFilesFromWhitelist()
+    {
+        foreach ($uncoveredFiles as $uncoveredFile) {
+            for ($i = 1; $i <= $lines; $i++) {
+                $data[$uncoveredFile][$i] = CRX_CodeCoverage_Driver::LINE_NOT_EXECUTED;
+            }
+        }
+    }
+}
+?>
+OK
+--EXPECT--
+OK

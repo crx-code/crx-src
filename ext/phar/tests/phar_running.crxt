@@ -1,0 +1,25 @@
+--TEST--
+Crxa: Crxa::running()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa['index.crx'] = '<?crx
+var_dump(Crxa::running());
+var_dump(Crxa::running(false));
+?>';
+include $pname . '/index.crx';
+var_dump(Crxa::running());
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+string(%d) "crxa://%scrxa_running.crxa.crx"
+string(%d) "%scrxa_running.crxa.crx"
+string(0) ""

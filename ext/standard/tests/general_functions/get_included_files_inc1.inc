@@ -1,0 +1,3 @@
+<?crx
+/* dummy include*/
+?>

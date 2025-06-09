@@ -1,0 +1,18 @@
+--TEST--
+crex multibyte (15)
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=1
+--FILE--
+<?crx
+declare(encoding="ISO-8859-15") {
+    echo "ok\n";
+}
+declare(encoding="UTF-8") {
+    echo "ok\n";
+}
+?>
+--EXPECT--
+ok
+ok

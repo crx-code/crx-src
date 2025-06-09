@@ -1,0 +1,42 @@
+--TEST--
+Crxa: rename_dir test tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://' . $fname;
+
+$tar = new tarmaker($fname, 'none');
+$tar->init();
+$tar->addFile('.crxa/stub.crx', "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>");
+
+$files = array();
+$files['a/x'] = 'a';
+
+foreach ($files as $n => $file) {
+    $tar->addFile($n, $file);
+}
+
+$tar->close();
+
+include $fname;
+
+echo file_get_contents($alias . '/a/x') . "\n";
+rename($alias . '/a', $alias . '/b');
+echo file_get_contents($alias . '/b/x') . "\n";
+echo file_get_contents($alias . '/a/x') . "\n";
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECTF--
+a
+a
+
+Warning: file_get_contents(crxa://%srename_dir.crxa.tar/a/x): Failed to open stream: crxa error: "a/x" is not a file in crxa "%srename_dir.crxa.tar" in %srename_dir.crx on line %d

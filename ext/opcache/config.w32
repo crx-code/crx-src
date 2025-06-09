@@ -1,0 +1,45 @@
+ARG_ENABLE("opcache", "whether to enable Crex OPcache support", "yes");
+
+
+if (CRX_OPCACHE != "no") {
+
+	ARG_ENABLE("opcache-jit", "whether to enable JIT", "yes");
+
+	CREX_EXTENSION('opcache', "\
+		CrexAccelerator.c \
+		crex_accelerator_blacklist.c \
+		crex_accelerator_debug.c \
+		crex_accelerator_hash.c \
+		crex_accelerator_module.c \
+		crex_accelerator_util_funcs.c \
+		crex_persist.c \
+		crex_persist_calc.c \
+		crex_file_cache.c \
+		crex_shared_alloc.c \
+		shared_alloc_win32.c", true, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+
+	if (CRX_OPCACHE_JIT == "yes") {
+		if (CHECK_HEADER_ADD_INCLUDE("dynasm/dasm_x86.h", "CFLAGS_OPCACHE", CRX_OPCACHE + ";ext\\opcache\\jit")) {
+			var dasm_flags = (X64 ? "-D X64=1" : "") + (X64 ? " -D X64WIN=1" : "") + " -D WIN=1";
+			if (CRX_ZTS == "yes") {
+				dasm_flags += " -D ZTS=1";
+			}
+			DEFINE("DASM_FLAGS", dasm_flags);
+			DEFINE("DASM_ARCH", "x86");
+
+			AC_DEFINE('HAVE_JIT', 1, 'Define to enable JIT');
+			/* XXX read this dynamically */
+			/*ADD_FLAG("CFLAGS_OPCACHE", "/D DASM_VERSION=10400");*/
+
+			ADD_MAKEFILE_FRAGMENT(configure_module_dirname + "\\jit\\Makefile.frag.w32");
+
+			ADD_SOURCES(configure_module_dirname + "\\jit", "crex_jit.c crex_jit_vm_helpers.c", "opcache", "ext\\opcache\\jit");
+		} else {
+			WARNING("JIT not enabled, headers not found");
+		}
+	}
+
+	ADD_FLAG('CFLAGS_OPCACHE', "/I " + configure_module_dirname);
+
+}
+

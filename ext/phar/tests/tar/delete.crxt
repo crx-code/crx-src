@@ -1,0 +1,32 @@
+--TEST--
+Crxa: delete test, tar-based crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://' . $fname;
+$stub = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$crxa = new Crxa($fname);
+$crxa['a'] = 'a';
+$crxa->setStub($stub);
+$crxa->stopBuffering();
+
+echo file_get_contents($alias . '/a') . "\n";
+$crxa->delete('a');
+echo file_get_contents($alias . '/a') . "\n";
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECTF--
+a
+
+Warning: file_get_contents(crxa://%sdelete.crxa.tar/a): Failed to open stream: crxa error: "a" is not a file in crxa "%sdelete.crxa.tar" in %sdelete.crx on line %d

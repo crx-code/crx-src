@@ -1,0 +1,249 @@
+--TEST--
+Test semi-reserved words as class properties
+--FILE--
+<?crx
+
+class Obj
+{
+    var $empty = 'empty';
+    var $callable = 'callable';
+    var $class = 'class';
+    var $trait = 'trait';
+    var $extends = 'extends';
+    var $implements = 'implements';
+    var $static = 'static';
+    var $abstract = 'abstract';
+    var $final = 'final';
+    var $public = 'public';
+    var $protected = 'protected';
+    var $private = 'private';
+    var $const = 'const';
+    var $enddeclare = 'enddeclare';
+    var $endfor = 'endfor';
+    var $endforeach = 'endforeach';
+    var $endif = 'endif';
+    var $endwhile = 'endwhile';
+    var $and = 'and';
+    var $global = 'global';
+    var $goto = 'goto';
+    var $instanceof = 'instanceof';
+    var $insteadof = 'insteadof';
+    var $interface = 'interface';
+    var $namespace = 'namespace';
+    var $new = 'new';
+    var $or = 'or';
+    var $xor = 'xor';
+    var $try = 'try';
+    var $use = 'use';
+    var $var = 'var';
+    var $exit = 'exit';
+    var $list = 'list';
+    var $clone = 'clone';
+    var $include = 'include';
+    var $include_once = 'include_once';
+    var $throw = 'throw';
+    var $array = 'array';
+    var $print = 'print';
+    var $echo = 'echo';
+    var $require = 'require';
+    var $require_once = 'require_once';
+    var $return = 'return';
+    var $else = 'else';
+    var $elseif = 'elseif';
+    var $default = 'default';
+    var $break = 'break';
+    var $continue = 'continue';
+    var $switch = 'switch';
+    var $yield = 'yield';
+    var $function = 'function';
+    var $fn = 'fn';
+    var $if = 'if';
+    var $endswitch = 'endswitch';
+    var $finally = 'finally';
+    var $for = 'for';
+    var $foreach = 'foreach';
+    var $declare = 'declare';
+    var $case = 'case';
+    var $do = 'do';
+    var $while = 'while';
+    var $as = 'as';
+    var $catch = 'catch';
+    var $die = 'die';
+    var $self = 'self';
+    var $parent = 'parent';
+    var $isset = 'isset';
+    var $unset = 'unset';
+    var $__CLASS__ = '__CLASS__';
+    var $__TRAIT__ = '__TRAIT__';
+    var $__FUNCTION__ = '__FUNCTION__';
+    var $__METHOD__ = '__METHOD__';
+    var $__LINE__ = '__LINE__';
+    var $__FILE__ = '__FILE__';
+    var $__DIR__ = '__DIR__';
+    var $__NAMESPACE__ = '__NAMESPACE__';
+    var $__halt_compiler = '__halt_compiler';
+}
+
+$obj = new Obj;
+
+echo $obj->empty, CRX_EOL;
+echo $obj->callable, CRX_EOL;
+echo $obj->class, CRX_EOL;
+echo $obj->trait, CRX_EOL;
+echo $obj->extends, CRX_EOL;
+echo $obj->implements, CRX_EOL;
+echo $obj->static, CRX_EOL;
+echo $obj->abstract, CRX_EOL;
+echo $obj->final, CRX_EOL;
+echo $obj->public, CRX_EOL;
+echo $obj->protected, CRX_EOL;
+echo $obj->private, CRX_EOL;
+echo $obj->const, CRX_EOL;
+echo $obj->enddeclare, CRX_EOL;
+echo $obj->endfor, CRX_EOL;
+echo $obj->endforeach, CRX_EOL;
+echo $obj->endif, CRX_EOL;
+echo $obj->endwhile, CRX_EOL;
+echo $obj->and, CRX_EOL;
+echo $obj->global, CRX_EOL;
+echo $obj->goto, CRX_EOL;
+echo $obj->instanceof, CRX_EOL;
+echo $obj->insteadof, CRX_EOL;
+echo $obj->interface, CRX_EOL;
+echo $obj->namespace, CRX_EOL;
+echo $obj->new, CRX_EOL;
+echo $obj->or, CRX_EOL;
+echo $obj->xor, CRX_EOL;
+echo $obj->try, CRX_EOL;
+echo $obj->use, CRX_EOL;
+echo $obj->var, CRX_EOL;
+echo $obj->exit, CRX_EOL;
+echo $obj->list, CRX_EOL;
+echo $obj->clone, CRX_EOL;
+echo $obj->include, CRX_EOL;
+echo $obj->include_once, CRX_EOL;
+echo $obj->throw, CRX_EOL;
+echo $obj->array, CRX_EOL;
+echo $obj->print, CRX_EOL;
+echo $obj->echo, CRX_EOL;
+echo $obj->require, CRX_EOL;
+echo $obj->require_once, CRX_EOL;
+echo $obj->return, CRX_EOL;
+echo $obj->else, CRX_EOL;
+echo $obj->elseif, CRX_EOL;
+echo $obj->default, CRX_EOL;
+echo $obj->break, CRX_EOL;
+echo $obj->continue, CRX_EOL;
+echo $obj->switch, CRX_EOL;
+echo $obj->yield, CRX_EOL;
+echo $obj->function, CRX_EOL;
+echo $obj->fn, CRX_EOL;
+echo $obj->if, CRX_EOL;
+echo $obj->endswitch, CRX_EOL;
+echo $obj->finally, CRX_EOL;
+echo $obj->for, CRX_EOL;
+echo $obj->foreach, CRX_EOL;
+echo $obj->declare, CRX_EOL;
+echo $obj->case, CRX_EOL;
+echo $obj->do, CRX_EOL;
+echo $obj->while, CRX_EOL;
+echo $obj->as, CRX_EOL;
+echo $obj->catch, CRX_EOL;
+echo $obj->die, CRX_EOL;
+echo $obj->self, CRX_EOL;
+echo $obj->parent, CRX_EOL;
+echo $obj->isset, CRX_EOL;
+echo $obj->unset, CRX_EOL;
+echo $obj->__CLASS__, CRX_EOL;
+echo $obj->__TRAIT__, CRX_EOL;
+echo $obj->__FUNCTION__, CRX_EOL;
+echo $obj->__METHOD__, CRX_EOL;
+echo $obj->__LINE__, CRX_EOL;
+echo $obj->__FILE__, CRX_EOL;
+echo $obj->__DIR__, CRX_EOL;
+echo $obj->__NAMESPACE__, CRX_EOL;
+echo $obj->__halt_compiler, CRX_EOL;
+
+echo "\nDone\n";
+
+?>
+--EXPECT--
+empty
+callable
+class
+trait
+extends
+implements
+static
+abstract
+final
+public
+protected
+private
+const
+enddeclare
+endfor
+endforeach
+endif
+endwhile
+and
+global
+goto
+instanceof
+insteadof
+interface
+namespace
+new
+or
+xor
+try
+use
+var
+exit
+list
+clone
+include
+include_once
+throw
+array
+print
+echo
+require
+require_once
+return
+else
+elseif
+default
+break
+continue
+switch
+yield
+function
+fn
+if
+endswitch
+finally
+for
+foreach
+declare
+case
+do
+while
+as
+catch
+die
+self
+parent
+isset
+unset
+__CLASS__
+__TRAIT__
+__FUNCTION__
+__METHOD__
+__LINE__
+__FILE__
+__DIR__
+__NAMESPACE__
+__halt_compiler
+
+Done

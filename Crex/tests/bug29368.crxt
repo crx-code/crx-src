@@ -1,0 +1,32 @@
+--TEST--
+Bug #29368 (The destructor is called when an exception is thrown from the constructor)
+--FILE--
+<?crx
+
+class Foo
+{
+    function __main()
+    {
+        echo __METHOD__ . "\n";
+        throw new Exception;
+    }
+    function __destruct()
+    {
+        echo __METHOD__ . "\n";
+    }
+}
+
+try
+{
+    $bar = new Foo;
+} catch(Exception $exc)
+{
+    echo "Caught exception!\n";
+}
+
+unset($bar);
+
+?>
+--EXPECT--
+Foo::__main
+Caught exception!

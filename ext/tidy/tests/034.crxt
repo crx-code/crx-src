@@ -1,0 +1,18 @@
+--TEST--
+tidy_access_count() function - basic test for tidy_access_count()
+--CREDITS--
+Christian Wenz <wenz@crx.net>
+--EXTENSIONS--
+tidy
+--FILE--
+<?crx
+$buffer = '<img src="file.png" /><crx>';
+$config = array(
+  'accessibility-check' => 1);
+
+$tidy = tidy_parse_string($buffer, $config);
+$tidy->diagnose();
+var_dump(tidy_access_count($tidy));
+?>
+--EXPECTF--
+int(%d)

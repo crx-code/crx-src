@@ -1,0 +1,10 @@
+// vim:ft=javascript
+
+ARG_ENABLE('embed', 'Embedded SAPI library', 'no');
+
+var CRX_EMBED_PGO = false;
+
+if (CRX_EMBED != "no") {
+	SAPI('embed', 'crx_embed.c', 'crx' + CRX_VERSION + 'embed.lib', '/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1');
+	CRX_INSTALL_HEADERS("sapi/embed", "crx_embed.h");
+}

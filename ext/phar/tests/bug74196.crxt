@@ -1,0 +1,23 @@
+--TEST--
+CRX bug #74196: CrxaData->decompress() does not correctly support dot names
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.2.3.crxa.tar.gz';
+$decompressed_name = str_replace( ".gz", "",  $fname);
+var_dump(file_exists($fname));
+
+$crxa = new Crxa($fname);
+$crxa->decompress();
+var_dump(file_exists($decompressed_name));
+unlink($decompressed_name);
+
+?>
+--EXPECT--
+bool(true)
+bool(true)

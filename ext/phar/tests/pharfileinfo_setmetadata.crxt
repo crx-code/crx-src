@@ -1,0 +1,47 @@
+--TEST--
+Crxa: CrxaFileInfo::setMetadata/delMetadata extra code coverage
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+
+$crxa['a/b'] = 'hi there';
+$tar = $crxa->convertToData(Crxa::TAR);
+
+$b = $crxa['a/b'];
+try {
+$crxa['a']->setMetadata('hi');
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+$crxa['a']->delMetadata();
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+ini_set('crxa.readonly', 1);
+try {
+$b->setMetadata('hi');
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+$b->delMetadata();
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar'); ?>
+--EXPECT--
+Crxa entry is a temporary directory (not an actual entry in the archive), cannot set metadata
+Crxa entry is a temporary directory (not an actual entry in the archive), cannot delete metadata
+Write operations disabled by the crx.ini setting crxa.readonly
+Write operations disabled by the crx.ini setting crxa.readonly

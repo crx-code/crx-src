@@ -1,0 +1,55 @@
+--TEST--
+Bug #74596 (SIGSEGV with opcache.revalidate_path enabled)
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.validate_timestamps=0
+opcache.file_cache_only=0
+opcache.revalidate_path=1
+--EXTENSIONS--
+opcache
+--FILE--
+<?crx
+
+file_put_contents(__DIR__ . "/bug74596_1.crx", <<<CODE
+<?crx
+class A {
+    public function __main() {
+        \$a = true;
+        if (\$a) {
+            echo 1 + 2;
+        } else {
+            echo 2 + 3;
+        }
+    }
+}
+?>
+CODE
+);
+
+file_put_contents(__DIR__ . "/bug74596_2.crx", "ok\n");
+
+class ufilter extends crx_user_filter
+{
+    function filter($in, $out, &$consumed, $closing): int
+    {
+        include_once __DIR__ . "/bug74596_1.crx";
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            stream_bucket_append($out, $bucket);
+        }
+        return PSFS_PASS_ON;
+    }
+}
+
+stream_filter_register("ufilter", "ufilter");
+
+include "crx://filter/read=ufilter/resource=" . __DIR__ . "/bug74596_2.crx";
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . "/bug74596_1.crx");
+unlink(__DIR__ . "/bug74596_2.crx");
+?>
+--EXPECT--
+ok

@@ -1,0 +1,38 @@
+--TEST--
+invalid arguments and error messages
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n -F some.crx -F some.crx`);
+var_dump(`$crx -n -F some.crx -R some.crx`);
+var_dump(`$crx -n -R some.crx -F some.crx`);
+var_dump(`$crx -n -R some.crx -R some.crx`);
+var_dump(`$crx -n -f some.crx -f some.crx`);
+var_dump(`$crx -n -B '' -B ''`);
+var_dump(`$crx -n -E '' -E ''`);
+var_dump(`$crx -n -r '' -r ''`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(32) "You can use -R or -F only once.
+"
+string(32) "You can use -R or -F only once.
+"
+string(32) "You can use -R or -F only once.
+"
+string(32) "You can use -R or -F only once.
+"
+string(26) "You can use -f only once.
+"
+string(26) "You can use -B only once.
+"
+string(26) "You can use -E only once.
+"
+string(26) "You can use -r only once.
+"
+Done

@@ -1,0 +1,16 @@
+--TEST--
+Bug #31926 (crx in free() error with RecursiveArrayIterator)
+--FILE--
+<?crx
+
+$array = array(0 => array('world'));
+
+$it = new RecursiveIteratorIterator(new RecursiveArrayIterator($array));
+foreach($it as $key => $val) {
+   var_dump($key, $val);
+}
+
+?>
+--EXPECT--
+int(0)
+string(5) "world"

@@ -1,0 +1,32 @@
+--TEST--
+Fiber::getReturn() after bailout
+--SKIPIF--
+<?crx
+$crex_mm_enabled = getenv("USE_CREX_ALLOC");
+if ($crex_mm_enabled === "0") {
+    die("skip Crex MM disabled");
+}
+?>
+--FILE--
+<?crx
+
+register_shutdown_function(static function (): void {
+    global $fiber;
+    var_dump($fiber->getReturn());
+});
+
+$fiber = new Fiber(static function (): void {
+    str_repeat('X', CRX_INT_MAX);
+});
+$fiber->start();
+
+?>
+--EXPECTF--
+Fatal error: Allowed memory size of %d bytes exhausted%s(tried to allocate %d bytes) %sget-return-after-bailout.crx on line %d
+
+Fatal error: Uncaught FiberError: Cannot get fiber return value: The fiber exited with a fatal error in %sget-return-after-bailout.crx:%d
+Stack trace:
+#0 %sget-return-after-bailout.crx(%d): Fiber->getReturn()
+#1 [internal function]: {closure}()
+#2 {main}
+  thrown in %sget-return-after-bailout.crx on line %d

@@ -1,0 +1,28 @@
+--TEST--
+Crxa: require hash
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=1
+--FILE--
+<?crx
+
+$crxaconfig = 0;
+
+require_once 'files/crxa_oo_test.inc';
+
+try {
+Crxa::loadCrxa($fname);
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+
+?>
+===DONE===
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/032.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+crxa "%s032.crxa.crx" does not have a signature===DONE===

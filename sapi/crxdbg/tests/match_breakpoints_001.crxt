@@ -1,0 +1,30 @@
+--TEST--
+Test match default breakpoint with variable assignment
+--INI--
+opcache.enable_cli=0
+--CRXDBG--
+b 5
+b 10
+r
+q
+--EXPECTF--
+[Successful compilation of %s.crx]
+prompt> [Breakpoint #0 added at %s.crx:5]
+prompt> [Breakpoint #1 added at %s.crx:10]
+prompt> [Breakpoint #1 at %s.crx:10, hits: 1]
+>00010:     default => 'bar', // breakpoint #1
+ 00011: };
+ 00012: 
+prompt>
+--FILE--
+<?crx
+
+$foo = match (0) {
+    0 => 'foo',
+    default => 'bar', // breakpoint #0
+};
+
+$foo = match (1) {
+    0 => 'foo',
+    default => 'bar', // breakpoint #1
+};

@@ -1,0 +1,58 @@
+--TEST--
+Crxa::convertToCrxa() bzipped
+--EXTENSIONS--
+crxa
+bz2
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.crxa';
+
+$crxa = new Crxa($fname);
+$crxa['a.txt'] = 'some text';
+$crxa->stopBuffering();
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump(strlen($crxa->getStub()));
+
+$crxa = $crxa->convertToExecutable(Crxa::TAR);
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->getStub());
+
+$crxa['a'] = 'hi there';
+
+$crxa = $crxa->convertToExecutable(Crxa::CRXA, Crxa::BZ2);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isCompressed());
+var_dump(strlen($crxa->getStub()));
+
+copy($fname . '.bz2', $fname2);
+
+$crxa = new Crxa($fname2);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump($crxa->isCompressed() == Crxa::BZ2);
+var_dump(strlen($crxa->getStub()));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.bz2');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+?>
+--EXPECT--
+bool(false)
+int(6641)
+bool(true)
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+bool(true)
+int(8192)
+int(6641)
+bool(true)
+bool(true)
+int(6641)

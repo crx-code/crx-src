@@ -1,0 +1,13 @@
+--TEST--
+Attribute validation callback of internal attributes.
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+#[CrexTestAttribute]
+function foo() {
+}
+?>
+--EXPECTF--
+Fatal error: Only classes can be marked with #[CrexTestAttribute] in %s

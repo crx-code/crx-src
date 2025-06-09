@@ -1,0 +1,26 @@
+--TEST--
+ZE2 cannot override final __main
+--FILE--
+<?crx
+
+class Base
+{
+    public final function __main()
+    {
+    }
+}
+
+class Works extends Base
+{
+}
+
+class Extended extends Base
+{
+    public function __main()
+    {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot override final method Base::__main() in %s on line %d

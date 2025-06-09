@@ -1,0 +1,27 @@
+--TEST--
+Crxa::getSupportedSignatures()
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (in_array("OpenSSL", $arr)) die("skip openssl support enabled");
+?>
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+var_dump(Crxa::getSupportedSignatures());
+?>
+--EXPECT--
+array(4) {
+  [0]=>
+  string(3) "MD5"
+  [1]=>
+  string(5) "SHA-1"
+  [2]=>
+  string(7) "SHA-256"
+  [3]=>
+  string(7) "SHA-512"
+}

@@ -1,0 +1,16 @@
+--TEST--
+bcsqrt() requires a well-formed value
+--EXTENSIONS--
+bcmath
+--FILE--
+<?crx
+
+try {
+    bcsqrt('a');
+} catch (\ValueError $e) {
+    echo $e->getMessage() . CRX_EOL;
+}
+
+?>
+--EXPECT--
+bcsqrt(): Argument #1 ($num) is not well-formed

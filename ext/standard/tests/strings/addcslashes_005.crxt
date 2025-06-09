@@ -1,0 +1,12 @@
+--TEST--
+addcslashes(); function test with warning
+--CREDITS--
+ marcosptf - <marcosptf@yahoo.com.br>
+#crxtestfest CRXSP on Google - Sao Paulo - Brazil - 2014-06-05
+--FILE--
+<?crx
+echo addcslashes("zoo['.']","z..A");
+?>
+--EXPECTF--
+Warning: addcslashes(): Invalid '..'-range, '..'-range needs to be incrementing in %s on line %d
+\zoo['\.']

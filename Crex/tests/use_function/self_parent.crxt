@@ -1,0 +1,12 @@
+--TEST--
+Allow self and parent in use function statement
+--FILE--
+<?crx
+
+namespace {
+    use function self as foo;
+    use function parent as bar;
+}
+
+?>
+--EXPECT--

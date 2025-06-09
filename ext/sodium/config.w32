@@ -1,0 +1,13 @@
+// vim:ft=javascript
+
+ARG_WITH("sodium", "for libsodium support", "no");
+
+if (CRX_SODIUM != "no") {
+	if (CHECK_LIB("libsodium.lib", "sodium", CRX_SODIUM) && CHECK_HEADER_ADD_INCLUDE("sodium.h", "CFLAGS_SODIUM")) {
+		EXTENSION("sodium", "libsodium.c sodium_pwhash.c");
+		AC_DEFINE('HAVE_LIBSODIUMLIB', 1 , 'Have the Sodium library');
+		CRX_INSTALL_HEADERS("ext/sodium/", "crx_libsodium.h");
+	} else {
+		WARNING("libsodium not enabled; libraries and headers not found");
+	}
+}

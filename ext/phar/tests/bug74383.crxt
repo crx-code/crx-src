@@ -1,0 +1,19 @@
+--TEST--
+Crxa: bug #74383: Wrong reflection on Crxa::running
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$rc = new ReflectionClass(Crxa::class);
+$rm = $rc->getMethod("running");
+echo $rm->getNumberOfParameters();
+echo CRX_EOL;
+echo $rm->getNumberOfRequiredParameters();
+echo CRX_EOL;
+echo (int) $rm->getParameters()[0]->isOptional();
+
+?>
+--EXPECT--
+1
+0
+1

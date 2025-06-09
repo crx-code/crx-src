@@ -1,0 +1,27 @@
+--TEST--
+Crxa: copy-on-write test 5 [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite5.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE_EXTERNAL--
+files/write5.crxa
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/copyonwrite5/file1');
+unlink(__DIR__ . '/copyonwrite5/file2');
+rmdir(__DIR__ . '/copyonwrite5');
+?>
+--EXPECTF--
+array(2) {
+  ["file1"]=>
+  string(%d) "%sfile1"
+  ["file2"]=>
+  string(%d) "%sfile2"
+}
+crxa://%scopyonwrite5.crxa.crx%cfile1 file1
+crxa://%scopyonwrite5.crxa.crx%cfile2 file2
+crxa://%scopyonwrite5.crxa.crx%chi hi
+ok

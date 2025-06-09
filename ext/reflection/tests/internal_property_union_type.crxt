@@ -1,0 +1,12 @@
+--TEST--
+Union type on internal property
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+$rp = new ReflectionProperty(_CrexTestClass::class, 'classUnionProp');
+$rt = $rp->getType();
+echo $rt, "\n";
+?>
+--EXPECT--
+stdClass|Iterator|null

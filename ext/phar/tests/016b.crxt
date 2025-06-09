@@ -1,0 +1,24 @@
+--TEST--
+Crxa::mapCrxa invalid file (gzipped file length is too short)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+// file length is too short
+
+$files = array();
+$files['a'] = array('cont'=>'a','flags'=>0x00001000, 'clen' => 1);
+include 'files/crxa_test.inc';
+
+echo file_get_contents($pname . '/a');
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+Warning: file_get_contents(crxa://%s/a): Failed to open stream: crxa error: internal corruption of crxa "%s" (actual filesize mismatch on file "a") in %s on line %d

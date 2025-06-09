@@ -1,0 +1,122 @@
+--TEST--
+Crxa: fopen/stat/fseek/unlink/rename edge cases
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.3.crxa.crx';
+$pname = 'crxa://' . $fname;
+$pname2 = 'crxa://' . $fname2;
+$pname3 = 'crxa://' . $fname3;
+
+// create in cwd
+chdir(__DIR__);
+file_put_contents('crxa://fopen_edgetest.crxa/hi', 'hi');
+// append
+$a = fopen($pname . '/b/c.crx', 'a');
+// invalid crxaname
+$a = fopen($pname . '.crxa.gz', 'r');
+// test crxa_open_url() with quiet stat for code coverage
+var_dump(file_exists($pname . '.crxa.gz/hi'));
+// test open for write with new crxa
+$a = fopen($pname . '/hi', 'w');
+fclose($a);
+// test open for write with corrupted crxa
+file_put_contents($fname2, '<?crx oh crap __HALT_COMPILER();');
+$a = fopen($pname2 . '/hi', 'w');
+$a = fopen('crxa://', 'r');
+$a = fopen('crxa://foo.crxa', 'r');
+
+file_put_contents($pname . '/hi', 'hi');
+$a = fopen($pname . '/hi', 'r');
+var_dump(fseek($a, 1), ftell($a));
+var_dump(fseek($a, 1, SEEK_CUR), ftell($a));
+fclose($a);
+
+var_dump(stat('crxa://'));
+var_dump(stat('crxa://foo.crxa'));
+var_dump(is_dir($pname));
+
+// this tests coverage of the case where the crxa exists and has no files
+$crxa = new Crxa($fname3);
+var_dump(file_exists($pname3 . '/test'));
+
+unlink($pname2 . '/hi');
+unlink('crxa://');
+unlink('crxa://foo.crxa');
+unlink($pname . '/oops');
+
+rename('crxa://', 'crxa://');
+rename($pname . '/hi', 'crxa://');
+rename('crxa://foo.crxa/hi', 'crxa://');
+rename($pname . '/hi', 'crxa://foo.crxa/hi');
+
+ini_set('crxa.readonly', 1);
+rename($pname . '/hi', $pname . '/there');
+ini_set('crxa.readonly', 0);
+Crxa::unlinkArchive($fname);
+file_put_contents($pname . '/test.crx', '<?crx
+$a = fopen("./notfound.crx", "r");
+?>');
+include $pname . '/test.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/fopen_edgetest.crxa'); ?>
+--EXPECTF--
+Warning: fopen(crxa://%sfopen_edgecases.crxa.crx/b/c.crx): Failed to open stream: crxa error: open mode append not supported in %sfopen_edgecases.crx on line %d
+
+Warning: fopen(crxa://%sfopen_edgecases.crxa.crx.crxa.gz): Failed to open stream: crxa error: invalid url or non-existent crxa "crxa://%sfopen_edgecases.crxa.crx.crxa.gz" in %sfopen_edgecases.crx on line %d
+bool(false)
+
+Warning: fopen(crxa://%sfopen_edgecases.2.crxa.crx/hi): Failed to open stream: internal corruption of crxa "%sfopen_edgecases.2.crxa.crx" (truncated manifest at stub end) in %sfopen_edgecases.crx on line %d
+
+Warning: fopen(crxa://): Failed to open stream: crxa error: no directory in "crxa://", must have at least crxa:/// for root directory (always use full path to a new crxa) in %sfopen_edgecases.crx on line %d
+
+Warning: fopen(crxa://foo.crxa): Failed to open stream: %s in %sfopen_edgecases.crx on line %d
+int(0)
+int(1)
+int(0)
+int(2)
+
+Warning: stat(): stat failed for crxa:// in %sfopen_edgecases.crx on line %d
+bool(false)
+
+Warning: stat(): stat failed for crxa://foo.crxa in %sfopen_edgecases.crx on line %d
+bool(false)
+bool(true)
+bool(false)
+
+Warning: unlink(): internal corruption of crxa "%sfopen_edgecases.2.crxa.crx" (truncated manifest at stub end) in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): crxa error: unlink failed in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): crxa error: no directory in "crxa://", must have at least crxa:/// for root directory (always use full path to a new crxa) in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): crxa error: unlink failed in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): crxa error: invalid url or non-existent crxa "crxa://foo.crxa" in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): crxa error: unlink failed in %sfopen_edgecases.crx on line %d
+
+Warning: unlink(): unlink of "crxa://%sfopen_edgecases.crxa.crx/oops" failed, file does not exist in %sfopen_edgecases.crx on line %d
+
+Warning: rename(): crxa error: cannot rename "crxa://" to "crxa://": invalid or non-writable url "crxa://" in %sfopen_edgecases.crx on line %d
+
+Warning: rename(): crxa error: cannot rename "crxa://%sfopen_edgecases.crxa.crx/hi" to "crxa://": invalid or non-writable url "crxa://" in %sfopen_edgecases.crx on line %d
+
+Warning: rename(): crxa error: cannot rename "crxa://foo.crxa/hi" to "crxa://": invalid or non-writable url "crxa://" in %sfopen_edgecases.crx on line %d
+
+Warning: rename(): crxa error: cannot rename "crxa://%sfopen_edgecases.crxa.crx/hi" to "crxa://foo.crxa/hi", not within the same crxa archive in %sfopen_edgecases.crx on line %d
+
+Warning: rename(): crxa error: cannot rename "crxa://%sfopen_edgecases.crxa.crx/hi" to "crxa://%sfopen_edgecases.crxa.crx/there": invalid or non-writable url "crxa://%sfopen_edgecases.crxa.crx/hi" in %sfopen_edgecases.crx on line %d
+
+Warning: fopen(./notfound.crx): Failed to open stream: No such file or directory in crxa://%sfopen_edgecases.crxa.crx/test.crx on line %d
+

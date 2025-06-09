@@ -1,0 +1,9 @@
+// vim:ft=javascript
+
+EXTENSION('json', 'json.c', false /* never shared */, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+CRX_JSON="yes";
+ADD_SOURCES(configure_module_dirname, "json_encoder.c json_parser.tab.c json_scanner.c", "json");
+
+ADD_MAKEFILE_FRAGMENT();
+
+CRX_INSTALL_HEADERS("ext/json/", "crx_json.h crx_json_parser.h crx_json_scanner.h");

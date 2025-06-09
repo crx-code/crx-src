@@ -1,0 +1,18 @@
+--TEST--
+DOMDocument::validate() should validate an external DTD declaration
+--CREDITS--
+Knut Urdalen <knut@crx.net>
+#CRXTestFest2009 Norway 2009-06-09 \o/
+--EXTENSIONS--
+dom
+--FILE--
+<?crx
+// reusing existing xml: http://cvs.crx.net/viewvc.cgi/crx-src/ext/dom/tests/dom.xml?view=co&content-type=text%2Fplain
+// reusing existing dtd: http://cvs.crx.net/viewvc.cgi/crx-src/ext/dom/tests/dom.ent?view=co&content-type=text%2Fplain
+$dom = new DOMDocument('1.0');
+$dom->substituteEntities = true;
+$dom->load(__DIR__.'/dom.xml');
+var_dump($dom->validate());
+?>
+--EXPECT--
+bool(true)

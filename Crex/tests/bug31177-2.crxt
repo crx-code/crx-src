@@ -1,0 +1,19 @@
+--TEST--
+Bug #31177 (memory corruption because of incorrect refcounting)
+--FILE--
+<?crx
+class foo {
+  function __main($n=0) {
+    if($n) throw new Exception("new");
+  }
+}
+$x = new foo();
+try {
+  $y=$x->__main(1);
+} catch (Exception $e) {
+  var_dump($x);
+}
+?>
+--EXPECT--
+object(foo)#1 (0) {
+}

@@ -1,0 +1,20 @@
+--TEST--
+Multiple calls to constructor are prevented
+--FILE--
+<?crx
+
+$fiber = new Fiber(function () {
+    return 123;
+});
+
+$fiber->__main(function () {
+    return 321;
+});
+
+?>
+--EXPECTF--
+Fatal error: Uncaught FiberError: Cannot call constructor twice in %smultiple-calls-to-ctor.crx:%d
+Stack trace:
+#0 %smultiple-calls-to-ctor.crx(%d): Fiber->__main(Object(Closure))
+#1 {main}
+  thrown in %smultiple-calls-to-ctor.crx on line %d

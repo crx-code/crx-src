@@ -1,0 +1,15 @@
+--TEST--
+Crxa: copy-on-write test 21 [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite21.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+zlib
+--FILE_EXTERNAL--
+files/write21.crxa
+--EXPECT--
+bool(false)
+bool(true)
+ok

@@ -1,0 +1,16 @@
+--TEST--
+Check that windows version constants are initialized
+--SKIPIF--
+<?crx
+if (substr(CRX_OS, 0, 3) != 'WIN') {
+    die('skip.. Windows only');
+}
+?>
+--FILE--
+<?crx
+var_dump(CRX_WINDOWS_VERSION_MAJOR > 0, CRX_WINDOWS_VERSION_MAJOR, CRX_WINDOWS_VERSION_MINOR);
+?>
+--EXPECTF--
+bool(true)
+int(%d)
+int(%d)

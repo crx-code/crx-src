@@ -1,0 +1,71 @@
+--TEST--
+Crxa: context/compress=GZ
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+
+$context = stream_context_create(array('crxa'=>array('compress'=>Crxa::GZ)));
+
+file_put_contents($pname . '/b', 'new b');
+file_put_contents($pname . '/c', 'new c', 0, $context);
+file_put_contents($pname . '/d', 'new d');
+file_put_contents($pname . '/e', 'new e', 0, $context);
+
+$crxa = new Crxa($fname);
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+var_dump(file_get_contents($pname . '/d'));
+var_dump($crxa['d']->isCompressed());
+var_dump(file_get_contents($pname . '/e'));
+var_dump($crxa['e']->isCompressed());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECT--
+string(1) "a"
+bool(false)
+string(1) "b"
+bool(false)
+string(1) "c"
+bool(false)
+string(1) "a"
+bool(false)
+string(5) "new b"
+bool(false)
+string(5) "new c"
+bool(true)
+string(5) "new d"
+bool(false)
+string(5) "new e"
+bool(true)

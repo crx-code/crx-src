@@ -1,0 +1,27 @@
+--TEST--
+Testing static call method using the original class name
+--FILE--
+<?crx
+
+class foo {
+    static public function msg() {
+        print "hello\n";
+    }
+}
+
+interface test { }
+
+
+class_alias('foo', 'baz');
+
+class bar extends baz {
+    public function __main() {
+        foo::msg();
+    }
+}
+
+new bar;
+
+?>
+--EXPECT--
+hello

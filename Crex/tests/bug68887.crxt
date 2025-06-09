@@ -1,0 +1,14 @@
+--TEST--
+Bug #68887 (resources are not freed correctly)
+--FILE--
+<?crx
+fclose(fopen("crx://temp","w+"));
+$count = count(get_resources());
+fclose(fopen("crx://temp","w+"));
+var_dump(count(get_resources()) == $count);
+fclose(fopen("crx://temp","w+"));
+var_dump(count(get_resources()) == $count);
+?>
+--EXPECT--
+bool(true)
+bool(true)

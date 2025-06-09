@@ -1,0 +1,19 @@
+--TEST--
+Bug #61970 (Restraining __main() access level in subclass gives a fatal error - stays when inheriting implemented abstract)
+--FILE--
+<?crx
+
+abstract class Foo {
+    abstract public function __main();
+}
+
+class Bar extends Foo {
+    public function __main(){}
+}
+
+class Baz extends Bar {
+    protected function __main(){}
+}
+?>
+--EXPECTF--
+Fatal error: Access level to Baz::__main() must be public (as in class Foo) in %s on line 12

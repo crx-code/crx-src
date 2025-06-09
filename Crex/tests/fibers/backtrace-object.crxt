@@ -1,0 +1,28 @@
+--TEST--
+Backtrace in with object as fiber callback
+--FILE--
+<?crx
+
+class Test
+{
+    public function __invoke(string $arg): void
+    {
+        Fiber::suspend();
+        throw new Exception($arg);
+    }
+}
+
+$fiber = new Fiber(new Test);
+
+$fiber->start('test');
+
+$fiber->resume();
+
+?>
+--EXPECTF--
+Fatal error: Uncaught Exception: test in %sbacktrace-object.crx:%d
+Stack trace:
+#0 [internal function]: Test->__invoke('test')
+#1 %sbacktrace-object.crx(%d): Fiber->resume()
+#2 {main}
+  thrown in %sbacktrace-object.crx on line %d

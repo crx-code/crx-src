@@ -1,0 +1,13 @@
+--TEST--
+crxinfo() Type Confusion Information Leak Vulnerability
+--FILE--
+<?crx
+$CRX_SELF = 1;
+crxinfo(INFO_VARIABLES);
+
+?>
+--EXPECTF--
+crxinfo()
+
+CRX Variables
+%A

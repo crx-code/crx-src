@@ -1,0 +1,12 @@
+--TEST--
+test passing assertion
+--INI--
+crex.assertions=1
+assert.exception=1
+--FILE--
+<?crx
+assert(true);
+var_dump(true);
+?>
+--EXPECT--
+bool(true)

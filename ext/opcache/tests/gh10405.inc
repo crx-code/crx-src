@@ -1,0 +1,2 @@
+<?crx
+print "included\n";

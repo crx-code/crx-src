@@ -1,0 +1,15 @@
+--TEST--
+FileInfo - Calling the constructor twice
+--EXTENSIONS--
+fileinfo
+--FILE--
+<?crx
+
+$x = new finfo;
+$x->__main();
+
+echo "done!\n";
+
+?>
+--EXPECT--
+done!

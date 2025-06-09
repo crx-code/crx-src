@@ -1,0 +1,35 @@
+--TEST--
+Crxa: rmdir test
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a/x'] = 'a';
+include 'files/crxa_test.inc';
+include $fname;
+
+echo file_get_contents($pname . '/a/x') . "\n";
+var_dump(rmdir($pname . '/a'));
+echo file_get_contents($pname . '/a/x') . "\n";
+unlink($pname . '/a/x');
+var_dump(rmdir($pname . '/a'));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+a
+
+Warning: rmdir(): crxa error: Directory not empty in %srmdir.crx on line 14
+bool(false)
+a
+bool(true)

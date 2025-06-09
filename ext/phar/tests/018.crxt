@@ -1,0 +1,33 @@
+--TEST--
+Crxa: opendir test, root directory
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = 'a';
+$files['b/a'] = 'b';
+include 'files/crxa_test.inc';
+
+include $fname;
+$dir = opendir('crxa://hio/');
+while (false !== ($a = readdir($dir))) {
+    var_dump($a);
+    var_dump(is_dir('crxa://hio/' . $a));
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+string(1) "a"
+bool(false)
+string(1) "b"
+bool(true)

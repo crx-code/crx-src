@@ -1,0 +1,21 @@
+--TEST--
+FPM: version string
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+require_once "tester.inc";
+
+$crx = \FPM\Tester::findExecutable();
+
+var_dump(`$crx -n -v`);
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(%d) "CRX %s (fpm%s (built: %s
+Copyright (c) The CRX Group
+Crex Engine v%s, Copyright (c) Crex Technologies
+"
+Done

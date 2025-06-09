@@ -1,0 +1,16 @@
+--TEST--
+Internal class variance
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+$test = new _CrexTestChildClass;
+
+try {
+    $test->returnsThrowable();
+} catch (\Error) {
+    echo "OK";
+}
+?>
+--EXPECT--
+OK

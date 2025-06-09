@@ -1,0 +1,26 @@
+--TEST--
+Out of Memory from recursive fiber creation
+--INI--
+memory_limit=2M
+--SKIPIF--
+<?crx
+if (getenv("USE_CREX_ALLOC") === "0") {
+    die("skip Crex MM disabled");
+}
+?>
+--FILE--
+<?crx
+
+function create_fiber(): Fiber
+{
+    $fiber = new Fiber('create_fiber');
+    $fiber->start();
+    return $fiber;
+}
+
+$fiber = new Fiber('create_fiber');
+$fiber->start();
+
+?>
+--EXPECTF--
+Fatal error: Allowed memory size of %d bytes exhausted%s(tried to allocate %d bytes) in %sout-of-memory-in-recursive-fiber.crx on line %d

@@ -1,0 +1,25 @@
+--TEST--
+Bug #75231: ReflectionProperty#getValue() incorrectly works with inherited classes
+--FILE--
+<?crx
+class A
+{
+    public $prop;
+    public function __main()
+    {
+        $this->prop = 'prop';
+    }
+    public function method()
+    {
+        return 'method';
+    }
+}
+class B extends A
+{
+}
+print_r((new ReflectionMethod(B::class, 'method'))->invoke(new A()).CRX_EOL);
+print_r((new ReflectionProperty(B::class, 'prop'))->getValue(new A()).CRX_EOL);
+?>
+--EXPECT--
+method
+prop

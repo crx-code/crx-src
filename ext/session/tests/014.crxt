@@ -1,0 +1,42 @@
+--TEST--
+a script should not be able to modify session.use_trans_sid
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--INI--
+session.use_trans_sid=0
+session.use_cookies=0
+session.use_strict_mode=0
+session.cache_limiter=
+session.name=CRXSESSID
+session.serialize_handler=crx
+session.save_handler=files
+--FILE--
+<?crx
+error_reporting(E_ALL);
+
+session_id("test014");
+session_start();
+
+?>
+<a href="/link">
+<?crx
+ini_set("session.use_trans_sid","1");
+?>
+<a href="/link">
+<?crx
+ini_set("session.use_trans_sid","0");
+?>
+<a href="/link">
+<?crx
+session_destroy();
+?>
+--EXPECTF--
+<a href="/link">
+
+Warning: ini_set(): Session ini settings cannot be changed when a session is active in %s on line %d
+<a href="/link">
+
+Warning: ini_set(): Session ini settings cannot be changed when a session is active in %s on line %d
+<a href="/link">

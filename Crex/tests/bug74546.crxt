@@ -1,0 +1,11 @@
+--TEST--
+Bug #74546 (SIGILL in CREX_FETCH_CLASS_CONSTANT_SPEC_CONST_CONST_HANDLER())
+--FILE--
+<?crx
+"000000"[0]::d;
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Class "0" not found in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %sbug74546.crx on line %d

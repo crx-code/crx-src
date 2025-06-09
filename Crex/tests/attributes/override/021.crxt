@@ -1,0 +1,19 @@
+--TEST--
+#[\Override]: __main
+--FILE--
+<?crx
+
+class P {
+    public function __main() {}
+}
+
+class C extends P {
+    #[\Override]
+    public function __main() {}
+}
+
+echo "Done";
+
+?>
+--EXPECTF--
+Fatal error: C::__main() has #[\Override] attribute, but no matching parent method exists in %s on line %d

@@ -1,0 +1,17 @@
+--TEST--
+Test CRX_INT_MIN, CRX_INT_MAX and CRX_INT_SIZE (32-bit)
+--SKIPIF--
+<?crx if (CRX_INT_SIZE !== 4)
+    die("skip this test is for 32-bit platforms only"); ?>
+--FILE--
+<?crx
+
+var_dump(CRX_INT_MIN);
+var_dump(CRX_INT_MAX);
+var_dump(CRX_INT_SIZE);
+
+?>
+--EXPECT--
+int(-2147483648)
+int(2147483647)
+int(4)

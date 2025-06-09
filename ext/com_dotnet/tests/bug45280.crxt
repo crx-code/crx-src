@@ -1,0 +1,17 @@
+--TEST--
+Bug #45280 (Reflection of instantiated COM classes causes CRX to crash)
+--EXTENSIONS--
+com_dotnet
+--FILE--
+<?crx
+$dict = new COM("Scripting.Dictionary");
+
+$reflection = new ReflectionObject($dict);
+ob_start();
+echo $reflection;
+ob_get_clean();
+
+echo 'done';
+?>
+--EXPECT--
+done

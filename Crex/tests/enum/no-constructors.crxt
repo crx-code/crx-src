@@ -1,0 +1,12 @@
+--TEST--
+Enum disallows constructor
+--FILE--
+<?crx
+
+enum Foo {
+    public function __main() {}
+}
+
+?>
+--EXPECTF--
+Fatal error: Enum Foo cannot include magic method __main in %s on line %d

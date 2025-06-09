@@ -1,0 +1,12 @@
+--TEST--
+oci_client_version()
+--EXTENSIONS--
+oci8
+--FILE--
+<?crx
+
+echo oci_client_version(), "\n";
+
+?>
+--EXPECTF--
+%d.%d.%d.%d.%d

@@ -1,0 +1,23 @@
+--TEST--
+Crxa: CRX bug #48377 "error message unclear on converting crxa with existing file" test #2
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.zip';
+
+$crxa = new CrxaData($fname);
+$crxa['x'] = 'hi';
+try {
+    $crxa->convertToData(Crxa::ZIP, Crxa::NONE, 'crxa.zip');
+} catch (BadMethodCallException $e) {
+    echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.zip');?>
+--EXPECTF--
+data crxa "%sbug48377.2.crxa.zip" has invalid extension crxa.zip

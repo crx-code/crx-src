@@ -1,0 +1,22 @@
+--TEST--
+Crxa: copy-on-write test 11 [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite11.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE_EXTERNAL--
+files/write11.crxa
+--EXPECT--
+string(174) "<?crx
+$p = new Crxa(__FILE__);
+var_dump($p->getStub());
+$p2 = new Crxa(__FILE__);
+$p->setDefaultStub();
+echo strlen($p2->getStub()),"\n";
+echo "ok\n";
+__HALT_COMPILER(); ?>
+"
+6643
+ok

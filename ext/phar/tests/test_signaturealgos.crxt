@@ -1,0 +1,44 @@
+--TEST--
+Crxa: verify signature parsing works
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (!in_array("OpenSSL", $arr)) die("skip openssl support required");
+?>
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$a = new Crxa(__DIR__ . '/files/sha1.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/sha512.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/sha256.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/md5.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/openssl.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/openssl256.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+$a = new Crxa(__DIR__ . '/files/openssl512.crxa');
+$r = $a->getSignature();
+var_dump($r['hash_type']);
+?>
+--EXPECT--
+string(5) "SHA-1"
+string(7) "SHA-512"
+string(7) "SHA-256"
+string(3) "MD5"
+string(7) "OpenSSL"
+string(14) "OpenSSL_SHA256"
+string(14) "OpenSSL_SHA512"

@@ -1,0 +1,19 @@
+--TEST--
+version string
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n -v`);
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(%d) "CRX %s (cli) (built: %s)%s
+Copyright (c) The CRX Group
+Crex Engine v%s, Copyright (c) Crex Technologies
+"
+Done

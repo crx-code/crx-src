@@ -1,0 +1,27 @@
+--TEST--
+Check xsltprocessor::registerCRXFunctions and a undefined crx function
+--DESCRIPTION--
+The XSL script tries to call a crx function that is not defined
+--EXTENSIONS--
+xsl
+--FILE--
+<?crx
+include __DIR__ .'/prepare.inc';
+$crxfuncxsl = new domDocument();
+$crxfuncxsl->load(__DIR__."/crxfunc-undef.xsl");
+if(!$crxfuncxsl) {
+  echo "Error while parsing the xsl document\n";
+  exit;
+}
+$proc->importStylesheet($crxfuncxsl);
+var_dump($proc->registerCRXFunctions());
+var_dump($proc->transformToXml($dom));
+?>
+--EXPECTF--
+NULL
+
+Warning: XSLTProcessor::transformToXml(): Unable to call handler undefinedfunc() in %s on line %d
+NULL
+--CREDITS--
+Christian Weiske, cweiske@crx.net
+CRX Testfest Berlin 2009-05-09

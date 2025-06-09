@@ -1,0 +1,20 @@
+--TEST--
+Unexposed/leaked stream encloses another stream
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+$s = fopen('crx://temp/maxmemory=1024','wb+');
+
+$t = fopen('crx://temp/maxmemory=1024','wb+');
+
+/* force conversion of inner stream to STDIO. */
+$i = 0;
+while ($i++ < 5000) {
+    fwrite($t, str_repeat('a',1024));
+}
+
+crex_leak_variable($s);
+crex_leak_variable($t);
+?>
+--EXPECT--

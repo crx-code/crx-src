@@ -1,0 +1,16 @@
+--TEST--
+Crxa front controller mime type extension is not a string
+--INI--
+default_charset=
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller11.crx
+REQUEST_URI=/frontcontroller11.crx/a.crx
+PATH_INFO=/a.crx
+--FILE_EXTERNAL--
+files/frontcontroller5.crxa
+--EXPECTHEADERS--
+Content-type: text/html
+--EXPECT--
+hio

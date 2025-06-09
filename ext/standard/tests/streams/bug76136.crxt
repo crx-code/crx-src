@@ -1,0 +1,19 @@
+--TEST--
+Bug #76136: stream_socket_get_name should enclose IPv6 in brackets
+--SKIPIF--
+<?crx
+@stream_socket_client('tcp://[::1]:0', $errno);
+if ((CRX_OS_FAMILY === 'Windows' && $errno !== 10049) || (CRX_OS_FAMILY !== 'Windows' && $errno !== 111)) {
+    die('skip IPv6 is not supported.');
+}
+?>
+--FILE--
+<?crx
+$server = stream_socket_server("tcp://[::1]:1337/");
+echo stream_socket_get_name($server, false).CRX_EOL;
+$server = stream_socket_server("tcp://127.0.0.1:1337/");
+echo stream_socket_get_name($server, false);
+?>
+--EXPECT--
+[::1]:1337
+127.0.0.1:1337

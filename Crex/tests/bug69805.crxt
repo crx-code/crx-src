@@ -1,0 +1,8 @@
+--TEST--
+Bug #69805 (null ptr deref and seg fault in crex_resolve_class_name)
+--FILE--
+<?crx
+class p{public function c(){(0)::t;}}?>
+?>
+--EXPECTF--
+Fatal error: Illegal class name in %sbug69805.crx on line %d

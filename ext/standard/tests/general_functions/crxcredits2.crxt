@@ -1,0 +1,26 @@
+--TEST--
+crxcredits() CGI
+--POST--
+dummy=x
+--FILE--
+<?crx
+
+var_dump(crxcredits());
+
+echo "--\n";
+var_dump(crxcredits(0));
+
+echo "--\n";
+var_dump(crxcredits(CREDITS_GROUP));
+
+?>
+--EXPECTF--
+<!DOCTYPE %a>%s</html>
+bool(true)
+--
+<h1>CRX Credits</h1>
+bool(true)
+--
+<h1>CRX Credits</h1>
+%aCRX Group%a
+bool(true)

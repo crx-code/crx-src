@@ -1,0 +1,48 @@
+--TEST--
+Crxa::chmod tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://hio';
+
+$crxa = new Crxa($fname);
+$crxa['a.crx'] = '<?crx echo "This is a\n"; include "'.$alias.'/b.crx"; ?>';
+$crxa->setAlias('hio');
+$crxa->addEmptyDir('test');
+$crxa->stopBuffering();
+
+try {
+    var_dump($crxa['a.crx']->isExecutable());
+    $crxa['a.crx']->chmod(0777);
+    var_dump($crxa['a.crx']->isExecutable());
+    $crxa['a.crx']->chmod(0666);
+    var_dump($crxa['a.crx']->isExecutable());
+    echo "test dir\n";
+    var_dump($crxa['test']->isReadable());
+    $crxa['test']->chmod(0000);
+    var_dump($crxa['test']->isReadable());
+    $crxa['test']->chmod(0666);
+    var_dump($crxa['test']->isReadable());
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+?>
+--EXPECT--
+bool(false)
+bool(true)
+bool(false)
+test dir
+bool(true)
+bool(false)
+bool(true)

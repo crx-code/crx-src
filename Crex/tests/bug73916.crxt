@@ -1,0 +1,16 @@
+--TEST--
+Bug #73916 (crex_print_flat_zval_r doesn't consider reference)
+--FILE--
+<?crx
+$a = array('a');
+class b{};
+$b = new b;
+$test[] =& $a;
+$test[] =& $b;
+test($test);
+function test() {
+    debug_print_backtrace();
+}
+?>
+--EXPECTF--
+#0 %s(%d): test(Array)

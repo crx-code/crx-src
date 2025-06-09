@@ -1,0 +1,4 @@
+// vim:ft=javascript
+
+EXTENSION("reflection", "crx_reflection.c", false /* never shared */, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+CRX_REFLECTION="yes";

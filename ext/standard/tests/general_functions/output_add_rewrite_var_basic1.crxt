@@ -1,0 +1,121 @@
+--TEST--
+Test output_add_rewrite_var() function basic feature
+--EXTENSIONS--
+session
+--INI--
+session.trans_sid_tags="a=href,area=href,frame=src,form="
+url_rewriter.tags="a=href,area=href,frame=src,form="
+--FILE--
+<?crx
+    ob_start();
+// Common setting
+ini_set('url_rewriter.hosts', 'crx.net,www.crx.net');
+ini_set('session.trans_sid_hosts', 'crx.net,www.crx.net');
+ini_set('session.use_only_cookies', 0);
+ini_set('session.use_cookies', 0);
+ini_set('session.use_strict_mode', 0);
+session_id('testid');
+
+output_add_rewrite_var('<name>', '<value>');
+?>
+Without session
+<a href=""> </a>
+<a href="./foo.crx"> </a>
+<a href="//crx.net/foo.crx"> </a>
+<a href="http://crx.net/foo.crx"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx"> </a>
+
+<form method="get"> </form>
+<form action="./foo.crx" method="get">
+<form action="//crx.net/bar.crx" method="get">
+<form action="http://crx.net/bar.crx" method="get">
+<form action="bad://crx.net/bar.crx" method="get">
+<form action="//www.crx.net/bar.crx" method="get">
+
+<?crx
+ini_set('session.use_trans_sid', 0);
+session_start();
+output_add_rewrite_var('<name>', '<value>');
+?>
+Test use_trans_sid=0
+<a href=""> </a>
+<a href="./foo.crx"> </a>
+<a href="//crx.net/foo.crx"> </a>
+<a href="http://crx.net/foo.crx"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx"> </a>
+
+<form method="get"> </form>
+<form action="./foo.crx" method="get"> </form>
+<form action="//crx.net/bar.crx" method="get"> </form>
+<form action="http://crx.net/bar.crx" method="get"> </form>
+<form action="bad://crx.net/bar.crx" method="get"> </form>
+<form action="//www.crx.net/bar.crx" method="get"> </form>
+
+<?crx
+session_commit();
+ini_set('session.use_trans_sid', 1);
+output_reset_rewrite_vars();
+session_start();
+output_add_rewrite_var('<NAME>', '<VALUE>');
+?>
+Test use_trans_sid=1
+<a href=""> </a>
+<a href="./foo.crx"> </a>
+<a href="//crx.net/foo.crx"> </a>
+<a href="http://crx.net/foo.crx"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx"> </a>
+
+<form method="get"> </form>
+<form action="./foo.crx" method="get"> </form>
+<form action="//crx.net/bar.crx" method="get"> </form>
+<form action="http://crx.net/bar.crx" method="get"> </form>
+<form action="bad://crx.net/bar.crx" method="get"> </form>
+<form action="//www.crx.net/bar.crx" method="get"> </form>
+--EXPECT--
+Without session
+<a href="?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="./foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="//crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="http://crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+
+<form method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+<form action="./foo.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" />
+<form action="//crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" />
+<form action="http://crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" />
+<form action="bad://crx.net/bar.crx" method="get">
+<form action="//www.crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" />
+
+Test use_trans_sid=0
+<a href="?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="./foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="//crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="http://crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx?%3CNAME%3E=%3CVALUE%3E"> </a>
+
+<form method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+<form action="./foo.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+<form action="//crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+<form action="http://crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+<form action="bad://crx.net/bar.crx" method="get"> </form>
+<form action="//www.crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /> </form>
+
+Test use_trans_sid=1
+<a href="?CRXSESSID=testid&%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="./foo.crx?CRXSESSID=testid&%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="//crx.net/foo.crx?CRXSESSID=testid&%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="http://crx.net/foo.crx?CRXSESSID=testid&%3CNAME%3E=%3CVALUE%3E"> </a>
+<a href="bad://crx.net/foo.crx"> </a>
+<a href="//www.crx.net/foo.crx?CRXSESSID=testid&%3CNAME%3E=%3CVALUE%3E"> </a>
+
+<form method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="CRXSESSID" value="testid" /> </form>
+<form action="./foo.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="CRXSESSID" value="testid" /> </form>
+<form action="//crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="CRXSESSID" value="testid" /> </form>
+<form action="http://crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="CRXSESSID" value="testid" /> </form>
+<form action="bad://crx.net/bar.crx" method="get"> </form>
+<form action="//www.crx.net/bar.crx" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="CRXSESSID" value="testid" /> </form>

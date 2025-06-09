@@ -1,0 +1,60 @@
+--TEST--
+Crxa with meta-data (write)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = array('cont' => 'a');
+$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
+$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
+$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
+include 'files/crxa_test.inc';
+
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
+
+$crxa = new Crxa($fname);
+$crxa['a']->setMetadata(42);
+$crxa['b']->setMetadata(NULL);
+$crxa['c']->setMetadata(array(25, 'foo'=>'bar'));
+$crxa['d']->setMetadata(true);
+
+foreach($files as $name => $cont) {
+    var_dump($crxa[$name]->getMetadata());
+}
+
+unset($crxa);
+
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"
+int(42)
+NULL
+array(2) {
+  [0]=>
+  int(25)
+  ["foo"]=>
+  string(3) "bar"
+}
+bool(true)
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"

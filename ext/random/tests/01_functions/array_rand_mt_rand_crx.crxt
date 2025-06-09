@@ -1,0 +1,35 @@
+--TEST--
+array_rand() is not affected by MT_RAND_CRX as with CRX < 8.2
+--FILE--
+<?crx
+
+$array = [
+    'foo',
+    'bar',
+    'baz',
+];
+
+mt_srand(1, MT_RAND_CRX);
+function custom_array_rand() {
+    global $array;
+    $key = array_rand($array);
+    var_dump('found key ' . $key);
+    return $array[$key];
+}
+
+var_dump(
+    custom_array_rand(),
+    custom_array_rand(),
+    custom_array_rand(),
+);
+?>
+--EXPECTF--
+Deprecated: Constant MT_RAND_CRX is deprecated in %s on line %d
+
+Deprecated: The MT_RAND_CRX variant of Mt19937 is deprecated in %s on line %d
+string(11) "found key 0"
+string(11) "found key 1"
+string(11) "found key 0"
+string(3) "foo"
+string(3) "bar"
+string(3) "foo"

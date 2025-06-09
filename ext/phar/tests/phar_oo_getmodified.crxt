@@ -1,0 +1,33 @@
+--TEST--
+Crxa::getModified()
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getModified());
+$crxa->compressFiles(Crxa::GZ);
+var_dump($crxa->getModified());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECT--
+bool(false)
+bool(true)

@@ -1,0 +1,5 @@
+<?crx
+
+trait AutoTrait {}
+
+?>

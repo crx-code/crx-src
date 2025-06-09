@@ -1,0 +1,15 @@
+--TEST--
+Crxa: truncated tar
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    $p = new CrxaData(__DIR__ . '/files/trunc.tar');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--EXPECTF--
+crxa error: "%strunc.tar" is a corrupted tar file (truncated)

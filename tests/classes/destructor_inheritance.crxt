@@ -1,0 +1,27 @@
+--TEST--
+ZE2 The inherited destructor is called
+--FILE--
+<?crx
+class base {
+   function __main() {
+      echo __METHOD__ . "\n";
+   }
+
+   function __destruct() {
+      echo __METHOD__ . "\n";
+   }
+}
+
+class derived extends base {
+}
+
+$obj = new derived;
+
+unset($obj);
+
+echo 'Done';
+?>
+--EXPECT--
+base::__main
+base::__destruct
+Done

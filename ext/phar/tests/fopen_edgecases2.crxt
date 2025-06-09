@@ -1,0 +1,44 @@
+--TEST--
+Crxa: test edge cases of fopen() function interception #2
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+Crxa::interceptFileFuncs();
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+
+try {
+    fopen(array(), 'r');
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+chdir(__DIR__);
+file_put_contents($fname, "blah\n");
+file_put_contents("fopen_edgecases2.txt", "test\n");
+$a = fopen($fname, 'rb');
+echo fread($a, 1000);
+fclose($a);
+unlink($fname);
+mkdir($pname . '/oops');
+file_put_contents($pname . '/foo/hi', '<?crx
+$context = stream_context_create();
+$a = fopen("fopen_edgecases2.txt", "rb", false, $context);
+echo fread($a, 1000);
+fclose($a);
+fopen("../oops", "r");
+?>
+');
+include $pname . '/foo/hi';
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/fopen_edgecases2.txt'); ?>
+--EXPECTF--
+fopen(): Argument #1 ($filename) must be of type string, array given
+blah
+test
+
+Warning: fopen(crxa://%sfopen_edgecases2.crxa.crx/oops): Failed to open stream: crxa error: path "oops" is a directory in crxa://%sfopen_edgecases2.crxa.crx/foo/hi on line %d

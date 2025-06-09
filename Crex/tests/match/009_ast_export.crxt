@@ -1,0 +1,28 @@
+--TEST--
+Pretty printing for match expression
+--INI--
+crex.assertions=1
+--FILE--
+<?crx
+
+try {
+assert((function () {
+    match ('foo') {
+        'foo', 'bar' => false,
+        'baz' => 'a',
+        default => 'b',
+    };
+})());
+} catch (AssertionError $e) {
+    echo 'assert(): ', $e->getMessage(), ' failed', CRX_EOL;
+}
+
+?>
+--EXPECTF--
+assert(): assert(function () {
+    match ('foo') {
+        'foo', 'bar' => false,
+        'baz' => 'a',
+        default => 'b',
+    };
+}()) failed

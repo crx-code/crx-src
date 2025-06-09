@@ -1,0 +1,1658 @@
+/* This is a generated file, edit the .stub.crx file instead.
+ * Stub hash: 5781d892d122912b19d530a72f9023cced814064 */
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_Reflection_getModifierNames, 0, 1, IS_ARRAY, 0)
+	CREX_ARG_TYPE_INFO(0, modifiers, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract___clone, 0, 0, IS_VOID, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_inNamespace, 0, 0, _IS_BOOL, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_isClosure arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isDeprecated arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isInternal arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isUserDefined arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isGenerator arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isVariadic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_isStatic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getClosureThis, 0, 0, IS_OBJECT, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getClosureScopeClass, 0, 0, ReflectionClass, 1)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_getClosureCalledClass arginfo_class_ReflectionFunctionAbstract_getClosureScopeClass
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables, 0, 0, IS_ARRAY, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_MASK_EX(arginfo_class_ReflectionFunctionAbstract_getDocComment, 0, 0, MAY_BE_STRING|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_MASK_EX(arginfo_class_ReflectionFunctionAbstract_getEndLine, 0, 0, MAY_BE_LONG|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getExtension, 0, 0, ReflectionExtension, 1)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_getExtensionName arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+#define arginfo_class_ReflectionFunctionAbstract_getFileName arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getName, 0, 0, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_getNamespaceName arginfo_class_ReflectionFunctionAbstract_getName
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters, 0, 0, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_getNumberOfRequiredParameters arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getParameters, 0, 0, IS_ARRAY, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunctionAbstract_getShortName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionFunctionAbstract_getStartLine arginfo_class_ReflectionFunctionAbstract_getEndLine
+
+#define arginfo_class_ReflectionFunctionAbstract_getStaticVariables arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionFunctionAbstract_returnsReference arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionFunctionAbstract_hasReturnType arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getReturnType, 0, 0, ReflectionType, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType, 0, 0, _IS_BOOL, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getTentativeReturnType, 0, 0, ReflectionType, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunctionAbstract_getAttributes, 0, 0, IS_ARRAY, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, name, IS_STRING, 1, "null")
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, flags, IS_LONG, 0, "0")
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionFunction___main, 0, 0, 1)
+	CREX_ARG_OBJ_TYPE_MASK(0, function, Closure, MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunction___toString, 0, 0, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionFunction_isAnonymous arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionFunction_isDisabled arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunction_invoke, 0, 0, IS_MIXED, 0)
+	CREX_ARG_VARIADIC_TYPE_INFO(0, args, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFunction_invokeArgs, 0, 1, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, args, IS_ARRAY, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFunction_getClosure, 0, 0, Closure, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionGenerator___main, 0, 0, 1)
+	CREX_ARG_OBJ_INFO(0, generator, Generator, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionGenerator_getExecutingLine arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+#define arginfo_class_ReflectionGenerator_getExecutingFile arginfo_class_ReflectionFunctionAbstract_getName
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionGenerator_getTrace, 0, 0, IS_ARRAY, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_LONG, 0, "DEBUG_BACKTRACE_PROVIDE_OBJECT")
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionGenerator_getFunction, 0, 0, ReflectionFunctionAbstract, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionGenerator_getThis arginfo_class_ReflectionFunctionAbstract_getClosureThis
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionGenerator_getExecutingGenerator, 0, 0, Generator, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionMethod___main, 0, 0, 1)
+	CREX_ARG_TYPE_MASK(0, objectOrMethod, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, method, IS_STRING, 1, "null")
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionMethod_createFromMethodName, 0, 1, IS_STATIC, 0)
+	CREX_ARG_TYPE_INFO(0, method, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionMethod___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionMethod_isPublic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isPrivate arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isProtected arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isAbstract arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isFinal arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isConstructor arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionMethod_isDestructor arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionMethod_getClosure, 0, 0, Closure, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, object, IS_OBJECT, 1, "null")
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionMethod_getModifiers arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionMethod_invoke, 0, 1, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, object, IS_OBJECT, 1)
+	CREX_ARG_VARIADIC_TYPE_INFO(0, args, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionMethod_invokeArgs, 0, 2, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, object, IS_OBJECT, 1)
+	CREX_ARG_TYPE_INFO(0, args, IS_ARRAY, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionMethod_getDeclaringClass, 0, 0, ReflectionClass, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionMethod_getPrototype, 0, 0, ReflectionMethod, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionMethod_hasPrototype arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionMethod_setAccessible, 0, 1, IS_VOID, 0)
+	CREX_ARG_TYPE_INFO(0, accessible, _IS_BOOL, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionClass___main, 0, 0, 1)
+	CREX_ARG_TYPE_MASK(0, objectOrClass, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionClass_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionClass_isInternal arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isUserDefined arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isAnonymous arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isInstantiable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isCloneable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_getFileName arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+#define arginfo_class_ReflectionClass_getStartLine arginfo_class_ReflectionFunctionAbstract_getEndLine
+
+#define arginfo_class_ReflectionClass_getEndLine arginfo_class_ReflectionFunctionAbstract_getEndLine
+
+#define arginfo_class_ReflectionClass_getDocComment arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionClass_getConstructor, 0, 0, ReflectionMethod, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_hasMethod, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionClass_getMethod, 0, 1, ReflectionMethod, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_getMethods, 0, 0, IS_ARRAY, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, filter, IS_LONG, 1, "null")
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_hasProperty arginfo_class_ReflectionClass_hasMethod
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionClass_getProperty, 0, 1, ReflectionProperty, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_getProperties arginfo_class_ReflectionClass_getMethods
+
+#define arginfo_class_ReflectionClass_hasConstant arginfo_class_ReflectionClass_hasMethod
+
+#define arginfo_class_ReflectionClass_getConstants arginfo_class_ReflectionClass_getMethods
+
+#define arginfo_class_ReflectionClass_getReflectionConstants arginfo_class_ReflectionClass_getMethods
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_getConstant, 0, 1, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_TYPE_MASK_EX(arginfo_class_ReflectionClass_getReflectionConstant, 0, 1, ReflectionClassConstant, MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_getInterfaces arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_getInterfaceNames arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_isInterface arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_getTraits arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_getTraitNames arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_getTraitAliases arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_isTrait arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isEnum arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionClass_isAbstract arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isFinal arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isReadOnly arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionClass_getModifiers arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_isInstance, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, object, IS_OBJECT, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_newInstance, 0, 0, IS_OBJECT, 0)
+	CREX_ARG_VARIADIC_TYPE_INFO(0, args, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_newInstanceWithoutConstructor, 0, 0, IS_OBJECT, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_newInstanceArgs, 0, 0, IS_OBJECT, 1)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, args, IS_ARRAY, 0, "[]")
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_OBJ_TYPE_MASK_EX(arginfo_class_ReflectionClass_getParentClass, 0, 0, ReflectionClass, MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_isSubclassOf, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_OBJ_TYPE_MASK(0, class, ReflectionClass, MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_getStaticProperties arginfo_class_ReflectionFunctionAbstract_getParameters
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_getStaticPropertyValue, 0, 1, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, default, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_setStaticPropertyValue, 0, 2, IS_VOID, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_getDefaultProperties arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionClass_isIterable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_isIterateable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionClass_implementsInterface, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_OBJ_TYPE_MASK(0, interface, ReflectionClass, MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClass_getExtension arginfo_class_ReflectionFunctionAbstract_getExtension
+
+#define arginfo_class_ReflectionClass_getExtensionName arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+#define arginfo_class_ReflectionClass_inNamespace arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClass_getNamespaceName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionClass_getShortName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionClass_getAttributes arginfo_class_ReflectionFunctionAbstract_getAttributes
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionObject___main, 0, 0, 1)
+	CREX_ARG_TYPE_INFO(0, object, IS_OBJECT, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionProperty___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionProperty___main, 0, 0, 2)
+	CREX_ARG_TYPE_MASK(0, class, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
+	CREX_ARG_TYPE_INFO(0, property, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionProperty___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionProperty_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionProperty_getValue, 0, 0, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, object, IS_OBJECT, 1, "null")
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionProperty_setValue, 0, 1, IS_VOID, 0)
+	CREX_ARG_TYPE_INFO(0, objectOrValue, IS_MIXED, 0)
+	CREX_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionProperty_isInitialized, 0, 0, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, object, IS_OBJECT, 1, "null")
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionProperty_isPublic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_isPrivate arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_isProtected arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_isStatic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_isReadOnly arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionProperty_isDefault arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_isPromoted arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionProperty_getModifiers arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+#define arginfo_class_ReflectionProperty_getDeclaringClass arginfo_class_ReflectionMethod_getDeclaringClass
+
+#define arginfo_class_ReflectionProperty_getDocComment arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+#define arginfo_class_ReflectionProperty_setAccessible arginfo_class_ReflectionMethod_setAccessible
+
+#define arginfo_class_ReflectionProperty_getType arginfo_class_ReflectionFunctionAbstract_getReturnType
+
+#define arginfo_class_ReflectionProperty_hasType arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionProperty_hasDefaultValue arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionProperty_getDefaultValue, 0, 0, IS_MIXED, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionProperty_getAttributes arginfo_class_ReflectionFunctionAbstract_getAttributes
+
+#define arginfo_class_ReflectionClassConstant___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionClassConstant___main, 0, 0, 2)
+	CREX_ARG_TYPE_MASK(0, class, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
+	CREX_ARG_TYPE_INFO(0, constant, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionClassConstant___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionClassConstant_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionClassConstant_getValue arginfo_class_ReflectionProperty_getDefaultValue
+
+#define arginfo_class_ReflectionClassConstant_isPublic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClassConstant_isPrivate arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClassConstant_isProtected arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionClassConstant_isFinal arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionClassConstant_getModifiers arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+#define arginfo_class_ReflectionClassConstant_getDeclaringClass arginfo_class_ReflectionMethod_getDeclaringClass
+
+#define arginfo_class_ReflectionClassConstant_getDocComment arginfo_class_ReflectionFunctionAbstract_getDocComment
+
+#define arginfo_class_ReflectionClassConstant_getAttributes arginfo_class_ReflectionFunctionAbstract_getAttributes
+
+#define arginfo_class_ReflectionClassConstant_isEnumCase arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionClassConstant_hasType arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionClassConstant_getType arginfo_class_ReflectionFunctionAbstract_getTentativeReturnType
+
+#define arginfo_class_ReflectionParameter___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionParameter___main, 0, 0, 2)
+	CREX_ARG_INFO(0, function)
+	CREX_ARG_TYPE_MASK(0, param, MAY_BE_LONG|MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionParameter___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionParameter_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionParameter_isPassedByReference arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_canBePassedByValue arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_getDeclaringFunction arginfo_class_ReflectionGenerator_getFunction
+
+#define arginfo_class_ReflectionParameter_getDeclaringClass arginfo_class_ReflectionFunctionAbstract_getClosureScopeClass
+
+#define arginfo_class_ReflectionParameter_getClass arginfo_class_ReflectionFunctionAbstract_getClosureScopeClass
+
+#define arginfo_class_ReflectionParameter_hasType arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_getType arginfo_class_ReflectionFunctionAbstract_getReturnType
+
+#define arginfo_class_ReflectionParameter_isArray arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_isCallable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_allowsNull arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_getPosition arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters
+
+#define arginfo_class_ReflectionParameter_isOptional arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_isDefaultValueAvailable arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_getDefaultValue arginfo_class_ReflectionProperty_getDefaultValue
+
+#define arginfo_class_ReflectionParameter_isDefaultValueConstant arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionParameter_getDefaultValueConstantName, 0, 0, IS_STRING, 1)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionParameter_isVariadic arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionParameter_isPromoted arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionParameter_getAttributes arginfo_class_ReflectionFunctionAbstract_getAttributes
+
+#define arginfo_class_ReflectionType___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+#define arginfo_class_ReflectionType_allowsNull arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionType___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionNamedType_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionNamedType_isBuiltin arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionUnionType_getTypes arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables
+
+#define arginfo_class_ReflectionIntersectionType_getTypes arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables
+
+#define arginfo_class_ReflectionExtension___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionExtension___main, 0, 0, 1)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionExtension___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionExtension_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionExtension_getVersion arginfo_class_ReflectionParameter_getDefaultValueConstantName
+
+#define arginfo_class_ReflectionExtension_getFunctions arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionExtension_getConstants arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionExtension_getINIEntries arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionExtension_getClasses arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionExtension_getClassNames arginfo_class_ReflectionFunctionAbstract_getParameters
+
+#define arginfo_class_ReflectionExtension_getDependencies arginfo_class_ReflectionFunctionAbstract_getParameters
+
+CREX_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionExtension_info, 0, 0, IS_VOID, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionExtension_isPersistent arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionExtension_isTemporary arginfo_class_ReflectionFunctionAbstract_inNamespace
+
+#define arginfo_class_ReflectionCrexExtension___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+#define arginfo_class_ReflectionCrexExtension___main arginfo_class_ReflectionExtension___main
+
+#define arginfo_class_ReflectionCrexExtension___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionCrexExtension_getName arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionCrexExtension_getVersion arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionCrexExtension_getAuthor arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionCrexExtension_getURL arginfo_class_ReflectionFunctionAbstract_getName
+
+#define arginfo_class_ReflectionCrexExtension_getCopyright arginfo_class_ReflectionFunctionAbstract_getName
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionReference_fromArrayElement, 0, 2, ReflectionReference, 1)
+	CREX_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
+	CREX_ARG_TYPE_MASK(0, key, MAY_BE_LONG|MAY_BE_STRING, NULL)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionReference_getId arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionReference___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionReference___main, 0, 0, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionAttribute_getName arginfo_class_ReflectionFunction___toString
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionAttribute_getTarget, 0, 0, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionAttribute_isRepeated arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+#define arginfo_class_ReflectionAttribute_getArguments arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionAttribute_newInstance, 0, 0, IS_OBJECT, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionAttribute___toString arginfo_class_ReflectionFunction___toString
+
+#define arginfo_class_ReflectionAttribute___clone arginfo_class_ReflectionFunctionAbstract___clone
+
+#define arginfo_class_ReflectionAttribute___main arginfo_class_ReflectionReference___main
+
+#define arginfo_class_ReflectionEnum___main arginfo_class_ReflectionClass___main
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionEnum_hasCase, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionEnum_getCase, 0, 1, ReflectionEnumUnitCase, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionEnum_getCases arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables
+
+#define arginfo_class_ReflectionEnum_isBacked arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionEnum_getBackingType, 0, 0, ReflectionNamedType, 1)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionEnumUnitCase___main arginfo_class_ReflectionClassConstant___main
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionEnumUnitCase_getEnum, 0, 0, ReflectionEnum, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionEnumUnitCase_getValue, 0, 0, UnitEnum, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_class_ReflectionEnumBackedCase___main arginfo_class_ReflectionClassConstant___main
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_ReflectionEnumBackedCase_getBackingValue, 0, 0, MAY_BE_LONG|MAY_BE_STRING)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_INFO_EX(arginfo_class_ReflectionFiber___main, 0, 0, 1)
+	CREX_ARG_OBJ_INFO(0, fiber, Fiber, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_ReflectionFiber_getFiber, 0, 0, Fiber, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFiber_getExecutingFile, 0, 0, IS_STRING, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFiber_getExecutingLine, 0, 0, IS_LONG, 1)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFiber_getCallable, 0, 0, IS_CALLABLE, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_ReflectionFiber_getTrace, 0, 0, IS_ARRAY, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_LONG, 0, "DEBUG_BACKTRACE_PROVIDE_OBJECT")
+CREX_END_ARG_INFO()
+
+
+CREX_METHOD(Reflection, getModifierNames);
+CREX_METHOD(ReflectionClass, __clone);
+CREX_METHOD(ReflectionFunctionAbstract, inNamespace);
+CREX_METHOD(ReflectionFunctionAbstract, isClosure);
+CREX_METHOD(ReflectionFunctionAbstract, isDeprecated);
+CREX_METHOD(ReflectionFunctionAbstract, isInternal);
+CREX_METHOD(ReflectionFunctionAbstract, isUserDefined);
+CREX_METHOD(ReflectionFunctionAbstract, isGenerator);
+CREX_METHOD(ReflectionFunctionAbstract, isVariadic);
+CREX_METHOD(ReflectionFunctionAbstract, isStatic);
+CREX_METHOD(ReflectionFunctionAbstract, getClosureThis);
+CREX_METHOD(ReflectionFunctionAbstract, getClosureScopeClass);
+CREX_METHOD(ReflectionFunctionAbstract, getClosureCalledClass);
+CREX_METHOD(ReflectionFunctionAbstract, getClosureUsedVariables);
+CREX_METHOD(ReflectionFunctionAbstract, getDocComment);
+CREX_METHOD(ReflectionFunctionAbstract, getEndLine);
+CREX_METHOD(ReflectionFunctionAbstract, getExtension);
+CREX_METHOD(ReflectionFunctionAbstract, getExtensionName);
+CREX_METHOD(ReflectionFunctionAbstract, getFileName);
+CREX_METHOD(ReflectionFunctionAbstract, getName);
+CREX_METHOD(ReflectionFunctionAbstract, getNamespaceName);
+CREX_METHOD(ReflectionFunctionAbstract, getNumberOfParameters);
+CREX_METHOD(ReflectionFunctionAbstract, getNumberOfRequiredParameters);
+CREX_METHOD(ReflectionFunctionAbstract, getParameters);
+CREX_METHOD(ReflectionFunctionAbstract, getShortName);
+CREX_METHOD(ReflectionFunctionAbstract, getStartLine);
+CREX_METHOD(ReflectionFunctionAbstract, getStaticVariables);
+CREX_METHOD(ReflectionFunctionAbstract, returnsReference);
+CREX_METHOD(ReflectionFunctionAbstract, hasReturnType);
+CREX_METHOD(ReflectionFunctionAbstract, getReturnType);
+CREX_METHOD(ReflectionFunctionAbstract, hasTentativeReturnType);
+CREX_METHOD(ReflectionFunctionAbstract, getTentativeReturnType);
+CREX_METHOD(ReflectionFunctionAbstract, getAttributes);
+CREX_METHOD(ReflectionFunction, __main);
+CREX_METHOD(ReflectionFunction, __toString);
+CREX_METHOD(ReflectionFunction, isAnonymous);
+CREX_METHOD(ReflectionFunction, isDisabled);
+CREX_METHOD(ReflectionFunction, invoke);
+CREX_METHOD(ReflectionFunction, invokeArgs);
+CREX_METHOD(ReflectionFunction, getClosure);
+CREX_METHOD(ReflectionGenerator, __main);
+CREX_METHOD(ReflectionGenerator, getExecutingLine);
+CREX_METHOD(ReflectionGenerator, getExecutingFile);
+CREX_METHOD(ReflectionGenerator, getTrace);
+CREX_METHOD(ReflectionGenerator, getFunction);
+CREX_METHOD(ReflectionGenerator, getThis);
+CREX_METHOD(ReflectionGenerator, getExecutingGenerator);
+CREX_METHOD(ReflectionMethod, __main);
+CREX_METHOD(ReflectionMethod, createFromMethodName);
+CREX_METHOD(ReflectionMethod, __toString);
+CREX_METHOD(ReflectionMethod, isPublic);
+CREX_METHOD(ReflectionMethod, isPrivate);
+CREX_METHOD(ReflectionMethod, isProtected);
+CREX_METHOD(ReflectionMethod, isAbstract);
+CREX_METHOD(ReflectionMethod, isFinal);
+CREX_METHOD(ReflectionMethod, isConstructor);
+CREX_METHOD(ReflectionMethod, isDestructor);
+CREX_METHOD(ReflectionMethod, getClosure);
+CREX_METHOD(ReflectionMethod, getModifiers);
+CREX_METHOD(ReflectionMethod, invoke);
+CREX_METHOD(ReflectionMethod, invokeArgs);
+CREX_METHOD(ReflectionMethod, getDeclaringClass);
+CREX_METHOD(ReflectionMethod, getPrototype);
+CREX_METHOD(ReflectionMethod, hasPrototype);
+CREX_METHOD(ReflectionMethod, setAccessible);
+CREX_METHOD(ReflectionClass, __main);
+CREX_METHOD(ReflectionClass, __toString);
+CREX_METHOD(ReflectionClass, getName);
+CREX_METHOD(ReflectionClass, isInternal);
+CREX_METHOD(ReflectionClass, isUserDefined);
+CREX_METHOD(ReflectionClass, isAnonymous);
+CREX_METHOD(ReflectionClass, isInstantiable);
+CREX_METHOD(ReflectionClass, isCloneable);
+CREX_METHOD(ReflectionClass, getFileName);
+CREX_METHOD(ReflectionClass, getStartLine);
+CREX_METHOD(ReflectionClass, getEndLine);
+CREX_METHOD(ReflectionClass, getDocComment);
+CREX_METHOD(ReflectionClass, getConstructor);
+CREX_METHOD(ReflectionClass, hasMethod);
+CREX_METHOD(ReflectionClass, getMethod);
+CREX_METHOD(ReflectionClass, getMethods);
+CREX_METHOD(ReflectionClass, hasProperty);
+CREX_METHOD(ReflectionClass, getProperty);
+CREX_METHOD(ReflectionClass, getProperties);
+CREX_METHOD(ReflectionClass, hasConstant);
+CREX_METHOD(ReflectionClass, getConstants);
+CREX_METHOD(ReflectionClass, getReflectionConstants);
+CREX_METHOD(ReflectionClass, getConstant);
+CREX_METHOD(ReflectionClass, getReflectionConstant);
+CREX_METHOD(ReflectionClass, getInterfaces);
+CREX_METHOD(ReflectionClass, getInterfaceNames);
+CREX_METHOD(ReflectionClass, isInterface);
+CREX_METHOD(ReflectionClass, getTraits);
+CREX_METHOD(ReflectionClass, getTraitNames);
+CREX_METHOD(ReflectionClass, getTraitAliases);
+CREX_METHOD(ReflectionClass, isTrait);
+CREX_METHOD(ReflectionClass, isEnum);
+CREX_METHOD(ReflectionClass, isAbstract);
+CREX_METHOD(ReflectionClass, isFinal);
+CREX_METHOD(ReflectionClass, isReadOnly);
+CREX_METHOD(ReflectionClass, getModifiers);
+CREX_METHOD(ReflectionClass, isInstance);
+CREX_METHOD(ReflectionClass, newInstance);
+CREX_METHOD(ReflectionClass, newInstanceWithoutConstructor);
+CREX_METHOD(ReflectionClass, newInstanceArgs);
+CREX_METHOD(ReflectionClass, getParentClass);
+CREX_METHOD(ReflectionClass, isSubclassOf);
+CREX_METHOD(ReflectionClass, getStaticProperties);
+CREX_METHOD(ReflectionClass, getStaticPropertyValue);
+CREX_METHOD(ReflectionClass, setStaticPropertyValue);
+CREX_METHOD(ReflectionClass, getDefaultProperties);
+CREX_METHOD(ReflectionClass, isIterable);
+CREX_METHOD(ReflectionClass, implementsInterface);
+CREX_METHOD(ReflectionClass, getExtension);
+CREX_METHOD(ReflectionClass, getExtensionName);
+CREX_METHOD(ReflectionClass, inNamespace);
+CREX_METHOD(ReflectionClass, getNamespaceName);
+CREX_METHOD(ReflectionClass, getShortName);
+CREX_METHOD(ReflectionClass, getAttributes);
+CREX_METHOD(ReflectionObject, __main);
+CREX_METHOD(ReflectionProperty, __main);
+CREX_METHOD(ReflectionProperty, __toString);
+CREX_METHOD(ReflectionProperty, getName);
+CREX_METHOD(ReflectionProperty, getValue);
+CREX_METHOD(ReflectionProperty, setValue);
+CREX_METHOD(ReflectionProperty, isInitialized);
+CREX_METHOD(ReflectionProperty, isPublic);
+CREX_METHOD(ReflectionProperty, isPrivate);
+CREX_METHOD(ReflectionProperty, isProtected);
+CREX_METHOD(ReflectionProperty, isStatic);
+CREX_METHOD(ReflectionProperty, isReadOnly);
+CREX_METHOD(ReflectionProperty, isDefault);
+CREX_METHOD(ReflectionProperty, isPromoted);
+CREX_METHOD(ReflectionProperty, getModifiers);
+CREX_METHOD(ReflectionProperty, getDeclaringClass);
+CREX_METHOD(ReflectionProperty, getDocComment);
+CREX_METHOD(ReflectionProperty, setAccessible);
+CREX_METHOD(ReflectionProperty, getType);
+CREX_METHOD(ReflectionProperty, hasType);
+CREX_METHOD(ReflectionProperty, hasDefaultValue);
+CREX_METHOD(ReflectionProperty, getDefaultValue);
+CREX_METHOD(ReflectionProperty, getAttributes);
+CREX_METHOD(ReflectionClassConstant, __main);
+CREX_METHOD(ReflectionClassConstant, __toString);
+CREX_METHOD(ReflectionClassConstant, getName);
+CREX_METHOD(ReflectionClassConstant, getValue);
+CREX_METHOD(ReflectionClassConstant, isPublic);
+CREX_METHOD(ReflectionClassConstant, isPrivate);
+CREX_METHOD(ReflectionClassConstant, isProtected);
+CREX_METHOD(ReflectionClassConstant, isFinal);
+CREX_METHOD(ReflectionClassConstant, getModifiers);
+CREX_METHOD(ReflectionClassConstant, getDeclaringClass);
+CREX_METHOD(ReflectionClassConstant, getDocComment);
+CREX_METHOD(ReflectionClassConstant, getAttributes);
+CREX_METHOD(ReflectionClassConstant, isEnumCase);
+CREX_METHOD(ReflectionClassConstant, hasType);
+CREX_METHOD(ReflectionClassConstant, getType);
+CREX_METHOD(ReflectionParameter, __main);
+CREX_METHOD(ReflectionParameter, __toString);
+CREX_METHOD(ReflectionParameter, getName);
+CREX_METHOD(ReflectionParameter, isPassedByReference);
+CREX_METHOD(ReflectionParameter, canBePassedByValue);
+CREX_METHOD(ReflectionParameter, getDeclaringFunction);
+CREX_METHOD(ReflectionParameter, getDeclaringClass);
+CREX_METHOD(ReflectionParameter, getClass);
+CREX_METHOD(ReflectionParameter, hasType);
+CREX_METHOD(ReflectionParameter, getType);
+CREX_METHOD(ReflectionParameter, isArray);
+CREX_METHOD(ReflectionParameter, isCallable);
+CREX_METHOD(ReflectionParameter, allowsNull);
+CREX_METHOD(ReflectionParameter, getPosition);
+CREX_METHOD(ReflectionParameter, isOptional);
+CREX_METHOD(ReflectionParameter, isDefaultValueAvailable);
+CREX_METHOD(ReflectionParameter, getDefaultValue);
+CREX_METHOD(ReflectionParameter, isDefaultValueConstant);
+CREX_METHOD(ReflectionParameter, getDefaultValueConstantName);
+CREX_METHOD(ReflectionParameter, isVariadic);
+CREX_METHOD(ReflectionParameter, isPromoted);
+CREX_METHOD(ReflectionParameter, getAttributes);
+CREX_METHOD(ReflectionType, allowsNull);
+CREX_METHOD(ReflectionType, __toString);
+CREX_METHOD(ReflectionNamedType, getName);
+CREX_METHOD(ReflectionNamedType, isBuiltin);
+CREX_METHOD(ReflectionUnionType, getTypes);
+CREX_METHOD(ReflectionIntersectionType, getTypes);
+CREX_METHOD(ReflectionExtension, __main);
+CREX_METHOD(ReflectionExtension, __toString);
+CREX_METHOD(ReflectionExtension, getName);
+CREX_METHOD(ReflectionExtension, getVersion);
+CREX_METHOD(ReflectionExtension, getFunctions);
+CREX_METHOD(ReflectionExtension, getConstants);
+CREX_METHOD(ReflectionExtension, getINIEntries);
+CREX_METHOD(ReflectionExtension, getClasses);
+CREX_METHOD(ReflectionExtension, getClassNames);
+CREX_METHOD(ReflectionExtension, getDependencies);
+CREX_METHOD(ReflectionExtension, info);
+CREX_METHOD(ReflectionExtension, isPersistent);
+CREX_METHOD(ReflectionExtension, isTemporary);
+CREX_METHOD(ReflectionCrexExtension, __main);
+CREX_METHOD(ReflectionCrexExtension, __toString);
+CREX_METHOD(ReflectionCrexExtension, getName);
+CREX_METHOD(ReflectionCrexExtension, getVersion);
+CREX_METHOD(ReflectionCrexExtension, getAuthor);
+CREX_METHOD(ReflectionCrexExtension, getURL);
+CREX_METHOD(ReflectionCrexExtension, getCopyright);
+CREX_METHOD(ReflectionReference, fromArrayElement);
+CREX_METHOD(ReflectionReference, getId);
+CREX_METHOD(ReflectionReference, __main);
+CREX_METHOD(ReflectionAttribute, getName);
+CREX_METHOD(ReflectionAttribute, getTarget);
+CREX_METHOD(ReflectionAttribute, isRepeated);
+CREX_METHOD(ReflectionAttribute, getArguments);
+CREX_METHOD(ReflectionAttribute, newInstance);
+CREX_METHOD(ReflectionAttribute, __toString);
+CREX_METHOD(ReflectionAttribute, __clone);
+CREX_METHOD(ReflectionAttribute, __main);
+CREX_METHOD(ReflectionEnum, __main);
+CREX_METHOD(ReflectionEnum, hasCase);
+CREX_METHOD(ReflectionEnum, getCase);
+CREX_METHOD(ReflectionEnum, getCases);
+CREX_METHOD(ReflectionEnum, isBacked);
+CREX_METHOD(ReflectionEnum, getBackingType);
+CREX_METHOD(ReflectionEnumUnitCase, __main);
+CREX_METHOD(ReflectionEnumUnitCase, getEnum);
+CREX_METHOD(ReflectionEnumBackedCase, __main);
+CREX_METHOD(ReflectionEnumBackedCase, getBackingValue);
+CREX_METHOD(ReflectionFiber, __main);
+CREX_METHOD(ReflectionFiber, getFiber);
+CREX_METHOD(ReflectionFiber, getExecutingFile);
+CREX_METHOD(ReflectionFiber, getExecutingLine);
+CREX_METHOD(ReflectionFiber, getCallable);
+CREX_METHOD(ReflectionFiber, getTrace);
+
+
+static const crex_function_entry class_ReflectionException_methods[] = {
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_Reflection_methods[] = {
+	CREX_ME(Reflection, getModifierNames, arginfo_class_Reflection_getModifierNames, CREX_ACC_PUBLIC|CREX_ACC_STATIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_Reflector_methods[] = {
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionFunctionAbstract_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionFunctionAbstract___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionFunctionAbstract, inNamespace, arginfo_class_ReflectionFunctionAbstract_inNamespace, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isClosure, arginfo_class_ReflectionFunctionAbstract_isClosure, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isDeprecated, arginfo_class_ReflectionFunctionAbstract_isDeprecated, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isInternal, arginfo_class_ReflectionFunctionAbstract_isInternal, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isUserDefined, arginfo_class_ReflectionFunctionAbstract_isUserDefined, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isGenerator, arginfo_class_ReflectionFunctionAbstract_isGenerator, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isVariadic, arginfo_class_ReflectionFunctionAbstract_isVariadic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, isStatic, arginfo_class_ReflectionFunctionAbstract_isStatic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getClosureThis, arginfo_class_ReflectionFunctionAbstract_getClosureThis, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getClosureScopeClass, arginfo_class_ReflectionFunctionAbstract_getClosureScopeClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getClosureCalledClass, arginfo_class_ReflectionFunctionAbstract_getClosureCalledClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getClosureUsedVariables, arginfo_class_ReflectionFunctionAbstract_getClosureUsedVariables, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getDocComment, arginfo_class_ReflectionFunctionAbstract_getDocComment, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getEndLine, arginfo_class_ReflectionFunctionAbstract_getEndLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getExtension, arginfo_class_ReflectionFunctionAbstract_getExtension, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getExtensionName, arginfo_class_ReflectionFunctionAbstract_getExtensionName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getFileName, arginfo_class_ReflectionFunctionAbstract_getFileName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getName, arginfo_class_ReflectionFunctionAbstract_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getNamespaceName, arginfo_class_ReflectionFunctionAbstract_getNamespaceName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getNumberOfParameters, arginfo_class_ReflectionFunctionAbstract_getNumberOfParameters, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getNumberOfRequiredParameters, arginfo_class_ReflectionFunctionAbstract_getNumberOfRequiredParameters, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getParameters, arginfo_class_ReflectionFunctionAbstract_getParameters, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getShortName, arginfo_class_ReflectionFunctionAbstract_getShortName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getStartLine, arginfo_class_ReflectionFunctionAbstract_getStartLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getStaticVariables, arginfo_class_ReflectionFunctionAbstract_getStaticVariables, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, returnsReference, arginfo_class_ReflectionFunctionAbstract_returnsReference, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, hasReturnType, arginfo_class_ReflectionFunctionAbstract_hasReturnType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getReturnType, arginfo_class_ReflectionFunctionAbstract_getReturnType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, hasTentativeReturnType, arginfo_class_ReflectionFunctionAbstract_hasTentativeReturnType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getTentativeReturnType, arginfo_class_ReflectionFunctionAbstract_getTentativeReturnType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunctionAbstract, getAttributes, arginfo_class_ReflectionFunctionAbstract_getAttributes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionFunction_methods[] = {
+	CREX_ME(ReflectionFunction, __main, arginfo_class_ReflectionFunction___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunction, __toString, arginfo_class_ReflectionFunction___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunction, isAnonymous, arginfo_class_ReflectionFunction_isAnonymous, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunction, isDisabled, arginfo_class_ReflectionFunction_isDisabled, CREX_ACC_PUBLIC|CREX_ACC_DEPRECATED)
+	CREX_ME(ReflectionFunction, invoke, arginfo_class_ReflectionFunction_invoke, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunction, invokeArgs, arginfo_class_ReflectionFunction_invokeArgs, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFunction, getClosure, arginfo_class_ReflectionFunction_getClosure, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionGenerator_methods[] = {
+	CREX_ME(ReflectionGenerator, __main, arginfo_class_ReflectionGenerator___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getExecutingLine, arginfo_class_ReflectionGenerator_getExecutingLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getExecutingFile, arginfo_class_ReflectionGenerator_getExecutingFile, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getTrace, arginfo_class_ReflectionGenerator_getTrace, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getFunction, arginfo_class_ReflectionGenerator_getFunction, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getThis, arginfo_class_ReflectionGenerator_getThis, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionGenerator, getExecutingGenerator, arginfo_class_ReflectionGenerator_getExecutingGenerator, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionMethod_methods[] = {
+	CREX_ME(ReflectionMethod, __main, arginfo_class_ReflectionMethod___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, createFromMethodName, arginfo_class_ReflectionMethod_createFromMethodName, CREX_ACC_PUBLIC|CREX_ACC_STATIC)
+	CREX_ME(ReflectionMethod, __toString, arginfo_class_ReflectionMethod___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isPublic, arginfo_class_ReflectionMethod_isPublic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isPrivate, arginfo_class_ReflectionMethod_isPrivate, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isProtected, arginfo_class_ReflectionMethod_isProtected, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isAbstract, arginfo_class_ReflectionMethod_isAbstract, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isFinal, arginfo_class_ReflectionMethod_isFinal, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isConstructor, arginfo_class_ReflectionMethod_isConstructor, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, isDestructor, arginfo_class_ReflectionMethod_isDestructor, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, getClosure, arginfo_class_ReflectionMethod_getClosure, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, getModifiers, arginfo_class_ReflectionMethod_getModifiers, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, invoke, arginfo_class_ReflectionMethod_invoke, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, invokeArgs, arginfo_class_ReflectionMethod_invokeArgs, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, getDeclaringClass, arginfo_class_ReflectionMethod_getDeclaringClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, getPrototype, arginfo_class_ReflectionMethod_getPrototype, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, hasPrototype, arginfo_class_ReflectionMethod_hasPrototype, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionMethod, setAccessible, arginfo_class_ReflectionMethod_setAccessible, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionClass_methods[] = {
+	CREX_ME(ReflectionClass, __clone, arginfo_class_ReflectionClass___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionClass, __main, arginfo_class_ReflectionClass___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, __toString, arginfo_class_ReflectionClass___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getName, arginfo_class_ReflectionClass_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isInternal, arginfo_class_ReflectionClass_isInternal, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isUserDefined, arginfo_class_ReflectionClass_isUserDefined, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isAnonymous, arginfo_class_ReflectionClass_isAnonymous, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isInstantiable, arginfo_class_ReflectionClass_isInstantiable, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isCloneable, arginfo_class_ReflectionClass_isCloneable, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getFileName, arginfo_class_ReflectionClass_getFileName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getStartLine, arginfo_class_ReflectionClass_getStartLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getEndLine, arginfo_class_ReflectionClass_getEndLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getDocComment, arginfo_class_ReflectionClass_getDocComment, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getConstructor, arginfo_class_ReflectionClass_getConstructor, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, hasMethod, arginfo_class_ReflectionClass_hasMethod, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getMethod, arginfo_class_ReflectionClass_getMethod, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getMethods, arginfo_class_ReflectionClass_getMethods, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, hasProperty, arginfo_class_ReflectionClass_hasProperty, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getProperty, arginfo_class_ReflectionClass_getProperty, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getProperties, arginfo_class_ReflectionClass_getProperties, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, hasConstant, arginfo_class_ReflectionClass_hasConstant, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getConstants, arginfo_class_ReflectionClass_getConstants, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getReflectionConstants, arginfo_class_ReflectionClass_getReflectionConstants, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getConstant, arginfo_class_ReflectionClass_getConstant, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getReflectionConstant, arginfo_class_ReflectionClass_getReflectionConstant, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getInterfaces, arginfo_class_ReflectionClass_getInterfaces, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getInterfaceNames, arginfo_class_ReflectionClass_getInterfaceNames, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isInterface, arginfo_class_ReflectionClass_isInterface, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getTraits, arginfo_class_ReflectionClass_getTraits, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getTraitNames, arginfo_class_ReflectionClass_getTraitNames, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getTraitAliases, arginfo_class_ReflectionClass_getTraitAliases, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isTrait, arginfo_class_ReflectionClass_isTrait, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isEnum, arginfo_class_ReflectionClass_isEnum, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isAbstract, arginfo_class_ReflectionClass_isAbstract, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isFinal, arginfo_class_ReflectionClass_isFinal, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isReadOnly, arginfo_class_ReflectionClass_isReadOnly, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getModifiers, arginfo_class_ReflectionClass_getModifiers, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isInstance, arginfo_class_ReflectionClass_isInstance, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, newInstance, arginfo_class_ReflectionClass_newInstance, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, newInstanceWithoutConstructor, arginfo_class_ReflectionClass_newInstanceWithoutConstructor, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, newInstanceArgs, arginfo_class_ReflectionClass_newInstanceArgs, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getParentClass, arginfo_class_ReflectionClass_getParentClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isSubclassOf, arginfo_class_ReflectionClass_isSubclassOf, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getStaticProperties, arginfo_class_ReflectionClass_getStaticProperties, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getStaticPropertyValue, arginfo_class_ReflectionClass_getStaticPropertyValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, setStaticPropertyValue, arginfo_class_ReflectionClass_setStaticPropertyValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getDefaultProperties, arginfo_class_ReflectionClass_getDefaultProperties, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, isIterable, arginfo_class_ReflectionClass_isIterable, CREX_ACC_PUBLIC)
+	CREX_MALIAS(ReflectionClass, isIterateable, isIterable, arginfo_class_ReflectionClass_isIterateable, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, implementsInterface, arginfo_class_ReflectionClass_implementsInterface, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getExtension, arginfo_class_ReflectionClass_getExtension, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getExtensionName, arginfo_class_ReflectionClass_getExtensionName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, inNamespace, arginfo_class_ReflectionClass_inNamespace, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getNamespaceName, arginfo_class_ReflectionClass_getNamespaceName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getShortName, arginfo_class_ReflectionClass_getShortName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClass, getAttributes, arginfo_class_ReflectionClass_getAttributes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionObject_methods[] = {
+	CREX_ME(ReflectionObject, __main, arginfo_class_ReflectionObject___main, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionProperty_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionProperty___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionProperty, __main, arginfo_class_ReflectionProperty___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, __toString, arginfo_class_ReflectionProperty___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getName, arginfo_class_ReflectionProperty_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getValue, arginfo_class_ReflectionProperty_getValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, setValue, arginfo_class_ReflectionProperty_setValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isInitialized, arginfo_class_ReflectionProperty_isInitialized, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isPublic, arginfo_class_ReflectionProperty_isPublic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isPrivate, arginfo_class_ReflectionProperty_isPrivate, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isProtected, arginfo_class_ReflectionProperty_isProtected, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isStatic, arginfo_class_ReflectionProperty_isStatic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isReadOnly, arginfo_class_ReflectionProperty_isReadOnly, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isDefault, arginfo_class_ReflectionProperty_isDefault, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, isPromoted, arginfo_class_ReflectionProperty_isPromoted, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getModifiers, arginfo_class_ReflectionProperty_getModifiers, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getDeclaringClass, arginfo_class_ReflectionProperty_getDeclaringClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getDocComment, arginfo_class_ReflectionProperty_getDocComment, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, setAccessible, arginfo_class_ReflectionProperty_setAccessible, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getType, arginfo_class_ReflectionProperty_getType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, hasType, arginfo_class_ReflectionProperty_hasType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, hasDefaultValue, arginfo_class_ReflectionProperty_hasDefaultValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getDefaultValue, arginfo_class_ReflectionProperty_getDefaultValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionProperty, getAttributes, arginfo_class_ReflectionProperty_getAttributes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionClassConstant_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionClassConstant___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionClassConstant, __main, arginfo_class_ReflectionClassConstant___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, __toString, arginfo_class_ReflectionClassConstant___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getName, arginfo_class_ReflectionClassConstant_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getValue, arginfo_class_ReflectionClassConstant_getValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, isPublic, arginfo_class_ReflectionClassConstant_isPublic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, isPrivate, arginfo_class_ReflectionClassConstant_isPrivate, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, isProtected, arginfo_class_ReflectionClassConstant_isProtected, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, isFinal, arginfo_class_ReflectionClassConstant_isFinal, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getModifiers, arginfo_class_ReflectionClassConstant_getModifiers, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getDeclaringClass, arginfo_class_ReflectionClassConstant_getDeclaringClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getDocComment, arginfo_class_ReflectionClassConstant_getDocComment, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getAttributes, arginfo_class_ReflectionClassConstant_getAttributes, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, isEnumCase, arginfo_class_ReflectionClassConstant_isEnumCase, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, hasType, arginfo_class_ReflectionClassConstant_hasType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionClassConstant, getType, arginfo_class_ReflectionClassConstant_getType, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionParameter_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionParameter___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionParameter, __main, arginfo_class_ReflectionParameter___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, __toString, arginfo_class_ReflectionParameter___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getName, arginfo_class_ReflectionParameter_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isPassedByReference, arginfo_class_ReflectionParameter_isPassedByReference, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, canBePassedByValue, arginfo_class_ReflectionParameter_canBePassedByValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getDeclaringFunction, arginfo_class_ReflectionParameter_getDeclaringFunction, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getDeclaringClass, arginfo_class_ReflectionParameter_getDeclaringClass, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getClass, arginfo_class_ReflectionParameter_getClass, CREX_ACC_PUBLIC|CREX_ACC_DEPRECATED)
+	CREX_ME(ReflectionParameter, hasType, arginfo_class_ReflectionParameter_hasType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getType, arginfo_class_ReflectionParameter_getType, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isArray, arginfo_class_ReflectionParameter_isArray, CREX_ACC_PUBLIC|CREX_ACC_DEPRECATED)
+	CREX_ME(ReflectionParameter, isCallable, arginfo_class_ReflectionParameter_isCallable, CREX_ACC_PUBLIC|CREX_ACC_DEPRECATED)
+	CREX_ME(ReflectionParameter, allowsNull, arginfo_class_ReflectionParameter_allowsNull, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getPosition, arginfo_class_ReflectionParameter_getPosition, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isOptional, arginfo_class_ReflectionParameter_isOptional, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isDefaultValueAvailable, arginfo_class_ReflectionParameter_isDefaultValueAvailable, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getDefaultValue, arginfo_class_ReflectionParameter_getDefaultValue, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isDefaultValueConstant, arginfo_class_ReflectionParameter_isDefaultValueConstant, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getDefaultValueConstantName, arginfo_class_ReflectionParameter_getDefaultValueConstantName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isVariadic, arginfo_class_ReflectionParameter_isVariadic, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, isPromoted, arginfo_class_ReflectionParameter_isPromoted, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionParameter, getAttributes, arginfo_class_ReflectionParameter_getAttributes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionType_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionType___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionType, allowsNull, arginfo_class_ReflectionType_allowsNull, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionType, __toString, arginfo_class_ReflectionType___toString, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionNamedType_methods[] = {
+	CREX_ME(ReflectionNamedType, getName, arginfo_class_ReflectionNamedType_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionNamedType, isBuiltin, arginfo_class_ReflectionNamedType_isBuiltin, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionUnionType_methods[] = {
+	CREX_ME(ReflectionUnionType, getTypes, arginfo_class_ReflectionUnionType_getTypes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionIntersectionType_methods[] = {
+	CREX_ME(ReflectionIntersectionType, getTypes, arginfo_class_ReflectionIntersectionType_getTypes, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionExtension_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionExtension___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionExtension, __main, arginfo_class_ReflectionExtension___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, __toString, arginfo_class_ReflectionExtension___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getName, arginfo_class_ReflectionExtension_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getVersion, arginfo_class_ReflectionExtension_getVersion, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getFunctions, arginfo_class_ReflectionExtension_getFunctions, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getConstants, arginfo_class_ReflectionExtension_getConstants, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getINIEntries, arginfo_class_ReflectionExtension_getINIEntries, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getClasses, arginfo_class_ReflectionExtension_getClasses, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getClassNames, arginfo_class_ReflectionExtension_getClassNames, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, getDependencies, arginfo_class_ReflectionExtension_getDependencies, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, info, arginfo_class_ReflectionExtension_info, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, isPersistent, arginfo_class_ReflectionExtension_isPersistent, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionExtension, isTemporary, arginfo_class_ReflectionExtension_isTemporary, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionCrexExtension_methods[] = {
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionCrexExtension___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionCrexExtension, __main, arginfo_class_ReflectionCrexExtension___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, __toString, arginfo_class_ReflectionCrexExtension___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, getName, arginfo_class_ReflectionCrexExtension_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, getVersion, arginfo_class_ReflectionCrexExtension_getVersion, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, getAuthor, arginfo_class_ReflectionCrexExtension_getAuthor, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, getURL, arginfo_class_ReflectionCrexExtension_getURL, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionCrexExtension, getCopyright, arginfo_class_ReflectionCrexExtension_getCopyright, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionReference_methods[] = {
+	CREX_ME(ReflectionReference, fromArrayElement, arginfo_class_ReflectionReference_fromArrayElement, CREX_ACC_PUBLIC|CREX_ACC_STATIC)
+	CREX_ME(ReflectionReference, getId, arginfo_class_ReflectionReference_getId, CREX_ACC_PUBLIC)
+	CREX_MALIAS(ReflectionClass, __clone, __clone, arginfo_class_ReflectionReference___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionReference, __main, arginfo_class_ReflectionReference___main, CREX_ACC_PRIVATE)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionAttribute_methods[] = {
+	CREX_ME(ReflectionAttribute, getName, arginfo_class_ReflectionAttribute_getName, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, getTarget, arginfo_class_ReflectionAttribute_getTarget, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, isRepeated, arginfo_class_ReflectionAttribute_isRepeated, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, getArguments, arginfo_class_ReflectionAttribute_getArguments, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, newInstance, arginfo_class_ReflectionAttribute_newInstance, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, __toString, arginfo_class_ReflectionAttribute___toString, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionAttribute, __clone, arginfo_class_ReflectionAttribute___clone, CREX_ACC_PRIVATE)
+	CREX_ME(ReflectionAttribute, __main, arginfo_class_ReflectionAttribute___main, CREX_ACC_PRIVATE)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionEnum_methods[] = {
+	CREX_ME(ReflectionEnum, __main, arginfo_class_ReflectionEnum___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnum, hasCase, arginfo_class_ReflectionEnum_hasCase, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnum, getCase, arginfo_class_ReflectionEnum_getCase, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnum, getCases, arginfo_class_ReflectionEnum_getCases, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnum, isBacked, arginfo_class_ReflectionEnum_isBacked, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnum, getBackingType, arginfo_class_ReflectionEnum_getBackingType, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionEnumUnitCase_methods[] = {
+	CREX_ME(ReflectionEnumUnitCase, __main, arginfo_class_ReflectionEnumUnitCase___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnumUnitCase, getEnum, arginfo_class_ReflectionEnumUnitCase_getEnum, CREX_ACC_PUBLIC)
+	CREX_MALIAS(ReflectionClassConstant, getValue, getValue, arginfo_class_ReflectionEnumUnitCase_getValue, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionEnumBackedCase_methods[] = {
+	CREX_ME(ReflectionEnumBackedCase, __main, arginfo_class_ReflectionEnumBackedCase___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionEnumBackedCase, getBackingValue, arginfo_class_ReflectionEnumBackedCase_getBackingValue, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+
+static const crex_function_entry class_ReflectionFiber_methods[] = {
+	CREX_ME(ReflectionFiber, __main, arginfo_class_ReflectionFiber___main, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFiber, getFiber, arginfo_class_ReflectionFiber_getFiber, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFiber, getExecutingFile, arginfo_class_ReflectionFiber_getExecutingFile, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFiber, getExecutingLine, arginfo_class_ReflectionFiber_getExecutingLine, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFiber, getCallable, arginfo_class_ReflectionFiber_getCallable, CREX_ACC_PUBLIC)
+	CREX_ME(ReflectionFiber, getTrace, arginfo_class_ReflectionFiber_getTrace, CREX_ACC_PUBLIC)
+	CREX_FE_END
+};
+
+static crex_class_entry *register_class_ReflectionException(crex_class_entry *class_entry_Exception)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionException", class_ReflectionException_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_Exception);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_Reflection(void)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "Reflection", class_Reflection_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_Reflector(crex_class_entry *class_entry_Stringable)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "Reflector", class_Reflector_methods);
+	class_entry = crex_register_internal_interface(&ce);
+	crex_class_implements(class_entry, 1, class_entry_Stringable);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionFunctionAbstract(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionFunctionAbstract", class_ReflectionFunctionAbstract_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_ABSTRACT|CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionFunction(crex_class_entry *class_entry_ReflectionFunctionAbstract)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionFunction", class_ReflectionFunction_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionFunctionAbstract);
+
+	zval const_IS_DEPRECATED_value;
+	ZVAL_LONG(&const_IS_DEPRECATED_value, CREX_ACC_DEPRECATED);
+	crex_string *const_IS_DEPRECATED_name = crex_string_init_interned("IS_DEPRECATED", sizeof("IS_DEPRECATED") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_DEPRECATED_name, &const_IS_DEPRECATED_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_DEPRECATED_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionGenerator(void)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionGenerator", class_ReflectionGenerator_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_FINAL|CREX_ACC_NOT_SERIALIZABLE;
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionMethod(crex_class_entry *class_entry_ReflectionFunctionAbstract)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionMethod", class_ReflectionMethod_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionFunctionAbstract);
+
+	zval const_IS_STATIC_value;
+	ZVAL_LONG(&const_IS_STATIC_value, CREX_ACC_STATIC);
+	crex_string *const_IS_STATIC_name = crex_string_init_interned("IS_STATIC", sizeof("IS_STATIC") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_STATIC_name, &const_IS_STATIC_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_STATIC_name);
+
+	zval const_IS_PUBLIC_value;
+	ZVAL_LONG(&const_IS_PUBLIC_value, CREX_ACC_PUBLIC);
+	crex_string *const_IS_PUBLIC_name = crex_string_init_interned("IS_PUBLIC", sizeof("IS_PUBLIC") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PUBLIC_name, &const_IS_PUBLIC_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PUBLIC_name);
+
+	zval const_IS_PROTECTED_value;
+	ZVAL_LONG(&const_IS_PROTECTED_value, CREX_ACC_PROTECTED);
+	crex_string *const_IS_PROTECTED_name = crex_string_init_interned("IS_PROTECTED", sizeof("IS_PROTECTED") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PROTECTED_name, &const_IS_PROTECTED_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PROTECTED_name);
+
+	zval const_IS_PRIVATE_value;
+	ZVAL_LONG(&const_IS_PRIVATE_value, CREX_ACC_PRIVATE);
+	crex_string *const_IS_PRIVATE_name = crex_string_init_interned("IS_PRIVATE", sizeof("IS_PRIVATE") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PRIVATE_name, &const_IS_PRIVATE_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PRIVATE_name);
+
+	zval const_IS_ABSTRACT_value;
+	ZVAL_LONG(&const_IS_ABSTRACT_value, CREX_ACC_ABSTRACT);
+	crex_string *const_IS_ABSTRACT_name = crex_string_init_interned("IS_ABSTRACT", sizeof("IS_ABSTRACT") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_ABSTRACT_name, &const_IS_ABSTRACT_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_ABSTRACT_name);
+
+	zval const_IS_FINAL_value;
+	ZVAL_LONG(&const_IS_FINAL_value, CREX_ACC_FINAL);
+	crex_string *const_IS_FINAL_name = crex_string_init_interned("IS_FINAL", sizeof("IS_FINAL") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_FINAL_name, &const_IS_FINAL_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_FINAL_name);
+
+	zval property_class_default_value;
+	ZVAL_UNDEF(&property_class_default_value);
+	crex_string *property_class_name = crex_string_init("class", sizeof("class") - 1, 1);
+	crex_declare_typed_property(class_entry, property_class_name, &property_class_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_class_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionClass(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionClass", class_ReflectionClass_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval const_IS_IMPLICIT_ABSTRACT_value;
+	ZVAL_LONG(&const_IS_IMPLICIT_ABSTRACT_value, CREX_ACC_IMPLICIT_ABSTRACT_CLASS);
+	crex_string *const_IS_IMPLICIT_ABSTRACT_name = crex_string_init_interned("IS_IMPLICIT_ABSTRACT", sizeof("IS_IMPLICIT_ABSTRACT") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_IMPLICIT_ABSTRACT_name, &const_IS_IMPLICIT_ABSTRACT_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_IMPLICIT_ABSTRACT_name);
+
+	zval const_IS_EXPLICIT_ABSTRACT_value;
+	ZVAL_LONG(&const_IS_EXPLICIT_ABSTRACT_value, CREX_ACC_EXPLICIT_ABSTRACT_CLASS);
+	crex_string *const_IS_EXPLICIT_ABSTRACT_name = crex_string_init_interned("IS_EXPLICIT_ABSTRACT", sizeof("IS_EXPLICIT_ABSTRACT") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_EXPLICIT_ABSTRACT_name, &const_IS_EXPLICIT_ABSTRACT_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_EXPLICIT_ABSTRACT_name);
+
+	zval const_IS_FINAL_value;
+	ZVAL_LONG(&const_IS_FINAL_value, CREX_ACC_FINAL);
+	crex_string *const_IS_FINAL_name = crex_string_init_interned("IS_FINAL", sizeof("IS_FINAL") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_FINAL_name, &const_IS_FINAL_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_FINAL_name);
+
+	zval const_IS_READONLY_value;
+	ZVAL_LONG(&const_IS_READONLY_value, CREX_ACC_READONLY_CLASS);
+	crex_string *const_IS_READONLY_name = crex_string_init_interned("IS_READONLY", sizeof("IS_READONLY") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_READONLY_name, &const_IS_READONLY_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_READONLY_name);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionObject(crex_class_entry *class_entry_ReflectionClass)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionObject", class_ReflectionObject_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionClass);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionProperty(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionProperty", class_ReflectionProperty_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval const_IS_STATIC_value;
+	ZVAL_LONG(&const_IS_STATIC_value, CREX_ACC_STATIC);
+	crex_string *const_IS_STATIC_name = crex_string_init_interned("IS_STATIC", sizeof("IS_STATIC") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_STATIC_name, &const_IS_STATIC_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_STATIC_name);
+
+	zval const_IS_READONLY_value;
+	ZVAL_LONG(&const_IS_READONLY_value, CREX_ACC_READONLY);
+	crex_string *const_IS_READONLY_name = crex_string_init_interned("IS_READONLY", sizeof("IS_READONLY") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_READONLY_name, &const_IS_READONLY_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_READONLY_name);
+
+	zval const_IS_PUBLIC_value;
+	ZVAL_LONG(&const_IS_PUBLIC_value, CREX_ACC_PUBLIC);
+	crex_string *const_IS_PUBLIC_name = crex_string_init_interned("IS_PUBLIC", sizeof("IS_PUBLIC") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PUBLIC_name, &const_IS_PUBLIC_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PUBLIC_name);
+
+	zval const_IS_PROTECTED_value;
+	ZVAL_LONG(&const_IS_PROTECTED_value, CREX_ACC_PROTECTED);
+	crex_string *const_IS_PROTECTED_name = crex_string_init_interned("IS_PROTECTED", sizeof("IS_PROTECTED") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PROTECTED_name, &const_IS_PROTECTED_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PROTECTED_name);
+
+	zval const_IS_PRIVATE_value;
+	ZVAL_LONG(&const_IS_PRIVATE_value, CREX_ACC_PRIVATE);
+	crex_string *const_IS_PRIVATE_name = crex_string_init_interned("IS_PRIVATE", sizeof("IS_PRIVATE") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PRIVATE_name, &const_IS_PRIVATE_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PRIVATE_name);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	zval property_class_default_value;
+	ZVAL_UNDEF(&property_class_default_value);
+	crex_string *property_class_name = crex_string_init("class", sizeof("class") - 1, 1);
+	crex_declare_typed_property(class_entry, property_class_name, &property_class_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_class_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionClassConstant(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionClassConstant", class_ReflectionClassConstant_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval const_IS_PUBLIC_value;
+	ZVAL_LONG(&const_IS_PUBLIC_value, CREX_ACC_PUBLIC);
+	crex_string *const_IS_PUBLIC_name = crex_string_init_interned("IS_PUBLIC", sizeof("IS_PUBLIC") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PUBLIC_name, &const_IS_PUBLIC_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PUBLIC_name);
+
+	zval const_IS_PROTECTED_value;
+	ZVAL_LONG(&const_IS_PROTECTED_value, CREX_ACC_PROTECTED);
+	crex_string *const_IS_PROTECTED_name = crex_string_init_interned("IS_PROTECTED", sizeof("IS_PROTECTED") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PROTECTED_name, &const_IS_PROTECTED_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PROTECTED_name);
+
+	zval const_IS_PRIVATE_value;
+	ZVAL_LONG(&const_IS_PRIVATE_value, CREX_ACC_PRIVATE);
+	crex_string *const_IS_PRIVATE_name = crex_string_init_interned("IS_PRIVATE", sizeof("IS_PRIVATE") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_PRIVATE_name, &const_IS_PRIVATE_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_PRIVATE_name);
+
+	zval const_IS_FINAL_value;
+	ZVAL_LONG(&const_IS_FINAL_value, CREX_ACC_FINAL);
+	crex_string *const_IS_FINAL_name = crex_string_init_interned("IS_FINAL", sizeof("IS_FINAL") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_FINAL_name, &const_IS_FINAL_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_FINAL_name);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	zval property_class_default_value;
+	ZVAL_UNDEF(&property_class_default_value);
+	crex_string *property_class_name = crex_string_init("class", sizeof("class") - 1, 1);
+	crex_declare_typed_property(class_entry, property_class_name, &property_class_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_class_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionParameter(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionParameter", class_ReflectionParameter_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionType(crex_class_entry *class_entry_Stringable)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionType", class_ReflectionType_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_ABSTRACT|CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Stringable);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionNamedType(crex_class_entry *class_entry_ReflectionType)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionNamedType", class_ReflectionNamedType_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionType);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionUnionType(crex_class_entry *class_entry_ReflectionType)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionUnionType", class_ReflectionUnionType_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionType);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionIntersectionType(crex_class_entry *class_entry_ReflectionType)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionIntersectionType", class_ReflectionIntersectionType_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionType);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionExtension(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionExtension", class_ReflectionExtension_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionCrexExtension(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionCrexExtension", class_ReflectionCrexExtension_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval property_name_default_value;
+	ZVAL_UNDEF(&property_name_default_value);
+	crex_string *property_name_name = crex_string_init("name", sizeof("name") - 1, 1);
+	crex_declare_typed_property(class_entry, property_name_name, &property_name_default_value, CREX_ACC_PUBLIC, NULL, (crex_type) CREX_TYPE_INIT_MASK(MAY_BE_STRING));
+	crex_string_release(property_name_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionReference(void)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionReference", class_ReflectionReference_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_FINAL|CREX_ACC_NOT_SERIALIZABLE;
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionAttribute(crex_class_entry *class_entry_Reflector)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionAttribute", class_ReflectionAttribute_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_NOT_SERIALIZABLE;
+	crex_class_implements(class_entry, 1, class_entry_Reflector);
+
+	zval const_IS_INSTANCEOF_value;
+	ZVAL_LONG(&const_IS_INSTANCEOF_value, REFLECTION_ATTRIBUTE_IS_INSTANCEOF);
+	crex_string *const_IS_INSTANCEOF_name = crex_string_init_interned("IS_INSTANCEOF", sizeof("IS_INSTANCEOF") - 1, 1);
+	crex_declare_class_constant_ex(class_entry, const_IS_INSTANCEOF_name, &const_IS_INSTANCEOF_value, CREX_ACC_PUBLIC, NULL);
+	crex_string_release(const_IS_INSTANCEOF_name);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionEnum(crex_class_entry *class_entry_ReflectionClass)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionEnum", class_ReflectionEnum_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionClass);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionEnumUnitCase(crex_class_entry *class_entry_ReflectionClassConstant)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionEnumUnitCase", class_ReflectionEnumUnitCase_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionClassConstant);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionEnumBackedCase(crex_class_entry *class_entry_ReflectionEnumUnitCase)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionEnumBackedCase", class_ReflectionEnumBackedCase_methods);
+	class_entry = crex_register_internal_class_ex(&ce, class_entry_ReflectionEnumUnitCase);
+
+	return class_entry;
+}
+
+static crex_class_entry *register_class_ReflectionFiber(void)
+{
+	crex_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "ReflectionFiber", class_ReflectionFiber_methods);
+	class_entry = crex_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= CREX_ACC_FINAL|CREX_ACC_NOT_SERIALIZABLE;
+
+	return class_entry;
+}

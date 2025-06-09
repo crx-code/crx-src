@@ -1,0 +1,13 @@
+--TEST--
+Req #54514 (Get crx binary path during script execution)
+--FILE--
+<?crx
+if(realpath(getenv('TEST_CRX_EXECUTABLE')) === realpath(CRX_BINARY)) {
+    echo "done";
+} else {
+    var_dump(getenv('TEST_CRX_EXECUTABLE'));
+    var_dump(CRX_BINARY);
+}
+?>
+--EXPECT--
+done

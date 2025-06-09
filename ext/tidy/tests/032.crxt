@@ -1,0 +1,15 @@
+--TEST--
+tidy_error_count() function - basic test for tidy_error_count()
+--CREDITS--
+Christian Wenz <wenz@crx.net>
+--EXTENSIONS--
+tidy
+--FILE--
+<?crx
+$buffer = '<img src="file.png" /><crx>';
+
+$tidy = tidy_parse_string($buffer);
+var_dump(tidy_error_count($tidy));
+?>
+--EXPECTF--
+int(%d)

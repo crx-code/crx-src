@@ -1,0 +1,8 @@
+--TEST--
+$this in unset
+--FILE--
+<?crx
+unset($this);
+?>
+--EXPECTF--
+Fatal error: Cannot unset $this in %sthis_in_unset.crx on line 2

@@ -1,0 +1,200 @@
+--TEST--
+Crxa::conversion to other formats
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.tbz';
+$pname = 'crxa://' . $fname;
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+$zip = $crxa->convertToData(Crxa::ZIP);
+echo $zip->getPath() . "\n";
+$tgz = $crxa->convertToData(Crxa::TAR, Crxa::GZ);
+echo $tgz->getPath() . "\n";
+$tbz = $crxa->convertToData(Crxa::TAR, Crxa::BZ2);
+echo $tbz->getPath() . "\n";
+try {
+$crxa = $tbz->convertToExecutable(Crxa::CRXA, Crxa::NONE);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+copy($tbz->getPath(), $fname2);
+$tbz = new CrxaData($fname2);
+$crxa = $tbz->convertToExecutable(Crxa::CRXA, Crxa::NONE);
+echo $crxa->getPath() . "\n";
+$crxa['a'] = 'hi';
+$crxa['a']->setMetadata('hi');
+$zip = $crxa->convertToExecutable(Crxa::ZIP);
+echo $zip->getPath() . "\n";
+echo $zip['a']->getMetadata() . "\n";
+$data = $zip->convertToData();
+echo $data->getPath() . "\n";
+// extra code coverage
+try {
+$data->setStub('hi');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$data->setDefaultStub();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$data->setAlias('hi');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+$tar = $crxa->convertToExecutable(Crxa::TAR);
+echo $tar->getPath() . "\n";
+$data = $tar->convertToData();
+echo $data->getPath() . "\n";
+$tgz = $tar->convertToExecutable(null, Crxa::GZ);
+echo $tgz->getPath() . "\n";
+try {
+$tgz->convertToExecutable(25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToExecutable(Crxa::ZIP, Crxa::GZ);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToExecutable(Crxa::ZIP, Crxa::BZ2);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa->convertToData();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(Crxa::CRXA);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(Crxa::ZIP, Crxa::GZ);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(Crxa::ZIP, Crxa::BZ2);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToExecutable(Crxa::TAR, 25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(Crxa::TAR, 25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+// extra code coverage
+try {
+$data->setStub('hi');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$data->setAlias('hi');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$data->setDefaultStub();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$tgz->convertToData(Crxa::TAR, Crxa::GZ, '.crxa.tgz.oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+try {
+$crxa->convertToExecutable(Crxa::TAR, Crxa::GZ, '.tgz.oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+try {
+$tgz->convertToData(Crxa::TAR, Crxa::GZ, '.crxa/.tgz.oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar.gz');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar.bz2');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.tbz');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.tar.gz');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+%scrxa_convert_again.zip
+%scrxa_convert_again.tar.gz
+%scrxa_convert_again.tar.bz2
+Unable to add newly converted crxa "%scrxa_convert_again.crxa" to the list of crxas, a crxa with that name already exists
+%scrxa_convert_again2.crxa
+%scrxa_convert_again2.crxa.zip
+hi
+%scrxa_convert_again2.zip
+A Crxa stub cannot be set in a plain zip archive
+A Crxa stub cannot be set in a plain zip archive
+A Crxa alias cannot be set in a plain zip archive
+%scrxa_convert_again2.crxa.tar
+%scrxa_convert_again2.tar
+%scrxa_convert_again2.crxa.tar.gz
+Unknown file format specified, please pass one of Crxa::CRXA, Crxa::TAR or Crxa::ZIP
+Cannot compress entire archive with gzip, zip archives do not support whole-archive compression
+Cannot compress entire archive with bz2, zip archives do not support whole-archive compression
+Cannot write out data crxa archive, use Crxa::TAR or Crxa::ZIP
+Cannot write out data crxa archive, use Crxa::TAR or Crxa::ZIP
+Unknown file format specified, please pass one of Crxa::TAR or Crxa::ZIP
+Cannot compress entire archive with gzip, zip archives do not support whole-archive compression
+Cannot compress entire archive with bz2, zip archives do not support whole-archive compression
+Unknown compression specified, please pass one of Crxa::GZ or Crxa::BZ2
+Unknown compression specified, please pass one of Crxa::GZ or Crxa::BZ2
+A Crxa stub cannot be set in a plain tar archive
+A Crxa alias cannot be set in a plain tar archive
+A Crxa stub cannot be set in a plain tar archive
+data crxa "%scrxa_convert_again2.crxa.tgz.oops" has invalid extension crxa.tgz.oops
+crxa "%scrxa_convert_again2.tgz.oops" has invalid extension tgz.oops
+data crxa "%scrxa_convert_again2.crxa/.tgz.oops" has invalid extension crxa/.tgz.oops

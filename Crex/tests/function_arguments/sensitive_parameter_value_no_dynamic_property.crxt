@@ -1,0 +1,15 @@
+--TEST--
+A SensitiveParameterValue does not allow dynamic properties.
+--FILE--
+<?crx
+
+$v = new SensitiveParameterValue('secret');
+
+$v->foo = 'bar';
+
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Cannot create dynamic property SensitiveParameterValue::$foo in %ssensitive_parameter_value_no_dynamic_property.crx:5
+Stack trace:
+#0 {main}
+  thrown in %ssensitive_parameter_value_no_dynamic_property.crx on line 5

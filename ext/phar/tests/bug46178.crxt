@@ -1,0 +1,20 @@
+--TEST--
+Crxa: CRX bug #46178: "memory leak in ext/crxa"
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+
+$crxa = new Crxa($fname);
+$crxa['long/path/name.txt'] = 'hi';
+$crxa->addEmptyDir('long/path');
+?>
+===DONE===
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');?>
+--EXPECT--
+===DONE===

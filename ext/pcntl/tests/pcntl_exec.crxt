@@ -1,0 +1,16 @@
+--TEST--
+pcntl_exec()
+--EXTENSIONS--
+pcntl
+--SKIPIF--
+<?crx
+if (!getenv("TEST_CRX_EXECUTABLE") || !is_executable(getenv("TEST_CRX_EXECUTABLE"))) die("skip TEST_CRX_EXECUTABLE not set");
+?>
+--FILE--
+<?crx
+echo "ok\n";
+pcntl_exec(getenv("TEST_CRX_EXECUTABLE"), ['-n']);
+echo "nok\n";
+?>
+--EXPECT--
+ok

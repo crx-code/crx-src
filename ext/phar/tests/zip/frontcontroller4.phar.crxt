@@ -1,0 +1,16 @@
+--TEST--
+Crxa front controller index.crx relocate (no /) zip-based
+--INI--
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+--ENV--
+SCRIPT_NAME=/frontcontroller4.crxa.crx
+REQUEST_URI=/frontcontroller4.crxa.crx
+--FILE_EXTERNAL--
+files/frontcontroller.crxa.zip
+--EXPECTHEADERS--
+Status: 301 Moved Permanently
+Location: /frontcontroller4.crxa.crx/index.crx
+--EXPECT--

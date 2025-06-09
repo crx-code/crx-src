@@ -1,0 +1,19 @@
+--TEST--
+running code with -r
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n -r "var_dump('hello');"`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(18) "string(5) "hello"
+"
+Done

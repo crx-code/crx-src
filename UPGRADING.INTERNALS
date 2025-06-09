@@ -1,0 +1,170 @@
+CRX 8.3 INTERNALS UPGRADE NOTES
+
+1. Internal API changes
+
+2. Build system changes
+
+3. Module changes
+
+4. OpCode changes
+
+5. SAPI changes
+
+========================
+1. Internal API changes
+========================
+
+* crex_class_entry now possesses a default_object_handlers field, which
+  provides a default object handler when create_object() is not overriding it.
+* Custom Fiber implementations have to initialize EG(stack_limit) and
+  EG(stack_base).
+* EG(opline_before_exception) may now be null if the VM throws an exception
+  before executing any opline.
+* Many C header files have been cleaned up and include dependencies
+  have been reduced.  Many headers which used to be always included by
+  Crex headers (e.g. "errno.h") are no longer implied, and this may
+  break the build of third-party extensions which relied on this
+  implementation detail.  Those extensions may need to add the missing
+  #include lines.
+* Since version 8, CRX requires a C99 compiler.  Configure-time checks
+  for C99 features have been removed and therefore macro definitions
+  from crx_config.h have disappeared.  Do not use those feature
+  macros.
+* Internal class aliases created during request time can now exist in
+  the class table. crex_register_class_alias_ex() will not increase
+  the refcount for class aliases and the cleanup function takes this
+  into account.
+* The return types of the following functions have been changed from
+  `bool` to `crex_result`:
+  - crex_fiber_init_context()
+* The fast_add_function() has been removed, use add_function() that will
+  call the static inline add_function_fast() instead.
+* The order of members of crex_op_array, crex_ssa_var, crex_ssa_var_info,
+  crex_executor_globals and crx_core_globals have changed to improve
+  struct packing which reduces their size.
+* Many calls to crex_assign_to_variable have been replaced with
+  crex_assign_to_variable_ex which allows delaying the releasing of the old
+  variable value. This avoids side-effects through destructors between the
+  assignment of the variable and the assignment to the result zval in the VM
+  (i.e. it may free the new value). See GH-10168 for details.
+* The return types of the following functions were changed from int to
+  crex_result:
+  - open_file_for_scanning
+  - crx_rfc1867_callback
+  - virtual_chdir
+  - crex_execute_scripts
+  - crex_get_module_started
+  - crex_handle_undef_args
+  - crex_list_delete
+  - crex_multibyte_parse_encoding_list
+  - crex_multibyte_set_internal_encoding
+  - crex_parse_ini_file
+  - crex_parse_ini_string
+  - crex_set_user_opcode_handler
+  - crex_ssa_inference
+* Removed unused macros CRX_FNV1_32A_INIT and CRX_FNV1A_64_INIT. See GH-11114.
+* ext/standard/hrtime.h was moved to Crex/crex_hrtime.h
+  * The prefix of the CRX_HRTIME_ macros was changed to CREX_HRTIME_
+  * The HRTIME_AVAILABLE macro was renamed to CREX_HRTIME_AVAILABLE
+  * The crx_hrtime_current() function was renamed to crex_hrtime()
+* _crx_stream_dirent now has an extra d_type field that is used to store the
+  directory entry type. This can be used to avoid additional stat calls for
+  types when the type is already known.
+* The misspelled CREX_CGG_DIAGNOSTIC_IGNORED_(START|END) macros are deprecated.
+  Use CREX_DIAGNOSTIC_IGNORED_(START|END) instead. These macros now also support
+  Clang.
+
+========================
+2. Build system changes
+========================
+
+* CRX_EXTRA_VERSION can be passed to configure script to control custom CRX
+  build versions: ./configure CRX_EXTRA_VERSION="-acme"
+
+* LDFLAGS are not unset anymore allowing them to be adjusted e.g.
+  LDFLAGS="..." ./configure
+
+* Removed the HAVE_DEV_URANDOM compile time check.  HAVE_DEV_URANDOM will
+  now never be defined. Any checks relying on HAVE_DEV_URANDOM should be
+  removed.  Even with HAVE_DEV_URANDOM it was not guaranteed that
+  /dev/urandom is actually available at run time and thus a runtime
+  check needs to happen in all cases.
+
+========================
+3. Module changes
+========================
+
+ a. ext/json
+   - A new function crx_json_validate_ex has been added to check if the
+     provided C string is valid for the given depth and options.
+
+ b. ext/standard
+   - The CRXAPI crx_url_encode_hash_ex() function has had its signature change
+     from:
+     CRXAPI void crx_url_encode_hash_ex(HashTable *ht, smart_str *formstr,
+     				const char *num_prefix, size_t num_prefix_len,
+     				const char *key_prefix, size_t key_prefix_len,
+     				const char *key_suffix, size_t key_suffix_len,
+     				zval *type, const char *arg_sep, int enc_type);
+     to:
+     CRXAPI void crx_url_encode_hash_ex(HashTable *ht, smart_str *formstr,
+     				const char *num_prefix, size_t num_prefix_len,
+     				const crex_string *key_prefix,
+     				zval *type, const crex_string *arg_sep, int enc_type);
+     The change to use crex_string prevent the computation of the arg_sep
+     length at each call. The key_suffix parameter was dropped as it was a
+     constant value and depended on the key_prefix parameter to not be NULL.
+
+ c. ext/mysqlnd
+   - The function mysqlnd_shutdown and its corresponding internal methods
+   mysqlnd_command::shutdown & mysqlnd_conn_data::shutdown have been removed.
+   These functions are deprecated by MySQL in favour of SHUTDOWN SQL statement.
+
+ d. ext/pcre
+   - The function pcre_get_compiled_regex_ex has been removed.
+   Use pcre_get_compiled_regex instead.
+
+ e. ext/spl
+   - The CRXAPI spl_iterator_apply() function now returns crex_result instead of int.
+     There are no functional changes.
+   - The field _spl_filesystem_object->is_recursive has been removed.
+
+ f. ext/dom
+   - A new function dom_get_doc_props_read_only() is added to gather the document
+     properties in a read-only way. This function avoids allocation when there are
+     no document properties changed yet.
+   - The node list returned by DOMNode::getElementsByTagName() and
+	   DOMNode::getElementsByTagNameNS() now caches the length and the last requested item.
+	   This means that the length and the last requested item are not recalculated
+	   when the node list is iterated over multiple times.
+	   If you do not use the internal CRX dom APIs to modify the document, you need to
+	   manually invalidate the cache using crx_libxml_invalidate_node_list_cache_from_doc().
+	   Furthermore, the following internal APIs were added to handle the cache:
+	     . crx_dom_is_cache_tag_stale_from_doc_ptr()
+	     . crx_dom_is_cache_tag_stale_from_node()
+	     . crx_dom_mark_cache_tag_up_to_date_from_node()
+   - The function dom_get_elements_by_tag_name_ns_raw() has an additional parameter to indicate
+     the base node of the node list. This function also no longer accepts -1 as the index argument.
+   - The function dom_namednode_iter() has additional arguments to avoid recomputing the length of
+     the strings.
+   - The functions dom_parent_node_prepend(), dom_parent_node_append(), dom_parent_node_after(), and
+     dom_parent_node_before() now use an uint32_t argument for the number of nodes instead of int.
+   - There is now a helper function crx_dom_get_content_into_zval() to get the contents of a node.
+     This avoids allocation if possible.
+   - The function dom_set_old_ns() has been moved into ext/libxml as crx_libxml_set_old_ns() and
+     is now publicly exposed as an API.
+
+ g. ext/libxml
+   - Two new functions: crx_libxml_invalidate_node_list_cache_from_doc() and
+     crx_libxml_invalidate_node_list_cache() were added to invalidate the cache of a node list.
+
+========================
+4. OpCode changes
+========================
+
+========================
+5. SAPI changes
+========================
+
+* SAPIs that may execute in alternative stacks have to set EG(stack_limit) and
+  EG(stack_base)

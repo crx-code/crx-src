@@ -1,0 +1,100 @@
+--TEST--
+Crxa::buildFromIterator() RegexIterator(RecursiveIteratorIterator), SplFileInfo as current
+--EXTENSIONS--
+crxa
+--CONFLICTS--
+all
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+try {
+    chdir(__DIR__);
+    $crxa = new Crxa(__DIR__ . '/buildfromiterator10.crxa');
+    $dir = new RecursiveDirectoryIterator('.');
+    $iter = new RecursiveIteratorIterator($dir);
+    $a = $crxa->buildFromIterator(new RegexIterator($iter, '/_\d{3}\.crxt$/'), __DIR__ . DIRECTORY_SEPARATOR);
+    asort($a);
+    var_dump($a);
+} catch (Exception $e) {
+    var_dump(get_class($e));
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/buildfromiterator10.crxa');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+array(34) {
+  ["crxa_ctx_001.crxt"]=>
+  string(%d) "%scrxa_ctx_001.crxt"
+  ["crxa_get_supported_signatures_002.crxt"]=>
+  string(%d) "%scrxa_get_supported_signatures_002.crxt"
+  ["crxa_oo_001.crxt"]=>
+  string(%d) "%scrxa_oo_001.crxt"
+  ["crxa_oo_002.crxt"]=>
+  string(%d) "%scrxa_oo_002.crxt"
+  ["crxa_oo_003.crxt"]=>
+  string(%d) "%scrxa_oo_003.crxt"
+  ["crxa_oo_004.crxt"]=>
+  string(%d) "%scrxa_oo_004.crxt"
+  ["crxa_oo_005.crxt"]=>
+  string(%d) "%scrxa_oo_005.crxt"
+  ["crxa_oo_006.crxt"]=>
+  string(%d) "%scrxa_oo_006.crxt"
+  ["crxa_oo_007.crxt"]=>
+  string(%d) "%scrxa_oo_007.crxt"
+  ["crxa_oo_008.crxt"]=>
+  string(%d) "%scrxa_oo_008.crxt"
+  ["crxa_oo_009.crxt"]=>
+  string(%d) "%scrxa_oo_009.crxt"
+  ["crxa_oo_010.crxt"]=>
+  string(%d) "%scrxa_oo_010.crxt"
+  ["crxa_oo_011.crxt"]=>
+  string(%d) "%scrxa_oo_011.crxt"
+  ["crxa_oo_012.crxt"]=>
+  string(%d) "%scrxa_oo_012.crxt"
+  ["crxa_oo_compressed_001.crxt"]=>
+  string(%d) "%scrxa_oo_compressed_001.crxt"
+  ["crxa_oo_compressed_002.crxt"]=>
+  string(%d) "%scrxa_oo_compressed_002.crxt"
+  ["crxinfo_001.crxt"]=>
+  string(%d) "%scrxinfo_001.crxt"
+  ["crxinfo_002.crxt"]=>
+  string(%d) "%scrxinfo_002.crxt"
+  ["crxinfo_003.crxt"]=>
+  string(%d) "%scrxinfo_003.crxt"
+  ["crxinfo_004.crxt"]=>
+  string(%d) "%scrxinfo_004.crxt"
+  ["tar/tar_001.crxt"]=>
+  string(%d) "%star%ctar_001.crxt"
+  ["tar/tar_002.crxt"]=>
+  string(%d) "%star%ctar_002.crxt"
+  ["tar/tar_003.crxt"]=>
+  string(%d) "%star%ctar_003.crxt"
+  ["tar/tar_004.crxt"]=>
+  string(%d) "%star%ctar_004.crxt"
+  ["zip/corrupt_001.crxt"]=>
+  string(%d) "%szip%ccorrupt_001.crxt"
+  ["zip/corrupt_002.crxt"]=>
+  string(%d) "%szip%ccorrupt_002.crxt"
+  ["zip/corrupt_003.crxt"]=>
+  string(%d) "%szip%ccorrupt_003.crxt"
+  ["zip/corrupt_004.crxt"]=>
+  string(%d) "%szip%ccorrupt_004.crxt"
+  ["zip/corrupt_005.crxt"]=>
+  string(%d) "%szip%ccorrupt_005.crxt"
+  ["zip/corrupt_006.crxt"]=>
+  string(%d) "%szip%ccorrupt_006.crxt"
+  ["zip/corrupt_007.crxt"]=>
+  string(%d) "%szip%ccorrupt_007.crxt"
+  ["zip/corrupt_008.crxt"]=>
+  string(%d) "%szip%ccorrupt_008.crxt"
+  ["zip/corrupt_009.crxt"]=>
+  string(%d) "%szip%ccorrupt_009.crxt"
+  ["zip/corrupt_010.crxt"]=>
+  string(%d) "%szip%ccorrupt_010.crxt"
+}

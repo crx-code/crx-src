@@ -1,0 +1,11 @@
+--TEST--
+Constructors cannot declare a return type
+--FILE--
+<?crx
+
+class Foo {
+    function __main() : Foo {}
+}
+?>
+--EXPECTF--
+Fatal error: Method Foo::__main() cannot declare a return type in %s on line %d

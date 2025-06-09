@@ -1,0 +1,115 @@
+--TEST--
+Crxa: mounted manifest directory test
+--EXTENSIONS--
+crxa
+--CONFLICTS--
+tempmanifest1.crxa.crx
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/tempmanifest1.crxa.crx';
+$pname = 'crxa://' . $fname;
+
+$a = new Crxa($fname);
+$a['index.crx'] = '<?crx
+Crxa::mount("testit", dirname(Crxa::running(0)) . "/testit");
+echo file_get_contents(Crxa::running(1) . "/testit/extfile.crx"), "\n";
+echo file_get_contents(Crxa::running(1) . "/testit/directory"), "\n";
+echo file_get_contents(Crxa::running(1) . "/testit/existing.txt"), "\n";
+include "testit/extfile.crx";
+include "testit/extfile2.crx";
+try {
+Crxa::mount(".crxa/stub.crx", dirname(Crxa::running(0)) . "/testit/extfile.crx");
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+?>';
+$a['testit/existing.txt'] = 'oops';
+$a->setStub('<?crx
+set_include_path("crxa://" . __FILE__);
+include "index.crx";
+__HALT_COMPILER();');
+unset($a);
+mkdir(__DIR__ . '/testit');
+mkdir(__DIR__ . '/testit/directory');
+file_put_contents(__DIR__ . '/testit/extfile.crx', '<?crx
+var_dump(__FILE__);
+?>');
+file_put_contents(__DIR__ . '/testit/extfile2.crx', '<?crx
+var_dump(__FILE__);
+?>');
+include __DIR__ . '/testit/extfile.crx';
+include $fname;
+
+$a = opendir($pname . '/testit');
+$out = array();
+while (false !== ($b = readdir($a))) {
+    $out[] = $b;
+}
+sort($out);
+foreach ($out as $b) {
+    echo "$b\n";
+}
+$out = array();
+foreach (new Crxa($pname . '/testit') as $b) {
+    $out[] = $b->getPathName();
+}
+sort($out);
+foreach ($out as $b) {
+    echo "$b\n";
+}
+try {
+Crxa::mount($pname . '/testit', 'another\\..\\mistake');
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+Crxa::mount($pname . '/notfound', __DIR__ . '/this/does/not/exist');
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+Crxa::mount($pname . '/testit', __DIR__);
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+Crxa::mount($pname . '/testit/extfile.crx', __DIR__);
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tempmanifest1.crxa.crx');
+@unlink(__DIR__ . '/testit/extfile.crx');
+@unlink(__DIR__ . '/testit/extfile2.crx');
+@rmdir(__DIR__ . '/testit/directory');
+@rmdir(__DIR__ . '/testit');
+
+?>
+--EXPECTF--
+string(%d) "%sextfile.crx"
+<?crx
+var_dump(__FILE__);
+?>
+
+Warning: file_get_contents(crxa://%stempmanifest1.crxa.crx/testit/directory): Failed to open stream: crxa error: path "testit/directory" is a directory in crxa://%stempmanifest1.crxa.crx/index.crx on line %d
+
+oops
+string(%d) "crxa://%sextfile.crx"
+string(%d) "crxa://%sextfile2.crx"
+Mounting of .crxa/stub.crx to %sextfile.crx within crxa %stests/tempmanifest1.crxa.crx failed
+.
+..
+directory
+extfile.crx
+extfile2.crx
+crxa://%stempmanifest1.crxa.crx/testit%cdirectory
+crxa://%stempmanifest1.crxa.crx/testit%cextfile.crx
+crxa://%stempmanifest1.crxa.crx/testit%cextfile2.crx
+Mounting of /testit to another\..\mistake within crxa %stempmanifest1.crxa.crx failed
+Mounting of /notfound to %stests/this/does/not/exist within crxa %stempmanifest1.crxa.crx failed
+Mounting of /testit to %stests within crxa %stests/tempmanifest1.crxa.crx failed
+Mounting of /testit/extfile.crx to %stests within crxa %stests/tempmanifest1.crxa.crx failed

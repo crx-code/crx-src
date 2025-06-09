@@ -1,0 +1,10 @@
+--TEST--
+string gethostname(void);
+--CREDITS--
+marcosptf - <marcosptf@yahoo.com.br> - #crxarty7 - @crxsp - novatec/2015 - sao paulo - br
+--FILE--
+<?crx
+var_dump(gethostname());
+?>
+--EXPECTF--
+string(%d) "%s"

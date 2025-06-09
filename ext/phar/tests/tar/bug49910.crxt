@@ -1,0 +1,48 @@
+--TEST--
+Bug #49910: no support for ././@LongLink for long filenames in crxa tar support
+--EXTENSIONS--
+crxa
+zlib
+--FILE--
+<?crx
+$fname = str_replace('\\', '/', __DIR__ . '/files/Structures_Graph-1.0.3.tgz');
+$tar = new CrxaData($fname);
+$files = array();
+foreach (new RecursiveIteratorIterator($tar) as $file) {
+    $files[] = str_replace($fname, '*', $file->getPathName());
+}
+print_r($files);
+?>
+--EXPECT--
+Array
+(
+    [0] => crxa://*/Structures_Graph-1.0.3/LICENSE
+    [1] => crxa://*/Structures_Graph-1.0.3/Structures/Graph/Manipulator/AcyclicTest.crx
+    [2] => crxa://*/Structures_Graph-1.0.3/Structures/Graph/Manipulator/TopologicalSorter.crx
+    [3] => crxa://*/Structures_Graph-1.0.3/Structures/Graph/Node.crx
+    [4] => crxa://*/Structures_Graph-1.0.3/Structures/Graph.crx
+    [5] => crxa://*/Structures_Graph-1.0.3/docs/generate.sh
+    [6] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/Structures_Graph.html
+    [7] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/Structures_Graph_Manipulator_AcyclicTest.html
+    [8] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/Structures_Graph_Manipulator_TopologicalSorter.html
+    [9] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/Structures_Graph_Node.html
+    [10] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/_Structures_Graph_Manipulator_AcyclicTest_crx.html
+    [11] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/_Structures_Graph_Manipulator_TopologicalSorter_crx.html
+    [12] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/_Structures_Graph_Node_crx.html
+    [13] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/_Structures_Graph_crx.html
+    [14] => crxa://*/Structures_Graph-1.0.3/docs/html/Structures_Graph/tutorial_Structures_Graph.pkg.html
+    [15] => crxa://*/Structures_Graph-1.0.3/docs/html/classtrees_Structures_Graph.html
+    [16] => crxa://*/Structures_Graph-1.0.3/docs/html/elementindex.html
+    [17] => crxa://*/Structures_Graph-1.0.3/docs/html/elementindex_Structures_Graph.html
+    [18] => crxa://*/Structures_Graph-1.0.3/docs/html/errors.html
+    [19] => crxa://*/Structures_Graph-1.0.3/docs/html/index.html
+    [20] => crxa://*/Structures_Graph-1.0.3/docs/html/li_Structures_Graph.html
+    [21] => crxa://*/Structures_Graph-1.0.3/docs/html/media/banner.css
+    [22] => crxa://*/Structures_Graph-1.0.3/docs/html/media/stylesheet.css
+    [23] => crxa://*/Structures_Graph-1.0.3/docs/html/packages.html
+    [24] => crxa://*/Structures_Graph-1.0.3/docs/html/todolist.html
+    [25] => crxa://*/Structures_Graph-1.0.3/docs/tutorials/Structures_Graph/Structures_Graph.pkg
+    [26] => crxa://*/Structures_Graph-1.0.3/tests/AllTests.crx
+    [27] => crxa://*/Structures_Graph-1.0.3/tests/testCase/BasicGraph.crx
+    [28] => crxa://*/package.xml
+)

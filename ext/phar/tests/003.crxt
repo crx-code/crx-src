@@ -1,0 +1,13 @@
+--TEST--
+Crxa::canCompress
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+/* check this works and actually returns the boolean value */
+var_dump(Crxa::canCompress() == (
+    extension_loaded("zlib") || extension_loaded("bz2")
+    ));
+?>
+--EXPECT--
+bool(true)

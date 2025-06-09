@@ -1,0 +1,24 @@
+--TEST--
+Crxa - bug #70433 - Uninitialized pointer in crxa_make_dirstream when zip entry filename is "/"
+--EXTENSIONS--
+crxa
+zlib
+--FILE--
+<?crx
+$crxa = new CrxaData(__DIR__."/bug70433.zip");
+var_dump($crxa);
+$meta = $crxa->getMetadata();
+var_dump($meta);
+?>
+DONE
+--EXPECT--
+object(CrxaData)#1 (3) {
+  ["pathName":"SplFileInfo":private]=>
+  string(0) ""
+  ["glob":"DirectoryIterator":private]=>
+  bool(false)
+  ["subPathName":"RecursiveDirectoryIterator":private]=>
+  string(0) ""
+}
+NULL
+DONE

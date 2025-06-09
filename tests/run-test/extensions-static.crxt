@@ -1,0 +1,9 @@
+--TEST--
+crxt EXTENSIONS directive - static extension is present
+--EXTENSIONS--
+standard
+--FILE--
+<?crx
+var_dump(extension_loaded('standard'));
+--EXPECT--
+bool(true)

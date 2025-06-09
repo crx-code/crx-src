@@ -1,0 +1,36 @@
+--TEST--
+Crxa: crxa-based crxa named with ".zip" fails
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$tname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$alias = 'crxa://hio';
+
+$crxa = new Crxa($fname);
+$crxa['a.crx'] = '<?crx echo "This is a\n"; include "'.$alias.'/b.crx"; ?>';
+$crxa->setAlias('hio');
+$crxa->addEmptyDir('test');
+$crxa->stopBuffering();
+copy($fname, $tname);
+$crxa->setAlias('hio2');
+
+try {
+    $p = new Crxa($tname);
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+?>
+--EXPECTF--
+crxa zip error: crxa "%sexists_as_crxa.crxa.zip" already exists as a regular crxa and must be deleted from disk prior to creating as a zip-based crxa

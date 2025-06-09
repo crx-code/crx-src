@@ -1,0 +1,19 @@
+--TEST--
+#[\Override]: abstract __main
+--FILE--
+<?crx
+
+abstract class P {
+    public abstract function __main();
+}
+
+class C extends P {
+    #[\Override]
+    public function __main() {}
+}
+
+echo "Done";
+
+?>
+--EXPECT--
+Done

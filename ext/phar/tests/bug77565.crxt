@@ -1,0 +1,11 @@
+--TEST--
+Bug #77565 (Incorrect locator detection in ZIP-based crxas)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$crxa = new CrxaData(__DIR__ . '/bug77565.zip');
+var_dump($crxa['1.zip']->getFilename());
+?>
+--EXPECT--
+string(5) "1.zip"

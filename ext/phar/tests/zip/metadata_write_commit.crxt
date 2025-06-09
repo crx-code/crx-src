@@ -1,0 +1,83 @@
+--TEST--
+Crxa with meta-data (write) zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$f2name = __DIR__ . '/files/metadata.crxa.zip';
+$pname = 'crxa://' . $fname;
+$p2name = 'crxa://' . $f2name;
+
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = array('cont' => 'a');
+$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
+$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
+$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
+
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($p2name.'/'.$name));
+}
+
+copy($f2name, $fname);
+$crxa = new Crxa($fname);
+$crxa->startBuffering();
+$crxa['a']->setMetadata(42);
+$crxa['b']->setMetadata(NULL);
+$crxa['c']->setMetadata(array(25, 'foo'=>'bar'));
+$crxa['d']->setMetadata(true);
+$crxa->setMetadata('hi');
+
+foreach($files as $name => $cont) {
+    var_dump($crxa[$name]->getMetadata());
+}
+$crxa->stopBuffering();
+
+unset($crxa);
+
+$crxa = new Crxa($fname);
+
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
+
+foreach($files as $name => $cont) {
+    var_dump($crxa[$name]->getMetadata());
+}
+var_dump($crxa->getMetadata());
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx'); ?>
+--EXPECT--
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"
+int(42)
+NULL
+array(2) {
+  [0]=>
+  int(25)
+  ["foo"]=>
+  string(3) "bar"
+}
+bool(true)
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"
+int(42)
+NULL
+array(2) {
+  [0]=>
+  int(25)
+  ["foo"]=>
+  string(3) "bar"
+}
+bool(true)
+string(2) "hi"

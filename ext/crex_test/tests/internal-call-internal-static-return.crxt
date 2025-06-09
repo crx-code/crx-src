@@ -1,0 +1,32 @@
+--TEST--
+Calling a builtin function with 'static' return type from internal code
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+enum IntIntStaticInt : int {
+	case Life = 42;
+}
+
+enum IntIntStaticString : string {
+	case ThanksFor = "all the fish";
+}
+
+var_dump(crex_call_method(IntIntStaticInt::class, "from", 42));
+var_dump(crex_call_method(IntIntStaticInt::class, "tryFrom", 42));
+var_dump(crex_call_method(IntIntStaticString::class, "from", "all the fish"));
+var_dump(crex_call_method(IntIntStaticString::class, "tryFrom", "all the fish"));
+
+class StillReturnsStatic extends _CrexTestClass {}
+
+var_dump(get_class(crex_call_method(_CrexTestClass::class, "returnsStatic")));
+var_dump(get_class(crex_call_method(StillReturnsStatic::class, "returnsStatic")));
+
+--EXPECT--
+enum(IntIntStaticInt::Life)
+enum(IntIntStaticInt::Life)
+enum(IntIntStaticString::ThanksFor)
+enum(IntIntStaticString::ThanksFor)
+string(14) "_CrexTestClass"
+string(18) "StillReturnsStatic"

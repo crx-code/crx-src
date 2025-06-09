@@ -1,0 +1,17 @@
+--TEST--
+Test crx_uname() function -  error conditions - pass function incorrect arguments
+--FILE--
+<?crx
+
+echo "*** Testing crx_uname() - error test\n";
+
+echo "\n-- Testing crx_uname() function with invalid mode --\n";
+// am invalid mode should result in same o/p as mode 'a'
+var_dump( crx_uname('z') == crx_uname('z') );
+
+?>
+--EXPECT--
+*** Testing crx_uname() - error test
+
+-- Testing crx_uname() function with invalid mode --
+bool(true)

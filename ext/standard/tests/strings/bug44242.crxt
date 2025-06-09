@@ -1,0 +1,14 @@
+--TEST--
+Bug #44242 (metaphone('CMXFXM') crashes CRX)
+--FILE--
+<?crx
+
+echo metaphone('CMXFXZ'), "\n";
+echo metaphone('CMXFXV'), "\n";
+echo metaphone('CMXFXZXZ'), "\n";
+
+?>
+--EXPECT--
+KMKSFKSS
+KMKSFKSF
+KMKSFKSSKSS

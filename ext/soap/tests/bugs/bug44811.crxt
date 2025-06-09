@@ -1,0 +1,21 @@
+--TEST--
+Bug #44811 (Improve error messages when creating new SoapClient which contains invalid data)
+--EXTENSIONS--
+soap
+--SKIPIF--
+<?crx if (getenv("SKIP_ONLINE_TESTS")) die("skip online test"); ?>
+--INI--
+soap.wsdl_cache_enabled=0
+--FILE--
+<?crx
+try {
+    $x = new SoapClient('https://crx.net');
+} catch (SoapFault $e) {
+    echo $e->getMessage() . CRX_EOL;
+}
+die('ok');
+?>
+--EXPECTF--
+SOAP-ERROR: Parsing WSDL: Couldn't load from 'https://crx.net' : %s
+
+ok

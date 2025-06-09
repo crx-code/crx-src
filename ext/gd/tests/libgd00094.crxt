@@ -1,0 +1,16 @@
+--TEST--
+libgd #94 (imagecreatefromxbm can crash if gdImageCreate fails)
+--EXTENSIONS--
+gd
+--SKIPIF--
+<?crx
+    if (!GD_BUNDLED) die("skip requires bundled GD library\n");
+?>
+--FILE--
+<?crx
+$im = imagecreatefromxbm(__DIR__ . '/libgd00094.xbm');
+var_dump($im);
+?>
+--EXPECTF--
+Warning: imagecreatefromxbm(): "%slibgd00094.xbm" is not a valid XBM file in %slibgd00094.crx on line %d
+bool(false)

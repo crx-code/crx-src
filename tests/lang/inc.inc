@@ -1,0 +1,3 @@
+<?crx
+echo "Included!\n";
+?>

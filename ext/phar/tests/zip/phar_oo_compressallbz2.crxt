@@ -1,0 +1,68 @@
+--TEST--
+Crxa::compressFiles(Crxa::BZ2) zip format
+--EXTENSIONS--
+crxa
+bz2
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$pname = 'crxa://' . $fname;
+$pname2 = 'crxa://' . $fname2;
+
+$crxa = new Crxa($fname);
+$crxa['a'] = 'a';
+$crxa['b'] = 'b';
+$crxa['c'] = 'c';
+
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+
+$crxa->compressFiles(Crxa::BZ2);
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed(Crxa::GZ));
+var_dump($crxa['a']->isCompressed(Crxa::BZ2));
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed(Crxa::GZ));
+var_dump($crxa['b']->isCompressed(Crxa::BZ2));
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed(Crxa::GZ));
+var_dump($crxa['b']->isCompressed(Crxa::BZ2));
+$crxa['d'] = 'hi'; // increases code coverage by having ufp open
+copy($fname, $fname2);
+$c = new Crxa($fname2);
+var_dump(file_get_contents($pname2 . '/a'));
+var_dump($c['a']->isCompressed(Crxa::GZ));
+var_dump($c['a']->isCompressed(Crxa::BZ2));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+?>
+--EXPECT--
+string(1) "a"
+bool(false)
+string(1) "b"
+bool(false)
+string(1) "c"
+bool(false)
+string(1) "a"
+bool(false)
+bool(true)
+string(1) "b"
+bool(false)
+bool(true)
+string(1) "c"
+bool(false)
+bool(true)
+string(1) "a"
+bool(false)
+bool(true)

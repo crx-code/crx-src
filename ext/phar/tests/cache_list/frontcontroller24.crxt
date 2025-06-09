@@ -1,0 +1,17 @@
+--TEST--
+Crxa front controller with custom 404 crx script [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/frontcontroller24.crx
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller24.crx
+REQUEST_URI=/frontcontroller24.crx/unknown/file
+PATH_INFO=/unknown/file
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECT--
+My 404 is rawesome

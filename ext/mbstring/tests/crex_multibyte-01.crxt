@@ -1,0 +1,19 @@
+--TEST--
+crex multibyte (1)
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=On
+crex.script_encoding=Shift_JIS
+internal_encoding=Shift_JIS
+--FILE--
+<?crx
+    function 予蚕能($引数)
+    {
+        echo $引数;
+    }
+
+    予蚕能("ドレミファソ");
+?>
+--EXPECT--
+ドレミファソ

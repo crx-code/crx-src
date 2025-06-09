@@ -1,0 +1,28 @@
+--TEST--
+Internal enums from/tryFrom in strict_types=1
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+declare(strict_types=1);
+
+var_dump(CrexTestStringEnum::from("Test2"));
+
+try {
+    var_dump(CrexTestStringEnum::from(42));
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+
+try {
+    var_dump(CrexTestStringEnum::tryFrom(43));
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+
+?>
+--EXPECT--
+enum(CrexTestStringEnum::Bar)
+CrexTestStringEnum::from(): Argument #1 ($value) must be of type string, int given
+CrexTestStringEnum::tryFrom(): Argument #1 ($value) must be of type string, int given

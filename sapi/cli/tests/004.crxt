@@ -1,0 +1,32 @@
+--TEST--
+show information about function
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n --rf unknown`);
+var_dump(`$crx -n --rf echo`);
+var_dump(`$crx -n --rf crxinfo`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(45) "Exception: Function unknown() does not exist
+"
+string(42) "Exception: Function echo() does not exist
+"
+string(155) "Function [ <internal:standard> function crxinfo ] {
+
+  - Parameters [1] {
+    Parameter #0 [ <optional> int $flags = INFO_ALL ]
+  }
+  - Return [ true ]
+}
+
+"
+Done

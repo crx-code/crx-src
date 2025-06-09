@@ -1,0 +1,28 @@
+--TEST--
+Crxa: test ini_set with readonly and require_hash enabled
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=1
+crxa.readonly=1
+--FILE--
+<?crx
+var_dump(ini_set('crxa.require_hash', 1));
+var_dump(ini_set('crxa.readonly', 1));
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+var_dump(ini_set('crxa.require_hash', 0));
+var_dump(ini_set('crxa.readonly', 0));
+var_dump(ini_get('crxa.require_hash'));
+var_dump(ini_get('crxa.readonly'));
+__HALT_COMPILER();
+?>
+--EXPECT--
+string(1) "1"
+string(1) "1"
+string(1) "1"
+string(1) "1"
+bool(false)
+bool(false)
+string(1) "1"
+string(1) "1"

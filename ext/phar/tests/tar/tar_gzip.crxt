@@ -1,0 +1,48 @@
+--TEST--
+Crxa: tar-based crxa, gzipped tar
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+$fname = __DIR__ . '/tar_gzip.crxa';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/tar_gzip.crxa.tar';
+$pname2 = 'crxa://' . $fname2;
+
+$a = new tarmaker($fname, 'zlib');
+$a->init();
+$a->addFile('tar_004.crx', '<?crx var_dump(__FILE__);');
+$a->addFile('internal/file/here', "hi there!\n");
+$a->mkDir('internal/dir');
+$a->mkDir('dir');
+$a->addFile('.crxa/stub.crx', '<?crx
+Crxa::mapCrxa();
+var_dump("it worked");
+include "crxa://" . __FILE__ . "/tar_004.crx";
+');
+$a->close();
+
+include $fname;
+
+$a = new Crxa($fname);
+$a['test'] = 'hi';
+copy($fname, $fname2);
+$b = new Crxa($fname2);
+var_dump($b->isFileFormat(Crxa::TAR));
+var_dump($b->isCompressed() == Crxa::GZ);
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_gzip.crxa');
+@unlink(__DIR__ . '/tar_gzip.crxa.tar');
+?>
+--EXPECTF--
+string(9) "it worked"
+string(%d) "crxa://%star_gzip.crxa/tar_004.crx"
+bool(true)
+bool(true)

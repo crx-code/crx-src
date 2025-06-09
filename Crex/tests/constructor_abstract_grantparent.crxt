@@ -1,0 +1,18 @@
+--TEST--
+LSP checks are performed against an abstract constructor even if it is not a direct parent
+--FILE--
+<?crx
+
+abstract class A {
+    abstract function __main(X $x);
+}
+class B extends A {
+    function __main(X $x) {}
+}
+class C extends B {
+    function __main() {}
+}
+
+?>
+--EXPECTF--
+Fatal error: Declaration of C::__main() must be compatible with A::__main(X $x) in %s on line 10

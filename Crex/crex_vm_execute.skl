@@ -1,0 +1,156 @@
+{%DEFINES%}
+
+#if (CREX_VM_KIND != CREX_VM_KIND_CALL) && (CREX_GCC_VERSION >= 4000) && !defined(__clang__)
+# pragma GCC push_options
+# pragma GCC optimize("no-gcse")
+# pragma GCC optimize("no-ivopts")
+#endif
+CREX_API void {%EXECUTOR_NAME%}_ex(crex_execute_data *ex)
+{
+	DCL_OPLINE
+
+	{%HELPER_VARS%}
+
+	{%INTERNAL_LABELS%}
+
+	LOAD_OPLINE();
+	CREX_VM_LOOP_INTERRUPT_CHECK();
+
+#ifdef CREX_CHECK_STACK_LIMIT
+	if (UNEXPECTED(crex_call_stack_overflowed(EG(stack_limit)))) {
+		crex_call_stack_size_error();
+		/* No opline was executed before exception */
+		EG(opline_before_exception) = NULL;
+		LOAD_OPLINE();
+		/* Fall through to handle exception below. */
+	}
+#endif /* CREX_CHECK_STACK_LIMIT */
+
+	while (1) {
+		{%CREX_VM_CONTINUE_LABEL%}
+		{%CREX_VM_DISPATCH%} {
+			{%INTERNAL_EXECUTOR%}
+		}
+
+	}
+	crex_error_noreturn(E_CORE_ERROR, "Arrived at end of main loop which shouldn't happen");
+}
+#if (CREX_VM_KIND != CREX_VM_KIND_CALL) && (CREX_GCC_VERSION >= 4000) && !defined(__clang__)
+# pragma GCC pop_options
+#endif
+
+CREX_API void crex_{%EXECUTOR_NAME%}(crex_op_array *op_array, zval *return_value)
+{
+	crex_execute_data *execute_data;
+	void *object_or_called_scope;
+	uint32_t call_info;
+
+	if (EG(exception) != NULL) {
+		return;
+	}
+
+	object_or_called_scope = crex_get_this_object(EG(current_execute_data));
+	if (EXPECTED(!object_or_called_scope)) {
+		object_or_called_scope = crex_get_called_scope(EG(current_execute_data));
+		call_info = CREX_CALL_TOP_CODE | CREX_CALL_HAS_SYMBOL_TABLE;
+	} else {
+		call_info = CREX_CALL_TOP_CODE | CREX_CALL_HAS_SYMBOL_TABLE | CREX_CALL_HAS_THIS;
+	}
+	execute_data = crex_vm_stack_push_call_frame(call_info,
+		(crex_function*)op_array, 0, object_or_called_scope);
+	if (EG(current_execute_data)) {
+		execute_data->symbol_table = crex_rebuild_symbol_table();
+	} else {
+		execute_data->symbol_table = &EG(symbol_table);
+	}
+	EX(prev_execute_data) = EG(current_execute_data);
+	i_init_code_execute_data(execute_data, op_array, return_value);
+	CREX_OBSERVER_FCALL_BEGIN(execute_data);
+	crex_{%EXECUTOR_NAME%}_ex(execute_data);
+	/* Observer end handlers are called from CREX_RETURN */
+	crex_vm_stack_free_call_frame(execute_data);
+}
+
+{%EXTERNAL_EXECUTOR%}
+
+void {%INITIALIZER_NAME%}(void)
+{
+	{%EXTERNAL_LABELS%}
+	VM_TRACE_START();
+}
+
+static HashTable *crex_handlers_table = NULL;
+
+void crex_vm_dtor(void)
+{
+	VM_TRACE_END();
+	if (crex_handlers_table) {
+		crex_hash_destroy(crex_handlers_table);
+		free(crex_handlers_table);
+		crex_handlers_table = NULL;
+	}
+}
+
+static void init_opcode_serialiser(void)
+{
+	int i;
+	zval tmp;
+
+	crex_handlers_table = malloc(sizeof(HashTable));
+	crex_hash_init(crex_handlers_table, crex_handlers_count, NULL, NULL, 1);
+	crex_hash_real_init(crex_handlers_table, 0);
+	C_TYPE_INFO(tmp) = IS_LONG;
+	for (i = 0; i < crex_handlers_count; i++) {
+		C_LVAL(tmp) = i;
+		crex_hash_index_add(crex_handlers_table, (crex_long)(uintptr_t)crex_opcode_handlers[i], &tmp);
+	}
+}
+
+CREX_API void CREX_FASTCALL crex_serialize_opcode_handler(crex_op *op)
+{
+	zval *zv;
+
+	if (!crex_handlers_table) {
+		init_opcode_serialiser();
+	}
+	zv = crex_hash_index_find(crex_handlers_table, (crex_long)(uintptr_t)op->handler);
+	CREX_ASSERT(zv != NULL);
+	op->handler = (const void *)(uintptr_t)C_LVAL_P(zv);
+}
+
+CREX_API void CREX_FASTCALL crex_deserialize_opcode_handler(crex_op *op)
+{
+	op->handler = crex_opcode_handlers[(uintptr_t)op->handler];
+}
+
+CREX_API const void* CREX_FASTCALL crex_get_opcode_handler_func(const crex_op *op)
+{
+#if CREX_VM_KIND == CREX_VM_KIND_CALL
+	return op->handler;
+#elif CREX_VM_KIND == CREX_VM_KIND_HYBRID
+	zval *zv;
+
+	if (!crex_handlers_table) {
+		init_opcode_serialiser();
+	}
+	zv = crex_hash_index_find(crex_handlers_table, (crex_long)(uintptr_t)op->handler);
+	CREX_ASSERT(zv != NULL);
+	return crex_opcode_handler_funcs[C_LVAL_P(zv)];
+#else
+	return NULL;
+#endif
+}
+
+CREX_API const crex_op *crex_get_halt_op(void)
+{
+#if CREX_VM_KIND == CREX_VM_KIND_HYBRID
+	return &hybrid_halt_op;
+#else
+	return NULL;
+#endif
+}
+
+CREX_API int crex_vm_kind(void)
+{
+	return CREX_VM_KIND;
+}

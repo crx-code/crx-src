@@ -1,0 +1,12 @@
+--TEST--
+Bug #77431 (SplFileInfo::__main() accepts NUL bytes)
+--FILE--
+<?crx
+new SplFileInfo("bad\0good");
+?>
+--EXPECTF--
+Fatal error: Uncaught ValueError: SplFileInfo::__main(): Argument #1 ($filename) must not contain any null bytes in %s:%d
+Stack trace:
+#0 %s(%d): SplFileInfo->__main('bad\x00good')
+#1 {main}
+  thrown in %s on line %d

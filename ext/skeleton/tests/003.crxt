@@ -1,0 +1,12 @@
+--TEST--
+test2() Basic test
+--EXTENSIONS--
+%EXTNAME%
+--FILE--
+<?crx
+var_dump(test2());
+var_dump(test2('CRX'));
+?>
+--EXPECT--
+string(11) "Hello World"
+string(9) "Hello CRX"

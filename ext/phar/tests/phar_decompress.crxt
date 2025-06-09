@@ -1,0 +1,64 @@
+--TEST--
+Crxa::decompress()
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.crxa.gz';
+$pname = 'crxa://' . $fname;
+$file = '<?crx __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+
+$gz = $crxa->compress(Crxa::GZ);
+copy($gz->getPath(), $fname2);
+$a = new Crxa($fname2);
+var_dump($a->isCompressed());
+$unc = $a->compress(Crxa::NONE);
+echo $unc->getPath() . "\n";
+$unc2 = $gz->decompress();
+echo $unc2->getPath() . "\n";
+$unc3 = $gz->decompress('hooba.crxa');
+echo $unc3->getPath() . "\n";
+$zip = $crxa->convertToData(Crxa::ZIP);
+ini_set('crxa.readonly', 1);
+try {
+    $gz->decompress();
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    $zip->decompress();
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.hooba.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.gz');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.gz');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa');
+?>
+--EXPECTF--
+int(4096)
+%scrxa_decompress2.crxa
+%scrxa_decompress.crxa
+%scrxa_decompress.hooba.crxa
+Cannot decompress crxa archive, crxa is read-only
+Cannot decompress zip-based archives with whole-archive compression

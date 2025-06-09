@@ -1,0 +1,36 @@
+--TEST--
+Crxa object: getContent()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+
+$crxa = new Crxa($fname);
+$crxa['a/b'] = 'file contents
+this works';
+$crxa->addEmptyDir('hi');
+echo $crxa['a/b']->getContent() . "\n";
+try {
+echo $crxa['a']->getContent(), "\n";
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+try {
+echo $crxa['hi']->getContent(), "\n";
+} catch (Exception $e) {
+echo $e->getMessage(), "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+file contents
+this works
+crxa error: Cannot retrieve contents, "a" in crxa "%scrxa_oo_getcontents.crxa.crx" is a directory
+crxa error: Cannot retrieve contents, "hi" in crxa "%scrxa_oo_getcontents.crxa.crx" is a directory

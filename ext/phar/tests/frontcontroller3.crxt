@@ -1,0 +1,16 @@
+--TEST--
+Crxa front controller crxs
+--INI--
+default_charset=UTF-8
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller3.crx
+REQUEST_URI=/frontcontroller3.crx/a.crxs
+PATH_INFO=/a.crxs
+--FILE_EXTERNAL--
+files/frontcontroller.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECT--
+<pre><code style="color: #000000"><span style="color: #0000BB">&lt;?crx </span><span style="color: #007700">function </span><span style="color: #0000BB">hio</span><span style="color: #007700">(){}</span></code></pre>

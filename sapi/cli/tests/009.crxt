@@ -1,0 +1,22 @@
+--TEST--
+using invalid combinations of cmdline options
+--EXTENSIONS--
+readline
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n -a -r "echo hello;"`);
+var_dump(`$crx -n -r "echo hello;" -a`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(57) "Either execute direct code, process stdin or use a file.
+"
+string(57) "Either execute direct code, process stdin or use a file.
+"
+Done

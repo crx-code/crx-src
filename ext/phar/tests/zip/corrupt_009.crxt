@@ -1,0 +1,14 @@
+--TEST--
+Crxa: corrupted zip (extra field way too long)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/extralen_toolong.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: Unable to process extra field header for file in central directory in zip-based crxa "%sextralen_toolong.zip"

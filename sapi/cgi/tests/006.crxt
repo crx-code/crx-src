@@ -1,0 +1,66 @@
+--TEST--
+syntax check
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--INI--
+display_errors=stdout
+--FILE--
+<?crx
+include "include.inc";
+
+$crx = get_cgi_path();
+reset_env_vars();
+
+$filename = __DIR__."/006.test.crx";
+
+$code = '
+<?crx
+
+$test = "var";
+
+class test {
+    private $var;
+}
+
+echo test::$var;
+
+?>
+';
+
+file_put_contents($filename, $code);
+
+var_dump(`"$crx" -n -l "$filename"`);
+var_dump(`"$crx" -n -l some.unknown`);
+
+$code = '
+<?crx
+
+class test
+    private $var;
+}
+
+?>
+';
+
+file_put_contents($filename, $code);
+
+if (defined("CRX_WINDOWS_VERSION_MAJOR")) {
+    var_dump(`"$crx" -n -l "$filename"`);
+} else {
+    var_dump(`"$crx" -n -l "$filename" 2>/dev/null`);
+}
+
+@unlink($filename);
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(%d) "No syntax errors detected in %s006.test.crx
+"
+string(%d) "No input file specified.
+"
+string(%d) "<br />
+<b>Parse error</b>: %s expecting %s{%s in <b>%s006.test.crx</b> on line <b>5</b><br />
+Errors parsing %s006.test.crx
+"
+Done

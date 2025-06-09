@@ -1,0 +1,46 @@
+--TEST--
+Crxa: tar-based crxa, third-party tar with no stub, Crxa->getStub()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+$fname = __DIR__ . '/tar_nostub.crxa.tar';
+$alias = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/tar_nostub.tar';
+
+$tar = new tarmaker($fname, 'none');
+$tar->init();
+$tar->addFile('tar_004.crx', '<?crx var_dump(__FILE__);');
+$tar->addFile('internal/file/here', "hi there!\n");
+$tar->close();
+
+try {
+    $crxa = new Crxa($fname);
+    var_dump($crxa->getStub());
+} catch (Exception $e) {
+    echo $e->getMessage()."\n";
+}
+
+copy($fname, $fname2);
+
+try {
+    $crxa = new CrxaData($fname2);
+    var_dump($crxa->getStub());
+} catch (Exception $e) {
+    echo $e->getMessage()."\n";
+}
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_nostub.crxa.tar');
+@unlink(__DIR__ . '/tar_nostub.tar');
+?>
+--EXPECTF--
+RecursiveDirectoryIterator::__main(crxa://%star_nostub.crxa.tar/): Failed to open directory: '%star_nostub.crxa.tar' is not a crxa archive. Use CrxaData::__main() for a standard zip or tar archive
+crxa url "crxa://%star_nostub.crxa.tar/" is unknown
+string(0) ""

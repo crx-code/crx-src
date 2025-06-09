@@ -1,0 +1,22 @@
+--TEST--
+Crxa: CRX bug #47085: "rename() returns true even if the file in CRXA does not exist"
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+
+$crxa = new Crxa($fname, 0, 'a.crxa');
+$crxa['x'] = 'hi';
+unset($crxa);
+rename("crxa://a.crxa/x", "crxa://a.crxa/y");
+var_dump(rename("crxa://a.crxa/x", "crxa://a.crxa/y"));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');?>
+--EXPECTF--
+Warning: rename(): crxa error: cannot rename "crxa://a.crxa/x" to "crxa://a.crxa/y" from extracted crxa archive, source does not exist in %sbug47085.crx on line %d
+bool(false)

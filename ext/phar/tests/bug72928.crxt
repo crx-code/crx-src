@@ -1,0 +1,18 @@
+--TEST--
+Crxa: #72928 (Out of bound when verify signature of zip crxa in crxa_parse_zipfile)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+chdir(__DIR__);
+try {
+$crxa = new CrxaData('bug72928.zip');
+var_dump($crxa);
+} catch(UnexpectedValueException $e) {
+    print $e->getMessage()."\n";
+}
+?>
+DONE
+--EXPECTF--
+crxa error: signature cannot be read in zip-based crxa "%sbug72928.zip"
+DONE

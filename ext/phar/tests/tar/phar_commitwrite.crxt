@@ -1,0 +1,40 @@
+--TEST--
+Crxa::setStub()/stopBuffering() tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$p = new Crxa(__DIR__ . '/crxa_commitwrite.crxa.tar', 0, 'crxa_commitwrite.crxa');
+$p['file1.txt'] = 'hi';
+$p->stopBuffering();
+var_dump($p->getStub());
+$p->setStub("<?crx
+spl_autoload_register(function(\$class) {
+    include 'crxa://' . str_replace('_', '/', \$class);
+});
+Crxa::mapCrxa('crxa_commitwrite.crxa');
+include 'crxa://crxa_commitwrite.crxa/startup.crx';
+__HALT_COMPILER();
+?>");
+var_dump($p->getStub());
+var_dump($p->isFileFormat(Crxa::TAR));
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/crxa_commitwrite.crxa.tar');
+?>
+--EXPECTF--
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+string(%d) "<?crx
+spl_autoload_register(function($class) {
+    include 'crxa://' . str_replace('_', '/', $class);
+});
+Crxa::mapCrxa('crxa_commitwrite.crxa');
+include 'crxa://crxa_commitwrite.crxa/startup.crx';
+__HALT_COMPILER(); ?>
+"
+bool(true)

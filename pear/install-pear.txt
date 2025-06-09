@@ -1,0 +1,12 @@
++----------------------------------------------------------------------+
+| The installation process is not complete. The following resources    |
+| were not installed:                                                  |
+|                                                                      |
+|   PEAR: CRX Extension and Application Repository                     |
+|                                                                      |
+| To install these components,                                         |
+| download http://pear.crx.net/go-pear.crxa to crx-src/pear/           |
+| become the superuser and execute:                                    |
+|                                                                      |
+|   # make install-su                                                  |
++----------------------------------------------------------------------+

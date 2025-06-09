@@ -1,0 +1,32 @@
+--TEST--
+Bug #65414 Injection (A1) in .crxa files magic .crxa directory
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly = 0
+--FILE--
+<?crx
+$crxa = new \Crxa(__DIR__ . '/bug65414.crxa', 0, 'bug65414.crxa');
+$bads = [
+    '.crxa/injected-1.txt',
+    '/.crxa/injected-2.txt',
+    '//.crxa/injected-3.txt',
+    '/.crxa/',
+];
+foreach ($bads as $bad) {
+    echo $bad . ':';
+    try {
+        $crxa->addFromString($bad, 'this content is injected');
+        echo 'Failed to throw expected exception';
+    } catch (BadMethodCallException $ex) {
+        echo $ex->getMessage() . CRX_EOL;
+    }
+}
+echo 'done' . CRX_EOL;
+?>
+--EXPECT--
+.crxa/injected-1.txt:Cannot create any files in magic ".crxa" directory
+/.crxa/injected-2.txt:Cannot create any files in magic ".crxa" directory
+//.crxa/injected-3.txt:Entry //.crxa/injected-3.txt does not exist and cannot be created: crxa error: invalid path "//.crxa/injected-3.txt" contains double slash
+/.crxa/:Cannot create any files in magic ".crxa" directory
+done

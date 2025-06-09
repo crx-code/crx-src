@@ -1,0 +1,15 @@
+--TEST--
+getprotobynumber function errors test
+--CREDITS--
+edgarsandi - <edgar.r.sandi@gmail.com>
+--SKIPIF--
+<?crx
+if (getenv('SKIP_MSAN')) die('skip msan missing interceptor for getprotobynumber()');
+?>
+--FILE--
+<?crx
+// invalid protocol number
+var_dump(getprotobynumber(999));
+?>
+--EXPECT--
+bool(false)

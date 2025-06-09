@@ -1,0 +1,55 @@
+--TEST--
+Crxa object: iterating via SplFileObject and reading csv
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx if (!defined('SplFileObject::READ_CSV') || !defined('SplFileObject::SKIP_EMPTY')) die('skip newer SPL version is required'); ?>
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$crxaconfig = 2;
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+$crxa->setInfoClass('SplFileObject');
+
+$f = $crxa['a.csv'];
+$f->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE);
+foreach($f as $k => $v)
+{
+    echo "$k=>$v\n";
+}
+
+?>
+===CSV===
+<?crx
+
+$f->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE | SplFileObject::READ_CSV);
+foreach($f as $k => $v)
+{
+    echo "$k=>" . join('|', $v) . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_009.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+0=>1,2,3
+1=>2,a,b
+2=>3,"c","'e'"
+3=>4
+4=>5,5
+5=>7,777
+===CSV===
+0=>1|2|3
+1=>2|a|b
+2=>3|c|'e'
+3=>4
+4=>5|5
+6=>7|777

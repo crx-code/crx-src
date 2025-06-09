@@ -1,0 +1,34 @@
+--TEST--
+Bug #79912 (Crxa::decompressFiles not working)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = new Crxa(__DIR__ . "/bug79912.crxa");
+$crxa->addFromString("test.txt", "This is a test file.This is a test file.This is a test file.");
+$file = $crxa["test.txt"];
+var_dump($file->compress(Crxa::GZ)); //true (success)
+var_dump($file->getContent());
+var_dump($file->isCompressed()); //true (the file is compressed)
+var_dump($crxa->decompressFiles()); //true (success)
+var_dump($file->isCompressed()); //false (the file should not be compressed anymore)
+var_dump($crxa->extractTo(__DIR__ . "/bug79912")); //true
+var_dump(file_get_contents(__DIR__ . "/bug79912/test.txt")); //the extracted file in the folder should be decompressed
+?>
+--EXPECT--
+bool(true)
+string(60) "This is a test file.This is a test file.This is a test file."
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+string(60) "This is a test file.This is a test file.This is a test file."
+--CLEAN--
+<?crx
+@unlink(__DIR__ . "/bug79912/test.txt");
+@rmdir(__DIR__ . "/bug79912");
+@unlink(__DIR__ . "/bug79912.crxa");
+?>

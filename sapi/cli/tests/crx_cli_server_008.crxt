@@ -1,0 +1,61 @@
+--TEST--
+SERVER_PROTOCOL header availability
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start('var_dump($_SERVER["SERVER_PROTOCOL"]);');
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+if(fwrite($fp, <<<HEADER
+GET / HTTP/1.1
+Host: {$host}
+
+
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+    }
+}
+
+fclose($fp);
+
+$fp = crx_cli_server_connect();
+
+if(fwrite($fp, <<<HEADER
+GET / HTTP/1.0
+Host: {$host}
+
+
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+    }
+}
+
+fclose($fp);
+?>
+--EXPECTF--
+HTTP/1.1 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+string(8) "HTTP/1.1"
+HTTP/1.0 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+string(8) "HTTP/1.0"

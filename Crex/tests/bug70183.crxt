@@ -1,0 +1,8 @@
+--TEST--
+Bug #70183 (null pointer deref (segfault) in crex_eval_const_expr)
+--FILE--
+<?crx
+[[][]]
+?>
+--EXPECTF--
+Fatal error: Cannot use [] for reading in %sbug70183.crx on line %d

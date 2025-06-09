@@ -1,0 +1,17 @@
+--TEST--
+test enable/disable assertions at runtime (assertions completely disabled)
+--INI--
+crex.assertions=-1
+--FILE--
+<?crx
+ini_set("crex.assertions", 0);
+var_dump(assert(false));
+var_dump(assert(true));
+ini_set("crex.assertions", 1);
+?>
+--EXPECTF--
+Warning: crex.assertions may be completely enabled or disabled only in crx.ini in %sexpect_017.crx on line 2
+bool(true)
+bool(true)
+
+Warning: crex.assertions may be completely enabled or disabled only in crx.ini in %sexpect_017.crx on line 5

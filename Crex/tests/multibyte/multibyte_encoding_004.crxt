@@ -1,0 +1,19 @@
+--TEST--
+test for mbstring script_encoding for flex unsafe encoding (Shift_JIS)
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=1
+crex.script_encoding=Shift_JIS
+internal_encoding=Shift_JIS
+--FILE--
+<?crx
+    function 予蚕能($引数)
+    {
+        echo $引数;
+    }
+
+    予蚕能("ドレミファソ");
+?>
+--EXPECT--
+ドレミファソ

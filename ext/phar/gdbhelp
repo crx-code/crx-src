@@ -1,0 +1,122 @@
+define ___crxaglobals
+	if basic_functions_module.zts
+		set $tsrm_ls = ts_resource_ex(0, 0)
+		set $crxaglobals = ((crex_crxa_globals) (*((void ***) $tsrm_ls))[crxa_globals_id-1])
+	else
+		set $crxaglobals = crxa_globals
+	end
+end
+
+define ____print_crxaht
+	set $ht = $arg0
+	set $p = $ht.pListHead
+
+	while $p != 0
+		set $i = $ind
+		while $i > 0
+			printf "  "
+			set $i = $i - 1
+		end
+
+		set $temp = *(crxa_archive_data*)$p->pDataPtr
+		____print_str $temp.fname $temp.fname_len
+		printf " => "
+
+		if $arg1 == 0
+
+			printf "%i (alias ", $temp.refcount
+			____print_str $temp.alias $temp.alias_len
+			printf ")\n"
+		end
+
+		set $p = $p->pListNext
+	end
+end
+
+define print_crxa
+	set $ind = 1
+	___crxaglobals
+	printf "{"
+	____print_crxaht $crxaglobals.crxa_fname_map 0
+	printf "}\n"
+end
+
+document display_crxa_globals
+	display crxa globals
+end
+
+define display_crxa_globals
+	___crxaglobals
+	graph display $crxa_globals.$arg0
+end
+
+define print_crxafp
+	___crxaglobals
+	set $ht = $crxaglobals.crxa_fname_map
+	set $p = $ht.pListHead
+	set $fpcount = 0
+
+	while $p != 0
+		set $crxaname = (*(crxa_archive_data*)$p->pDataPtr).fname
+		set $crxarefcount = (*(crxa_archive_data*)$p->pDataPtr).refcount
+		if (*(crxa_archive_data*)$p->pDataPtr).fp != 0
+			set $fpcount = $fpcount + 1
+			printf "crxa %s is open (%i)\n", $crxaname, $crxarefcount
+		end
+		set $manifest = (*(crxa_archive_data*)$p->pDataPtr).manifest
+		set $m = $manifest.pListHead
+		while $m != 0
+			if (*(crxa_entry_info *)$m->pData).fp
+				set $fpcount = $fpcount + 1
+				set $a = (*(crxa_entry_info *)$m->pData).fp_refcount
+				printf "crxa %s file %s is open (%i)\n", $crxaname, (*(crxa_entry_info *)$m->pData).filename, $a
+			end
+			set $m = $m->pListNext
+		end
+
+		set $p = $p->pListNext
+	end
+	printf "Open file pointers: %d\n", $fpcount
+end
+
+document print_crxafp
+	displays all open file pointers in crxa, and the crxas plus entries that are open with reference counts
+end
+
+define dump_entry
+	___crxaglobals
+	set $ht = $crxaglobals.crxa_fname_map
+	set $p = $ht.pListHead
+	set $done = 0
+	while $p != 0
+		set $t = (*(crxa_archive_data*)$p->pDataPtr)
+		if $t.fname[0] == $arg0[0] || $t.alias[0] == $arg0[0]
+			set $manifest = (*(crxa_archive_data*)$p->pDataPtr).manifest
+			set $m = $manifest.pListHead
+			while $m != 0
+				if (*(crxa_entry_info *)$m->pData).filename[0] == $arg1[0]
+					if $argc == 3
+						output *((crxa_entry_info *)$m->pData)->fp
+					end
+					if $argc == 2
+						output *(crxa_entry_info *)$m->pData
+					end
+					printf "\n"
+					set $done = 1
+					loop_break
+				end
+				set $m = $m->pListNext
+			end
+		end
+		if $done == 1
+			loop_break
+		end
+		set $p = $p->pListNext
+	end
+end
+
+document dump_entry
+	dump_entry "crxaname"|"crxaalias" "filename" [1]
+	display crxa_entry_info for a file within a crxa.  If the optional third param
+	is passed in, displays the crx_stream that is the file's fp
+end

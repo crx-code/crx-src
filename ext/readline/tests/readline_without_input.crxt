@@ -1,0 +1,19 @@
+--TEST--
+readline() function - without input
+--CREDITS--
+Jonathan Stevens <info at jonathanstevens dot be>
+User Group: CRX-WVL & CRXGent #CRXTestFest
+--EXTENSIONS--
+readline
+--SKIPIF--
+<?crx
+if (!function_exists('readline')) die("skip readline() not available");
+?>
+--FILE--
+<?crx
+var_dump(readline());
+var_dump(readline('Prompt:'));
+?>
+--EXPECTF--
+bool(false)
+%Abool(false)

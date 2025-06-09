@@ -1,0 +1,70 @@
+--TEST--
+Test C_PARAM_OBJ_OF_CLASS_OR_STR() and C_PARAM_OBJ_OF_CLASS_OR_STR_OR_NULL
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+class Foo {}
+class ToString {
+    public function __toString() {
+        return "ToString";
+    }
+}
+
+var_dump(crex_string_or_stdclass("string"));
+var_dump(crex_string_or_stdclass(1));
+var_dump(crex_string_or_stdclass(null));
+var_dump(crex_string_or_stdclass(new stdClass()));
+var_dump(crex_string_or_stdclass(new ToString()));
+
+try {
+    crex_string_or_stdclass([]);
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+    crex_string_or_stdclass(new Foo());
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+var_dump(crex_string_or_stdclass_or_null("string"));
+var_dump(crex_string_or_stdclass_or_null(1));
+var_dump(crex_string_or_stdclass_or_null(null));
+var_dump(crex_string_or_stdclass_or_null(new stdClass()));
+var_dump(crex_string_or_stdclass_or_null(new ToString()));
+
+try {
+    crex_string_or_stdclass_or_null([]);
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+    crex_string_or_stdclass_or_null(new Foo());
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+?>
+--EXPECTF--
+string(6) "string"
+string(1) "1"
+
+Deprecated: crex_string_or_stdclass(): Passing null to parameter #1 ($param) of type string is deprecated in %s on line %d
+string(0) ""
+object(stdClass)#1 (0) {
+}
+string(8) "ToString"
+crex_string_or_stdclass(): Argument #1 ($param) must be of type stdClass|string, array given
+crex_string_or_stdclass(): Argument #1 ($param) must be of type stdClass|string, Foo given
+string(6) "string"
+string(1) "1"
+NULL
+object(stdClass)#1 (0) {
+}
+string(8) "ToString"
+crex_string_or_stdclass_or_null(): Argument #1 ($param) must be of type stdClass|string|null, array given
+crex_string_or_stdclass_or_null(): Argument #1 ($param) must be of type stdClass|string|null, Foo given

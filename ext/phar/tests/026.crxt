@@ -1,0 +1,32 @@
+--TEST--
+Crxa: crxa:// require from within
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; require \''.$pname.'/b.crx\'; ?>';
+$files['b.crx']   = '<?crx echo "This is b\n"; require \''.$pname.'/b/c.crx\'; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; require \''.$pname.'/b/d.crx\'; ?>';
+$files['b/d.crx'] = '<?crx echo "This is b/d\n"; require \''.$pname.'/e.crx\'; ?>';
+$files['e.crx']   = '<?crx echo "This is e\n"; ?>';
+
+include 'files/crxa_test.inc';
+
+require $pname . '/a.crx';
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+This is a
+This is b
+This is b/c
+This is b/d
+This is e

@@ -1,0 +1,17 @@
+--TEST--
+Crxa: bug #71498: Out-of-Bound Read in crxa_parse_zipfile()
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+$p = new CrxaData(__DIR__."/bug71498.zip");
+} catch(UnexpectedValueException $e) {
+    echo $e->getMessage();
+}
+?>
+
+DONE
+--EXPECTF--
+crxa error: end of central directory not found in zip-based crxa "%s%ebug71498.zip"
+DONE

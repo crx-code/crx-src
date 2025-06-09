@@ -1,0 +1,17 @@
+--TEST--
+Test to check regressions on use statements and lexer state
+--FILE--
+<?crx
+
+use A\B\C\D;
+
+class Foo
+{
+    private static $foo;
+
+}
+
+echo CRX_EOL, "Done", CRX_EOL;
+?>
+--EXPECT--
+Done

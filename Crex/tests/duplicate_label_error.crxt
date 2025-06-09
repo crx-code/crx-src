@@ -1,0 +1,12 @@
+--TEST--
+Duplicate labels are not allowed
+--FILE--
+<?crx
+
+foo:
+foo:
+goto foo;
+
+?>
+--EXPECTF--
+Fatal error: Label 'foo' already defined in %s on line %d

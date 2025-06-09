@@ -1,0 +1,44 @@
+--TEST--
+Crxa: alias edge cases
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa';
+
+$p = new Crxa($fname);
+
+$p->setAlias('foo');
+$p['unused'] = 'hi';
+try {
+$a = new Crxa($fname2, 0, 'foo');
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+copy($fname, $fname2);
+echo "2\n";
+try {
+$a = new Crxa($fname2);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+$b = new Crxa($fname, 0, 'another');
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa');
+?>
+--EXPECTF--
+alias "foo" is already used for archive "%salias_acrobatics.crxa" cannot be overloaded with "%salias_acrobatics.2.crxa"
+2
+Cannot open archive "%salias_acrobatics.2.crxa", alias is already in use by existing archive
+alias "another" is already used for archive "%salias_acrobatics.crxa" cannot be overloaded with "%salias_acrobatics.crxa"

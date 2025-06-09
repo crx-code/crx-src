@@ -1,0 +1,30 @@
+--TEST--
+Test to ensure const list syntax declaration works
+--FILE--
+<?crx
+
+class Obj
+{
+    const DECLARE = 'declare',
+          RETURN = 'return',
+          FUNCTION = 'function',
+          USE = 'use';
+}
+
+echo Obj::DECLARE, CRX_EOL;
+echo Obj::RETURN, CRX_EOL;
+echo Obj::FUNCTION, CRX_EOL;
+echo Obj::USE, CRX_EOL;
+echo Obj::
+
+    USE, CRX_EOL;
+echo "\nDone\n";
+?>
+--EXPECT--
+declare
+return
+function
+use
+use
+
+Done

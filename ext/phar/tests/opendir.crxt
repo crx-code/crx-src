@@ -1,0 +1,42 @@
+--TEST--
+Crxa: test opendir() interception
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=1
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$a = new Crxa($fname);
+$a['index.crx'] = '<?crx
+$a = opendir("dir");
+if ($a) {
+    while (false !== ($e = readdir($a))) {
+        echo $e;
+    }
+}
+?>';
+$a['dir/file1.txt'] = 'hi';
+$a['dir/file2.txt'] = 'hi2';
+$a['dir/file3.txt'] = 'hi3';
+$a->setStub('<?crx
+Crxa::interceptFileFuncs();
+set_include_path("crxa://" . __FILE__);
+include "index.crx";
+__HALT_COMPILER();');
+include $fname;
+echo "\n";
+opendir('crxa://');
+opendir('crxa://hi.crxa');
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+file1.txtfile2.txtfile3.txt
+
+Warning: opendir(crxa://): Failed to open directory: crxa error: no directory in "crxa://", must have at least crxa:/// for root directory (always use full path to a new crxa)
+crxa url "crxa://" is unknown in %sopendir.crx on line %d
+
+Warning: opendir(crxa://hi.crxa): Failed to open directory: crxa error: invalid url or non-existent crxa "crxa://hi.crxa"
+crxa url "crxa://hi.crxa" is unknown in %sopendir.crx on line %d

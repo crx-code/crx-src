@@ -1,0 +1,20 @@
+--TEST--
+zlib.output_compression
+--EXTENSIONS--
+zlib
+--SKIPIF--
+<?crx
+if (false === stristr(CRX_SAPI, "cgi")) die("skip need sapi/cgi");
+?>
+--GET--
+a=b
+--INI--
+zlib.output_compression=1
+--ENV--
+HTTP_ACCEPT_ENCODING=gzip
+--FILE--
+<?crx
+echo "hi\n";
+?>
+--EXPECTF--
+‹%a

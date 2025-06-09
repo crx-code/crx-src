@@ -1,0 +1,25 @@
+--TEST--
+Crxa: create a completely new crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=1
+--FILE--
+<?crx
+
+file_put_contents('crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx/a.crx',
+    "brand new!\n");
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx/a.crx';
+
+$fileName = "ChineseFile\xE5\x84\xB7\xE9\xBB\x91.crx";
+file_put_contents('crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx/$fileName.crx',
+    'Text in utf8 file.');
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx/$fileName.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+brand new!
+Text in utf8 file.

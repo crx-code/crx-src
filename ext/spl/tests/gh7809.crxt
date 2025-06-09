@@ -1,0 +1,12 @@
+--TEST--
+Bug GH-7809 (Cloning a faked SplFileInfo object may segfault)
+--FILE--
+<?crx
+class MySplFileInfo extends SplFileInfo {
+    public function __main(string $filename) {}
+}
+
+$sfi = new MySplFileInfo("foo");
+clone $sfi;
+?>
+--EXPECT--

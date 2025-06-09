@@ -1,0 +1,59 @@
+--TEST--
+Crxa::setAlias() zip-based
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.3.crxa.zip';
+
+$crxa = new Crxa($fname);
+$crxa->setStub('<?crx echo "first stub\n"; __HALT_COMPILER(); ?>');
+$crxa->setAlias('hio');
+
+$files = array();
+
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+foreach ($files as $n => $file) {
+    $crxa[$n] = $file;
+}
+$crxa->stopBuffering();
+
+echo $crxa->getAlias() . "\n";
+$crxa->setAlias('test');
+echo $crxa->getAlias() . "\n";
+
+// test compression
+
+$crxa->compressFiles(Crxa::GZ);
+copy($fname, $fname2);
+$crxa->setAlias('unused');
+$p2 = new Crxa($fname2);
+echo $p2->getAlias(), "\n";
+$p2->compressFiles(Crxa::BZ2);
+copy($fname2, $fname3);
+$p2->setAlias('unused2');
+$p3 = new Crxa($fname3);
+echo $p3->getAlias(), "\n";
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.3.crxa.zip');
+?>
+--EXPECT--
+hio
+test
+test
+test

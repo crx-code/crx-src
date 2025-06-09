@@ -1,0 +1,19 @@
+--TEST--
+Bug #64330 (stream_socket_server() creates wrong Abstract Namespace UNIX sockets)
+--SKIPIF--
+<?crx
+if (!in_array("unix", stream_get_transports())) die("SKIP unix domain sockets unavailable");
+if (!stristr(CRX_OS, "Linux")) die('skip abstract namespace is a Linux-only feature');
+?>
+--FILE--
+<?crx
+echo "Test\n";
+$server = stream_socket_server("unix://\x00/MyBindName");
+$client = stream_socket_client("unix://\x00/MyBindName");
+if ($client) {
+    echo "ok\n";
+}
+?>
+--EXPECT--
+Test
+ok

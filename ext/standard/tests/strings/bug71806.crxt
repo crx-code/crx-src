@@ -1,0 +1,11 @@
+--TEST--
+Bug #71806 (crx_strip_whitespace() fails on some numerical values)
+--FILE--
+<?crx
+
+echo crx_strip_whitespace(__DIR__ . '/bug71806.data');
+
+?>
+--EXPECT--
+<?crx
+ echo 098 ;

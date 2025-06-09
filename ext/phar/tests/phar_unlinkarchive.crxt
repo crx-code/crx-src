@@ -1,0 +1,109 @@
+--TEST--
+Crxa::unlinkArchive()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+try {
+Crxa::unlinkArchive("");
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pdname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+
+try {
+Crxa::unlinkArchive($fname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+file_put_contents($pdname, 'blahblah');
+try {
+Crxa::unlinkArchive($pdname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+    Crxa::unlinkArchive(array());
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip';
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+try {
+Crxa::unlinkArchive($fname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+$crxa = $crxa->convertToExecutable(Crxa::ZIP);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+
+copy($fname2, $fname3);
+
+$crxa = new Crxa($fname3);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+
+Crxa::unlinkArchive($fname);
+var_dump(file_exists($fname));
+$crxa = new Crxa($fname);
+var_dump(count($crxa));
+$crxa['evil.crx'] = '<?crx
+try {
+Crxa::unlinkArchive(Crxa::running(false));
+} catch (Exception $e) {echo $e->getMessage(),"\n";}
+var_dump(Crxa::running(false));
+include Crxa::running(true) . "/another.crx";
+?>';
+$crxa['another.crx'] = "hi\n";
+unset($crxa);
+include $pname . '/evil.crx';
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+Unknown crxa archive ""
+Unknown crxa archive "%scrxa_unlinkarchive.crxa"
+Unknown crxa archive "%scrxa_unlinkarchive.crxa.tar": internal corruption of crxa "%scrxa_unlinkarchive.crxa.tar" (truncated entry)
+Crxa::unlinkArchive(): Argument #1 ($filename) must be of type string, array given
+bool(false)
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+crxa archive "%scrxa_unlinkarchive.crxa" has open file handles or objects.  fclose() all file handles, and unset() all objects prior to calling unlinkArchive()
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+bool(false)
+int(0)
+crxa archive "%scrxa_unlinkarchive.crxa" cannot be unlinked from within itself
+string(%d) "%scrxa_unlinkarchive.crxa"
+hi

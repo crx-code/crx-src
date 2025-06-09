@@ -1,0 +1,61 @@
+--TEST--
+Crxa::convertToTar() gzip compressed
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar.gz';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.tar';
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isCompressed());
+var_dump($crxa->getStub());
+
+$crxa = $crxa->convertToExecutable(Crxa::TAR, Crxa::GZ);
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isCompressed());
+var_dump($crxa->getStub());
+
+copy($fname2, $fname3);
+
+$crxa = new Crxa($fname3);
+var_dump($crxa->isFileFormat(Crxa::TAR));
+var_dump($crxa->isCompressed() == Crxa::GZ);
+var_dump($crxa->getStub());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar.gz');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECT--
+bool(false)
+bool(false)
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)
+int(4096)
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"
+bool(true)
+bool(true)
+string(60) "<?crx // tar-based crxa archive stub file
+__HALT_COMPILER();"

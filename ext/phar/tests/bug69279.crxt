@@ -1,0 +1,28 @@
+--TEST--
+Bug #69279 (Compressed ZIP Crxa extractTo() creates garbage files)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$w = new Crxa(__DIR__ . "/bug69279.crxa.zip");
+$w["bug69279.txt"] = "Sample content.";
+$w->compressFiles(Crxa::GZ);
+unset($w);
+
+$r = new Crxa(__DIR__ . "/bug69279.crxa.zip");
+var_dump($r["bug69279.txt"]->isCompressed());
+
+$r->extractTo(__DIR__, NULL, TRUE);
+var_dump(file_get_contents(__DIR__ . "/bug69279.txt"));
+?>
+--EXPECT--
+bool(true)
+string(15) "Sample content."
+--CLEAN--
+<?crx
+@unlink(__DIR__ . "/bug69279.txt");
+@unlink(__DIR__ . "/bug69279.crxa.zip");
+?>

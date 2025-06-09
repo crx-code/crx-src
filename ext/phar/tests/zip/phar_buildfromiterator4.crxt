@@ -1,0 +1,58 @@
+--TEST--
+Crxa::buildFromIterator() iterator, 1 file passed in zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+class myIterator implements Iterator
+{
+    var $a;
+    function __main(array $a)
+    {
+        $this->a = $a;
+    }
+    function next(): void {
+        echo "next\n";
+        next($this->a);
+    }
+    function current(): mixed {
+        echo "current\n";
+        return current($this->a);
+    }
+    function key(): mixed {
+        echo "key\n";
+        return key($this->a);
+    }
+    function valid(): bool {
+        echo "valid\n";
+        return current($this->a);
+    }
+    function rewind(): void {
+        echo "rewind\n";
+        reset($this->a);
+    }
+}
+chdir(__DIR__);
+$crxa = new Crxa(__DIR__ . '/buildfromiterator4.crxa.zip');
+var_dump($crxa->buildFromIterator(new myIterator(array('a' => basename(__FILE__, 'crx') . 'crxt'))));
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/buildfromiterator4.crxa.zip');
+?>
+--EXPECTF--
+rewind
+valid
+current
+key
+next
+valid
+array(1) {
+  ["a"]=>
+  string(%d) "%scrxa_buildfromiterator4.crxt"
+}
+bool(true)

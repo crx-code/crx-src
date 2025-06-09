@@ -1,0 +1,37 @@
+--TEST--
+Bug #72035 crx-cgi.exe fails to run scripts relative to drive root
+--SKIPIF--
+<?crx
+if(substr(CRX_OS, 0, 3) != 'WIN' ) die('skip windows only test');
+
+$cgi = realpath(dirname(CRX_BINARY)) . DIRECTORY_SEPARATOR . "crx-cgi.exe";
+if (!file_exists($cgi)) die('skip CGI binary not found');
+?>
+--FILE--
+<?crx
+
+$fl = __DIR__ . DIRECTORY_SEPARATOR . md5(uniqid()) . ".crx";
+$fl = substr($fl, 2);
+
+$cgi = realpath(dirname(CRX_BINARY) . DIRECTORY_SEPARATOR . "crx-cgi.exe");
+
+file_put_contents($fl, "<?crx echo \"hello\", \"\n\"; ?>");
+
+$cmd = "$cgi -n -C $fl";
+
+/* Need to run CGI with the env reset. */
+$desc = array(0 => array("pipe", "r"));
+$proc = proc_open($cmd, $desc, $pipes, getcwd(), array());
+if (is_resource($proc)) {
+    echo stream_get_contents($pipes[0]);
+
+    proc_close($proc);
+}
+
+unlink($fl);
+?>
+--EXPECTF--
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+hello

@@ -1,0 +1,47 @@
+<?crx
+
+/** @generate-class-entries */
+
+/**
+ * @var string
+ * @cvalue CRXDBG_VERSION
+ */
+const CRXDBG_VERSION = UNKNOWN;
+
+/**
+ * @var int
+ * @cvalue CRXDBG_COLOR_PROMPT
+ */
+const CRXDBG_COLOR_PROMPT = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRXDBG_COLOR_NOTICE
+ */
+const CRXDBG_COLOR_NOTICE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRXDBG_COLOR_ERROR
+ */
+const CRXDBG_COLOR_ERROR = UNKNOWN;
+
+function crxdbg_break_next(): void {}
+
+function crxdbg_break_file(string $file, int $line): void {}
+
+function crxdbg_break_method(string $class, string $method): void {}
+
+function crxdbg_break_function(string $function): void {}
+
+function crxdbg_color(int $element, string $color): void {}
+
+function crxdbg_prompt(string $string): void {}
+
+function crxdbg_exec(string $context): string|bool {}
+
+function crxdbg_clear(): void {}
+
+function crxdbg_start_oplog(): void {}
+
+function crxdbg_end_oplog(array $options = []): ?array {}
+
+function crxdbg_get_executable(array $options = []): array {}

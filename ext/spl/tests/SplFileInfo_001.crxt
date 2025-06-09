@@ -1,0 +1,11 @@
+--TEST--
+Testing SplFileInfo calling the constructor twice
+--FILE--
+<?crx
+$x = new splfileinfo(1);
+$x->__main(1);
+
+echo "done!\n";
+?>
+--EXPECT--
+done!

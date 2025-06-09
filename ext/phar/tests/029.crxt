@@ -1,0 +1,48 @@
+--TEST--
+Crxa::loadCrxa overloading alias names
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname1 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+$fname = $fname1;
+$alias = '';
+$pname = 'crxa://hio';
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include "'.$pname.'/b.crx"; ?>';
+$files['b.crx']   = '<?crx echo "This is b\n"; include "'.$pname.'/b/c.crx"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; include "'.$pname.'/b/d.crx"; ?>';
+$files['b/d.crx'] = '<?crx echo "This is b/d\n"; include "'.$pname.'/e.crx"; ?>';
+$files['e.crx']   = '<?crx echo "This is e\n"; ?>';
+
+include 'files/crxa_test.inc';
+
+copy($fname1, $fname2);
+
+var_dump(Crxa::loadCrxa($fname1, 'hio'));
+var_dump(Crxa::loadCrxa($fname1, 'copy'));
+$a = new Crxa($fname1);
+try
+{
+    var_dump(Crxa::loadCrxa($fname2, 'copy'));
+}
+catch (Exception $e)
+{
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx');
+?>
+--EXPECTF--
+bool(true)
+bool(true)
+alias "copy" is already used for archive "%s029.1.crxa.crx" cannot be overloaded with "%s029.2.crxa.crx"

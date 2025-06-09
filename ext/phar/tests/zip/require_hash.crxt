@@ -1,0 +1,57 @@
+--TEST--
+Crxa: zip-based crxa, require_hash=1, no signature
+--EXTENSIONS--
+crxa
+zip
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+ini_set('crxa.require_hash', 1);
+include __DIR__ . '/files/zipmaker.crx.inc';
+$fname = __DIR__ . '/require_hash.crxa.zip';
+$alias = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/require_hash.zip';
+
+$zip = new zipmaker($fname);
+$zip->init();
+$zip->addFile('zip_001.crx', '<?crx var_dump(__FILE__);');
+$zip->addFile('internal/file/here', "hi there!\n");
+$zip->addFile('.crxa/stub.crx', "__HALT_COMPILER();");
+$zip->close();
+
+try {
+	$crxa = new Crxa($fname);
+	var_dump($crxa->getStub());
+} catch (Exception $e) {
+	echo $e->getMessage()."\n";
+}
+ini_set('crxa.require_hash', 0);
+try {
+	$crxa = new CrxaData($fname2);
+	$crxa['file'] = 'hi';
+	var_dump($crxa->getSignature());
+	$crxa->setSignatureAlgorithm(Crxa::MD5);
+	var_dump($crxa->getSignature());
+} catch (Exception $e) {
+	echo $e->getMessage()."\n";
+}
+
+?>
+===DONE===
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/require_hash.crxa.zip');
+@unlink(__DIR__ . '/require_hash.zip');
+?>
+--EXPECTF--
+crxa error: signature is missing in zip-based crxa "%srequire_hash.crxa.zip"
+bool(false)
+array(2) {
+  ["hash"]=>
+  string(32) "%s"
+  ["hash_type"]=>
+  string(3) "MD5"
+}
+===DONE===

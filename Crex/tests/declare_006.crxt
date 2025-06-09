@@ -1,0 +1,10 @@
+--TEST--
+Use of non-literals in declare ticks values crashes compiler
+--FILE--
+<?crx
+declare(ticks = UNKNOWN_CONST) {
+  echo 'Done';
+}
+?>
+--EXPECTF--
+Fatal error: declare(ticks) value must be a literal in %sdeclare_006.crx on line 2

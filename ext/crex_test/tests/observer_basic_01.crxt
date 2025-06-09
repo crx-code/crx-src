@@ -1,0 +1,70 @@
+--TEST--
+Observer: Basic observability of userland functions
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+opcache.optimization_level=0x7FFFBFFF & ~0x0080
+--FILE--
+<?crx
+function bar()
+{
+    echo 'Bar' . CRX_EOL;
+    var_dump(array_sum([1,2,3]));
+}
+
+function foo()
+{
+    echo 'Foo' . CRX_EOL;
+    bar();
+}
+
+foo();
+foo();
+foo();
+
+echo 'DONE' . CRX_EOL;
+?>
+--EXPECTF--
+<!-- init '%s%eobserver_basic_%d.crx' -->
+<file '%s%eobserver_basic_%d.crx'>
+  <!-- init foo() -->
+  <foo>
+Foo
+    <!-- init bar() -->
+    <bar>
+Bar
+      <!-- init array_sum() -->
+      <array_sum>
+      </array_sum>
+      <!-- init var_dump() -->
+      <var_dump>
+int(6)
+      </var_dump>
+    </bar>
+  </foo>
+  <foo>
+Foo
+    <bar>
+Bar
+      <array_sum>
+      </array_sum>
+      <var_dump>
+int(6)
+      </var_dump>
+    </bar>
+  </foo>
+  <foo>
+Foo
+    <bar>
+Bar
+      <array_sum>
+      </array_sum>
+      <var_dump>
+int(6)
+      </var_dump>
+    </bar>
+  </foo>
+DONE
+</file '%s%eobserver_basic_%d.crx'>

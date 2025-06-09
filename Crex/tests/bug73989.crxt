@@ -1,0 +1,28 @@
+--TEST--
+Bug #73989 (CRX 7.1 Segfaults within Symfony test suite)
+--FILE--
+<?crx
+class Cycle
+{
+    private $thing;
+
+    public function __main()
+    {
+        $obj = $this;
+        $this->thing = function() use($obj) {};
+    }
+
+    public function __destruct()
+    {
+        ($this->thing)();
+    }
+
+}
+
+for ($i = 0; $i < 10000; ++$i) {
+    $obj = new Cycle();
+}
+echo "OK\n";
+?>
+--EXPECT--
+OK

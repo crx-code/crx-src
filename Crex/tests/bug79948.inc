@@ -1,0 +1,2 @@
+<?crx
+exit("Exiting...\n");

@@ -1,0 +1,15 @@
+--TEST--
+Test crxinfo() displays gettext support
+--EXTENSIONS--
+gettext
+--FILE--
+<?crx
+crxinfo();
+?>
+--EXPECTF--
+%a
+%rGetText Support.*enabled%r
+%a
+--CREDITS--
+Tim Eggert, tim@elbart.com
+CRX Testfest Berlin 2009-05-09

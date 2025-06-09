@@ -1,0 +1,57 @@
+--TEST--
+Crxa and RecursiveDirectoryIterator
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+$fname = str_replace('\\', '/', $fname);
+
+$it = new RecursiveDirectoryIterator('crxa://'.$fname);
+$it = new RecursiveIteratorIterator($it);
+
+foreach($it as $name => $ent)
+{
+    var_dump(str_replace(array('\\', $fname), array('/', '*'), $name));
+    var_dump(str_replace(array('\\', $fname), array('/', '*'), $ent->getPathname()));
+    var_dump(str_replace('\\', '/', $it->getSubPath()));
+    var_dump(str_replace('\\', '/', $it->getSubPathName()));
+    $sub = $it->getPathInfo();
+    var_dump(str_replace('\\', '/', $sub->getFilename()));
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_005.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+string(14) "crxa://*/a.crx"
+string(14) "crxa://*/a.crx"
+string(0) ""
+string(5) "a.crx"
+string(20) "crxa_oo_005.crxa.crx"
+string(16) "crxa://*/b/c.crx"
+string(16) "crxa://*/b/c.crx"
+string(1) "b"
+string(7) "b/c.crx"
+string(1) "b"
+string(16) "crxa://*/b/d.crx"
+string(16) "crxa://*/b/d.crx"
+string(1) "b"
+string(7) "b/d.crx"
+string(1) "b"
+string(14) "crxa://*/b.crx"
+string(14) "crxa://*/b.crx"
+string(0) ""
+string(5) "b.crx"
+string(20) "crxa_oo_005.crxa.crx"
+string(14) "crxa://*/e.crx"
+string(14) "crxa://*/e.crx"
+string(0) ""
+string(5) "e.crx"
+string(20) "crxa_oo_005.crxa.crx"

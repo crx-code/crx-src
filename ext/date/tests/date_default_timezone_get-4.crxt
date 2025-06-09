@@ -1,0 +1,11 @@
+--TEST--
+date_default_timezone_get() function [4]
+--INI--
+date.timezone=Incorrect/Zone
+--FILE--
+<?crx
+    echo date_default_timezone_get(), "\n";
+?>
+--EXPECTF--
+Warning: CRX Startup: Invalid date.timezone value 'Incorrect/Zone', using 'UTC' instead in %s on line %d
+UTC

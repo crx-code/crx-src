@@ -1,0 +1,49 @@
+--TEST--
+Crxa object: array access
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+
+class MyFile extends SplFileObject
+{
+    function __main($what)
+    {
+        echo __METHOD__ . "($what)\n";
+        parent::__main($what);
+    }
+}
+
+$crxa = new Crxa($fname);
+try
+{
+    $crxa->setFileClass('SplFileInfo');
+}
+catch (TypeError $e)
+{
+    echo $e->getMessage() . "\n";
+}
+$crxa->setInfoClass('MyFile');
+
+echo $crxa['a.crx']->getFilename() . "\n";
+echo $crxa['b/c.crx']->getFilename() . "\n";
+echo $crxa['b.crx']->getFilename() . "\n";
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_006.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+SplFileInfo::setFileClass(): Argument #1 ($class) must be a class name derived from SplFileObject, SplFileInfo given
+MyFile::__main(crxa://%s/a.crx)
+a.crx
+MyFile::__main(crxa://%s/b/c.crx)
+c.crx
+MyFile::__main(crxa://%s/b.crx)
+b.crx

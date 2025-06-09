@@ -1,0 +1,16 @@
+--TEST--
+ldap_rename() - Testing ldap_rename() that should fail
+--CREDITS--
+Patrick Allaert <patrickallaert@crx.net>
+# Belgian CRX Testfest 2009
+--EXTENSIONS--
+ldap
+--FILE--
+<?crx
+require "connect.inc";
+
+$link = ldap_connect($uri);
+var_dump(ldap_rename($link, "cn=userNotFound,$base", "cn=userZ", "$base", true));
+?>
+--EXPECT--
+bool(false)

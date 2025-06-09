@@ -1,0 +1,15 @@
+--TEST--
+crex multibyte (6)
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=On
+crex.script_encoding=EUC-JP
+internal_encoding=CP932
+--FILE--
+<?crx
+declare(encoding="UTF-8");
+var_dump(bin2hex("テスト"));
+?>
+--EXPECT--
+string(12) "836583588367"

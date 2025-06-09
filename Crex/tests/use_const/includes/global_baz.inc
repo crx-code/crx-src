@@ -1,0 +1,3 @@
+<?crx
+
+const baz = NULL;

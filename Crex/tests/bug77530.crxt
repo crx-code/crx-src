@@ -1,0 +1,10 @@
+--TEST--
+Bug #77530: CRX crashes when parsing '(2)::class'
+--FILE--
+<?crx
+
+echo (2)::class;
+
+?>
+--EXPECTF--
+Fatal error: Illegal class name in %s on line %d

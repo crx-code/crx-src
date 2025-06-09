@@ -1,0 +1,25 @@
+--TEST--
+Crxa: CrxaFileInfo::__destruct
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+
+$a = new Crxa($fname);
+$a['a/subdir/here'] = 'hi';
+
+$b = new CrxaFileInfo($pname . '/a/subdir');
+unset($b);
+
+$b = new CrxaFileInfo($pname . '/a/subdir/here');
+unset($b);
+?>
+===DONE===
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+--EXPECT--
+===DONE===

@@ -1,0 +1,12 @@
+--TEST--
+Crxa front controller with weird SCRIPT_NAME
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/huh?
+REQUEST_URI=/huh?
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa
+--EXPECTF--
+oops did not run
+%a

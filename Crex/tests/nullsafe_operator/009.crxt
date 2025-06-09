@@ -1,0 +1,11 @@
+--TEST--
+Test fetch nullsafe property by ref
+--FILE--
+<?crx
+
+$foo = null;
+$ref = &$foo?->bar
+
+?>
+--EXPECTF--
+Fatal error: Cannot take reference of a nullsafe chain in %s.crx on line 4

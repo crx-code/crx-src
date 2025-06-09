@@ -1,0 +1,28 @@
+--TEST--
+Crxa: fopen a .crxa for writing (existing file)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+include 'files/crxa_test.inc';
+
+var_dump(fopen($pname . '/b/c.crx', 'wb'));
+include $pname . '/b/c.crx';
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+Warning: fopen(crxa://%sopen_for_write_existing_c.crxa.crx/b/c.crx): Failed to open stream: crxa error: write operations disabled by the crx.ini setting crxa.readonly in %sopen_for_write_existing_c.crx on line %d
+bool(false)
+This is b/c

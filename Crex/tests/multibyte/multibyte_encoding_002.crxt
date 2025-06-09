@@ -1,0 +1,13 @@
+--TEST--
+Crex Multibyte and UTF-8 BOM
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=1
+internal_encoding=iso-8859-1
+--FILE--
+﻿<?crx
+print "Hello World\n";
+?>
+--EXPECT--
+Hello World

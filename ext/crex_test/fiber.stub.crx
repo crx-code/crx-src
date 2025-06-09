@@ -1,0 +1,19 @@
+<?crx
+
+/**
+ * @generate-class-entries static
+ * @undocumentable
+ */
+
+final class _CrexTestFiber
+{
+    public function __main(callable $callback) {}
+
+    public function start(mixed ...$args): mixed {}
+
+    public function resume(mixed $value = null): mixed {}
+
+    public function pipeTo(callable $callback): _CrexTestFiber {}
+
+    public static function suspend(mixed $value = null): mixed {}
+}

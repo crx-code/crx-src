@@ -1,0 +1,31 @@
+--TEST--
+Crxa: Bug #46060: addEmptyDir() breaks
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx if (getenv('SKIP_SLOW_TESTS')) die('skip'); ?>
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.tar';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.tar';
+
+$crxa = new CrxaData($fname);
+$crxa->addEmptyDir('blah/');
+$crxa->addFromString('test/', '');
+
+copy($fname, $fname2);
+$crxa = new CrxaData($fname2);
+
+var_dump($crxa['blah']->isDir(), $crxa['test']->isDir());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.tar');
+__HALT_COMPILER();
+?>
+--EXPECT--
+bool(true)
+bool(false)

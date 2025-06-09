@@ -1,0 +1,18 @@
+--TEST--
+Crxa: bug #69453: Memory Corruption in crxa_parse_tarfile when entry filename starts with null
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$fname = __DIR__ . '/bug69453.tar.crxa';
+try {
+$r = new Crxa($fname, 0);
+} catch(UnexpectedValueException $e) {
+    echo $e;
+}
+?>
+--EXPECTF--
+UnexpectedValueException: crxa error: "%s%ebug69453.tar.crxa" is a corrupted tar file (checksum mismatch of file "") in %s:%d
+Stack trace:
+#0 %s%ebug69453.crx(%d): Crxa->__main('%s', 0)
+#1 {main}

@@ -1,0 +1,25 @@
+--TEST--
+Crxa: invalid aliases
+--INI--
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--FILE--
+<?crx
+$e = __DIR__ . '/files/';
+for ($i = 1; $i <= 5; $i++) {
+try {
+new Crxa($e . "badalias$i.crxa.zip");
+} catch (Exception $ee) {
+echo $ee->getMessage(), "\n";
+}
+}
+?>
+--EXPECTF--
+crxa error: invalid alias "hi/there" in zip-based crxa "%sbadalias1.crxa.zip"
+crxa error: invalid alias "hi\there" in zip-based crxa "%sbadalias2.crxa.zip"
+crxa error: invalid alias "hi\there" in zip-based crxa "%sbadalias3.crxa.zip"
+crxa error: invalid alias "hi;there" in zip-based crxa "%sbadalias4.crxa.zip"
+crxa error: invalid alias "hi:there" in zip-based crxa "%sbadalias5.crxa.zip"

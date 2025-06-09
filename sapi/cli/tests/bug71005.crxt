@@ -1,0 +1,42 @@
+--TEST--
+Bug #71005 (Segfault in crx_cli_server_dispatch_router())
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+
+$code = <<<'EOF'
+set_exception_handler(function () { echo 'goodbye'; });
+throw new Exception;
+EOF;
+
+include "crx_cli_server.inc";
+crx_cli_server_start($code);
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+if(fwrite($fp, <<<HEADER
+GET / HTTP/1.1
+Host: {$host}
+
+
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+    }
+}
+
+?>
+--EXPECTF--
+HTTP/1.1 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+goodbye

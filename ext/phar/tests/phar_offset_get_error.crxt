@@ -1,0 +1,48 @@
+--TEST--
+Crxa: ignore filenames starting with / on offsetSet
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://'.$fname;
+$iname = '/file.txt';
+$ename = '/error/..';
+
+$p = new Crxa($fname);
+$p[$iname] = "foobar\n";
+
+try
+{
+    $p[$ename] = "foobar\n";
+}
+catch(Exception $e)
+{
+    echo $e->getMessage() . "\n";
+}
+
+include($pname . $iname);
+
+// extra coverage
+try {
+$p['.crxa/oops'] = 'hi';
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+$a = $p['.crxa/stub.crx'];
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+Entry /error/.. does not exist and cannot be created: crxa error: invalid path "/error/.." contains upper directory reference
+foobar
+Cannot set any files or directories in magic ".crxa" directory
+Entry .crxa/stub.crx does not exist

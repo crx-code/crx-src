@@ -1,0 +1,14 @@
+--TEST--
+Bug #40236 (crx -a function allocation eats memory)
+--SKIPIF--
+<?crx
+if (extension_loaded("readline")) die("skip Test doesn't support readline");
+?>
+--FILE--
+<?crx
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+$cmd = "$crx -n -d memory_limit=4M -a \"".__DIR__."\"/bug40236.inc";
+echo `$cmd`;
+?>
+--EXPECT--
+Interactive shell (-a) requires the readline extension.

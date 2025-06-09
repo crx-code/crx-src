@@ -1,0 +1,38 @@
+--TEST--
+Bug #74780	parse_url() borks when query string contains colon
+--FILE--
+<?crx
+var_dump(
+    parse_url('//crx.net/path?query=1:2'),
+    parse_url('//crx.net/path.crx?query=a:b'),
+    parse_url('//username@crx.net/path?query=1:2')
+);
+
+?>
+--EXPECT--
+array(3) {
+  ["host"]=>
+  string(7) "crx.net"
+  ["path"]=>
+  string(5) "/path"
+  ["query"]=>
+  string(9) "query=1:2"
+}
+array(3) {
+  ["host"]=>
+  string(7) "crx.net"
+  ["path"]=>
+  string(9) "/path.crx"
+  ["query"]=>
+  string(9) "query=a:b"
+}
+array(4) {
+  ["host"]=>
+  string(7) "crx.net"
+  ["user"]=>
+  string(8) "username"
+  ["path"]=>
+  string(5) "/path"
+  ["query"]=>
+  string(9) "query=1:2"
+}

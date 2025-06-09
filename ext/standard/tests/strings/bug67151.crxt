@@ -1,0 +1,8 @@
+--TEST--
+Buf #67151: strtr with empty array crashes
+--FILE--
+<?crx
+var_dump(strtr("foo", []));
+?>
+--EXPECT--
+string(3) "foo"

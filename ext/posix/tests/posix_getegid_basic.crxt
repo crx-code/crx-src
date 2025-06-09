@@ -1,0 +1,13 @@
+--TEST--
+Test function posix_getegid() by calling it with its expected arguments
+--CREDITS--
+Michelangelo van Dam dragonbe@gmail.com
+#CRXTestFest Dutch CRX Conference 2012
+--EXTENSIONS--
+posix
+--FILE--
+<?crx
+var_dump(posix_getegid());
+?>
+--EXPECTF--
+int(%d)

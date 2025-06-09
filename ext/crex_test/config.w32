@@ -1,0 +1,8 @@
+// vim:ft=javascript
+
+ARG_ENABLE("crex-test", "enable crex_test extension", "no");
+
+if (CRX_CREX_TEST != "no") {
+	EXTENSION("crex_test", "test.c observer.c fiber.c iterators.c object_handlers.c", CRX_CREX_TEST_SHARED, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+	ADD_FLAG("CFLAGS_CREX_TEST", "/D CRX_CREX_TEST_EXPORTS ");
+}

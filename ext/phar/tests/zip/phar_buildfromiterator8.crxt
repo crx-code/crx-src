@@ -1,0 +1,65 @@
+--TEST--
+Crxa::buildFromIterator() iterator, SplFileInfo as current zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+chdir(__DIR__);
+$crxa = new Crxa(__DIR__ . '/buildfromiterator8.crxa.zip');
+$a = $crxa->buildFromIterator(new RegexIterator(new DirectoryIterator('.'), '/^frontcontroller\d{0,2}\.crxa\.crxt\\z|^\.\\z|^\.\.\\z/'), __DIR__ . DIRECTORY_SEPARATOR);
+asort($a);
+var_dump($a);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/buildfromiterator8.crxa.zip');
+?>
+--EXPECTF--
+array(21) {
+  ["frontcontroller1.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller1.crxa.crxt"
+  ["frontcontroller10.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller10.crxa.crxt"
+  ["frontcontroller11.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller11.crxa.crxt"
+  ["frontcontroller12.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller12.crxa.crxt"
+  ["frontcontroller13.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller13.crxa.crxt"
+  ["frontcontroller14.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller14.crxa.crxt"
+  ["frontcontroller15.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller15.crxa.crxt"
+  ["frontcontroller16.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller16.crxa.crxt"
+  ["frontcontroller17.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller17.crxa.crxt"
+  ["frontcontroller18.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller18.crxa.crxt"
+  ["frontcontroller19.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller19.crxa.crxt"
+  ["frontcontroller2.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller2.crxa.crxt"
+  ["frontcontroller20.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller20.crxa.crxt"
+  ["frontcontroller21.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller21.crxa.crxt"
+  ["frontcontroller3.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller3.crxa.crxt"
+  ["frontcontroller4.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller4.crxa.crxt"
+  ["frontcontroller5.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller5.crxa.crxt"
+  ["frontcontroller6.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller6.crxa.crxt"
+  ["frontcontroller7.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller7.crxa.crxt"
+  ["frontcontroller8.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller8.crxa.crxt"
+  ["frontcontroller9.crxa.crxt"]=>
+  string(%d) "%sfrontcontroller9.crxa.crxt"
+}
+bool(true)

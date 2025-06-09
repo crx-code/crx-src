@@ -1,0 +1,10 @@
+--TEST--
+Bug #33989 (extract($GLOBALS,EXTR_REFS) crashes CRX)
+--FILE--
+<?crx
+$a="a";
+extract($GLOBALS, EXTR_REFS);
+echo "ok\n";
+?>
+--EXPECT--
+ok

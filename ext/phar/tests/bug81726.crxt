@@ -1,0 +1,12 @@
+--TEST--
+Bug #81726 (crxa wrapper: DOS when using quine gzip file)
+--EXTENSIONS--
+crxa
+zlib
+--FILE--
+<?crx
+var_dump(fopen("crxa://" . __DIR__ . "/bug81726.gz", "r"));
+?>
+--EXPECTF--
+Warning: fopen(crxa://%s): Failed to open stream: unable to decompress gzipped crxa archive "%s" in %s on line %d
+bool(false)

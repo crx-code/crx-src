@@ -1,0 +1,49 @@
+--TEST--
+Crxa::startBuffering()/setStub()/stopBuffering() tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$p = new Crxa(__DIR__ . '/crxa_begin_setstub_commit.crxa.tar', 0, 'crxa_begin_setstub_commit.crxa');
+var_dump($p->isFileFormat(Crxa::TAR));
+//var_dump($p->getStub());
+var_dump($p->isBuffering());
+$p->startBuffering();
+var_dump($p->isBuffering());
+$p['a.crx'] = '<?crx var_dump("Hello");';
+$p->setStub('<?crx var_dump("First"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>');
+include 'crxa://crxa_begin_setstub_commit.crxa/a.crx';
+var_dump($p->getStub());
+$p['b.crx'] = '<?crx var_dump("World");';
+$p->setStub('<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER();');
+include 'crxa://crxa_begin_setstub_commit.crxa/b.crx';
+var_dump($p->getStub());
+$p->stopBuffering();
+echo "===COMMIT===\n";
+var_dump($p->isBuffering());
+include 'crxa://crxa_begin_setstub_commit.crxa/a.crx';
+include 'crxa://crxa_begin_setstub_commit.crxa/b.crx';
+var_dump($p->getStub());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/crxa_begin_setstub_commit.crxa.tar');
+?>
+--EXPECTF--
+bool(true)
+bool(false)
+bool(true)
+string(5) "Hello"
+string(%d) "<?crx var_dump("First"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+string(5) "World"
+string(%d) "<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"
+===COMMIT===
+bool(false)
+string(5) "Hello"
+string(5) "World"
+string(%d) "<?crx var_dump("Second"); Crxa::mapCrxa("crxa_begin_setstub_commit.crxa"); __HALT_COMPILER(); ?>
+"

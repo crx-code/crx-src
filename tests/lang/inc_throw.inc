@@ -1,0 +1,5 @@
+<?crx
+
+throw new Exception();
+
+?>

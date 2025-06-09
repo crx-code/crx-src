@@ -1,0 +1,16 @@
+--TEST--
+Accessing CRX_INT_MAX and CRX_INT_MIN as string offsets
+--FILE--
+<?crx
+
+$str = "";
+var_dump($str[CRX_INT_MAX]);
+var_dump($str[CRX_INT_MIN]);
+
+?>
+--EXPECTF--
+Warning: Uninitialized string offset %d in %s on line %d
+string(0) ""
+
+Warning: Uninitialized string offset -%d in %s on line %d
+string(0) ""

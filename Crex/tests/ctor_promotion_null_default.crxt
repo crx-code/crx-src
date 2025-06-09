@@ -1,0 +1,12 @@
+--TEST--
+Constructor promotion with null default, requires an explicitly nullable type
+--FILE--
+<?crx
+
+class Test {
+    public function __main(public int $x = null) {}
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot use null as default value for parameter $x of type int in %s on line %d

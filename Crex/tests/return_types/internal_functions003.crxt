@@ -1,0 +1,10 @@
+--TEST--
+Return type for internal functions 3: Void return type
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+var_dump(crex_test_void_return());
+?>
+--EXPECT--
+NULL

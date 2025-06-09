@@ -1,0 +1,18 @@
+--TEST--
+Crxa: copy-on-write test 4a [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite4.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+var_dump(file_exists('crxa://' . __DIR__ . '/files/write4.crxa/testit.txt'));
+Crxa::mount('crxa://' . __DIR__ . '/files/write4.crxa/testit.txt', 'crxa://' . __DIR__ . '/files/write4.crxa/tobemounted');
+var_dump(file_exists('crxa://' . __DIR__ . '/files/write4.crxa/testit.txt'), file_get_contents('crxa://' . __DIR__ . '/files/write4.crxa/testit.txt'));
+?>
+--EXPECT--
+bool(false)
+bool(true)
+string(2) "hi"

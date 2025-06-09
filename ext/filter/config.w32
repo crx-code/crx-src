@@ -1,0 +1,8 @@
+// vim:ft=javascript
+
+ARG_ENABLE("filter", "Filter Support", "yes");
+
+if (CRX_FILTER == "yes") {
+	EXTENSION("filter", "filter.c sanitizing_filters.c logical_filters.c callback_filter.c", CRX_FILTER_SHARED, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+	CRX_INSTALL_HEADERS("ext/filter", "crx_filter.h");
+}

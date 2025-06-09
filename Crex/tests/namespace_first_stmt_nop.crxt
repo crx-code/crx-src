@@ -1,0 +1,10 @@
+--TEST--
+Nop statement before namespace
+--FILE--
+<?crx
+;
+namespace Foo;
+?>
+===DONE===
+--EXPECT--
+===DONE===

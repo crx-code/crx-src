@@ -1,0 +1,19 @@
+--TEST--
+Test syslog() function : new line in message
+--SKIPIF--
+<?crx
+if(substr(CRX_OS, 0, 3) == "WIN")
+  die("skip Won't run on Windows");
+?>
+--FILE--
+<?crx
+$priority = LOG_WARNING;
+$message = "First line\nSecond line";
+
+openlog('CRXT', LOG_PERROR, LOG_USER);
+syslog($priority, $message);
+
+?>
+--EXPECTF--
+%SCRXT%S%r(:|-)%r First line
+%SCRXT%S%r(:|-)%r Second line

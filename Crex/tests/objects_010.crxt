@@ -1,0 +1,16 @@
+--TEST--
+redefining constructor (__main second)
+--FILE--
+<?crx
+
+class test {
+    function test() {
+    }
+    function __main() {
+    }
+}
+
+echo "Done\n";
+?>
+--EXPECT--
+Done

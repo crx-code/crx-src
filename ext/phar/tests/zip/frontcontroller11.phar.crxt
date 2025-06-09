@@ -1,0 +1,18 @@
+--TEST--
+Crxa front controller mime type extension is not a string zip-based
+--INI--
+default_charset=
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+--ENV--
+SCRIPT_NAME=/frontcontroller11.crxa.crx
+REQUEST_URI=/frontcontroller11.crxa.crx/a.crx
+PATH_INFO=/a.crx
+--FILE_EXTERNAL--
+files/frontcontroller5.crxa.zip
+--EXPECTHEADERS--
+Content-type: text/html
+--EXPECT--
+hio

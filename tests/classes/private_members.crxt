@@ -1,0 +1,101 @@
+--TEST--
+ZE2 A private member is
+--FILE--
+<?crx
+
+class base
+{
+  private $member;
+
+  function __main()
+  {
+    echo __METHOD__ . "(begin)\n";
+    $this->member = 'base::member';
+    $this->test();
+    echo __METHOD__ . "(end)\n";
+  }
+
+  function test()
+  {
+    echo __METHOD__ . "\n";
+    print_r($this);
+  }
+}
+
+class derived extends base
+{
+  public $member = 'derived::member (default)';
+
+  function __main()
+  {
+    echo __METHOD__ . "(begin)\n";
+    parent::__main();
+    parent::test();
+    $this->test();
+    $this->member = 'derived::member';
+    echo __METHOD__ . "(end)\n";
+  }
+
+  function test()
+  {
+    parent::test();
+    echo __METHOD__ . "\n";
+    print_r($this);
+  }
+}
+
+$t = new derived;
+$t->test();
+unset($t);
+
+echo "Done\n";
+
+?>
+--EXPECT--
+derived::__main(begin)
+base::__main(begin)
+base::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member (default)
+)
+derived::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member (default)
+)
+base::__main(end)
+base::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member (default)
+)
+base::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member (default)
+)
+derived::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member (default)
+)
+derived::__main(end)
+base::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member
+)
+derived::test
+derived Object
+(
+    [member:base:private] => base::member
+    [member] => derived::member
+)
+Done

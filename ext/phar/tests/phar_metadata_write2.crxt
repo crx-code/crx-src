@@ -1,0 +1,45 @@
+--TEST--
+Crxa with object in metadata
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = array('cont' => 'a');
+include 'files/crxa_test.inc';
+
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getMetadata());
+$crxa->setMetadata((object) ['my' => 'friend']);
+unset($crxa);
+// NOTE: Crxa will use the cached value of metadata if setMetaData was called on that Crxa path before.
+// Save the writes to the crxa and use a different file path.
+$fname_new = "$fname.copy.crx";
+copy($fname, $fname_new);
+$crxa = new Crxa($fname_new);
+var_dump($crxa->getMetadata());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx.copy.crx');
+?>
+--EXPECT--
+string(1) "a"
+NULL
+object(stdClass)#2 (1) {
+  ["my"]=>
+  string(6) "friend"
+}

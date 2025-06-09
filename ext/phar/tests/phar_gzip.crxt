@@ -1,0 +1,50 @@
+--TEST--
+Crxa: gzipped crxa
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/crxa_gzip.crxa';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/crxa_gzip.2.crxa';
+$pname2 = 'crxa://' . $fname2;
+
+$file = '<?crx
+Crxa::mapCrxa();
+var_dump("it worked");
+include "crxa://" . __FILE__ . "/tar_004.crx";
+__HALT_COMPILER();';
+
+$files = array();
+$files['tar_004.crx']   = '<?crx var_dump(__FILE__);';
+$files['internal/file/here']   = "hi there!\n";
+$files['internal/dir/'] = '';
+$files['dir/'] = '';
+$gzip = true;
+
+include 'files/crxa_test.inc';
+
+include $fname;
+
+$a = new Crxa($fname);
+$a['test'] = 'hi';
+copy($fname, $fname2);
+$a->setAlias('another');
+$b = new Crxa($fname2);
+var_dump($b->isFileFormat(Crxa::CRXA));
+var_dump($b->isCompressed() == Crxa::GZ);
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/crxa_gzip.crxa');
+@unlink(__DIR__ . '/crxa_gzip.2.crxa');
+?>
+--EXPECTF--
+string(9) "it worked"
+string(%d) "crxa://%scrxa_gzip.crxa/tar_004.crx"
+bool(true)
+bool(true)

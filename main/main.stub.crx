@@ -1,0 +1,344 @@
+<?crx
+
+/** @generate-class-entries */
+
+/* Register constants */
+/**
+ * @var string
+ * @cvalue CRX_VERSION
+ */
+const CRX_VERSION = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_MAJOR_VERSION
+ */
+const CRX_MAJOR_VERSION = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_MINOR_VERSION
+ */
+const CRX_MINOR_VERSION = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_RELEASE_VERSION
+ */
+const CRX_RELEASE_VERSION = UNKNOWN;
+	
+/**
+ * @var string
+ * @cvalue CRX_EXTRA_VERSION
+ */
+const CRX_EXTRA_VERSION = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_VERSION_ID
+ */
+const CRX_VERSION_ID = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_ZTS
+ */
+const CRX_ZTS = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_DEBUG
+ */
+const CRX_DEBUG = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_OS_STR
+ */
+const CRX_OS = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_OS_FAMILY
+ */
+const CRX_OS_FAMILY = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_INCLUDE_PATH
+ */
+const DEFAULT_INCLUDE_PATH = UNKNOWN;
+/**
+ * @var string
+ * @cvalue PEAR_INSTALLDIR
+ */
+const PEAR_INSTALL_DIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_EXTENSION_DIR
+ */
+const PEAR_EXTENSION_DIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_EXTENSION_DIR
+ */
+const CRX_EXTENSION_DIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_PREFIX
+ */
+const CRX_PREFIX = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_BINDIR
+ */
+const CRX_BINDIR = UNKNOWN;
+#ifndef CRX_WIN32
+/**
+ * @var string
+ * @cvalue CRX_MANDIR
+ */
+const CRX_MANDIR = UNKNOWN;
+#endif
+/**
+ * @var string
+ * @cvalue CRX_LIBDIR
+ */
+const CRX_LIBDIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_DATADIR
+ */
+const CRX_DATADIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_SYSCONFDIR
+ */
+const CRX_SYSCONFDIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_LOCALSTATEDIR
+ */
+const CRX_LOCALSTATEDIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_CONFIG_FILE_PATH
+ */
+const CRX_CONFIG_FILE_PATH = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_CONFIG_FILE_SCAN_DIR
+ */
+const CRX_CONFIG_FILE_SCAN_DIR = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_SHLIB_SUFFIX
+ */
+const CRX_SHLIB_SUFFIX = UNKNOWN;
+/**
+ * @var string
+ * @cvalue CRX_EOL
+ */
+const CRX_EOL = UNKNOWN;
+/**
+ * @var int
+ * @cvalue MAXPATHLEN
+ */
+const CRX_MAXPATHLEN = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CREX_LONG_MAX
+ */
+const CRX_INT_MAX = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CREX_LONG_MIN
+ */
+const CRX_INT_MIN = UNKNOWN;
+/**
+ * @var int
+ * @cvalue SIZEOF_CREX_LONG
+ */
+const CRX_INT_SIZE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue FD_SETSIZE
+ */
+const CRX_FD_SETSIZE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue DBL_DIG
+ */
+const CRX_FLOAT_DIG = UNKNOWN;
+/**
+ * @var float
+ * @cvalue DBL_EPSILON
+ */
+const CRX_FLOAT_EPSILON = UNKNOWN;
+/**
+ * @var float
+ * @cvalue DBL_MAX
+ */
+const CRX_FLOAT_MAX = UNKNOWN;
+/**
+ * @var float
+ * @cvalue DBL_MIN
+ */
+const CRX_FLOAT_MIN = UNKNOWN;
+
+#ifdef CRX_WIN32
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).dwMajorVersion
+ */
+const CRX_WINDOWS_VERSION_MAJOR = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).dwMinorVersion
+ */
+const CRX_WINDOWS_VERSION_MINOR = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).dwBuildNumber
+ */
+const CRX_WINDOWS_VERSION_BUILD = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).dwPlatformId
+ */
+const CRX_WINDOWS_VERSION_PLATFORM = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).wServicePackMajor
+ */
+const CRX_WINDOWS_VERSION_SP_MAJOR = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).wServicePackMinor
+ */
+const CRX_WINDOWS_VERSION_SP_MINOR = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).wSuiteMask
+ */
+const CRX_WINDOWS_VERSION_SUITEMASK = UNKNOWN;
+/**
+ * @var int
+ * @cvalue EG(windows_version_info).wProductType
+ */
+const CRX_WINDOWS_VERSION_PRODUCTTYPE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue VER_NT_DOMAIN_CONTROLLER
+ */
+const CRX_WINDOWS_NT_DOMAIN_CONTROLLER = UNKNOWN;
+/**
+ * @var int
+ * @cvalue VER_NT_SERVER
+ */
+const CRX_WINDOWS_NT_SERVER = UNKNOWN;
+/**
+ * @var int
+ * @cvalue VER_NT_WORKSTATION
+ */
+const CRX_WINDOWS_NT_WORKSTATION = UNKNOWN;
+#endif
+
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_START
+ */
+const CRX_OUTPUT_HANDLER_START = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_WRITE
+ */
+const CRX_OUTPUT_HANDLER_WRITE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_FLUSH
+ */
+const CRX_OUTPUT_HANDLER_FLUSH = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_CLEAN
+ */
+const CRX_OUTPUT_HANDLER_CLEAN = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_FINAL
+ */
+const CRX_OUTPUT_HANDLER_FINAL = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_WRITE
+ */
+const CRX_OUTPUT_HANDLER_CONT = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_FINAL
+ */
+const CRX_OUTPUT_HANDLER_END = UNKNOWN;
+
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_CLEANABLE
+ */
+const CRX_OUTPUT_HANDLER_CLEANABLE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_FLUSHABLE
+ */
+const CRX_OUTPUT_HANDLER_FLUSHABLE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_REMOVABLE
+ */
+const CRX_OUTPUT_HANDLER_REMOVABLE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_STDFLAGS
+ */
+const CRX_OUTPUT_HANDLER_STDFLAGS = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_STARTED
+ */
+const CRX_OUTPUT_HANDLER_STARTED = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_OUTPUT_HANDLER_DISABLED
+ */
+const CRX_OUTPUT_HANDLER_DISABLED = UNKNOWN;
+
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_OK
+ */
+const UPLOAD_ERR_OK = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_A
+ */
+const UPLOAD_ERR_INI_SIZE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_B
+ */
+const UPLOAD_ERR_FORM_SIZE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_C
+ */
+const UPLOAD_ERR_PARTIAL = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_D
+ */
+const UPLOAD_ERR_NO_FILE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_E
+ */
+const UPLOAD_ERR_NO_TMP_DIR = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_F
+ */
+const UPLOAD_ERR_CANT_WRITE = UNKNOWN;
+/**
+ * @var int
+ * @cvalue CRX_UPLOAD_ERROR_X
+ */
+const UPLOAD_ERR_EXTENSION = UNKNOWN;

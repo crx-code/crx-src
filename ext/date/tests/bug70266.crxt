@@ -1,0 +1,8 @@
+--TEST--
+Bug #70266 (DateInterval::__main.interval_spec is not supposed to be optional)
+--FILE--
+<?crx
+var_dump((new ReflectionParameter(['DateInterval', '__main'], 0))->isOptional());
+?>
+--EXPECT--
+bool(false)

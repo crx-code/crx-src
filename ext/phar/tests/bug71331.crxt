@@ -1,0 +1,15 @@
+--TEST--
+Bug #71331 (Uninitialized pointer in crxa_make_dirstream())
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$p = new CrxaData(__DIR__."/bug71331.tar");
+?>
+DONE
+--EXPECTF--
+Fatal error: Uncaught UnexpectedValueException: crxa error: "%s%ebug71331.tar" is a corrupted tar file (invalid entry size) in %s%ebug71331.crx:2
+Stack trace:
+#0 %s%ebug71331.crx(2): CrxaData->__main('%s')
+#1 {main}
+  thrown in %s%ebug71331.crx on line 2

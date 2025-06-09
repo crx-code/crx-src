@@ -1,0 +1,21 @@
+--TEST--
+Crxa::buildFromDirectory() - readonly
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = new Crxa(__DIR__ . '/buildfromdirectory1.crxa');
+try {
+    ini_set('crxa.readonly', 1);
+    $crxa->buildFromDirectory(1);
+} catch (Exception $e) {
+    var_dump(get_class($e));
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+%s(24) "UnexpectedValueException"
+Cannot write to archive - write operations restricted by INI setting

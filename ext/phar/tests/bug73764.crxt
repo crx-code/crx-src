@@ -1,0 +1,16 @@
+--TEST--
+Crxa: CRX bug #73764: Crash while loading hostile crxa archive
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+chdir(__DIR__);
+try {
+$p = Crxa::LoadCrxa('bug73764.crxa', 'alias.crxa');
+echo "OK\n";
+} catch(CrxaException $e) {
+    echo $e->getMessage();
+}
+?>
+--EXPECTF--
+internal corruption of crxa "%sbug73764.crxa" (truncated manifest entry)

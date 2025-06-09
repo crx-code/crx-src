@@ -1,0 +1,18 @@
+--TEST--
+Bug #73615 (crxdbg without option never load .crxdbginit at startup)
+--SKIPIF--
+<?crx
+if (!getenv('TEST_CRXDBG_EXECUTABLE')) die("SKIP: No TEST_CRXDBG_EXECUTABLE specified");
+?>
+--FILE--
+<?crx
+
+$crxdbg = getenv('TEST_CRXDBG_EXECUTABLE_ESCAPED');
+
+chdir(__DIR__."/bug73615");
+
+print `$crxdbg -qn`;
+
+?>
+--EXPECT--
+Executed .crxdbginit

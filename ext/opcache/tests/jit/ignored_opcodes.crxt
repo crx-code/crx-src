@@ -1,0 +1,32 @@
+--TEST--
+JIT: ignored opcodes
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.jit_buffer_size=1M
+opcache.jit=function
+;opcache.jit_debug=257
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+crex_test.observer.show_opcode_in_user_handler=CREX_EXIT, CREX_BEGIN_SILENCE, CREX_END_SILENCE
+--EXTENSIONS--
+opcache
+crex_test
+--FILE--
+<?crx
+function test(): int
+{
+    return 0;
+}
+
+exit(@test());
+?>
+--EXPECTF--
+<!-- init '%s' -->
+<file '%s'>
+  <!-- opcode: 'CREX_BEGIN_SILENCE' in user handler -->
+  <!-- opcode: 'CREX_END_SILENCE' in user handler -->
+  <!-- opcode: 'CREX_EXIT' in user handler -->
+  <!-- Exception: UnwindExit -->
+</file '%s'>

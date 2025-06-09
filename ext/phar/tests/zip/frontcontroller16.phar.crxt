@@ -1,0 +1,18 @@
+--TEST--
+Crxa front controller mime type override, Crxa::CRX zip-based
+--INI--
+default_charset=UTF-8
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+--ENV--
+SCRIPT_NAME=/frontcontroller16.crxa.crx
+REQUEST_URI=/frontcontroller16.crxa.crx/a.crxs
+PATH_INFO=/a.crxs
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa.zip
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECT--
+hio1

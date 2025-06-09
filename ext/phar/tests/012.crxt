@@ -1,0 +1,28 @@
+--TEST--
+Crxa::mapCrxa valid file
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = 'a';
+
+include 'files/crxa_test.inc';
+include $fname;
+
+echo file_get_contents('crxa://hio/a');
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+a

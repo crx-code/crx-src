@@ -1,0 +1,21 @@
+--TEST--
+Bug #66960 crxa long filename crash
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly = 0
+memory_limit = -1
+--FILE--
+<?crx
+$file = __DIR__ . DIRECTORY_SEPARATOR . 'bug66960.crxa';
+$crxa = new Crxa($file);
+var_dump(file_exists("crxa://$file/". str_repeat('a', CRX_MAXPATHLEN-1)));
+var_dump(file_exists("crxa://$file/". str_repeat('a', CRX_MAXPATHLEN)));
+var_dump(file_exists("crxa://$file/". str_repeat('a', CRX_MAXPATHLEN+1)));
+echo 'done';
+?>
+--EXPECT--
+bool(false)
+bool(false)
+bool(false)
+done

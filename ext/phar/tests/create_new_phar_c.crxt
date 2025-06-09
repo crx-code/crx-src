@@ -1,0 +1,26 @@
+--TEST--
+Crxa: create a completely new crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=1
+--FILE--
+<?crx
+
+file_put_contents('crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx/a.crx',
+    'brand new!');
+
+$crxa = new Crxa(__DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx');
+
+var_dump($crxa->getSignature());
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+array(2) {
+  ["hash"]=>
+  string(64) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-256"
+}

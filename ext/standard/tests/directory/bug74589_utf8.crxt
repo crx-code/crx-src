@@ -1,0 +1,47 @@
+--TEST--
+Bug #74589 __DIR__ wrong for unicode character, UTF-8
+--SKIPIF--
+<?crx
+if (substr(CRX_OS, 0, 3) != 'WIN' && CRX_OS != 'Linux') {
+    die('skip Linux or Windows only');
+}
+?>
+--INI--
+internal_encoding=utf-8
+--FILE--
+<?crx
+/*
+#vim: set fileencoding=utf-8
+#vim: set encoding=utf-8
+*/
+
+$item = "bug74589_新建文件夹"; // utf-8 string
+$dir = __DIR__ . DIRECTORY_SEPARATOR . $item;
+$test_file = $dir . DIRECTORY_SEPARATOR . "test.crx";
+$test_file_escaped = escapeshellarg($test_file);
+
+mkdir($dir);
+
+file_put_contents($test_file,
+"<?crx
+    var_dump(__DIR__);
+    var_dump(__FILE__);
+    var_dump(__DIR__ === __DIR__);");
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+echo shell_exec("$crx -n $test_file_escaped");
+
+?>
+--EXPECTF--
+string(%d) "%sbug74589_新建文件夹"
+string(%d) "%sbug74589_新建文件夹%etest.crx"
+bool(true)
+--CLEAN--
+<?crx
+	$item = "bug74589_新建文件夹"; // utf-8 string
+	$dir = __DIR__ . DIRECTORY_SEPARATOR . $item;
+	$test_file = $dir . DIRECTORY_SEPARATOR . "test.crx";
+	unlink($test_file);
+	rmdir($dir);
+?>

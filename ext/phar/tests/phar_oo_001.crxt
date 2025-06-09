@@ -1,0 +1,51 @@
+--TEST--
+Crxa object: basics
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getVersion());
+var_dump(count($crxa));
+
+class MyCrxa extends Crxa
+{
+    function __main()
+    {
+    }
+}
+
+try
+{
+    $crxa = new MyCrxa();
+    var_dump($crxa->getVersion());
+}
+catch (LogicException $e)
+{
+    var_dump($e->getMessage());
+}
+try {
+    $crxa = new Crxa('test.crxa');
+    $crxa->__main('oops');
+} catch (LogicException $e)
+{
+    var_dump($e->getMessage());
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_001.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+string(5) "1.0.0"
+int(5)
+string(50) "Cannot call method on an uninitialized Crxa object"
+string(29) "Cannot call constructor twice"

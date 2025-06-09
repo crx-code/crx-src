@@ -1,0 +1,114 @@
+--TEST--
+Crxa::setStub()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$file = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$fp = fopen($fname, 'rb');
+//// 1
+echo fread($fp, strlen($file)) . "\n";
+fclose($fp);
+$crxa = new Crxa($fname);
+$file = '<?crx echo "second stub\n"; __HALT_COMPILER(); ?>';
+
+//// 2
+$crxa->setStub($file);
+$fp = fopen($fname, 'rb');
+echo fread($fp, strlen($file)) . "\n";
+fclose($fp);
+
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxatmp.crx';
+$file = '<?crx echo "third stub\n"; __HALT_COMPILER(); ?>';
+$fp = fopen($fname2, 'wb');
+fwrite($fp, $file);
+fclose($fp);
+$fp = fopen($fname2, 'rb');
+
+//// 3
+$crxa->setStub($fp);
+fclose($fp);
+
+$fp = fopen($fname, 'rb');
+echo fread($fp, strlen($file)) . "\n";
+fclose($fp);
+
+$fp = fopen($fname2, 'ab');
+fwrite($fp, 'booya');
+fclose($fp);
+echo file_get_contents($fname2) . "\n";
+
+$fp = fopen($fname2, 'rb');
+
+//// 4
+set_error_handler(function ($severity, $message, $file, $line) {
+    throw new Exception($message);
+});
+try {
+    $crxa->setStub($fp);
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+set_error_handler(null);
+fclose($fp);
+
+$fp = fopen($fname, 'rb');
+echo fread($fp, strlen($file)) . "\n";
+fclose($fp);
+
+$fp = fopen($fname2, 'rb');
+
+//// 5
+$crxa->setStub($fp, strlen($file));
+fclose($fp);
+
+$fp = fopen($fname, 'rb');
+echo fread($fp, strlen($file)) . "\n";
+if (fread($fp, strlen('booya')) == 'booya') {
+    echo 'failed - copied booya';
+}
+fclose($fp);
+$crxa['testing'] = 'hi';
+
+// ensure stub is not overwritten
+$fp = fopen($fname, 'rb');
+echo fread($fp, strlen($file)) . "\n";
+if (fread($fp, strlen('booya')) == 'booya') {
+    echo 'failed - copied booya';
+}
+fclose($fp);
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxatmp.crx');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "second stub\n"; __HALT_COMPILER(); ?>
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>booya
+Calling Crxa::setStub(resource $stub, int $length) is deprecated
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>

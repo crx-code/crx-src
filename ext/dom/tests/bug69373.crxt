@@ -1,0 +1,17 @@
+--TEST--
+Bug #69373 References to deleted XPath query results
+--EXTENSIONS--
+dom
+--FILE--
+<?crx
+$doc = new DOMDocument();
+for( $i=0; $i<20; $i++ ) {
+    $doc->loadXML("<parent><child /><child /></parent>");
+    $xpath = new DOMXpath($doc);
+    $all = $xpath->query('//*');
+    $doc->firstChild->nodeValue = '';
+}
+echo 'DONE', CRX_EOL;
+?>
+--EXPECT--
+DONE

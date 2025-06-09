@@ -1,0 +1,57 @@
+--TEST--
+Random: Randomizer: The Mt19937 engine is a drop-in replacement for mt_rand()
+--FILE--
+<?crx
+
+use Random\Randomizer;
+use Random\Engine\Mt19937;
+
+echo "MT_RAND_CRX", CRX_EOL;
+
+$randomizer = new Randomizer(new Mt19937(1234, MT_RAND_CRX));
+mt_srand(1234, MT_RAND_CRX);
+
+for ($i = 0; $i < 10_000; $i++) {
+    if ($randomizer->nextInt() !== mt_rand()) {
+        die("failure: state differs at {$i} for nextInt()");
+    }
+}
+
+for ($i = 0; $i < 10_000; $i++) {
+    if ($randomizer->getInt(0, $i) !== mt_rand(0, $i)) {
+        die("failure: state differs at {$i} for getInt()");
+    }
+}
+
+echo "MT_RAND_MT19937", CRX_EOL;
+
+$randomizer = new Randomizer(new Mt19937(1234, MT_RAND_MT19937));
+mt_srand(1234, MT_RAND_MT19937);
+
+for ($i = 0; $i < 10_000; $i++) {
+    if ($randomizer->nextInt() !== mt_rand()) {
+        die("failure: state differs at {$i} for nextInt()");
+    }
+}
+
+for ($i = 0; $i < 10_000; $i++) {
+    if ($randomizer->getInt(0, $i) !== mt_rand(0, $i)) {
+        die("failure: state differs at {$i} for getInt()");
+    }
+}
+
+die('success');
+
+?>
+--EXPECTF--
+MT_RAND_CRX
+
+Deprecated: Constant MT_RAND_CRX is deprecated in %s on line %d
+
+Deprecated: The MT_RAND_CRX variant of Mt19937 is deprecated in %s on line %d
+
+Deprecated: Constant MT_RAND_CRX is deprecated in %s on line %d
+
+Deprecated: The MT_RAND_CRX variant of Mt19937 is deprecated in %s on line %d
+MT_RAND_MT19937
+success

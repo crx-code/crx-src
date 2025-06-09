@@ -1,0 +1,36 @@
+--TEST--
+Extending the CrxToken class
+--EXTENSIONS--
+tokenizer
+--FILE--
+<?crx
+
+$code = <<<'CRX'
+<?CRX
+FUNCTION FOO() {
+    ECHO "bar";
+}
+CRX;
+
+class MyCrxToken extends CrxToken {
+    public int $extra = 123;
+
+    public function getLoweredText(): string {
+        return strtolower($this->text);
+    }
+}
+
+foreach (MyCrxToken::tokenize($code) as $token) {
+    echo $token->getLoweredText();
+
+    if ($token->extra !== 123) {
+        echo "Missing property!\n";
+    }
+}
+
+?>
+--EXPECT--
+<?crx
+function foo() {
+    echo "bar";
+}

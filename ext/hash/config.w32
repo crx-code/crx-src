@@ -1,0 +1,46 @@
+// vim:ft=javascript
+
+ARG_WITH('mhash', 'mhash support (BC via hash)', 'no');
+
+if (CRX_MHASH != 'no') {
+	AC_DEFINE('CRX_MHASH_BC', 1);
+}
+
+CRX_HASH = 'yes';
+
+EXTENSION('hash',	'hash.c hash_md.c hash_sha.c hash_ripemd.c hash_haval.c ' +
+					'hash_tiger.c hash_gost.c hash_snefru.c hash_whirlpool.c ' +
+					'hash_adler32.c hash_crc32.c hash_joaat.c hash_fnv.c ' +
+					'hash_sha3.c hash_murmur.c hash_xxhash.c', false);
+
+var hash_sha3_dir = 'ext/hash/sha3/generic' + (X64 ? '64' : '32') + 'lc';
+
+if(X64) {
+	ADD_SOURCES(hash_sha3_dir, 'KeccakHash.c KeccakSponge.c KeccakP-1600-opt64.c', 'hash');
+} else {
+	ADD_SOURCES(hash_sha3_dir, 'KeccakHash.c KeccakSponge.c KeccakP-1600-inplace32BI.c', 'hash');
+}
+
+if (!CHECK_HEADER_ADD_INCLUDE('KeccakHash.h', 'CFLAGS_HASH', hash_sha3_dir)) {
+	// Should NEVER happen
+	ERROR('Unable to locate SHA3 headers');
+}
+
+ADD_FLAG('CFLAGS_HASH', '/DKeccakP200_excluded /DKeccakP400_excluded /DKeccakP800_excluded /DCREX_ENABLE_STATIC_TSRMLS_CACHE=1');
+
+var hash_murmur_dir = 'ext/hash/murmur';
+if (!CHECK_HEADER_ADD_INCLUDE('PMurHash.h', 'CFLAGS_HASH', hash_murmur_dir)) {
+	ERROR('Unable to locate murmur headers');
+}
+ADD_SOURCES(hash_murmur_dir, 'PMurHash.c PMurHash128.c', 'hash');
+
+var hash_xxhash_dir = 'ext/hash/xxhash';
+if (!CHECK_HEADER_ADD_INCLUDE('xxhash.h', 'CFLAGS_HASH', hash_xxhash_dir)) {
+	ERROR('Unable to locate xxhash headers');
+}
+
+CRX_INSTALL_HEADERS('ext/hash/',	'crx_hash.h crx_hash_md.h crx_hash_sha.h ' +
+									'crx_hash_ripemd.h crx_hash_haval.h crx_hash_tiger.h ' +
+									'crx_hash_gost.h crx_hash_snefru.h crx_hash_whirlpool.h ' +
+									'crx_hash_adler32.h crx_hash_crc32.h crx_hash_sha3.h ' +
+									'crx_hash_murmur.h crx_hash_xxhash.h');

@@ -1,0 +1,25 @@
+--TEST--
+Bug #74892 Url Rewriting (trans_sid) not working on urls that start with #
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--FILE--
+<?crx
+ini_set('session.use_cookies', '0');
+ini_set('session.use_only_cookies',0);
+ini_set('session.use_trans_sid',1);
+ini_set('session.trans_sid_hosts','crx.net');
+session_id('sessionidhere');
+session_start();
+
+?>
+<p><a href="index.crx">Click This Anchor Tag!</a></p>
+<p><a href="index.crx#place">External link with anchor</a></p>
+<p><a href="http://crx.net#foo">External link with anchor 2</a></p>
+<p><a href="#place">Internal link</a></p>
+--EXPECT--
+<p><a href="index.crx?CRXSESSID=sessionidhere">Click This Anchor Tag!</a></p>
+<p><a href="index.crx?CRXSESSID=sessionidhere#place">External link with anchor</a></p>
+<p><a href="http://crx.net?CRXSESSID=sessionidhere#foo">External link with anchor 2</a></p>
+<p><a href="#place">Internal link</a></p>

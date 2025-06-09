@@ -1,0 +1,13 @@
+--TEST--
+ldap_err2str() - Basic error number to string conversion
+--CREDITS--
+Patrick Allaert <patrickallaert@crx.net>
+# Belgian CRX Testfest 2009
+--EXTENSIONS--
+ldap
+--FILE--
+<?crx
+var_dump(ldap_err2str(2));
+?>
+--EXPECT--
+string(14) "Protocol error"

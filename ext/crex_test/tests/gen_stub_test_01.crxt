@@ -1,0 +1,30 @@
+--TEST--
+gen_stub.crx: nested namespaced typed properties test.
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$foo = new \CrexTestNS2\Foo();
+var_dump($foo);
+$foo->foo = new \CrexTestNS2\CrexSubNS\Foo();
+var_dump($foo);
+$foo = new \CrexTestNS\UnlikelyCompileError();
+var_dump($foo);
+$foo = new \CrexTestNS\NotUnlikelyCompileError();
+var_dump($foo);
+?>
+--EXPECTF--
+object(CrexTestNS2\Foo)#%d (%d) {
+  ["foo"]=>
+  uninitialized(CrexTestNS2\CrexSubNS\Foo)
+}
+object(CrexTestNS2\Foo)#%d (%d) {
+  ["foo"]=>
+  object(CrexTestNS2\CrexSubNS\Foo)#%d (%d) {
+  }
+}
+object(CrexTestNS\UnlikelyCompileError)#%d (%d) {
+}
+object(CrexTestNS\NotUnlikelyCompileError)#%d (%d) {
+}

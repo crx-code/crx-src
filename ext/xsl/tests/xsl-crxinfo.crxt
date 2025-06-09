@@ -1,0 +1,14 @@
+--TEST--
+Test crxinfo() displays xsl info
+--EXTENSIONS--
+xsl
+--FILE--
+<?crx
+crxinfo();
+?>
+--EXPECTF--
+%a
+libxslt compiled against libxml Version%a
+--CREDITS--
+Christian Weiske, cweiske@crx.net
+CRX Testfest Berlin 2009-05-09

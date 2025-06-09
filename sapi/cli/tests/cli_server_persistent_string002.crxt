@@ -1,0 +1,42 @@
+--TEST--
+Server processing multiple request at the same time
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start();
+
+$fd = stream_socket_client("tcp://" . CRX_CLI_SERVER_ADDRESS);
+fwrite($fd, "GET /index.crx HTTP/1.0\r\nHost: hello");
+
+$fd2 = stream_socket_client("tcp://" . CRX_CLI_SERVER_ADDRESS);
+fwrite($fd2, "GET /index.crx HTTP/1.0\r\nConnection: close\r\n\r\n");
+
+stream_copy_to_stream($fd2, STDOUT);
+
+fwrite($fd, "\r\n\r\n");
+stream_copy_to_stream($fd, STDOUT);
+
+echo CRX_EOL;
+
+?>
+===DONE===
+--EXPECTF--
+HTTP/1.0 200 OK
+Date: %s
+Connection: close
+X-Powered-By: %s
+Content-type: text/html; charset=UTF-8
+
+Hello worldHTTP/1.0 200 OK
+Host: hello
+Date: %s
+Connection: close
+X-Powered-By: %s
+Content-type: text/html; charset=UTF-8
+
+Hello world
+===DONE===

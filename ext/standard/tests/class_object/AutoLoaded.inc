@@ -1,0 +1,5 @@
+<?crx
+
+class AutoLoaded {}
+
+?>

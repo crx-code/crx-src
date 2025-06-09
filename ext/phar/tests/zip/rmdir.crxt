@@ -1,0 +1,38 @@
+--TEST--
+Crxa: rmdir test zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$alias = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa->setStub("<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>");
+$crxa->addEmptyDir('a');
+$crxa['a/x'] = 'a';
+$crxa->stopBuffering();
+
+include $fname;
+
+echo file_get_contents($alias . '/a/x') . "\n";
+var_dump(rmdir($alias . '/a'));
+echo file_get_contents($alias . '/a/x') . "\n";
+unlink($alias . '/a/x');
+var_dump(rmdir($alias . '/a'));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip'); ?>
+--EXPECTF--
+a
+
+Warning: rmdir(): crxa error: Directory not empty in %srmdir.crx on line %d
+bool(false)
+a
+bool(true)

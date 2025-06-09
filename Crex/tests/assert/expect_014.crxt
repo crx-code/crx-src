@@ -1,0 +1,12 @@
+--TEST--
+test failing assertion when disabled
+--INI--
+crex.assertions=0
+assert.exception=1
+--FILE--
+<?crx
+assert(false);
+var_dump(true);
+?>
+--EXPECT--
+bool(true)

@@ -1,0 +1,39 @@
+--TEST--
+Crxa: create new Crxa with broken.dirname in path
+--EXTENSIONS--
+crxa
+--INI--
+default_charset=
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$dir = __DIR__ . '/broken.dirname';
+mkdir($dir, 0777);
+
+$fname = $dir . '/dotted_path.crxa';
+$stub = Crxa::createDefaultStub();
+$file = $stub;
+
+$files = array();
+$files['a'] = 'this is a';
+$files['b'] = 'this is b';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+
+foreach ($crxa as $entry) {
+    echo file_get_contents($entry)."\n";
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/broken.dirname/dotted_path.crxa');
+rmdir(__DIR__ . '/broken.dirname');
+?>
+--EXPECT--
+this is a
+this is b

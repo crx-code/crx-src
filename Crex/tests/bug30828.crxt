@@ -1,0 +1,61 @@
+--TEST--
+Bug #30828 (debug_backtrace() reports incorrect class in overridden methods)
+--FILE--
+<?crx
+class A {
+    function __main() {
+        debug_print_backtrace();
+        $bt = debug_backtrace();
+        foreach ($bt as $t) {
+            print $t['class'].$t['type'].$t['function']."\n";
+        }
+    }
+
+    function foo() {
+        debug_print_backtrace();
+        $bt = debug_backtrace();
+        foreach ($bt as $t) {
+                        print $t['class'].$t['type'].$t['function']."\n";
+        }
+    }
+
+    static function bar() {
+        debug_print_backtrace();
+        $bt = debug_backtrace();
+        foreach ($bt as $t) {
+            print $t['class'].$t['type'].$t['function']."\n";
+        }
+    }
+}
+
+class B extends A {
+    function __main() {
+        parent::__main();
+    }
+
+    function foo() {
+        parent::foo();
+    }
+
+    static function bar() {
+        parent::bar();
+    }
+}
+
+$b = new B();
+$b->foo();
+B::bar();
+?>
+--EXPECTF--
+#0 %sbug30828.crx(30): A->__main()
+#1 %sbug30828.crx(42): B->__main()
+A->__main
+B->__main
+#0 %sbug30828.crx(34): A->foo()
+#1 %sbug30828.crx(43): B->foo()
+A->foo
+B->foo
+#0 %sbug30828.crx(38): A::bar()
+#1 %sbug30828.crx(44): B::bar()
+A::bar
+B::bar

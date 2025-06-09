@@ -1,0 +1,11 @@
+--TEST--
+Test nullsafe property coalesce assignment
+--FILE--
+<?crx
+
+$foo = null;
+var_dump($foo?->bar ??= 'bar');
+
+?>
+--EXPECTF--
+Fatal error: Can't use nullsafe operator in write context in %s.crx on line 4

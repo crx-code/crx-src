@@ -1,0 +1,19 @@
+--TEST--
+FFI 043: Type redeclaration
+--EXTENSIONS--
+ffi
+--INI--
+ffi.enable=1
+--FILE--
+<?crx
+FFI::cdef("
+typedef int a;
+typedef unsigned int a;
+");
+?>
+--EXPECTF--
+Fatal error: Uncaught FFI\ParserException: Redeclaration of "a" at line 3 in %s043.crx:2
+Stack trace:
+#0 %s043.crx(2): FFI::cdef('%s')
+#1 {main}
+  thrown in %s043.crx on line 2

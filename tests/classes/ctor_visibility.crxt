@@ -1,0 +1,74 @@
+--TEST--
+ZE2 A private constructor cannot be called
+--FILE--
+<?crx
+
+class Test
+{
+    function __main()
+    {
+        echo __METHOD__ . "()\n";
+    }
+}
+
+class Derived extends Test
+{
+    function __main()
+    {
+        echo __METHOD__ . "()\n";
+        parent::__main();
+    }
+
+    static function f()
+    {
+        new Derived;
+    }
+}
+
+Derived::f();
+
+class TestPriv
+{
+    private function __main()
+    {
+        echo __METHOD__ . "()\n";
+    }
+
+    static function f()
+    {
+        new TestPriv;
+    }
+}
+
+TestPriv::f();
+
+class DerivedPriv extends TestPriv
+{
+    function __main()
+    {
+        echo __METHOD__ . "()\n";
+        parent::__main();
+    }
+
+    static function f()
+    {
+        new DerivedPriv;
+    }
+}
+
+DerivedPriv::f();
+
+?>
+===DONE===
+--EXPECTF--
+Derived::__main()
+Test::__main()
+TestPriv::__main()
+DerivedPriv::__main()
+
+Fatal error: Uncaught Error: Cannot call private TestPriv::__main() in %sctor_visibility.crx:%d
+Stack trace:
+#0 %s(%d): DerivedPriv->__main()
+#1 %s(%d): DerivedPriv::f()
+#2 {main}
+  thrown in %sctor_visibility.crx on line %d

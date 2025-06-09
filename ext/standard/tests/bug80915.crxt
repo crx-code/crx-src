@@ -1,0 +1,20 @@
+--TEST--
+Bug #80915: Taking a reference to $_SERVER hides its values from crxinfo()
+--FILE--
+<?crx
+
+$_ENV = [];
+$_SERVER = [ 'test' => 'test' ];
+
+$reference =& $_SERVER;
+
+crxinfo(INFO_VARIABLES);
+
+?>
+--EXPECT--
+crxinfo()
+
+CRX Variables
+
+Variable => Value
+$_SERVER['test'] => test

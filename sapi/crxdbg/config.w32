@@ -1,0 +1,26 @@
+ARG_ENABLE('crxdbg', 'Build crxdbg', 'no');
+ARG_ENABLE('crxdbgs', 'Build crxdbg shared', 'no');
+
+CRXDBG_SOURCES='crxdbg.c crxdbg_prompt.c crxdbg_cmd.c crxdbg_info.c crxdbg_help.c crxdbg_break.c ' +
+		'crxdbg_print.c crxdbg_bp.c crxdbg_list.c crxdbg_utils.c ' +
+		'crxdbg_set.c crxdbg_frame.c crxdbg_watch.c crxdbg_win.c crxdbg_btree.c '+
+		'crxdbg_parser.c crxdbg_lexer.c crxdbg_sigsafe.c crxdbg_io.c crxdbg_out.c';
+CRXDBG_DLL='crx' + CRX_VERSION + 'crxdbg.dll';
+CRXDBG_EXE='crxdbg.exe';
+CRXDBG_CFLAGS='/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1';
+
+var CRX_CRXDBG_PGO = false;
+var CRX_CRXDBGS_PGO = false;
+
+if (CRX_CRXDBG == "yes") {
+	SAPI('crxdbg', CRXDBG_SOURCES, CRXDBG_EXE, CRXDBG_CFLAGS);
+	ADD_FLAG("LIBS_CRXDBG", "ws2_32.lib user32.lib");
+	ADD_FLAG("CFLAGS_CRXDBG", "/D YY_NO_UNISTD_H");
+	ADD_FLAG("LDFLAGS_CRXDBG", "/stack:8388608");
+}
+
+if (CRX_CRXDBGS == "yes") {
+	SAPI('crxdbgs', CRXDBG_SOURCES, CRXDBG_DLL, '/D CRX_CRXDBG_EXPORTS /I win32');
+	ADD_FLAG("LIBS_CRXDBGS", "ws2_32.lib user32.lib");
+	ADD_FLAG("CFLAGS_CRXDBGS", "/D YY_NO_UNISTD_H");
+}

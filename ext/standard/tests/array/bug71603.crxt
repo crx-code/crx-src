@@ -1,0 +1,15 @@
+--TEST--
+Bug #71603 (compact() maintains references in crx7)
+--FILE--
+<?crx
+$foo = "okey";
+$foo_reference =& $foo;
+
+$array = compact('foo_reference');
+
+$foo = 'changed!';
+
+var_dump($array['foo_reference']);
+?>
+--EXPECT--
+string(4) "okey"

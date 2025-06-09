@@ -1,0 +1,26 @@
+--TEST--
+Test session_status() function : active, none
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--FILE--
+<?crx
+
+ob_start();
+
+echo "*** Testing session_status() : active, none\n";
+
+var_dump(CRX_SESSION_NONE != CRX_SESSION_ACTIVE);
+var_dump(session_status() == CRX_SESSION_NONE);
+
+session_start();
+
+var_dump(session_status() == CRX_SESSION_ACTIVE);
+
+?>
+--EXPECT--
+*** Testing session_status() : active, none
+bool(true)
+bool(true)
+bool(true)

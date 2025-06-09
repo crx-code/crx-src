@@ -1,0 +1,51 @@
+--TEST--
+Bug #60159 (Router returns false, but POST is not passed to requested resource)
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+$info = crx_cli_server_start('print_r($_REQUEST); $_REQUEST["foo"] = "bar"; return FALSE;');
+$doc_root = $info->docRoot;
+file_put_contents($doc_root . '/request.crx', '<?crx print_r($_REQUEST); ?>');
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+if(fwrite($fp, <<<HEADER
+POST /request.crx HTTP/1.1
+Host: {$host}
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 3
+
+a=b
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+    }
+}
+
+fclose($fp);
+@unlink($doc_root . '/request.crx');
+
+?>
+--EXPECTF--
+HTTP/1.1 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+Array
+(
+    [a] => b
+)
+Array
+(
+    [a] => b
+    [foo] => bar
+)

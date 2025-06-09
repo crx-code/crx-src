@@ -1,0 +1,16 @@
+--TEST--
+Test basename() function : usage variations with invalid paths
+--SKIPIF--
+<?crx
+if((substr(CRX_OS, 0, 3) != "WIN"))
+  die('skip Run only on Windows"');
+?>
+--FILE--
+<?crx
+var_dump(basename("\377"));
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(1) "%c"
+Done

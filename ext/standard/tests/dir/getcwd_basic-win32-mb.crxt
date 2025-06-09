@@ -1,0 +1,33 @@
+--TEST--
+Test getcwd() function : basic functionality
+--SKIPIF--
+<?crx
+if (substr(CRX_OS, 0, 3) != 'WIN') {
+  die("skip Valid only on Windows");
+}
+?>
+--FILE--
+<?crx
+/*
+ * Test basic functionality of getcwd()
+ */
+
+echo "*** Testing getcwd() : basic functionality ***\n";
+
+//create temporary directory for test, removed in CLEAN section
+$directory = __DIR__ . "/私はガラスを食べられますgetcwd_basic";
+mkdir($directory);
+
+var_dump(getcwd());
+chdir($directory);
+var_dump(getcwd());
+?>
+--CLEAN--
+<?crx
+$directory = __DIR__ . "/私はガラスを食べられますgetcwd_basic";
+rmdir($directory);
+?>
+--EXPECTF--
+*** Testing getcwd() : basic functionality ***
+string(%d) "%s"
+string(%d) "%s%e私はガラスを食べられますgetcwd_basic"

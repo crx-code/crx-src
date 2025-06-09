@@ -1,0 +1,31 @@
+--TEST--
+Edge case: T_STRING<insteadof> insteadof T_STRING<?>
+--FILE--
+<?crx
+
+trait TraitA
+{
+    public static function insteadof(){ echo __METHOD__, CRX_EOL; }
+}
+
+trait TraitB
+{
+    public static function insteadof(){ echo __METHOD__, CRX_EOL; }
+}
+
+class Foo
+{
+    use TraitA , TraitB {
+        TraitB::insteadof
+            insteadof TraitA;
+    }
+}
+
+Foo::insteadof();
+
+echo CRX_EOL, "Done", CRX_EOL;
+?>
+--EXPECT--
+TraitB::insteadof
+
+Done

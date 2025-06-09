@@ -1,0 +1,29 @@
+--TEST--
+Crex: Test crex_forbid_dynamic_call() for methods
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$object = new CrexTestForbidDynamicCall();
+$object->call();
+CrexTestForbidDynamicCall::callStatic();
+
+try {
+    $call = [$object, 'call'];
+    $call();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
+}
+
+try {
+    $callStatic = [CrexTestForbidDynamicCall::class, 'callStatic'];
+    $callStatic();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
+}
+
+?>
+--EXPECT--
+Cannot call CrexTestForbidDynamicCall::call() dynamically
+Cannot call CrexTestForbidDynamicCall::callStatic() dynamically

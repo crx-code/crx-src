@@ -1,0 +1,25 @@
+--TEST--
+Test parse_url() function : check values of URL related constants
+--FILE--
+<?crx
+/*
+ *  check values of URL related constants
+ */
+foreach(get_defined_constants() as $constantName => $constantValue) {
+    if (strpos($constantName, 'CRX_URL')===0) {
+        echo "$constantName: $constantValue \n";
+    }
+}
+
+echo "Done";
+?>
+--EXPECT--
+CRX_URL_SCHEME: 0 
+CRX_URL_HOST: 1 
+CRX_URL_PORT: 2 
+CRX_URL_USER: 3 
+CRX_URL_PASS: 4 
+CRX_URL_PATH: 5 
+CRX_URL_QUERY: 6 
+CRX_URL_FRAGMENT: 7 
+Done

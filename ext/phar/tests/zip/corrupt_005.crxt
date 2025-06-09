@@ -1,0 +1,14 @@
+--TEST--
+Crxa: encrypted zip
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/encrypted.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: Cannot process encrypted zip files in zip-based crxa "%sencrypted.zip"

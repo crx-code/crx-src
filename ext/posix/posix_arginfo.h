@@ -1,0 +1,460 @@
+/* This is a generated file, edit the .stub.crx file instead.
+ * Stub hash: 372ab42a8aebd30ac41f4219d87a5ef6e8b03b24 */
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_kill, 0, 2, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, process_id, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO(0, signal, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_getpid, 0, 0, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_posix_getppid arginfo_posix_getpid
+
+#define arginfo_posix_getuid arginfo_posix_getpid
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setuid, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, user_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_posix_geteuid arginfo_posix_getpid
+
+#if defined(HAVE_SETEUID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_seteuid, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, user_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#define arginfo_posix_getgid arginfo_posix_getpid
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setgid, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, group_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#define arginfo_posix_getegid arginfo_posix_getpid
+
+#if defined(HAVE_SETEGID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setegid, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, group_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_GETGROUPS)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getgroups, 0, 0, MAY_BE_ARRAY|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_GETLOGIN)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getlogin, 0, 0, MAY_BE_STRING|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+#endif
+
+#define arginfo_posix_getpgrp arginfo_posix_getpid
+
+#if defined(HAVE_SETSID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setsid, 0, 0, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setpgid, 0, 2, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, process_id, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO(0, process_group_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_GETPGID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getpgid, 0, 1, MAY_BE_LONG|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, process_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_GETSID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getsid, 0, 1, MAY_BE_LONG|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, process_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_uname, 0, 0, MAY_BE_ARRAY|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+
+#define arginfo_posix_times arginfo_posix_uname
+
+#if defined(HAVE_CTERMID)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_ctermid, 0, 0, MAY_BE_STRING|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_ttyname, 0, 1, MAY_BE_STRING|MAY_BE_FALSE)
+	CREX_ARG_INFO(0, file_descriptor)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_isatty, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_INFO(0, file_descriptor)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getcwd, 0, 0, MAY_BE_STRING|MAY_BE_FALSE)
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_MKFIFO)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_mkfifo, 0, 2, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, filename, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, permissions, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_MKNOD)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_mknod, 0, 2, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, filename, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, major, IS_LONG, 0, "0")
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, minor, IS_LONG, 0, "0")
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_access, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, filename, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, flags, IS_LONG, 0, "0")
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_EACCESS)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_eaccess, 0, 1, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, filename, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, flags, IS_LONG, 0, "0")
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getgrnam, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getgrgid, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, group_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getpwnam, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, username, IS_STRING, 0)
+CREX_END_ARG_INFO()
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getpwuid, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, user_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_GETRLIMIT)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_getrlimit, 0, 0, MAY_BE_ARRAY|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, resource, IS_LONG, 1, "null")
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_SETRLIMIT)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_setrlimit, 0, 3, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, resource, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO(0, soft_limit, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO(0, hard_limit, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#define arginfo_posix_get_last_error arginfo_posix_getpid
+
+#define arginfo_posix_errno arginfo_posix_getpid
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_strerror, 0, 1, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, error_code, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_INITGROUPS)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_initgroups, 0, 2, _IS_BOOL, 0)
+	CREX_ARG_TYPE_INFO(0, username, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, group_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_posix_sysconf, 0, 1, IS_LONG, 0)
+	CREX_ARG_TYPE_INFO(0, conf_id, IS_LONG, 0)
+CREX_END_ARG_INFO()
+
+#if defined(HAVE_PATHCONF)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_pathconf, 0, 2, MAY_BE_LONG|MAY_BE_FALSE)
+	CREX_ARG_TYPE_INFO(0, path, IS_STRING, 0)
+	CREX_ARG_TYPE_INFO(0, name, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+#if defined(HAVE_FPATHCONF)
+CREX_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_posix_fpathconf, 0, 2, MAY_BE_LONG|MAY_BE_FALSE)
+	CREX_ARG_INFO(0, file_descriptor)
+	CREX_ARG_TYPE_INFO(0, name, IS_LONG, 0)
+CREX_END_ARG_INFO()
+#endif
+
+
+CREX_FUNCTION(posix_kill);
+CREX_FUNCTION(posix_getpid);
+CREX_FUNCTION(posix_getppid);
+CREX_FUNCTION(posix_getuid);
+CREX_FUNCTION(posix_setuid);
+CREX_FUNCTION(posix_geteuid);
+#if defined(HAVE_SETEUID)
+CREX_FUNCTION(posix_seteuid);
+#endif
+CREX_FUNCTION(posix_getgid);
+CREX_FUNCTION(posix_setgid);
+CREX_FUNCTION(posix_getegid);
+#if defined(HAVE_SETEGID)
+CREX_FUNCTION(posix_setegid);
+#endif
+#if defined(HAVE_GETGROUPS)
+CREX_FUNCTION(posix_getgroups);
+#endif
+#if defined(HAVE_GETLOGIN)
+CREX_FUNCTION(posix_getlogin);
+#endif
+CREX_FUNCTION(posix_getpgrp);
+#if defined(HAVE_SETSID)
+CREX_FUNCTION(posix_setsid);
+#endif
+CREX_FUNCTION(posix_setpgid);
+#if defined(HAVE_GETPGID)
+CREX_FUNCTION(posix_getpgid);
+#endif
+#if defined(HAVE_GETSID)
+CREX_FUNCTION(posix_getsid);
+#endif
+CREX_FUNCTION(posix_uname);
+CREX_FUNCTION(posix_times);
+#if defined(HAVE_CTERMID)
+CREX_FUNCTION(posix_ctermid);
+#endif
+CREX_FUNCTION(posix_ttyname);
+CREX_FUNCTION(posix_isatty);
+CREX_FUNCTION(posix_getcwd);
+#if defined(HAVE_MKFIFO)
+CREX_FUNCTION(posix_mkfifo);
+#endif
+#if defined(HAVE_MKNOD)
+CREX_FUNCTION(posix_mknod);
+#endif
+CREX_FUNCTION(posix_access);
+#if defined(HAVE_EACCESS)
+CREX_FUNCTION(posix_eaccess);
+#endif
+CREX_FUNCTION(posix_getgrnam);
+CREX_FUNCTION(posix_getgrgid);
+CREX_FUNCTION(posix_getpwnam);
+CREX_FUNCTION(posix_getpwuid);
+#if defined(HAVE_GETRLIMIT)
+CREX_FUNCTION(posix_getrlimit);
+#endif
+#if defined(HAVE_SETRLIMIT)
+CREX_FUNCTION(posix_setrlimit);
+#endif
+CREX_FUNCTION(posix_get_last_error);
+CREX_FUNCTION(posix_strerror);
+#if defined(HAVE_INITGROUPS)
+CREX_FUNCTION(posix_initgroups);
+#endif
+CREX_FUNCTION(posix_sysconf);
+#if defined(HAVE_PATHCONF)
+CREX_FUNCTION(posix_pathconf);
+#endif
+#if defined(HAVE_FPATHCONF)
+CREX_FUNCTION(posix_fpathconf);
+#endif
+
+
+static const crex_function_entry ext_functions[] = {
+	CREX_FE(posix_kill, arginfo_posix_kill)
+	CREX_FE(posix_getpid, arginfo_posix_getpid)
+	CREX_FE(posix_getppid, arginfo_posix_getppid)
+	CREX_FE(posix_getuid, arginfo_posix_getuid)
+	CREX_FE(posix_setuid, arginfo_posix_setuid)
+	CREX_FE(posix_geteuid, arginfo_posix_geteuid)
+#if defined(HAVE_SETEUID)
+	CREX_FE(posix_seteuid, arginfo_posix_seteuid)
+#endif
+	CREX_FE(posix_getgid, arginfo_posix_getgid)
+	CREX_FE(posix_setgid, arginfo_posix_setgid)
+	CREX_FE(posix_getegid, arginfo_posix_getegid)
+#if defined(HAVE_SETEGID)
+	CREX_FE(posix_setegid, arginfo_posix_setegid)
+#endif
+#if defined(HAVE_GETGROUPS)
+	CREX_FE(posix_getgroups, arginfo_posix_getgroups)
+#endif
+#if defined(HAVE_GETLOGIN)
+	CREX_FE(posix_getlogin, arginfo_posix_getlogin)
+#endif
+	CREX_FE(posix_getpgrp, arginfo_posix_getpgrp)
+#if defined(HAVE_SETSID)
+	CREX_FE(posix_setsid, arginfo_posix_setsid)
+#endif
+	CREX_FE(posix_setpgid, arginfo_posix_setpgid)
+#if defined(HAVE_GETPGID)
+	CREX_FE(posix_getpgid, arginfo_posix_getpgid)
+#endif
+#if defined(HAVE_GETSID)
+	CREX_FE(posix_getsid, arginfo_posix_getsid)
+#endif
+	CREX_FE(posix_uname, arginfo_posix_uname)
+	CREX_FE(posix_times, arginfo_posix_times)
+#if defined(HAVE_CTERMID)
+	CREX_FE(posix_ctermid, arginfo_posix_ctermid)
+#endif
+	CREX_FE(posix_ttyname, arginfo_posix_ttyname)
+	CREX_FE(posix_isatty, arginfo_posix_isatty)
+	CREX_FE(posix_getcwd, arginfo_posix_getcwd)
+#if defined(HAVE_MKFIFO)
+	CREX_FE(posix_mkfifo, arginfo_posix_mkfifo)
+#endif
+#if defined(HAVE_MKNOD)
+	CREX_FE(posix_mknod, arginfo_posix_mknod)
+#endif
+	CREX_FE(posix_access, arginfo_posix_access)
+#if defined(HAVE_EACCESS)
+	CREX_FE(posix_eaccess, arginfo_posix_eaccess)
+#endif
+	CREX_FE(posix_getgrnam, arginfo_posix_getgrnam)
+	CREX_FE(posix_getgrgid, arginfo_posix_getgrgid)
+	CREX_FE(posix_getpwnam, arginfo_posix_getpwnam)
+	CREX_FE(posix_getpwuid, arginfo_posix_getpwuid)
+#if defined(HAVE_GETRLIMIT)
+	CREX_FE(posix_getrlimit, arginfo_posix_getrlimit)
+#endif
+#if defined(HAVE_SETRLIMIT)
+	CREX_FE(posix_setrlimit, arginfo_posix_setrlimit)
+#endif
+	CREX_FE(posix_get_last_error, arginfo_posix_get_last_error)
+	CREX_FALIAS(posix_errno, posix_get_last_error, arginfo_posix_errno)
+	CREX_FE(posix_strerror, arginfo_posix_strerror)
+#if defined(HAVE_INITGROUPS)
+	CREX_FE(posix_initgroups, arginfo_posix_initgroups)
+#endif
+	CREX_FE(posix_sysconf, arginfo_posix_sysconf)
+#if defined(HAVE_PATHCONF)
+	CREX_FE(posix_pathconf, arginfo_posix_pathconf)
+#endif
+#if defined(HAVE_FPATHCONF)
+	CREX_FE(posix_fpathconf, arginfo_posix_fpathconf)
+#endif
+	CREX_FE_END
+};
+
+static void register_posix_symbols(int module_number)
+{
+	REGISTER_LONG_CONSTANT("POSIX_F_OK", F_OK, CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("POSIX_X_OK", X_OK, CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("POSIX_W_OK", W_OK, CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("POSIX_R_OK", R_OK, CONST_PERSISTENT);
+#if defined(S_IFREG)
+	REGISTER_LONG_CONSTANT("POSIX_S_IFREG", S_IFREG, CONST_PERSISTENT);
+#endif
+#if defined(S_IFCHR)
+	REGISTER_LONG_CONSTANT("POSIX_S_IFCHR", S_IFCHR, CONST_PERSISTENT);
+#endif
+#if defined(S_IFBLK)
+	REGISTER_LONG_CONSTANT("POSIX_S_IFBLK", S_IFBLK, CONST_PERSISTENT);
+#endif
+#if defined(S_IFIFO)
+	REGISTER_LONG_CONSTANT("POSIX_S_IFIFO", S_IFIFO, CONST_PERSISTENT);
+#endif
+#if defined(S_IFSOCK)
+	REGISTER_LONG_CONSTANT("POSIX_S_IFSOCK", S_IFSOCK, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_AS)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_AS", RLIMIT_AS, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_CORE)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_CORE", RLIMIT_CORE, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_CPU)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_CPU", RLIMIT_CPU, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_DATA)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_DATA", RLIMIT_DATA, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_FSIZE)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_FSIZE", RLIMIT_FSIZE, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_LOCKS)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_LOCKS", RLIMIT_LOCKS, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_MEMLOCK)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_MEMLOCK", RLIMIT_MEMLOCK, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_MSGQUEUE)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_MSGQUEUE", RLIMIT_MSGQUEUE, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_NICE)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_NICE", RLIMIT_NICE, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_NOFILE)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_NOFILE", RLIMIT_NOFILE, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_NPROC)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_NPROC", RLIMIT_NPROC, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_RSS)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_RSS", RLIMIT_RSS, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_RTPRIO)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_RTPRIO", RLIMIT_RTPRIO, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_RTTIME)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_RTTIME", RLIMIT_RTTIME, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_SIGPENDING)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_SIGPENDING", RLIMIT_SIGPENDING, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_STACK)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_STACK", RLIMIT_STACK, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_KQUEUES)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_KQUEUES", RLIMIT_KQUEUES, CONST_PERSISTENT);
+#endif
+#if defined(RLIMIT_NPTS)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_NPTS", RLIMIT_NPTS, CONST_PERSISTENT);
+#endif
+#if defined(HAVE_SETRLIMIT)
+	REGISTER_LONG_CONSTANT("POSIX_RLIMIT_INFINITY", RLIM_INFINITY, CONST_PERSISTENT);
+#endif
+#if defined(_SC_ARG_MAX)
+	REGISTER_LONG_CONSTANT("POSIX_SC_ARG_MAX", _SC_ARG_MAX, CONST_PERSISTENT);
+#endif
+#if defined(_SC_PAGESIZE)
+	REGISTER_LONG_CONSTANT("POSIX_SC_PAGESIZE", _SC_PAGESIZE, CONST_PERSISTENT);
+#endif
+#if defined(_SC_NPROCESSORS_CONF)
+	REGISTER_LONG_CONSTANT("POSIX_SC_NPROCESSORS_CONF", _SC_NPROCESSORS_CONF, CONST_PERSISTENT);
+#endif
+#if defined(_SC_NPROCESSORS_ONLN)
+	REGISTER_LONG_CONSTANT("POSIX_SC_NPROCESSORS_ONLN", _SC_NPROCESSORS_ONLN, CONST_PERSISTENT);
+#endif
+#if defined(_PC_LINK_MAX)
+	REGISTER_LONG_CONSTANT("POSIX_PC_LINK_MAX", _PC_LINK_MAX, CONST_PERSISTENT);
+#endif
+#if defined(_PC_MAX_CANON)
+	REGISTER_LONG_CONSTANT("POSIX_PC_MAX_CANON", _PC_MAX_CANON, CONST_PERSISTENT);
+#endif
+#if defined(_PC_MAX_INPUT)
+	REGISTER_LONG_CONSTANT("POSIX_PC_MAX_INPUT", _PC_MAX_INPUT, CONST_PERSISTENT);
+#endif
+#if defined(_PC_NAME_MAX)
+	REGISTER_LONG_CONSTANT("POSIX_PC_NAME_MAX", _PC_NAME_MAX, CONST_PERSISTENT);
+#endif
+#if defined(_PC_PATH_MAX)
+	REGISTER_LONG_CONSTANT("POSIX_PC_PATH_MAX", _PC_PATH_MAX, CONST_PERSISTENT);
+#endif
+#if defined(_PC_PIPE_BUF)
+	REGISTER_LONG_CONSTANT("POSIX_PC_PIPE_BUF", _PC_PIPE_BUF, CONST_PERSISTENT);
+#endif
+#if defined(_PC_CHOWN_RESTRICTED)
+	REGISTER_LONG_CONSTANT("POSIX_PC_CHOWN_RESTRICTED", _PC_CHOWN_RESTRICTED, CONST_PERSISTENT);
+#endif
+#if defined(_PC_NO_TRUNC)
+	REGISTER_LONG_CONSTANT("POSIX_PC_NO_TRUNC", _PC_NO_TRUNC, CONST_PERSISTENT);
+#endif
+#if defined(_PC_ALLOC_SIZE_MIN)
+	REGISTER_LONG_CONSTANT("POSIX_PC_ALLOC_SIZE_MIN", _PC_ALLOC_SIZE_MIN, CONST_PERSISTENT);
+#endif
+#if defined(_PC_SYMLINK_MAX)
+	REGISTER_LONG_CONSTANT("POSIX_PC_SYMLINK_MAX", _PC_SYMLINK_MAX, CONST_PERSISTENT);
+#endif
+}

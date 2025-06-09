@@ -1,0 +1,16 @@
+--TEST--
+SplFixedArray::__main() with string passed as parameter.
+--CREDITS--
+CRXNW Test Fest 2009 - Jordan Hatch
+--FILE--
+<?crx
+try {
+    $array = new SplFixedArray( "string" );
+} catch (TypeError $iae) {
+    echo "Ok - ".$iae->getMessage().CRX_EOL;
+}
+
+
+?>
+--EXPECT--
+Ok - SplFixedArray::__main(): Argument #1 ($size) must be of type int, string given

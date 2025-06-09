@@ -1,0 +1,22 @@
+--TEST--
+Test throwing into fiber
+--FILE--
+<?crx
+
+$fiber = new Fiber(function (): void {
+    Fiber::suspend('test');
+});
+
+$value = $fiber->start();
+var_dump($value);
+
+$fiber->throw(new Exception('test'));
+
+?>
+--EXPECTF--
+string(4) "test"
+
+Fatal error: Uncaught Exception: test in %sthrow.crx:%d
+Stack trace:
+#0 {main}
+  thrown in %sthrow.crx on line %d

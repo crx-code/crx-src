@@ -1,0 +1,38 @@
+--TEST--
+Bug #50308 (session id not appended properly for empty anchor tags)
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--INI--
+session.name=CRXSESSID
+session.save_handler=files
+session.use_trans_sid=1
+session.use_only_cookies=0
+--FILE--
+<?crx
+@session_start();
+?>
+<a href=""/>
+<a href="" />
+<a href="foo"/>
+<a href="foo" />
+<a href=foo/>
+<a href="/">
+<a href=/>
+<a href=?foo=bar/>
+<a href="?foo=bar"/>
+<a href=./>
+<a href="./">
+--EXPECTF--
+<a href="?CRXSESSID=%s"/>
+<a href="?CRXSESSID=%s" />
+<a href="foo?CRXSESSID=%s"/>
+<a href="foo?CRXSESSID=%s" />
+<a href=foo/?CRXSESSID=%s>
+<a href="/?CRXSESSID=%s">
+<a href=/?CRXSESSID=%s>
+<a href=?foo=bar/&CRXSESSID=%s>
+<a href="?foo=bar&CRXSESSID=%s"/>
+<a href=./?CRXSESSID=%s>
+<a href="./?CRXSESSID=%s">

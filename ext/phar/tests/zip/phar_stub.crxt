@@ -1,0 +1,77 @@
+--TEST--
+Crxa::setStub() (zip-based)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip.crx';
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$pname = 'crxa://' . $fname;
+$pname2 = 'crxa://' . $fname2;
+
+$p = new Crxa($pname2);
+$p->setStub('<?crx echo "first stub\n"; __HALT_COMPILER(); ?>');
+$p['a'] = 'a';
+$p['b'] = 'b';
+$p['c'] = 'c';
+copy($fname2, $fname);
+
+$crxa = new Crxa($fname);
+echo $crxa->getStub();
+
+$file = '<?crx echo "second stub\n"; __HALT_COMPILER(); ?>';
+
+//// 2
+$crxa->setStub($file);
+echo $crxa->getStub();
+
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxatmp.crx';
+$file = '<?crx echo "third stub\n"; __HALT_COMPILER(); ?>';
+$fp = fopen($fname3, 'wb');
+fwrite($fp, $file);
+fclose($fp);
+$fp = fopen($fname3, 'rb');
+
+//// 3
+$crxa->setStub($fp);
+fclose($fp);
+
+echo $crxa->getStub();
+
+$fp = fopen($fname3, 'ab');
+fwrite($fp, 'booya');
+fclose($fp);
+echo file_get_contents($fname3) . "\n";
+
+$fp = fopen($fname3, 'rb');
+
+//// 4
+$crxa->setStub($fp, strlen($file));
+fclose($fp);
+echo $crxa->getStub();
+
+$crxa['testing'] = 'hi';
+
+echo $crxa->getStub();
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxatmp.crx');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+<?crx echo "first stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "second stub\n"; __HALT_COMPILER(); ?>
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>booya
+
+Deprecated: Calling Crxa::setStub(resource $stub, int $length) is deprecated in %s on line %d
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>
+<?crx echo "third stub\n"; __HALT_COMPILER(); ?>

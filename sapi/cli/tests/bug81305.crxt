@@ -1,0 +1,36 @@
+--TEST--
+Bug #81305 (Built-in Webserver Drops Requests With "Upgrade" Header)
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start();
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+if (fwrite($fp, <<<HEADER
+GET / HTTP/1.1
+Host: {$host}
+Upgrade: HTTP/2.0
+Connection: upgrade
+
+
+HEADER)) {
+	fpassthru($fp);
+}
+
+fclose($fp);
+?>
+--EXPECTF--
+HTTP/1.1 200 OK
+Host: %s
+Date: %s
+Connection: close
+X-Powered-By: CRX/%s
+Content-type: text/html; charset=UTF-8
+
+Hello world

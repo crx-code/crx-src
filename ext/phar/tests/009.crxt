@@ -1,0 +1,23 @@
+--TEST--
+Crxa::mapCrxa too many manifest entries
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+$file .= pack('VVnVVV', 500, 500, 0x1000, 0x00000000, 0, 0) .  str_repeat('A', 500);
+file_put_contents(__DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx', $file);
+try {
+include __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+internal corruption of crxa "%s009.crxa.crx" (too many manifest entries for size of manifest)

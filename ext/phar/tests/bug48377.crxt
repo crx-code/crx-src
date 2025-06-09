@@ -1,0 +1,27 @@
+--TEST--
+Crxa: CRX bug #48377 "error message unclear on converting crxa with existing file"
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.zip';
+
+touch($fname2);
+
+$crxa = new Crxa($fname, 0, 'a.crxa');
+$crxa['x'] = 'hi';
+try {
+    $crxa->convertToData(Crxa::ZIP, Crxa::NONE, 'zip');
+} catch (BadMethodCallException $e) {
+    echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.zip');?>
+--EXPECTF--
+crxa "%sbug48377.zip" exists and must be unlinked prior to conversion

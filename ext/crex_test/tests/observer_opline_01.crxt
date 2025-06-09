@@ -1,0 +1,57 @@
+--TEST--
+Observer: Ensure opline exists on the execute_data
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+crex_test.observer.show_opcode=1
+opcache.jit=0
+--FILE--
+<?crx
+function foo()
+{
+    echo 'Foo' . CRX_EOL;
+}
+
+foo();
+include __DIR__ . '/observer.inc';
+echo array_sum([1,2,3]) . CRX_EOL;
+foo();
+?>
+--EXPECTF--
+<!-- init '%s' -->
+<!-- opcode: 'CREX_INIT_FCALL' -->
+<file '%s'>
+  <!-- opcode: 'CREX_INIT_FCALL' -->
+  <!-- init foo() -->
+  <!-- opcode: 'CREX_ECHO' -->
+  <foo>
+    <!-- opcode: 'CREX_ECHO' -->
+Foo
+    <!-- opcode: 'CREX_RETURN' -->
+  </foo>
+  <!-- init '%s' -->
+  <!-- opcode: 'CREX_INIT_FCALL' -->
+  <file '%s'>
+    <!-- opcode: 'CREX_INIT_FCALL' -->
+    <!-- init foo_observer_test() -->
+    <!-- opcode: 'CREX_ECHO' -->
+    <foo_observer_test>
+      <!-- opcode: 'CREX_ECHO' -->
+foo_observer_test
+      <!-- opcode: 'CREX_RETURN' -->
+    </foo_observer_test>
+    <!-- opcode: 'CREX_RETURN' -->
+  </file '%s'>
+  <!-- init array_sum() -->
+  <array_sum>
+  </array_sum>
+6
+  <foo>
+    <!-- opcode: 'CREX_ECHO' -->
+Foo
+    <!-- opcode: 'CREX_RETURN' -->
+  </foo>
+  <!-- opcode: 'CREX_RETURN' -->
+</file '%s'>

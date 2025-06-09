@@ -1,0 +1,26 @@
+--TEST--
+Bug #63206 Fully support error_handler stacking, even with null
+--FILE--
+<?crx
+
+set_error_handler(function() {
+    echo 'First handler' . CRX_EOL;
+});
+
+set_error_handler(function() {
+    echo 'Second handler' . CRX_EOL;
+});
+
+set_error_handler(null);
+
+set_error_handler(function() {
+    echo 'Fourth handler' . CRX_EOL;
+});
+
+restore_error_handler();
+restore_error_handler();
+
+$triggerNotice++;
+?>
+--EXPECT--
+Second handler

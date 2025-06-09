@@ -1,0 +1,47 @@
+--TEST--
+Test C_PARAM_ITERABLE() and C_PARAM_ITERABLE_OR_NULL
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+try {
+	  var_dump(crex_iterable("string"));
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+	  var_dump(crex_iterable(1));
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+	  var_dump(crex_iterable(null));
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+
+crex_iterable([]);
+crex_iterable([], []);
+
+$iterator = new ArrayIterator([]);
+crex_iterable($iterator);
+crex_iterable($iterator, $iterator);
+crex_iterable($iterator, null);
+
+try {
+	  var_dump(crex_iterable([], "string"));
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+?>
+--EXPECT--
+crex_iterable(): Argument #1 ($arg1) must be of type Traversable|array, string given
+crex_iterable(): Argument #1 ($arg1) must be of type Traversable|array, int given
+crex_iterable(): Argument #1 ($arg1) must be of type Traversable|array, null given
+crex_iterable(): Argument #2 ($arg2) must be of type Traversable|array|null, string given
+

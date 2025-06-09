@@ -1,0 +1,246 @@
+--TEST--
+Test semi-reserved words as static class properties
+--FILE--
+<?crx
+
+class Obj
+{
+    static $empty = 'empty';
+    static $callable = 'callable';
+    static $class = 'class';
+    static $trait = 'trait';
+    static $extends = 'extends';
+    static $implements = 'implements';
+    static $static = 'static';
+    static $abstract = 'abstract';
+    static $final = 'final';
+    static $public = 'public';
+    static $protected = 'protected';
+    static $private = 'private';
+    static $const = 'const';
+    static $enddeclare = 'enddeclare';
+    static $endfor = 'endfor';
+    static $endforeach = 'endforeach';
+    static $endif = 'endif';
+    static $endwhile = 'endwhile';
+    static $and = 'and';
+    static $global = 'global';
+    static $goto = 'goto';
+    static $instanceof = 'instanceof';
+    static $insteadof = 'insteadof';
+    static $interface = 'interface';
+    static $namespace = 'namespace';
+    static $new = 'new';
+    static $or = 'or';
+    static $xor = 'xor';
+    static $try = 'try';
+    static $use = 'use';
+    static $var = 'var';
+    static $exit = 'exit';
+    static $list = 'list';
+    static $clone = 'clone';
+    static $include = 'include';
+    static $include_once = 'include_once';
+    static $throw = 'throw';
+    static $array = 'array';
+    static $print = 'print';
+    static $echo = 'echo';
+    static $require = 'require';
+    static $require_once = 'require_once';
+    static $return = 'return';
+    static $else = 'else';
+    static $elseif = 'elseif';
+    static $default = 'default';
+    static $break = 'break';
+    static $continue = 'continue';
+    static $switch = 'switch';
+    static $yield = 'yield';
+    static $function = 'function';
+    static $fn = 'fn';
+    static $if = 'if';
+    static $endswitch = 'endswitch';
+    static $finally = 'finally';
+    static $for = 'for';
+    static $foreach = 'foreach';
+    static $declare = 'declare';
+    static $case = 'case';
+    static $do = 'do';
+    static $while = 'while';
+    static $as = 'as';
+    static $catch = 'catch';
+    static $die = 'die';
+    static $self = 'self';
+    static $parent = 'parent';
+    static $isset = 'isset';
+    static $unset = 'unset';
+    static $__CLASS__ = '__CLASS__';
+    static $__TRAIT__ = '__TRAIT__';
+    static $__FUNCTION__ = '__FUNCTION__';
+    static $__METHOD__ = '__METHOD__';
+    static $__LINE__ = '__LINE__';
+    static $__FILE__ = '__FILE__';
+    static $__DIR__ = '__DIR__';
+    static $__NAMESPACE__ = '__NAMESPACE__';
+    static $__halt_compiler = '__halt_compiler';
+}
+
+echo Obj::$empty, CRX_EOL;
+echo Obj::$callable, CRX_EOL;
+echo Obj::$class, CRX_EOL;
+echo Obj::$trait, CRX_EOL;
+echo Obj::$extends, CRX_EOL;
+echo Obj::$implements, CRX_EOL;
+echo Obj::$static, CRX_EOL;
+echo Obj::$abstract, CRX_EOL;
+echo Obj::$final, CRX_EOL;
+echo Obj::$public, CRX_EOL;
+echo Obj::$protected, CRX_EOL;
+echo Obj::$private, CRX_EOL;
+echo Obj::$const, CRX_EOL;
+echo Obj::$enddeclare, CRX_EOL;
+echo Obj::$endfor, CRX_EOL;
+echo Obj::$endforeach, CRX_EOL;
+echo Obj::$endif, CRX_EOL;
+echo Obj::$endwhile, CRX_EOL;
+echo Obj::$and, CRX_EOL;
+echo Obj::$global, CRX_EOL;
+echo Obj::$goto, CRX_EOL;
+echo Obj::$instanceof, CRX_EOL;
+echo Obj::$insteadof, CRX_EOL;
+echo Obj::$interface, CRX_EOL;
+echo Obj::$namespace, CRX_EOL;
+echo Obj::$new, CRX_EOL;
+echo Obj::$or, CRX_EOL;
+echo Obj::$xor, CRX_EOL;
+echo Obj::$try, CRX_EOL;
+echo Obj::$use, CRX_EOL;
+echo Obj::$var, CRX_EOL;
+echo Obj::$exit, CRX_EOL;
+echo Obj::$list, CRX_EOL;
+echo Obj::$clone, CRX_EOL;
+echo Obj::$include, CRX_EOL;
+echo Obj::$include_once, CRX_EOL;
+echo Obj::$throw, CRX_EOL;
+echo Obj::$array, CRX_EOL;
+echo Obj::$print, CRX_EOL;
+echo Obj::$echo, CRX_EOL;
+echo Obj::$require, CRX_EOL;
+echo Obj::$require_once, CRX_EOL;
+echo Obj::$return, CRX_EOL;
+echo Obj::$else, CRX_EOL;
+echo Obj::$elseif, CRX_EOL;
+echo Obj::$default, CRX_EOL;
+echo Obj::$break, CRX_EOL;
+echo Obj::$continue, CRX_EOL;
+echo Obj::$switch, CRX_EOL;
+echo Obj::$yield, CRX_EOL;
+echo Obj::$function, CRX_EOL;
+echo Obj::$fn, CRX_EOL;
+echo Obj::$if, CRX_EOL;
+echo Obj::$endswitch, CRX_EOL;
+echo Obj::$finally, CRX_EOL;
+echo Obj::$for, CRX_EOL;
+echo Obj::$foreach, CRX_EOL;
+echo Obj::$declare, CRX_EOL;
+echo Obj::$case, CRX_EOL;
+echo Obj::$do, CRX_EOL;
+echo Obj::$while, CRX_EOL;
+echo Obj::$as, CRX_EOL;
+echo Obj::$catch, CRX_EOL;
+echo Obj::$die, CRX_EOL;
+echo Obj::$self, CRX_EOL;
+echo Obj::$parent, CRX_EOL;
+echo Obj::$isset, CRX_EOL;
+echo Obj::$unset, CRX_EOL;
+echo Obj::$__CLASS__, CRX_EOL;
+echo Obj::$__TRAIT__, CRX_EOL;
+echo Obj::$__FUNCTION__, CRX_EOL;
+echo Obj::$__METHOD__, CRX_EOL;
+echo Obj::$__LINE__, CRX_EOL;
+echo Obj::$__FILE__, CRX_EOL;
+echo Obj::$__DIR__, CRX_EOL;
+echo Obj::$__NAMESPACE__, CRX_EOL;
+echo Obj::$__halt_compiler, CRX_EOL;
+
+echo "\nDone\n";
+?>
+--EXPECT--
+empty
+callable
+class
+trait
+extends
+implements
+static
+abstract
+final
+public
+protected
+private
+const
+enddeclare
+endfor
+endforeach
+endif
+endwhile
+and
+global
+goto
+instanceof
+insteadof
+interface
+namespace
+new
+or
+xor
+try
+use
+var
+exit
+list
+clone
+include
+include_once
+throw
+array
+print
+echo
+require
+require_once
+return
+else
+elseif
+default
+break
+continue
+switch
+yield
+function
+fn
+if
+endswitch
+finally
+for
+foreach
+declare
+case
+do
+while
+as
+catch
+die
+self
+parent
+isset
+unset
+__CLASS__
+__TRAIT__
+__FUNCTION__
+__METHOD__
+__LINE__
+__FILE__
+__DIR__
+__NAMESPACE__
+__halt_compiler
+
+Done

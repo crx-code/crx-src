@@ -1,0 +1,134 @@
+--TEST--
+Crxa: Crxa::isValidCrxaFilename()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+--FILE--
+<?crx
+chdir(__DIR__);
+var_dump(Crxa::isValidCrxaFilename('*'));
+var_dump(Crxa::isValidCrxaFilename('*', true));
+var_dump(Crxa::isValidCrxaFilename('*', false));
+
+echo "\nboo.crxa\n";
+var_dump(Crxa::isValidCrxaFilename('boo.crxa'));
+var_dump(Crxa::isValidCrxaFilename('boo.crxa', true));
+var_dump(Crxa::isValidCrxaFilename('boo.crxa', false));
+
+echo "\nboo.tar\n";
+var_dump(Crxa::isValidCrxaFilename('boo.tar'));
+var_dump(Crxa::isValidCrxaFilename('boo.tar', true));
+var_dump(Crxa::isValidCrxaFilename('boo.tar', false));
+
+echo "\nboo.crxa.tar\n";
+var_dump(Crxa::isValidCrxaFilename('boo.crxa.tar'));
+var_dump(Crxa::isValidCrxaFilename('boo.crxa.tar', true));
+var_dump(Crxa::isValidCrxaFilename('boo.crxa.tar', false));
+
+mkdir(__DIR__ . '/.crxa');
+
+echo "\n.crxa/boo.tar\n";
+var_dump(Crxa::isValidCrxaFilename('.crxa/boo.tar'));
+var_dump(Crxa::isValidCrxaFilename('.crxa/boo.tar', true));
+var_dump(Crxa::isValidCrxaFilename('.crxa/boo.tar', false));
+
+echo "\n.crxa.tar\n";
+var_dump(Crxa::isValidCrxaFilename('.crxa.tar'));
+var_dump(Crxa::isValidCrxaFilename('.crxa.tar', true));
+var_dump(Crxa::isValidCrxaFilename('.crxa.tar', false));
+
+echo "\n.crxa.crxa\n";
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxa'));
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxa', true));
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxa', false));
+
+echo "\n.crxa.crxat\n";
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxat'));
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxat', true));
+var_dump(Crxa::isValidCrxaFilename('.crxa.crxat', false));
+
+echo "\nmy.crxamy\n";
+var_dump(Crxa::isValidCrxaFilename('my.crxamy'));
+var_dump(Crxa::isValidCrxaFilename('my.crxamy', true));
+var_dump(Crxa::isValidCrxaFilename('my.crxamy', false));
+
+echo "\ncrxa.zip\n";
+var_dump(Crxa::isValidCrxaFilename('crxa.zip'));
+var_dump(Crxa::isValidCrxaFilename('crxa.zip', true));
+var_dump(Crxa::isValidCrxaFilename('crxa.zip', false));
+
+echo "\ncrxa.zip.crxa\n";
+var_dump(Crxa::isValidCrxaFilename('crxa.zip.crxa'));
+var_dump(Crxa::isValidCrxaFilename('crxa.zip.crxa', true));
+var_dump(Crxa::isValidCrxaFilename('crxa.zip.crxa', false));
+
+echo "\ndir.crxa.crx\n";
+var_dump(Crxa::isValidCrxaFilename('dir.crxa.crx'));
+var_dump(Crxa::isValidCrxaFilename('dir.crxa.crx', true));
+var_dump(Crxa::isValidCrxaFilename('dir.crxa.crx', false));
+
+?>
+--CLEAN--
+<?crx
+rmdir(__DIR__ . '/.crxa');
+?>
+--EXPECT--
+bool(false)
+bool(false)
+bool(false)
+
+boo.crxa
+bool(true)
+bool(true)
+bool(false)
+
+boo.tar
+bool(false)
+bool(false)
+bool(true)
+
+boo.crxa.tar
+bool(true)
+bool(true)
+bool(false)
+
+.crxa/boo.tar
+bool(false)
+bool(false)
+bool(true)
+
+.crxa.tar
+bool(false)
+bool(false)
+bool(true)
+
+.crxa.crxa
+bool(true)
+bool(true)
+bool(false)
+
+.crxa.crxat
+bool(false)
+bool(false)
+bool(true)
+
+my.crxamy
+bool(false)
+bool(false)
+bool(true)
+
+crxa.zip
+bool(false)
+bool(false)
+bool(true)
+
+crxa.zip.crxa
+bool(true)
+bool(true)
+bool(false)
+
+dir.crxa.crx
+bool(true)
+bool(true)
+bool(false)

@@ -1,0 +1,13 @@
+--TEST--
+Bug #61058 (array_fill leaks if start index is CRX_INT_MAX)
+--FILE--
+<?crx
+
+try {
+    array_fill(CRX_INT_MAX, 2, '*');
+} catch (\Error $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECT--
+Cannot add element to the array as the next element is already occupied

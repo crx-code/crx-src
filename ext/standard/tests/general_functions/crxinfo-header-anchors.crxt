@@ -1,0 +1,11 @@
+--TEST--
+crxinfo() with clickable anchor tags
+--CGI--
+--FILE--
+<?crx
+crxinfo();
+?>
+--EXPECTF--
+%a
+<h2><a name="module_core" href="#module_core">Core</a></h2>
+%a

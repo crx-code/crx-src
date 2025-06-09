@@ -1,0 +1,17 @@
+--TEST--
+Bug 67395: token_name() does not return name for T_POW and T_POW_EQUAL token
+--EXTENSIONS--
+tokenizer
+--FILE--
+<?crx
+
+$powToken = token_get_all('<?crx **')[1][0];
+var_dump(token_name($powToken));
+
+$powEqualToken = token_get_all('<?crx **=')[1][0];
+var_dump(token_name($powEqualToken));
+
+?>
+--EXPECT--
+string(5) "T_POW"
+string(11) "T_POW_EQUAL"

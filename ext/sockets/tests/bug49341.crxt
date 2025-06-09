@@ -1,0 +1,16 @@
+--TEST--
+Bug #49341: add SO_REUSEPORT support for socket_set_option()
+--EXTENSIONS--
+sockets
+--SKIPIF--
+<?crx
+
+if (CRX_OS !== 'Darwin' && false === strpos(CRX_OS, 'BSD')) {
+    die('skip is not *BSD.');
+}
+--FILE--
+<?crx
+var_dump(defined('SO_REUSEPORT'));
+?>
+--EXPECT--
+bool(true)

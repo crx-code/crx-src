@@ -1,0 +1,14 @@
+--TEST--
+gethostbyname() function - basic type return test
+--CREDITS--
+"Sylvain R." <sracine@crxquebec.org>
+--SKIPIF--
+<?crx
+if (getenv("SKIP_SLOW_TESTS")) die("skip slow test");
+?>
+--FILE--
+<?crx
+    var_dump(is_string(gethostbyname("www.crx.net")));
+?>
+--EXPECT--
+bool(true)

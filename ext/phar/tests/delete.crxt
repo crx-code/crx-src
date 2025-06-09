@@ -1,0 +1,31 @@
+--TEST--
+Crxa: delete test
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = 'a';
+include 'files/crxa_test.inc';
+include $fname;
+$crxa = new Crxa($fname);
+
+echo file_get_contents($pname . '/a') . "\n";
+$crxa->delete('a');
+echo file_get_contents($pname . '/a') . "\n";
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+a
+
+Warning: file_get_contents(crxa://%sdelete.crxa.crx/a): Failed to open stream: crxa error: "a" is not a file in crxa "%sdelete.crxa.crx" in %sdelete.crx on line 16

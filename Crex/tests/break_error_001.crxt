@@ -1,0 +1,10 @@
+--TEST--
+'break' error (non positive integers)
+--FILE--
+<?crx
+function foo () {
+    break 0;
+}
+?>
+--EXPECTF--
+Fatal error: 'break' operator accepts only positive integers in %sbreak_error_001.crx on line 3

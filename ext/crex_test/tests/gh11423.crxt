@@ -1,0 +1,29 @@
+--TEST--
+GH-11423 (internal constants have their namespace lowercased)
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$re = new \ReflectionExtension('crex_test');
+var_dump($re->getConstants());
+
+define('NS1\ns2\Const1','value1');
+var_dump(get_defined_constants(true)["user"]);
+
+?>
+--EXPECT--
+array(4) {
+  ["CREX_TEST_DEPRECATED"]=>
+  int(42)
+  ["CREX_CONSTANT_A"]=>
+  string(6) "global"
+  ["CrexTestNS2\CREX_CONSTANT_A"]=>
+  string(10) "namespaced"
+  ["CrexTestNS2\CrexSubNS\CREX_CONSTANT_A"]=>
+  string(10) "namespaced"
+}
+array(1) {
+  ["NS1\ns2\Const1"]=>
+  string(6) "value1"
+}

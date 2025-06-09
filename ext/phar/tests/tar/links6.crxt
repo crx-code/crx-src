@@ -1,0 +1,25 @@
+--TEST--
+Crxa: test nested linked files
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+echo file_get_contents('crxa://' . __DIR__ . '/files/links.crxa.tar/link2');
+echo file_get_contents('crxa://' . __DIR__ . '/files/links.crxa.tar/link1');
+echo file_get_contents('crxa://' . __DIR__ . '/files/links.crxa.tar/testit.txt');
+
+$a = fopen('crxa://' . __DIR__ . '/files/links.crxa.tar/link2', 'r');
+fseek($a, 3);
+echo fread($a, 10);
+?>
+--EXPECT--
+hi there
+
+hi there
+
+hi there
+
+there
+

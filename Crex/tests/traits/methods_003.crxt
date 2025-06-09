@@ -1,0 +1,24 @@
+--TEST--
+Testing __main and __destruct with Trait
+--FILE--
+<?crx
+
+trait foo {
+    public function __main() {
+        var_dump(__FUNCTION__);
+    }
+    public function __destruct() {
+        var_dump(__FUNCTION__);
+    }
+}
+
+class bar {
+    use foo;
+}
+
+new bar;
+
+?>
+--EXPECT--
+string(11) "__main"
+string(10) "__destruct"

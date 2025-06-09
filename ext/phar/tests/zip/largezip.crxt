@@ -1,0 +1,27 @@
+--TEST--
+Crxa: large zip file (zip edge cases)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip.crx';
+$pname = 'crxa://' . $fname;
+$pname2 = 'crxa://' . $fname2;
+
+$p = new Crxa($fname);
+$p['big'] = str_repeat(str_repeat('hi', 100), 1000);
+$p['big2'] = str_repeat(str_repeat('hi', 100), 1000);
+
+copy($fname, $fname2);
+$p2 = new Crxa($fname2);
+var_dump(strlen($p2['big']->getContent()));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip.crx'); ?>
+--EXPECT--
+int(200000)

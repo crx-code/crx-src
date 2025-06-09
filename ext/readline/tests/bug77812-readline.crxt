@@ -1,0 +1,56 @@
+--TEST--
+Bug #77812 (Interactive mode does not support CRX 7.3-style heredoc)
+--EXTENSIONS--
+readline
+--SKIPIF--
+<?crx
+if (READLINE_LIB !== "readline") die('skip readline only');
+if (!function_exists('proc_open')) die('skip proc_open() not available');
+?>
+--FILE--
+<?crx
+$crx = getenv('TEST_CRX_EXECUTABLE');
+$ini = getenv('TEST_CRX_EXTRA_ARGS');
+$descriptorspec = [['pipe', 'r'], STDOUT, STDERR];
+$proc = proc_open("$crx $ini -a", $descriptorspec, $pipes);
+fwrite($pipes[0], "echo <<<FOO\n    bar\n    FOO;\n");
+fwrite($pipes[0], "print(<<<FOO\nxx\nFOO);\n");
+fwrite($pipes[0], "echo <<<FOO\n    xxx\n    FOO;\nFOO\n;\n");
+fwrite($pipes[0], "echo <<<FOO\nFOOL\nFOO\n,1;\n");
+fwrite($pipes[0], "echo <<<FOO\nFOO4\nFOO\n,2;\n");
+fclose($pipes[0]);
+proc_close($proc);
+?>
+--EXPECTF--
+Interactive shell
+
+crx > echo <<<FOO
+<<< >     bar
+<<< >     FOO;
+bar
+crx > print(<<<FOO
+<<< > xx
+<<< > FOO);
+xx
+crx > echo <<<FOO
+<<< >     xxx
+<<< >     FOO;
+xxx
+crx > FOO
+crx > ;
+
+Warning: Uncaught Error: Undefined constant "FOO" in crx shell code:1
+Stack trace:
+#0 {main}
+  thrown in crx shell code on line 1
+crx > echo <<<FOO
+<<< > FOOL
+<<< > FOO
+crx > ,1;
+FOOL1
+crx > echo <<<FOO
+<<< > FOO4
+<<< > FOO
+crx > ,2;
+FOO42
+crx >

@@ -1,0 +1,15 @@
+--TEST--
+DateTime::diff() days -- massive
+--CREDITS--
+Daniel Convissor <danielc@crx.net>
+--FILE--
+<?crx
+
+require 'examine_diff.inc';
+define('CRXT_DATETIME_SHOW', CRXT_DATETIME_SHOW_DAYS);
+require 'DateTime_data-massive.inc';
+
+?>
+--EXPECT--
+test_massive_positive: DAYS: **243494757**
+test_massive_negative: DAYS: **243494757**

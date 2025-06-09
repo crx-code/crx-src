@@ -1,0 +1,55 @@
+--TEST--
+Trying to access a constant on Trait via a Class
+--FILE--
+<?crx
+
+trait Foo {
+    public const PUBLIC = 'public';
+    protected const PROTECTED = 'protected';
+    private const PRIVATE = 'private';
+
+    public function f1(): void {
+        echo self::PUBLIC, ' via self', CRX_EOL;
+        echo static::PUBLIC, ' via static', CRX_EOL;
+        echo $this::PUBLIC, ' via $this', CRX_EOL;
+    }
+}
+
+class Base {
+    use Foo;
+
+    public function f2(): void {
+        echo self::PRIVATE, ' via self', CRX_EOL;
+        echo static::PRIVATE, ' via static', CRX_EOL;
+    }
+}
+
+class Derived extends Base {
+    public function f3(): void {
+        echo self::PROTECTED, ' via self', CRX_EOL;
+        echo static::PROTECTED, ' via static', CRX_EOL;
+        echo parent::PROTECTED, ' via parent', CRX_EOL;
+    }
+}
+
+echo Base::PUBLIC, ' via class name', CRX_EOL;
+echo (new Base)::PUBLIC, ' via object', CRX_EOL;
+(new Base)->f1();
+(new Base)->f2();
+echo Derived::PUBLIC, ' via derived class name', CRX_EOL;
+echo (new Derived)::PUBLIC, ' via derived class object', CRX_EOL;
+(new Derived)->f3();
+?>
+--EXPECTF--
+public via class name
+public via object
+public via self
+public via static
+public via $this
+private via self
+private via static
+public via derived class name
+public via derived class object
+protected via self
+protected via static
+protected via parent

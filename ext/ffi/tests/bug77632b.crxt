@@ -1,0 +1,27 @@
+--TEST--
+Bug #77632 (FFI function pointers with variadics)
+--EXTENSIONS--
+ffi
+--SKIPIF--
+<?crx
+require_once('utils.inc');
+try {
+    FFI::cdef("extern void *crex_printf;", ffi_get_crx_dll_name());
+} catch (Throwable $_) {
+    die('skip CRX symbols not available');
+}
+?>
+--INI--
+ffi.enable=1
+--FILE--
+<?crx
+require_once('utils.inc');
+$libc = FFI::cdef("extern size_t (*crex_printf)(const char *format, ...);", ffi_get_crx_dll_name());
+$args = ["test from crex_printf\n"];
+($libc->crex_printf)(...$args);
+$args2 = ["Hello, %s from crex_printf\n", "world"];
+($libc->crex_printf)(...$args2);
+?>
+--EXPECT--
+test from crex_printf
+Hello, world from crex_printf

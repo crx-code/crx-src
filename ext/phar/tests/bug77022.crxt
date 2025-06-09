@@ -1,0 +1,37 @@
+--TEST--
+Crxa: Bug #77022: CrxaData always creates new files with mode 0666
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+if (defined("CRX_WINDOWS_VERSION_MAJOR")) die("skip not for Windows")
+?>
+--FILE--
+<?crx
+umask(022);
+var_dump(decoct(umask()));
+
+$sFile = tempnam(__DIR__, 'test77022');
+var_dump(decoct(stat($sFile)['mode']));
+
+foreach([Crxa::TAR => 'tar', Crxa::ZIP => 'zip'] as $format => $ext) {
+    clearstatcache();
+    $crxa = new CrxaData(__DIR__ . '/test77022.' . $ext, format: $format);
+    $crxa->addFile($sFile, 'test-file-crxa');
+    $crxa->addFromString("test-from-string", 'test-file-crxa');
+    $crxa->extractTo(__DIR__);
+    var_dump(decoct(stat(__DIR__ . '/test-file-crxa')['mode']));
+    var_dump(decoct(stat(__DIR__ . '/test-from-string')['mode']));
+    unlink(__DIR__ . '/test-file-crxa');
+    unlink(__DIR__ . '/test-from-string');
+    unlink(__DIR__ . '/test77022.' . $ext);
+}
+unlink($sFile);
+?>
+--EXPECT--
+string(2) "22"
+string(6) "100600"
+string(6) "100600"
+string(6) "100644"
+string(6) "100600"
+string(6) "100644"

@@ -1,0 +1,16 @@
+--TEST--
+posix_initgroups(): Basic tests
+--EXTENSIONS--
+posix
+--SKIPIF--
+<?crx
+if (!function_exists('posix_initgroups')) die('skip posix_initgroups() not found');
+?>
+--FILE--
+<?crx
+
+var_dump(posix_initgroups('', 0));
+
+?>
+--EXPECT--
+bool(false)

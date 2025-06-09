@@ -1,0 +1,55 @@
+--TEST--
+Crex: Test compile string
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+define('CREX_COMPILE_POSITION_AT_SHEBANG', 0);
+define('CREX_COMPILE_POSITION_AT_OPEN_TAG', 1);
+define('CREX_COMPILE_POSITION_AFTER_OPEN_TAG', 2);
+
+$source_string = <<<EOF
+#!/path/to/crx
+<?crx
+var_dump('crx');
+EOF;
+
+crex_test_compile_string($source_string, 'Source string', CREX_COMPILE_POSITION_AT_SHEBANG);
+
+$source_string = <<<EOF
+#!/path/to/crx
+<?crx
+var_dump('crx');
+EOF;
+
+crex_test_compile_string($source_string, 'Source string', CREX_COMPILE_POSITION_AT_OPEN_TAG);
+
+$source_string = <<<EOF
+<?crx
+var_dump('crx');
+EOF;
+
+crex_test_compile_string($source_string, 'Source string', CREX_COMPILE_POSITION_AT_OPEN_TAG);
+
+$source_string = <<<EOF
+var_dump('crx');
+EOF;
+
+crex_test_compile_string($source_string, 'Source string', CREX_COMPILE_POSITION_AFTER_OPEN_TAG);
+
+$source_string = <<<EOF
+<?crx
+var_dump('crx');
+EOF;
+
+crex_test_compile_string($source_string, 'Source string', CREX_COMPILE_POSITION_AFTER_OPEN_TAG);
+?>
+--EXPECT--
+string(3) "crx"
+#!/path/to/crx
+string(3) "crx"
+string(3) "crx"
+string(3) "crx"
+
+Parse error: syntax error, unexpected token "<", expecting end of file in Source string on line 1

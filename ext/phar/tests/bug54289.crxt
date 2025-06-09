@@ -1,0 +1,70 @@
+--TEST--
+Bug #54289 Crxa::extractTo() does not accept specific directories to be extracted
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly = 0
+--FILE--
+<?crx
+// put our test fixtures into a far
+$base  = __DIR__.DIRECTORY_SEPARATOR.'bug54289'.DIRECTORY_SEPARATOR;
+$inDir = $base.'in';
+$crxa  = $base.'test.crxa';
+$crxaA = new Crxa($crxa);
+$crxaA->buildFromDirectory($inDir);
+
+// we should be able to pull out a directory that's there, but none that share
+// the same prefix
+$outDir = $base.'out';
+$crxaB = new Crxa($crxa);
+$crxaB->extractTo($outDir, 'dirA/', true);
+var_dump(file_exists($outDir.DIRECTORY_SEPARATOR.'dirA'.DIRECTORY_SEPARATOR.'fileA'));
+var_dump(file_exists($outDir.DIRECTORY_SEPARATOR.'dirA'.DIRECTORY_SEPARATOR.'fileB'));
+var_dump(is_dir($outDir.DIRECTORY_SEPARATOR.'dirAB'));
+
+// should also not be able to pull out non-existent ones
+try {
+  $crxaB->extractTo($outDir, 'dirX/', true);
+  echo 'failed to throw expected exception';
+} catch (CrxaException $ex) {
+}
+
+// should also not be able to pull out /, because paths are not "rooted" that way
+try {
+  $crxaB->extractTo($outDir, '/', true);
+  echo 'failed to throw expected exception';
+} catch (CrxaException $ex) {
+}
+
+// should be able to do by array, too
+$crxaB = new Crxa($crxa);
+$crxaB->extractTo($outDir, [ 'dirA/', 'dirAB/' ], true);
+
+// but not an array with a bad member in it
+try {
+  $crxaB = new Crxa($crxa);
+  $crxaB->extractTo($outDir, [ 'dirA/', 'dirX/' ], true);
+  echo 'failed to throw expected exception';
+} catch (CrxaException $ex) {
+}
+
+echo 'done';
+?>
+--CLEAN--
+<?crx
+$base   = __DIR__.DIRECTORY_SEPARATOR.'bug54289'.DIRECTORY_SEPARATOR;
+$crxa   = $base.'test.crxa';
+$outDir = $base.'out';
+unlink($crxa);
+$iter = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
+  $outDir, \FilesystemIterator::SKIP_DOTS|\FilesystemIterator::UNIX_PATHS),
+  \RecursiveIteratorIterator::CHILD_FIRST);
+foreach ($iter as $value) {
+    $value->isFile() ? unlink($value) : rmdir($value);
+}
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(false)
+done

@@ -1,0 +1,19 @@
+--TEST--
+Crxa::getSupportedCompression() (bz2 and zlib)
+--EXTENSIONS--
+crxa
+bz2
+zlib
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+var_dump(Crxa::getSupportedCompression());
+?>
+--EXPECT--
+array(2) {
+  [0]=>
+  string(2) "GZ"
+  [1]=>
+  string(5) "BZIP2"
+}

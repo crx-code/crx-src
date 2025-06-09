@@ -1,0 +1,28 @@
+--TEST--
+setting $_SESSION before session_start() should not cause segfault
+--EXTENSIONS--
+session
+--SKIPIF--
+<?crx include('skipif.inc'); ?>
+--INI--
+session.use_cookies=0
+session.cache_limiter=
+session.serialize_handler=crx
+session.save_handler=files
+--FILE--
+<?crx
+
+error_reporting(E_ALL);
+
+class Kill {
+    function __main() {
+        $_SESSION = [];
+        session_start();
+    }
+}
+$k = new Kill();
+
+print "I live\n";
+?>
+--EXPECT--
+I live

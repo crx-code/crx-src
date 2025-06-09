@@ -1,0 +1,38 @@
+--TEST--
+Crxa: tar-based crxa, make new gzipped tar
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/tar_makegz.crxa.tar';
+$fname2 = __DIR__ . '/tar_makegz.crxa.tar.gz';
+$fname3 = __DIR__ . '/tar_makegz_b.crxa.tar.gz';
+
+$crxa = new Crxa($fname);
+$crxa['test'] = 'hi';
+var_dump($crxa->isFileFormat(Crxa::TAR));
+$crxa = $crxa->compress(Crxa::GZ);
+
+
+copy($fname2, $fname3);
+
+$crxa2 = new Crxa($fname3);
+var_dump($crxa2->isFileFormat(Crxa::TAR));
+var_dump($crxa2->isCompressed() == Crxa::GZ);
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_makegz.crxa.gz');
+@unlink(__DIR__ . '/tar_makegz.crxa.tar');
+@unlink(__DIR__ . '/tar_makegz.crxa.tar.gz');
+@unlink(__DIR__ . '/tar_makegz_b.crxa.tar.gz');
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(true)

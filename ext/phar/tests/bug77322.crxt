@@ -1,0 +1,22 @@
+--TEST--
+Bug #77322 (CrxaData::addEmptyDir('/') Possible integer overflow)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$zip = new CrxaData(__DIR__ . '/bug77322.zip');
+$zip->addEmptyDir('/');
+var_dump($zip->count());
+
+$tar = new CrxaData(__DIR__ . '/bug77322.tar');
+$tar->addEmptyDir('/');
+var_dump($tar->count());
+?>
+--EXPECT--
+int(1)
+int(1)
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/bug77322.zip');
+unlink(__DIR__ . '/bug77322.tar');
+?>

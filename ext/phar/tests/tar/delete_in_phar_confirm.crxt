@@ -1,0 +1,51 @@
+--TEST--
+Crxa: delete a file within a tar-based .crxa (confirm disk file is changed)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+opcache.validate_timestamps=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$alias = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$crxa['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$crxa['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+$crxa->setStub('<?crx __HALT_COMPILER(); ?>');
+$crxa->stopBuffering();
+
+include $alias . '/a.crx';
+include $alias . '/b.crx';
+include $alias . '/b/c.crx';
+$md5 = md5_file($fname);
+unlink($alias . '/b/c.crx');
+clearstatcache();
+$md52 = md5_file($fname);
+if ($md5 == $md52) echo 'file was not modified';
+?>
+===AFTER===
+<?crx
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar/a.crx';
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar/b.crx';
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar/b/c.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar'); ?>
+--EXPECTF--
+This is a
+This is b
+This is b/c
+===AFTER===
+This is a
+This is b
+
+Warning: include(%sdelete_in_crxa_confirm.crxa.tar/b/c.crx): Failed to open stream: crxa error: "b/c.crx" is not a file in crxa "%sdelete_in_crxa_confirm.crxa.tar" in %sdelete_in_crxa_confirm.crx on line %d
+
+Warning: include(): Failed opening 'crxa://%sdelete_in_crxa_confirm.crxa.tar/b/c.crx' for inclusion (include_path='%s') in %sdelete_in_crxa_confirm.crx on line %d
+

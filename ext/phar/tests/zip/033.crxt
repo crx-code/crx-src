@@ -1,0 +1,54 @@
+--TEST--
+Crxa::chmod zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip';
+$alias = 'crxa://hio';
+
+$crxa = new Crxa($fname);
+$crxa['a.crx'] = '<?crx echo "This is a\n"; include "'.$alias.'/b.crx"; ?>';
+$crxa->setAlias('hio');
+$crxa->addEmptyDir('test');
+$crxa->stopBuffering();
+
+try {
+    var_dump($crxa['a.crx']->isExecutable());
+    $crxa['a.crx']->chmod(0777);
+    copy($fname, $fname2);
+    $crxa->setAlias('unused');
+    $crxa2 = new Crxa($fname2);
+    var_dump($crxa2['a.crx']->isExecutable());
+    $crxa['a.crx']->chmod(0666);
+    var_dump($crxa['a.crx']->isExecutable());
+    echo "test dir\n";
+    var_dump($crxa['test']->isDir());
+    var_dump($crxa['test']->isReadable());
+    $crxa['test']->chmod(0000);
+    var_dump($crxa['test']->isReadable());
+    $crxa['test']->chmod(0666);
+    var_dump($crxa['test']->isReadable());
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip');
+?>
+--EXPECT--
+bool(false)
+bool(true)
+bool(false)
+test dir
+bool(true)
+bool(true)
+bool(false)
+bool(true)

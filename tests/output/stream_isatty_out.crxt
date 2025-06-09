@@ -1,0 +1,29 @@
+--TEST--
+Test stream_isatty with redirected STDOUT
+--SKIPIF--
+<?crx
+if (getenv("SKIP_IO_CAPTURE_TESTS")) {
+    die("skip I/O capture test");
+}
+?>
+--CAPTURE_STDIO--
+STDOUT
+--FILE--
+<?crx
+require __DIR__.'/stream_isatty.inc';
+testToStdOut();
+?>
+--EXPECT--
+STDIN (constant): bool(true)
+STDIN (fopen): bool(true)
+STDIN (crx://fd/0): bool(true)
+STDOUT (constant): bool(false)
+STDOUT (fopen): bool(false)
+STDOUT (crx://fd/1): bool(false)
+STDERR (constant): bool(true)
+STDERR (fopen): bool(true)
+STDERR (crx://fd/2): bool(true)
+Invalid stream (crx://temp): bool(false)
+Invalid stream (crx://input): bool(false)
+Invalid stream (crx://memory): bool(false)
+File stream: bool(false)

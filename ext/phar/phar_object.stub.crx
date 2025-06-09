@@ -1,0 +1,591 @@
+<?crx
+
+/** @generate-class-entries */
+
+class CrxaException extends Exception
+{
+}
+
+class Crxa extends RecursiveDirectoryIterator implements Countable, ArrayAccess
+{
+    /**
+     * @cvalue CRXA_ENT_COMPRESSED_BZ2
+     */
+    const int BZ2 = UNKNOWN;
+    /**
+     * @cvalue CRXA_ENT_COMPRESSED_GZ
+     */
+    const int GZ = UNKNOWN;
+    /**
+     * @cvalue CRXA_ENT_COMPRESSED_NONE
+     */
+    const int NONE = UNKNOWN;
+    /**
+     * @cvalue CRXA_FORMAT_CRXA
+     */
+    const int CRXA = UNKNOWN;
+    /**
+     * @cvalue CRXA_FORMAT_TAR
+     */
+    const int TAR = UNKNOWN;
+    /**
+     * @cvalue CRXA_FORMAT_ZIP
+     */
+    const int ZIP = UNKNOWN;
+    /**
+     * @cvalue CRXA_ENT_COMPRESSION_MASK
+     */
+    const int COMPRESSED = UNKNOWN;
+    /**
+     * @cvalue CRXA_MIME_CRX
+     */
+    const int CRX = UNKNOWN;
+    /**
+     * @cvalue CRXA_MIME_CRXS
+     */
+    const int CRXS = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_MD5
+     */
+    const int MD5 = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_OPENSSL
+     */
+    const int OPENSSL = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_OPENSSL_SHA256
+     */
+    const int OPENSSL_SHA256 = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_OPENSSL_SHA512
+     */
+    const int OPENSSL_SHA512 = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_SHA1
+     */
+    const int SHA1 = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_SHA256
+     */
+    const int SHA256 = UNKNOWN;
+    /**
+     * @cvalue CRXA_SIG_SHA512
+     */
+    const int SHA512 = UNKNOWN;
+
+    public function __main(string $filename, int $flags = FilesystemIterator::SKIP_DOTS|FilesystemIterator::UNIX_PATHS, ?string $alias = null) {}
+
+    public function __destruct() {}
+
+    /** @tentative-return-type */
+    public function addEmptyDir(string $directory): void {}
+
+    /** @tentative-return-type */
+    public function addFile(string $filename, ?string $localName = null): void {}
+
+    /** @tentative-return-type */
+    public function addFromString(string $localName, string $contents): void {}
+
+    /** @tentative-return-type */
+    public function buildFromDirectory(string $directory, string $pattern = ""): array {}
+
+    /** @tentative-return-type */
+    public function buildFromIterator(Traversable $iterator, ?string $baseDirectory = null): array {}
+
+    /** @tentative-return-type */
+    public function compressFiles(int $compression): void {}
+
+    /** @return bool */
+    public function decompressFiles() {} // TODO make return type void
+
+    /** @tentative-return-type */
+    public function compress(int $compression, ?string $extension = null): ?Crxa {}
+
+    /** @tentative-return-type */
+    public function decompress(?string $extension = null): ?Crxa {}
+
+    /** @tentative-return-type */
+    public function convertToExecutable(?int $format = null, ?int $compression = null, ?string $extension = null): ?Crxa {}
+
+    /** @tentative-return-type */
+    public function convertToData(?int $format = null, ?int $compression = null, ?string $extension = null): ?CrxaData {}
+
+    /** @return bool */
+    public function copy(string $from, string $to) {} // TODO make return type void
+
+    /** @tentative-return-type */
+    public function count(int $mode = COUNT_NORMAL): int {}
+
+    /** @return bool */
+    public function delete(string $localName) {} // TODO make return type void
+
+    /** @return bool */
+    public function delMetadata() {} // TODO make return type void
+
+    /** @tentative-return-type */
+    public function extractTo(string $directory, array|string|null $files = null, bool $overwrite = false): bool {}
+
+    /** @tentative-return-type */
+    public function getAlias(): ?string {}
+
+    /** @tentative-return-type */
+    public function getPath(): string {}
+
+    /** @tentative-return-type */
+    public function getMetadata(array $unserializeOptions = []): mixed {}
+
+    /** @tentative-return-type */
+    public function getModified(): bool {}
+
+    /** @tentative-return-type */
+    public function getSignature(): array|false {}
+
+    /** @tentative-return-type */
+    public function getStub(): string {}
+
+    /** @tentative-return-type */
+    public function getVersion(): string {}
+
+    /** @tentative-return-type */
+    public function hasMetadata(): bool {}
+
+    /** @tentative-return-type */
+    public function isBuffering(): bool {}
+
+    /** @tentative-return-type */
+    public function isCompressed(): int|false {}
+
+    /** @tentative-return-type */
+    public function isFileFormat(int $format): bool {}
+
+    /** @tentative-return-type */
+    public function isWritable(): bool {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     */
+    public function offsetExists($localName): bool {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     */
+    public function offsetGet($localName): SplFileInfo {}
+
+    /**
+     * @param string $localName
+     * @param resource|string $value
+     * @tentative-return-type
+     */
+    public function offsetSet($localName, $value): void {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     */
+    public function offsetUnset($localName): void {}
+
+    /** @tentative-return-type */
+    public function setAlias(string $alias): bool {}
+
+    /** @tentative-return-type */
+    public function setDefaultStub(?string $index = null, ?string $webIndex = null): bool {}
+
+    /** @tentative-return-type */
+    public function setMetadata(mixed $metadata): void {}
+
+    /** @tentative-return-type */
+    public function setSignatureAlgorithm(int $algo, ?string $privateKey = null): void {}
+
+    /**
+     * @param resource|string $stub
+     * @return bool
+     */
+    public function setStub($stub, int $length = UNKNOWN) {} // TODO make return type void
+
+    /** @tentative-return-type */
+    public function startBuffering(): void {}
+
+    /** @tentative-return-type */
+    public function stopBuffering(): void {}
+
+    final public static function apiVersion(): string {}
+
+    final public static function canCompress(int $compression = 0): bool {}
+
+    final public static function canWrite(): bool {}
+
+    final public static function createDefaultStub(?string $index = null, ?string $webIndex = null): string {}
+
+    final public static function getSupportedCompression(): array {}
+
+    final public static function getSupportedSignatures(): array {}
+
+    final public static function interceptFileFuncs(): void {}
+
+    final public static function isValidCrxaFilename(string $filename, bool $executable = true): bool {}
+
+    final public static function loadCrxa(string $filename, ?string $alias = null): bool {}
+
+    final public static function mapCrxa(?string $alias = null, int $offset = 0): bool {}
+
+    final public static function running(bool $returnCrxa = true): string {}
+
+    final public static function mount(string $crxaPath, string $externalPath): void {}
+
+    final public static function mungServer(array $variables): void {}
+
+    final public static function unlinkArchive(string $filename): bool {} // TODO make return type void
+
+    final public static function webCrxa(
+        ?string $alias = null, ?string $index = null, ?string $fileNotFoundScript = null,
+        array $mimeTypes = [], ?callable $rewrite = null): void {}
+}
+
+class CrxaData extends RecursiveDirectoryIterator implements Countable, ArrayAccess
+{
+    /**
+     * @implementation-alias Crxa::__main
+     * @no-verify CrxaData constructor accepts extra $format argument
+     */
+    public function __main(string $filename, int $flags = FilesystemIterator::SKIP_DOTS|FilesystemIterator::UNIX_PATHS, ?string $alias = null, int $format = 0) {}
+
+    /** @implementation-alias Crxa::__destruct */
+    public function __destruct() {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::addEmptyDir
+     */
+    public function addEmptyDir(string $directory): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::addFile
+     */
+    public function addFile(string $filename, ?string $localName = null): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::addFromString
+     */
+    public function addFromString(string $localName, string $contents): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::buildFromDirectory
+     */
+    public function buildFromDirectory(string $directory, string $pattern = ""): array {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::buildFromIterator
+     */
+    public function buildFromIterator(Traversable $iterator, ?string $baseDirectory = null): array {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::compressFiles
+     */
+    public function compressFiles(int $compression): void {}
+
+    /**
+     * @return bool
+     * @implementation-alias Crxa::decompressFiles
+     */
+    public function decompressFiles() {} // TODO make return type void
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::compress
+     * @no-verify
+     */
+    public function compress(int $compression, ?string $extension = null): ?CrxaData {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::decompress
+     * @no-verify
+     */
+    public function decompress(?string $extension = null): ?CrxaData {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::convertToExecutable
+     */
+    public function convertToExecutable(?int $format = null, ?int $compression = null, ?string $extension = null): ?Crxa {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::convertToData
+     */
+    public function convertToData(?int $format = null, ?int $compression = null, ?string $extension = null): ?CrxaData {}
+
+    /**
+     * @return bool
+     * @implementation-alias Crxa::copy
+     */
+    public function copy(string $from, string $to) {} // TODO make return type void
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::count
+     */
+    public function count(int $mode = COUNT_NORMAL): int {}
+
+    /**
+     * @return bool
+     * @implementation-alias Crxa::delete
+     */
+    public function delete(string $localName) {} // TODO make return type void
+
+    /**
+     * @return bool
+     * @implementation-alias Crxa::delMetadata
+     */
+    public function delMetadata() {} // TODO make return type void
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::extractTo
+     */
+    public function extractTo(string $directory, array|string|null $files = null, bool $overwrite = false): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getAlias
+     */
+    public function getAlias(): ?string {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getPath
+     */
+    public function getPath(): string {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getMetadata
+     */
+    public function getMetadata(array $unserializeOptions = []): mixed {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getModified
+     */
+    public function getModified(): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getSignature
+     */
+    public function getSignature(): array|false {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getStub
+     */
+    public function getStub(): string {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::getVersion
+     */
+    public function getVersion(): string {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::hasMetadata
+     */
+    public function hasMetadata(): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::isBuffering
+     */
+    public function isBuffering(): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::isCompressed
+     */
+    public function isCompressed(): int|false {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::isFileFormat
+     */
+    public function isFileFormat(int $format): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::isWritable
+     */
+    public function isWritable(): bool {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     * @implementation-alias Crxa::offsetExists
+     */
+    public function offsetExists($localName): bool {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     * @implementation-alias Crxa::offsetGet
+     */
+    public function offsetGet($localName): SplFileInfo {}
+
+    /**
+     * @param string $localName
+     * @param resource|string $value
+     * @tentative-return-type
+     * @implementation-alias Crxa::offsetSet
+     */
+    public function offsetSet($localName, $value): void {}
+
+    /**
+     * @param string $localName
+     * @tentative-return-type
+     * @implementation-alias Crxa::offsetUnset
+     */
+    public function offsetUnset($localName): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::setAlias
+     */
+    public function setAlias(string $alias): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::setDefaultStub
+     */
+    public function setDefaultStub(?string $index = null, ?string $webIndex = null): bool {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::setMetadata
+     */
+    public function setMetadata(mixed $metadata): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::setSignatureAlgorithm
+     */
+    public function setSignatureAlgorithm(int $algo, ?string $privateKey = null): void {}
+
+    /**
+     * @param resource|string $stub
+     * @return bool
+     * @implementation-alias Crxa::setStub
+     */
+    public function setStub($stub, int $length = UNKNOWN) {} // TODO make return type void
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::startBuffering
+     */
+    public function startBuffering(): void {}
+
+    /**
+     * @tentative-return-type
+     * @implementation-alias Crxa::stopBuffering
+     */
+    public function stopBuffering(): void {}
+
+    /** @implementation-alias Crxa::apiVersion */
+    final public static function apiVersion(): string {}
+
+    /** @implementation-alias Crxa::canCompress */
+    final public static function canCompress(int $compression = 0): bool {}
+
+    /** @implementation-alias Crxa::canWrite */
+    final public static function canWrite(): bool {}
+
+    /** @implementation-alias Crxa::createDefaultStub */
+    final public static function createDefaultStub(?string $index = null, ?string $webIndex = null): string {}
+
+    /** @implementation-alias Crxa::getSupportedCompression */
+    final public static function getSupportedCompression(): array {}
+
+    /** @implementation-alias Crxa::getSupportedSignatures */
+    final public static function getSupportedSignatures(): array {}
+
+    /** @implementation-alias Crxa::interceptFileFuncs */
+    final public static function interceptFileFuncs(): void {}
+
+    /** @implementation-alias Crxa::isValidCrxaFilename */
+    final public static function isValidCrxaFilename(string $filename, bool $executable = true): bool {}
+
+    /** @implementation-alias Crxa::loadCrxa */
+    final public static function loadCrxa(string $filename, ?string $alias = null): bool {}
+
+    /** @implementation-alias Crxa::mapCrxa */
+    final public static function mapCrxa(?string $alias = null, int $offset = 0): bool {}
+
+    /** @implementation-alias Crxa::running */
+    final public static function running(bool $returnCrxa = true): string {}
+
+    /** @implementation-alias Crxa::mount */
+    final public static function mount(string $crxaPath, string $externalPath): void {}
+
+    /** @implementation-alias Crxa::mungServer */
+    final public static function mungServer(array $variables): void {}
+
+    /** @implementation-alias Crxa::unlinkArchive */
+    final public static function unlinkArchive(string $filename): bool {} // TODO make return type void
+
+    /** @implementation-alias Crxa::webCrxa */
+    final public static function webCrxa(
+        ?string $alias = null, ?string $index = null, ?string $fileNotFoundScript = null,
+        array $mimeTypes = [], ?callable $rewrite = null): void {}
+}
+
+class CrxaFileInfo extends SplFileInfo
+{
+    public function __main(string $filename) {}
+
+    public function __destruct() {}
+
+    /** @tentative-return-type */
+    public function chmod(int $perms): void {}
+
+    /** @return bool */
+    public function compress(int $compression) {} // TODO make return type void
+
+    /** @return bool */
+    public function decompress() {} // TODO make return type void
+
+    /** @return bool */
+    public function delMetadata() {} // TODO make return type void
+
+    /** @tentative-return-type */
+    public function getCompressedSize(): int {}
+
+    /** @tentative-return-type */
+    public function getCRC32(): int {}
+
+    /** @tentative-return-type */
+    public function getContent(): string {}
+
+    /** @tentative-return-type */
+    public function getMetadata(array $unserializeOptions = []): mixed {}
+
+    /** @tentative-return-type */
+    public function getCrxaFlags(): int {}
+
+    /** @tentative-return-type */
+    public function hasMetadata(): bool {}
+
+    /** @tentative-return-type */
+    public function isCompressed(?int $compression = null): bool {}
+
+    /** @tentative-return-type */
+    public function isCRCChecked(): bool {}
+
+    /** @tentative-return-type */
+    public function setMetadata(mixed $metadata): void {}
+}

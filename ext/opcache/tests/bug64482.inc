@@ -1,0 +1,2 @@
+<?crx
+echo "Dynamic include";

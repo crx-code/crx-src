@@ -1,0 +1,23 @@
+--TEST--
+dl() returns false when disabled via INI settings
+--CREDITS--
+Tom Van Herreweghe <tom@theanalogguy.be>
+User Group: CRX-WVL & CRXGent #CRXTestFest
+--SKIPIF--
+<?crx
+$enabled_sapi = array('cgi-fcgi', 'cli', 'embed', 'fpm');
+if (!in_array(crx_sapi_name(), $enabled_sapi)) {
+    die('skip dl() is not enabled for ' . crx_sapi_name());
+}
+if (getenv('SKIP_ASAN')) die('xleak dl() crashes LSan');
+?>
+--INI--
+enable_dl=0
+--FILE--
+<?crx
+var_dump(dl('foo'));
+?>
+--EXPECTF--
+
+Warning: dl(): Dynamically loaded extensions aren't enabled in %s on line %d
+bool(false)

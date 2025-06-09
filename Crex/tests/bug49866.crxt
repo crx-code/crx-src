@@ -1,0 +1,14 @@
+--TEST--
+Bug #49866 (Making reference on string offsets crashes CRX)
+--FILE--
+<?crx
+$a = "string";
+$b = &$a[1];
+$b = "f";
+echo $a;
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Cannot create references to/from string offsets in %sbug49866.crx:3
+Stack trace:
+#0 {main}
+  thrown in %sbug49866.crx on line 3

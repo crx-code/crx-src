@@ -1,0 +1,38 @@
+--TEST--
+Crxa: fopen a .crxa for writing (existing file) zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$alias = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+$crxa->setStub('<?crx __HALT_COMPILER(); ?>');
+
+$files = array();
+
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+
+foreach ($files as $n => $file) {
+    $crxa[$n] = $file;
+}
+$crxa->stopBuffering();
+
+ini_set('crxa.readonly', 1);
+
+var_dump(fopen($alias . '/b/c.crx', 'wb'));
+include $alias . '/b/c.crx';
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip'); ?>
+--EXPECTF--
+Warning: fopen(crxa://%sopen_for_write_existing_b.crxa.zip/b/c.crx): Failed to open stream: crxa error: write operations disabled by the crx.ini setting crxa.readonly in %sopen_for_write_existing_b.crx on line %d
+bool(false)
+This is b/c

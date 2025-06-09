@@ -1,0 +1,11 @@
+--TEST--
+Bug #72146 (Integer overflow on substr_replace)
+--FILE--
+<?crx 
+var_dump(substr_replace(["ABCDE"], "123", 3, CRX_INT_MAX));
+?>
+--EXPECT--
+array(1) {
+  [0]=>
+  string(6) "ABC123"
+}

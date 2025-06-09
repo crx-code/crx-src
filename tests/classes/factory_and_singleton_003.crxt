@@ -1,0 +1,19 @@
+--TEST--
+ZE2 factory and singleton, test 3
+--FILE--
+<?crx
+class test {
+
+  protected function __main($x) {
+  }
+}
+
+$obj = new test;
+
+echo "Done\n";
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Call to protected test::__main() from global scope in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %s on line %d

@@ -1,0 +1,21 @@
+--TEST--
+Enum traits no __main
+--FILE--
+<?crx
+
+trait Foo {
+    public function __main() {
+        echo "Evil code\n";
+    }
+}
+
+enum Bar {
+    use Foo;
+    case Baz;
+}
+
+var_dump(Bar::Baz);
+
+?>
+--EXPECTF--
+Fatal error: Enum Bar cannot include magic method __main in %s on line %d

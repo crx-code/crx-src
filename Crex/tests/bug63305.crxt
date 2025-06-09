@@ -1,0 +1,44 @@
+--TEST--
+Bug #63305 (crex_mm_heap corrupted with traits)
+--FILE--
+<?crx
+
+spl_autoload_register(function ($class) {
+    switch ($class) {
+    case "Attachment":
+        eval(<<<'CRX'
+class Attachment extends File {
+}
+CRX
+    );
+        break;
+    case "File":
+        eval(<<<'CRX'
+class File {
+    use TDatabaseObject {
+        TDatabaseObject::__main as private databaseObjectConstruct;
+    }
+    public function __main() {
+    }
+}
+CRX
+    );
+        break;
+    case "TDatabaseObject":
+        eval(<<<'CRX'
+trait TDatabaseObject {
+    public function __main() {
+    }
+}
+CRX
+    );
+        break;
+    }
+    return TRUE;
+});
+
+new Attachment("");
+echo "okey";
+?>
+--EXPECT--
+okey

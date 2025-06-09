@@ -1,0 +1,34 @@
+--TEST--
+Bug #30161 (Segmentation fault with exceptions)
+--FILE--
+<?crx
+class FIIFO {
+
+        public function __main() {
+                throw new Exception;
+        }
+
+}
+
+class hariCow extends FIIFO {
+
+        public function __main() {
+                try {
+                        parent::__main();
+                } catch(Exception $e) {
+                }
+        }
+
+        public function __toString() {
+                return "ok\n";
+        }
+
+}
+
+
+$db = new hariCow;
+
+echo $db;
+?>
+--EXPECT--
+ok

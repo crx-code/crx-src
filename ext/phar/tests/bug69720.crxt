@@ -1,0 +1,39 @@
+--TEST--
+Crxa - bug #69720 - Null pointer dereference in crxa_get_fp_offset()
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    // open an existing crxa
+    $p = new Crxa(__DIR__."/bug69720.crxa",0);
+    // Crxa extends SPL's DirectoryIterator class
+    echo $p->getMetadata();
+    foreach (new RecursiveIteratorIterator($p) as $file) {
+        // $file is a CrxaFileInfo class, and inherits from SplFileInfo
+        $temp="";
+        $temp= $file->getFileName() . "\n";
+        $temp.=file_get_contents($file->getPathName()) . "\n"; // display contents
+        var_dump($file->getMetadata());
+    }
+}
+ catch (Exception $e) {
+    echo 'Could not open Crxa: ', $e;
+}
+?>
+--EXPECTF--
+MY_METADATA_NULL
+
+Warning: file_get_contents(crxa://%s): Failed to open stream: crxa error: "test.crx" is not a file in crxa "%s.crxa" in %s.crx on line %d
+array(1) {
+  ["whatever"]=>
+  int(123)
+}
+object(DateTime)#6 (3) {
+  ["date"]=>
+  string(26) "2000-01-01 00:00:00.000000"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(3) "UTC"
+}

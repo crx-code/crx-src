@@ -1,0 +1,11 @@
+--TEST--
+Return type for internal functions 2
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+crex_test_nullable_array_return();
+?>
+==DONE==
+--EXPECT--
+==DONE==

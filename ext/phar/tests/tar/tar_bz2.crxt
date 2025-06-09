@@ -1,0 +1,57 @@
+--TEST--
+Crxa: tar-based crxa, bzipped tar
+--EXTENSIONS--
+crxa
+bz2
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+include __DIR__ . '/files/tarmaker.crx.inc';
+
+$fname = __DIR__ . '/tar_bz2.crxa';
+$alias = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/tar_bz2.crxa.tar';
+$alias2 = 'crxa://' . $fname2;
+
+$tar = new tarmaker($fname, 'bz2');
+$tar->init();
+$tar->addFile('tar_004.crx', '<?crx var_dump(__FILE__);');
+$tar->addFile('internal/file/here', "hi there!\n");
+$tar->mkDir('internal/dir');
+$tar->mkDir('dir');
+$tar->addFile('.crxa/stub.crx', '<?crx
+var_dump(__FILE__);
+var_dump(substr(__FILE__, 0, 4) != "crxa");
+Crxa::mapCrxa();
+var_dump("it worked");
+include "crxa://" . __FILE__ . "/tar_004.crx";
+__HALT_COMPILER();
+');
+$tar->close();
+
+include $alias;
+
+$crxa = new Crxa($fname);
+$crxa['test'] = 'hi';
+
+copy($fname, $fname2);
+
+$crxa2 = new Crxa($fname2);
+var_dump($crxa2->isFileFormat(Crxa::TAR));
+var_dump($crxa2->isCompressed() == Crxa::BZ2);
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__ . '/tar_bz2.crxa');
+@unlink(__DIR__ . '/tar_bz2.crxa.tar');
+?>
+--EXPECTF--
+string(%d) "%star_bz2.crxa"
+bool(true)
+string(9) "it worked"
+string(%d) "crxa://%star_bz2.crxa/tar_004.crx"
+bool(true)
+bool(true)

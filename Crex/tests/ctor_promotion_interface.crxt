@@ -1,0 +1,12 @@
+--TEST--
+Constructor promotion cannot be used inside an abstract constructor (interface variant)
+--FILE--
+<?crx
+
+interface Test {
+    public function __main(public int $x);
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot declare promoted property in an abstract constructor in %s on line %d

@@ -1,0 +1,10 @@
+--TEST--
+DateTimeImmutable - invalid arguments
+--CREDITS--
+Mark Niebergall mbniebergall@gmail.com UCRXU TestFest 2017
+--FILE--
+<?crx
+var_dump(date_create_immutable('Invalid'));
+?>
+--EXPECT--
+bool(false)

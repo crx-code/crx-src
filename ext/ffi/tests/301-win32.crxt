@@ -1,0 +1,29 @@
+--TEST--
+FFI 301: FFI loading on Windows
+--EXTENSIONS--
+ffi
+--SKIPIF--
+<?crx if (substr(CRX_OS, 0, 3) != 'WIN') die('skip for Windows only'); ?>
+--INI--
+ffi.enable=1
+--FILE--
+<?crx
+require_once('utils.inc');
+$fn = __DIR__ . "/300-win32.h";
+$cont = str_replace(
+        "CRX_DLL_NAME",
+        ffi_get_crx_dll_name(),
+        file_get_contents("$fn.in")
+    );
+file_put_contents($fn, $cont);
+
+$ffi = FFI::load($fn);
+$ffi->crx_printf("Hello World from %s!\n", "CRX");
+?>
+--CLEAN--
+<?crx
+	$fn = __DIR__ . "/300-win32.h";
+	unlink($fn);
+?>
+--EXPECT--
+Hello World from CRX!

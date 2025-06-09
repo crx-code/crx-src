@@ -1,0 +1,18 @@
+--TEST--
+Bug #74950 (null pointer deref in zim_simplexml_element_getDocNamespaces)
+--EXTENSIONS--
+simplexml
+--SKIPIF--
+<?crx
+if (CRX_INT_SIZE != 8) die("skip this test is for 64bit platforms only");
+?>
+--FILE--
+<?crx
+$xml=new SimpleXMLElement(0,9000000000);var_dump($xml->getDocNamespaces())?>
+?>
+--EXPECTF--
+Fatal error: Uncaught Exception: SimpleXMLElement::__main(): Argument #2 ($options) is invalid in %sbug74950.crx:%d
+Stack trace:
+#0 %sbug74950.crx(%d): SimpleXMLElement->__main('0', 9000000000)
+#1 {main}
+  thrown in %sbug74950.crx on line %d

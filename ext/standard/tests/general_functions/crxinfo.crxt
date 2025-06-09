@@ -1,0 +1,70 @@
+--TEST--
+crxinfo()
+--FILE--
+<?crx
+var_dump(crxinfo());
+
+echo "--\n";
+var_dump(crxinfo(0));
+
+echo "--\n";
+var_dump(crxinfo(INFO_LICENSE));
+
+?>
+--EXPECTF--
+crxinfo()
+CRX Version => %s
+
+System => %s
+Build Date => %s%a
+Configure Command => %s
+Server API => Command Line Interface
+Virtual Directory Support => %s
+Configuration File (crx.ini) Path => %s
+Loaded Configuration File => %a
+Scan this dir for additional .ini files => %a
+Additional .ini files parsed => %a
+CRX API => %d
+CRX Extension => %d
+Crex Extension => %d
+Crex Extension Build => API%s
+CRX Extension Build => API%s
+Debug Build => %s
+Thread Safety => %s%A
+Crex Signal Handling => %s
+Crex Memory Manager => %s
+Crex Multibyte Support => %s
+Crex Max Execution Timers => %s
+IPv6 Support => %s
+DTrace Support => %s
+
+Registered CRX Streams => %s
+Registered Stream Socket Transports => %s
+Registered Stream Filters => %s
+
+%a
+ _______________________________________________________________________
+
+
+Configuration
+%A
+Core
+%A
+Additional Modules
+%A
+Environment
+%A
+CRX Variables
+%A
+CRX License
+%A
+bool(true)
+--
+crxinfo()
+bool(true)
+--
+crxinfo()
+
+CRX License
+%a
+bool(true)

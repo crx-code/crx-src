@@ -1,0 +1,87 @@
+--TEST--
+Crxa::setSupportedSignatures() with hash
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (!in_array("OpenSSL", $arr)) die("skip openssl support required");
+?>
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$p = new Crxa($fname);
+$p['file1.txt'] = 'hi';
+var_dump($p->getSignature());
+$p->setSignatureAlgorithm(Crxa::MD5);
+var_dump($p->getSignature());
+$p->setSignatureAlgorithm(Crxa::SHA1);
+var_dump($p->getSignature());
+try {
+$p->setSignatureAlgorithm(Crxa::SHA256);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+try {
+$p->setSignatureAlgorithm(Crxa::SHA512);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+try {
+$config = __DIR__ . '/files/openssl.cnf';
+$config_arg = array('config' => $config);
+$private = openssl_get_privatekey(file_get_contents(__DIR__ . '/files/private.pem'));
+$pkey = '';
+openssl_pkey_export($private, $pkey, NULL, $config_arg);
+$p->setSignatureAlgorithm(Crxa::OPENSSL, $pkey);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+?>
+--EXPECTF--
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-256"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(3) "MD5"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(5) "SHA-1"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-256"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-512"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "OpenSSL"
+}

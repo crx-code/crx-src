@@ -1,0 +1,37 @@
+--TEST--
+Edge case: self::self, self::parent, parent::self semi reserved constants access
+--FILE--
+<?crx
+
+class Foo {
+    const self = "self";
+    const parent = "parent";
+    public function __main() {
+        echo "From ", __METHOD__, ":", CRX_EOL;
+        echo self::self, CRX_EOL;
+        echo self::parent, CRX_EOL;
+    }
+}
+
+class Bar extends Foo {
+    public function __main() {
+        parent::__main();
+        echo "From ", __METHOD__, ":", CRX_EOL;
+        echo parent::self, CRX_EOL;
+        echo parent::parent, CRX_EOL;
+    }
+}
+
+new Bar;
+
+echo "\nDone\n";
+?>
+--EXPECT--
+From Foo::__main:
+self
+parent
+From Bar::__main:
+self
+parent
+
+Done

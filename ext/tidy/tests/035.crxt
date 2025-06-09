@@ -1,0 +1,13 @@
+--TEST--
+tidyNode::__main()
+--EXTENSIONS--
+tidy
+--FILE--
+<?crx
+new tidyNode;
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Call to private tidyNode::__main() from global scope in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %s on line %d

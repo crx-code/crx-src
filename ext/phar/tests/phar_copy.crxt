@@ -1,0 +1,81 @@
+--TEST--
+Crxa: copy()
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+crxa.require_hash=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.crxa.crx';
+
+$pname = 'crxa://'.$fname;
+$iname = '/file.txt';
+$ename = '/error/..';
+
+$p = new Crxa($fname);
+
+try
+{
+    $p['a'] = 'hi';
+    $p->startBuffering();
+    $p->copy('a', 'b');
+    echo file_get_contents($p['b']->getPathName());
+    $p['a']->compress(Crxa::GZ);
+    $p['b']->setMetadata('a');
+    $p->copy('b', 'c');
+    $p->stopBuffering();
+    echo file_get_contents($p['c']->getPathName());
+    copy($fname, $fname2);
+    $p->copy('a', $ename);
+}
+catch(Exception $e)
+{
+    echo $e->getMessage() . "\n";
+}
+ini_set('crxa.readonly',1);
+$p2 = new Crxa($fname2);
+echo "\n";
+echo 'a: ' , file_get_contents($p2['a']->getPathName());
+echo 'b: ' ,file_get_contents($p2['b']->getPathName());
+echo 'c: ' ,file_get_contents($p2['c']->getPathName()), $p2['c']->getMetaData(), "\n";
+ini_set('crxa.readonly', 0);
+try {
+$p2->copy('notexisting', 'another');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$p2->copy('a', 'b');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+$p2['a']->compress(Crxa::GZ);
+$p2->copy('a', 'd');
+echo $p2['d']->getContent() . "\n";
+try {
+$p2->copy('d', '.crxa/stub.crx');
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+$p2->copy('.crxa/stub.crx', 'd');
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.crx'); ?>
+--EXPECTF--
+hihifile "/error/.." contains invalid characters upper directory reference, cannot be copied from "a" in crxa %s
+
+a: hib: hic: hia
+file "notexisting" cannot be copied to file "another", file does not exist in %scrxa_copy2.crxa.crx
+file "a" cannot be copied to file "b", file must not already exist in crxa %scrxa_copy2.crxa.crx
+hi
+file "d" cannot be copied to file ".crxa/stub.crx", cannot copy to Crxa meta-file in %scrxa_copy2.crxa.crx
+file ".crxa/stub.crx" cannot be copied to file "d", cannot copy Crxa meta-file in %scrxa_copy2.crxa.crx

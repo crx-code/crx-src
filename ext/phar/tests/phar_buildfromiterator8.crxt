@@ -1,0 +1,93 @@
+--TEST--
+Crxa::buildFromIterator() RegexIterator(DirectoryIterator), SplFileInfo as current
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+try {
+    chdir(__DIR__);
+    $crxa = new Crxa(__DIR__ . '/buildfromiterator8.crxa');
+    $a = $crxa->buildFromIterator(new RegexIterator(new DirectoryIterator('.'), '/^\d{0,3}\.crxt\\z|^\.\\z|^\.\.\\z/'), __DIR__ . DIRECTORY_SEPARATOR);
+    asort($a);
+    var_dump($a);
+} catch (Exception $e) {
+    var_dump(get_class($e));
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/buildfromiterator8.crxa');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+array(33) {
+  ["001.crxt"]=>
+  string(%d) "%s001.crxt"
+  ["002.crxt"]=>
+  string(%d) "%s002.crxt"
+  ["003.crxt"]=>
+  string(%d) "%s003.crxt"
+  ["004.crxt"]=>
+  string(%d) "%s004.crxt"
+  ["005.crxt"]=>
+  string(%d) "%s005.crxt"
+  ["006.crxt"]=>
+  string(%d) "%s006.crxt"
+  ["007.crxt"]=>
+  string(%d) "%s007.crxt"
+  ["008.crxt"]=>
+  string(%d) "%s008.crxt"
+  ["009.crxt"]=>
+  string(%d) "%s009.crxt"
+  ["010.crxt"]=>
+  string(%d) "%s010.crxt"
+  ["011.crxt"]=>
+  string(%d) "%s011.crxt"
+  ["012.crxt"]=>
+  string(%d) "%s012.crxt"
+  ["013.crxt"]=>
+  string(%d) "%s013.crxt"
+  ["014.crxt"]=>
+  string(%d) "%s014.crxt"
+  ["015.crxt"]=>
+  string(%d) "%s015.crxt"
+  ["016.crxt"]=>
+  string(%d) "%s016.crxt"
+  ["017.crxt"]=>
+  string(%d) "%s017.crxt"
+  ["018.crxt"]=>
+  string(%d) "%s018.crxt"
+  ["019.crxt"]=>
+  string(%d) "%s019.crxt"
+  ["020.crxt"]=>
+  string(%d) "%s020.crxt"
+  ["021.crxt"]=>
+  string(%d) "%s021.crxt"
+  ["022.crxt"]=>
+  string(%d) "%s022.crxt"
+  ["023.crxt"]=>
+  string(%d) "%s023.crxt"
+  ["024.crxt"]=>
+  string(%d) "%s024.crxt"
+  ["025.crxt"]=>
+  string(%d) "%s025.crxt"
+  ["026.crxt"]=>
+  string(%d) "%s026.crxt"
+  ["027.crxt"]=>
+  string(%d) "%s027.crxt"
+  ["028.crxt"]=>
+  string(%d) "%s028.crxt"
+  ["029.crxt"]=>
+  string(%d) "%s029.crxt"
+  ["030.crxt"]=>
+  string(%d) "%s030.crxt"
+  ["031.crxt"]=>
+  string(%d) "%s031.crxt"
+  ["032.crxt"]=>
+  string(%d) "%s032.crxt"
+  ["033.crxt"]=>
+  string(%d) "%s033.crxt"
+}

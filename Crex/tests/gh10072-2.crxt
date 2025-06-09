@@ -1,0 +1,20 @@
+--TEST--
+GH-10072 (CRX crashes when execute_ex is overridden and a trampoline is used from internal code during shutdown)
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.replace_crex_execute_ex=1
+opcache.jit=disable
+--FILE--
+<?crx
+
+class TrampolineTest {
+    public function __call(string $name, array $arguments) {
+        echo 'Trampoline for ', $name, CRX_EOL;
+    }
+}
+
+register_shutdown_function([new TrampolineTest(), 'shutdown']);
+?>
+--EXPECT--
+Trampoline for shutdown

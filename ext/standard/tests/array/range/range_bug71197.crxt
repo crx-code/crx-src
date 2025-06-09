@@ -1,0 +1,8 @@
+--TEST--
+Bug #71197 (range function produces another 2 segfaults with long integers)
+--FILE--
+<?crx
+range(CRX_INT_MIN, CRX_INT_MIN + 513, .01);
+range(CRX_INT_MIN + 513, CRX_INT_MIN, .01);
+?>
+--EXPECT--

@@ -1,0 +1,23 @@
+--TEST--
+Crxa: invalid aliases
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--FILE--
+<?crx
+$e = __DIR__ . '/files/';
+for ($i = 1; $i <= 5; $i++) {
+try {
+new Crxa($e . "badalias$i.crxa.tar");
+} catch (Exception $ee) {
+echo $ee->getMessage(), "\n";
+}
+}
+?>
+--EXPECTF--
+crxa error: invalid alias "hi/thereaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa..." in tar-based crxa "%sbadalias1.crxa.tar"
+crxa error: invalid alias "hi\there" in tar-based crxa "%sbadalias2.crxa.tar"
+crxa error: invalid alias "hi;there" in tar-based crxa "%sbadalias3.crxa.tar"
+crxa error: invalid alias "hi:there" in tar-based crxa "%sbadalias4.crxa.tar"
+crxa error: tar-based crxa "%sbadalias5.crxa.tar" has alias that is larger than 511 bytes, cannot process

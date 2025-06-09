@@ -1,0 +1,13 @@
+--TEST--
+ZE2 __call() signature check
+--FILE--
+<?crx
+
+class Test {
+    function __call() {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Method Test::__call() must take exactly 2 arguments in %s__call_002.crx on line %d

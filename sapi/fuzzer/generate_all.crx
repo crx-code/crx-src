@@ -1,0 +1,21 @@
+<?crx
+require __DIR__ . '/generate_unserialize_dict.crx';
+require __DIR__ . '/generate_mbstring_dict.crx';
+require __DIR__ . '/generate_unserializehash_corpus.crx';
+require __DIR__ . '/generate_parser_corpus.crx';
+
+require __DIR__ . '/generate_corpus_util.crx';
+
+$baseDir = __DIR__ . '/../..';
+generate_corpus_from_crxt(
+    __DIR__ . '/corpus/execute',
+    ["$baseDir/Crex/tests", "$baseDir/ext/reflection"]
+);
+generate_corpus_from_crxt(
+    __DIR__ . '/corpus/function-jit',
+    ["$baseDir/Crex/tests", "$baseDir/ext/opcache/tests/jit"]
+);
+generate_corpus_from_crxt(
+    __DIR__ . '/corpus/tracing-jit',
+    ["$baseDir/Crex/tests", "$baseDir/ext/opcache/tests/jit"]
+);

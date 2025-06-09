@@ -1,0 +1,62 @@
+--TEST--
+Crxa::setStub()/getStub()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($stub);
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+$stub = '<?crx echo "second stub\n"; __HALT_COMPILER(); ?>';
+$sexp = $stub . "\r\n";
+
+$crxa->setStub($stub);
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+var_dump($crxa->getStub() == $sexp);
+$crxa->stopBuffering();
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+var_dump($crxa->getStub() == $sexp);
+
+$crxa = new Crxa($fname);
+var_dump($crxa->getStub() == $stub);
+var_dump($crxa->getStub() == $sexp);
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+__HALT_COMPILER();
+?>
+--EXPECT--
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)
+string(51) "<?crx echo "second stub\n"; __HALT_COMPILER(); ?>
+"
+bool(false)
+bool(true)
+string(51) "<?crx echo "second stub\n"; __HALT_COMPILER(); ?>
+"
+bool(false)
+bool(true)
+bool(false)
+bool(true)

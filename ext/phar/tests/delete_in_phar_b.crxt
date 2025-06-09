@@ -1,0 +1,44 @@
+--TEST--
+Crxa: delete a file within a .crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+include 'files/crxa_test.inc';
+
+include $pname . '/a.crx';
+include $pname . '/b.crx';
+include $pname . '/b/c.crx';
+unlink($pname . '/b/c.crx');
+?>
+===AFTER===
+<?crx
+include $pname . '/a.crx';
+include $pname . '/b.crx';
+include $pname . '/b/c.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+This is a
+This is b
+This is b/c
+
+Warning: unlink(): crxa error: write operations disabled by the crx.ini setting crxa.readonly in %sdelete_in_crxa_b.crx on line %d
+===AFTER===
+This is a
+This is b
+This is b/c
+

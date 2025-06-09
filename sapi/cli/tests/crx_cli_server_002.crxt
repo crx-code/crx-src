@@ -1,0 +1,20 @@
+--TEST--
+$_SERVER variable
+--INI--
+allow_url_fopen=1
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start('var_dump($_SERVER["DOCUMENT_ROOT"], $_SERVER["SERVER_SOFTWARE"], $_SERVER["SERVER_NAME"], $_SERVER["SERVER_PORT"]);');
+var_dump(file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS));
+?>
+--EXPECTF--
+string(%d) "string(%d) "%scrx_cli_server_002"
+string(%d) "CRX/%s (Development Server)"
+string(%d) "localhost"
+string(%d) "%s"
+"

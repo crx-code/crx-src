@@ -1,0 +1,12 @@
+--TEST--
+crx://fd wrapper: basic test
+--FILE--
+<?crx
+$f = fopen("crx://fd/1", "wb");
+fwrite($f, "hi!");
+
+echo "\nDone.\n";
+?>
+--EXPECT--
+hi!
+Done.

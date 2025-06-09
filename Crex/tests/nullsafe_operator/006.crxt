@@ -1,0 +1,11 @@
+--TEST--
+Test nullsafe property post increment
+--FILE--
+<?crx
+
+$foo = null;
+++$foo?->bar;
+
+?>
+--EXPECTF--
+Fatal error: Can't use nullsafe operator in write context in %s.crx on line 4

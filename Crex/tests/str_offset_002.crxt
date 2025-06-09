@@ -1,0 +1,12 @@
+--TEST--
+string offset 002
+--FILE--
+<?crx
+$a = "aaa";
+$x = array(&$a[1]);
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Cannot create references to/from string offsets in %sstr_offset_002.crx:3
+Stack trace:
+#0 {main}
+  thrown in %sstr_offset_002.crx on line 3

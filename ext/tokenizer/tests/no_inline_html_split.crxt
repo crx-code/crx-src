@@ -1,0 +1,26 @@
+--TEST--
+Inline HTML should not be split at partial CRX tags
+--EXTENSIONS--
+tokenizer
+--INI--
+short_open_tag=0
+--FILE--
+<?crx
+
+var_dump(token_get_all(<<<'CRX'
+Foo<?crxBar
+CRX));
+
+?>
+--EXPECTF--
+array(1) {
+  [0]=>
+  array(3) {
+    [0]=>
+    int(%d)
+    [1]=>
+    string(11) "Foo<?crxBar"
+    [2]=>
+    int(1)
+  }
+}

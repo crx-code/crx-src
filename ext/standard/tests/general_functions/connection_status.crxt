@@ -1,0 +1,10 @@
+--TEST--
+int connection_status ( void );
+--CREDITS--
+marcosptf - <marcosptf@yahoo.com.br> - #crxarty7 - @crxsp - novatec/2015 - sao paulo - br
+--FILE--
+<?crx
+var_dump(connection_status() == CONNECTION_NORMAL);
+?>
+--EXPECT--
+bool(true)

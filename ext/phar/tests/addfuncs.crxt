@@ -1,0 +1,51 @@
+--TEST--
+Crxa: addFile/addFromString
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$crxa = new Crxa($fname);
+$crxa->addFromString('a', 'hi');
+echo file_get_contents($pname . '/a') . "\n";
+$crxa->addFile($pname . '/a', 'b');
+echo file_get_contents($pname . '/b') . "\n";
+try {
+$crxa->addFile($pname . '/a');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa->addFile($pname . '/a', 'a');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa->addFile(__DIR__ . '/does/not/exist');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa->addFile($pname . '/a', '.crxa/stub.crx');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa->addFromString('.crxa/stub.crx', 'hi');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+hi
+hi
+Entry crxa://%saddfuncs.crxa.crx/a does not exist and cannot be created: crxa error: invalid path "crxa://%saddfuncs.crxa.crx/a" contains double slash
+Entry a does not exist and cannot be created: crxa error: file "a" in crxa "%saddfuncs.crxa.crx" cannot be opened for writing, readable file pointers are open
+crxa error: unable to open file "%s/does/not/exist" to add to crxa archive
+Cannot create any files in magic ".crxa" directory
+Cannot create any files in magic ".crxa" directory

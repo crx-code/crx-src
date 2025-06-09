@@ -1,0 +1,53 @@
+--TEST--
+Crxa: create and modify zip-based crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+opcache.validate_timestamps=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$pname = 'crxa://' . $fname;
+
+@unlink($fname);
+
+file_put_contents($pname . '/a.crx', "brand new!\n");
+
+if (function_exists("opcache_get_status")) {
+    $status = opcache_get_status();
+    if (is_array($status) && ($status["opcache_enabled"] || (isset($status["file_cache_only"]) && $status["file_cache_only"]))) {
+        opcache_invalidate($pname . '/a.crx', true);
+        // opcache_invalidate is buggy and doesn't work as expected so we add a
+        // minor delay here.
+        sleep(2);
+    }
+}
+
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+$sig1 = md5_file($fname);
+
+include $pname . '/a.crx';
+
+file_put_contents($pname .'/a.crx', "modified!\n");
+file_put_contents($pname .'/b.crx', "another!\n");
+
+$crxa = new Crxa($fname);
+$sig2 = md5_file($fname);
+
+var_dump($sig1 != $sig2);
+
+include $pname . '/a.crx';
+include $pname . '/b.crx';
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx'); ?>
+--EXPECT--
+bool(true)
+brand new!
+bool(true)
+modified!
+another!

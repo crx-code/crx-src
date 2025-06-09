@@ -1,0 +1,34 @@
+--TEST--
+FPM: Validates arrays in configuration are correctly set - crx_value array must be passed a key
+--SKIPIF--
+<?crx include "skipif.inc"; ?>
+--FILE--
+<?crx
+
+require_once "tester.inc";
+
+$cfg = <<<EOT
+[global]
+error_log = {{FILE:LOG}}
+pid = {{FILE:PID}}
+[unconfined]
+listen = {{ADDR}}
+crx_value[] = E_ALL
+pm = static
+pm.max_children = 5
+EOT;
+
+$tester = new FPM\Tester($cfg);
+$tester->start(['-tt']);
+$tester->expectLogError("\[%s:%d\] You must provide a key for field 'crx_value'");
+
+?>
+Done
+--EXPECT--
+
+Done
+--CLEAN--
+<?crx
+require_once "tester.inc";
+FPM\Tester::clean();
+?>

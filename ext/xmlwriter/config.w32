@@ -1,0 +1,16 @@
+// vim:ft=javascript
+
+ARG_ENABLE("xmlwriter", "XMLWriter support", "yes");
+
+if (CRX_XMLWRITER == "yes" && CRX_LIBXML == "yes") {
+	if (CHECK_HEADER_ADD_INCLUDE('libxml/xmlwriter.h', 'CFLAGS_XMLWRITER', CRX_XMLWRITER + ";" + CRX_CRX_BUILD + "\\include\\libxml2")) {
+		EXTENSION("xmlwriter", "crx_xmlwriter.c");
+		AC_DEFINE("HAVE_XMLWRITER", 1, "XMLWriter support");
+		if (!CRX_XMLWRITER_SHARED) {
+			ADD_FLAG("CFLAGS_XMLWRITER", "/D LIBXML_STATIC");
+		}
+		ADD_EXTENSION_DEP('xmlwriter', 'libxml');
+	} else {
+		WARNING('Could not find xmlwriter.h');
+	}
+}

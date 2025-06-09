@@ -1,0 +1,82 @@
+--TEST--
+Crxa::isWriteable
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.tar';
+$pname = 'crxa://hio';
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include "'.$pname.'/b.crx"; ?>';
+$files['dir/'] = '';
+$hasdir = 1;
+include 'files/crxa_test.inc';
+$a = new Crxa($fname);
+$b = new CrxaData($fname2);
+$b['test'] = 'hi';
+
+var_dump($a['a.crx']->isWritable());
+var_dump($a['a.crx']->isReadable());
+$a['a.crx']->chmod(000);
+var_dump($a['a.crx']->isWritable());
+var_dump($a['a.crx']->isReadable());
+$a['a.crx']->chmod(0666);
+var_dump($a['a.crx']->isWritable());
+var_dump($a['a.crx']->isReadable());
+ini_set('crxa.readonly',1);
+clearstatcache();
+var_dump($a['a.crx']->isWritable());
+var_dump($a['a.crx']->isReadable());
+ini_set('crxa.readonly',0);
+clearstatcache();
+var_dump($a['a.crx']->isWritable());
+var_dump($a['a.crx']->isReadable());
+?>
+archive
+<?crx
+ini_set('crxa.readonly',0);
+$p = new Crxa('doesnotexisthere.crxa');
+var_dump($p->isWritable());
+clearstatcache();
+var_dump($a->isWritable());
+var_dump($b->isWritable());
+ini_set('crxa.readonly',1);
+clearstatcache();
+var_dump($a->isWritable());
+var_dump($b->isWritable());
+chmod($fname2, 000);
+clearstatcache();
+var_dump($a->isWritable());
+var_dump($b->isWritable());
+chmod($fname2, 0666);
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(false)
+bool(false)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+bool(true)
+bool(true)
+archive
+bool(true)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+bool(false)

@@ -1,0 +1,32 @@
+--TEST--
+GH-12675 (MEMORY_LEAK in crxdbg_prompt.c)
+--INI--
+opcache.enable=0
+--CRXDBG--
+ev file_put_contents("gh12675_1.tmp", "<?crx echo 'hi';\necho 2;")
+ev file_put_contents("gh12675_2.tmp", "<?crx echo 'hi';")
+exec nonexistent.crx
+exec gh12675_1.tmp
+exec gh12675_1.tmp
+b gh12675_1.tmp:2
+r
+exec gh12675_2.tmp
+n
+q
+--EXPECTF--
+prompt> 24
+prompt> 16
+prompt> [Cannot stat nonexistent.crx, ensure the file exists]
+prompt> [Set execution context: %sgh12675_1.tmp]
+[Successful compilation of %sgh12675_1.tmp]
+prompt> [Execution context not changed]
+prompt> [Breakpoint #0 added at %sgh12675_1.tmp:2]
+prompt> hi
+[Breakpoint #0 at %sgh12675_1.tmp:2, hits: 1]
+>00002: echo 2;
+prompt> Do you really want to stop execution to set a new execution context? (type y or n): prompt>
+--CLEAN--
+<?crx
+@unlink("gh12675_1.tmp");
+@unlink("gh12675_2.tmp");
+?>

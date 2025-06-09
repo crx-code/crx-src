@@ -1,0 +1,27 @@
+--TEST--
+CLI crx -m
+--SKIPIF--
+<?crx
+include "skipif.inc";
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+
+echo `$crx -n -m`;
+
+echo "Done\n";
+?>
+--EXPECTF--
+[CRX Modules]
+%a
+pcre
+%a
+
+[Crex Modules]
+%aDone

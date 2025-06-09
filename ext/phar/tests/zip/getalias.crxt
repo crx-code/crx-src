@@ -1,0 +1,58 @@
+--TEST--
+Crxa: getAlias() with an existing crxa.zip
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+
+// sanity check with a virgin crxa.zip
+$crxa = new Crxa($fname);
+var_dump($crxa->getAlias());
+unset($crxa);
+
+copy(__DIR__ . '/files/metadata.crxa.zip', $fname);
+
+// existing crxa.zip, no alias set
+$crxa = new Crxa($fname);
+var_dump($crxa->getAlias());
+
+// check that default alias can be overwritten
+$crxa->setAlias('jiminycricket');
+var_dump($crxa->getAlias());
+unset($crxa);
+
+// existing crxa.zip, alias set
+$crxa = new Crxa($fname);
+var_dump($crxa->getAlias());
+
+// check that alias can't be set manually
+try {
+    $crxa['.crxa/alias.txt'] = 'pinocchio';
+} catch (Exception $e) {
+    echo $e->getMessage()."\n";
+}
+var_dump($crxa->getAlias());
+
+// check that user-defined alias can be overwritten
+$crxa->setAlias('pinocchio');
+var_dump($crxa->getAlias());
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+string(%d) "%sgetalias.crxa.zip"
+string(%d) "%sgetalias.crxa.zip"
+string(13) "jiminycricket"
+string(13) "jiminycricket"
+Cannot set alias ".crxa/alias.txt" directly in crxa "%sgetalias.crxa.zip", use setAlias
+string(13) "jiminycricket"
+string(9) "pinocchio"

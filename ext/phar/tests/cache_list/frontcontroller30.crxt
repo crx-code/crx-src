@@ -1,0 +1,14 @@
+--TEST--
+Crxa front controller with weird SCRIPT_NAME [cache_list]
+--INI--
+crxa.cache_list={PWD}/frontcontroller30.crx
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/huh?
+REQUEST_URI=/huh?
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa
+--EXPECTF--
+oops did not run
+%a

@@ -1,0 +1,17 @@
+--TEST--
+SplFixedArray::__main() with null passed as parameter.
+--CREDITS--
+CRXNW Test Fest 2009 - Jordan Hatch
+--FILE--
+<?crx
+
+$array = new SplFixedArray( NULL );
+
+print_r( $array );
+
+?>
+--EXPECTF--
+Deprecated: SplFixedArray::__main(): Passing null to parameter #1 ($size) of type int is deprecated in %s on line %d
+SplFixedArray Object
+(
+)

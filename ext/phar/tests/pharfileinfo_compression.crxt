@@ -1,0 +1,90 @@
+--TEST--
+Crxa: CrxaFileInfo compression-related methods
+--EXTENSIONS--
+crxa
+zlib
+bz2
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+
+$crxa = new Crxa($fname);
+
+$crxa['a/b'] = 'hi there';
+
+$b = $crxa['a/b'];
+
+try {
+$b->isCompressed(25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$b->compress(25);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+$tar = $crxa->convertToData(Crxa::TAR);
+
+$c = $tar['a/b'];
+try {
+$c->compress(Crxa::GZ);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$crxa['a']->compress(Crxa::GZ);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+ini_set('crxa.readonly', 1);
+try {
+$b->compress(Crxa::GZ);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+ini_set('crxa.readonly', 0);
+var_dump($b->compress(Crxa::GZ));
+var_dump($b->compress(Crxa::GZ));
+var_dump($b->compress(Crxa::BZ2));
+var_dump($b->compress(Crxa::BZ2));
+
+echo "decompress\n";
+
+ini_set('crxa.readonly', 1);
+try {
+$crxa['a/b']->decompress();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+ini_set('crxa.readonly', 0);
+try {
+$crxa['a']->decompress();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+var_dump($b->decompress());
+var_dump($b->decompress());
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar'); ?>
+--EXPECT--
+Unknown compression type specified
+Unknown compression type specified
+Cannot compress with Gzip compression, not possible with tar-based crxa archives
+Crxa entry is a directory, cannot set compression
+Crxa is readonly, cannot change compression
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+decompress
+Crxa is readonly, cannot decompress
+Crxa entry is a directory, cannot set compression
+bool(true)
+bool(true)

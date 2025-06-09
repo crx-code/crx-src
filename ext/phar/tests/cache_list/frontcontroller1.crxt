@@ -1,0 +1,21 @@
+--TEST--
+Crxa front controller other
+--INI--
+crxa.cache_list={PWD}/frontcontroller1.crx [cache_list]
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+if (getenv('SKIP_ASAN')) die('xleak LSan crashes for this test');
+?>
+--ENV--
+SCRIPT_NAME=/frontcontroller1.crx
+REQUEST_URI=/frontcontroller1.crx/a.jpg
+PATH_INFO=/a.jpg
+--FILE_EXTERNAL--
+files/frontcontroller.crxa
+--EXPECTHEADERS--
+Content-type: image/jpeg
+Content-length: 3
+--EXPECT--
+hio

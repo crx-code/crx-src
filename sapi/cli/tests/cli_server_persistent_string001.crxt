@@ -1,0 +1,19 @@
+--TEST--
+Close request before server sends a response
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start();
+
+$fd = stream_socket_client("tcp://" . CRX_CLI_SERVER_ADDRESS);
+fwrite($fd, "GET /index.crx HTTP/1.0\r\nHost: hello");
+fclose($fd);
+
+?>
+===DONE===
+--EXPECT--
+===DONE===

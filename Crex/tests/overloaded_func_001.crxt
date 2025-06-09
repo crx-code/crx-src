@@ -1,0 +1,13 @@
+--TEST--
+Overloaded function 001
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+$o = new _CrexTestChildClass();
+var_dump($o->test());
+var_dump(_CrexTestClass::test());
+?>
+--EXPECT--
+string(4) "test"
+string(4) "test"

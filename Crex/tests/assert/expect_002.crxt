@@ -1,0 +1,16 @@
+--TEST--
+test failing assertion
+--INI--
+crex.assertions=1
+assert.exception=1
+--FILE--
+<?crx
+assert(false);
+var_dump(true);
+?>
+--EXPECTF--
+Fatal error: Uncaught AssertionError: assert(false) in %sexpect_002.crx:%d
+Stack trace:
+#0 %sexpect_002.crx(%d): assert(false, 'assert(false)')
+#1 {main}
+  thrown in %sexpect_002.crx on line %d

@@ -1,0 +1,14 @@
+--TEST--
+Crxa: zip with file created from stdin
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/stdin.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: Cannot process zips created from stdin (zero-length filename) in zip-based crxa "%sstdin.zip"

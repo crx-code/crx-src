@@ -1,0 +1,32 @@
+--TEST--
+defining INI options with -d
+--SKIPIF--
+<?crx
+include "skipif.inc";
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+var_dump(`$crx -n -d max_execution_time=111 -r 'var_dump(ini_get("max_execution_time"));'`);
+var_dump(`$crx -n -d max_execution_time=500 -r 'var_dump(ini_get("max_execution_time"));'`);
+var_dump(`$crx -n -d max_execution_time=500 -d max_execution_time=555 -r 'var_dump(ini_get("max_execution_time"));'`);
+var_dump(`$crx -n -d upload_tmp_dir=/test/path -d max_execution_time=555 -r 'var_dump(ini_get("max_execution_time")); var_dump(ini_get("upload_tmp_dir"));'`);
+
+echo "Done\n";
+?>
+--EXPECT--
+string(16) "string(3) "111"
+"
+string(16) "string(3) "500"
+"
+string(16) "string(3) "555"
+"
+string(40) "string(3) "555"
+string(10) "/test/path"
+"
+Done

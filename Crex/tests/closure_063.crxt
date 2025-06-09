@@ -1,0 +1,12 @@
+--TEST--
+Closure::bindTo leaks with "fake" closure
+--FILE--
+<?crx
+function foo(){
+    static $y;
+}
+Closure::fromCallable('foo')->bindTo(new stdClass);
+?>
+DONE
+--EXPECT--
+DONE

@@ -1,0 +1,18 @@
+--TEST--
+Crxa: process zlib-compressed zip alias
+--INI--
+crxa.require_hash=0
+--EXTENSIONS--
+crxa
+zlib
+--FILE--
+<?crx
+try {
+    $a = new Crxa(__DIR__ . '/files/zlib_alias.crxa.zip');
+    var_dump($a->getAlias());
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECT--
+string(175) "hitheresuperlongzipistoostupidtodowhatIsaysoIhavetousethisridiculouslylongaliasbecauseitisstupiddidImentionthatalreadythemadnessdoesnotstopIhateinfozipIhateinfozipIhateinfozip"

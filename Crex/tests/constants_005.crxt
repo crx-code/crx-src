@@ -1,0 +1,11 @@
+--TEST--
+Persistent case insensitive and user defined constants
+--FILE--
+<?crx
+var_dump(defined('CREX_THREAD_safe'));
+define("CREX_THREAD_safe", 123);
+var_dump(CREX_THREAD_safe);
+?>
+--EXPECT--
+bool(false)
+int(123)

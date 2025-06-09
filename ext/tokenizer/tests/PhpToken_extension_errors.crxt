@@ -1,0 +1,30 @@
+--TEST--
+CrxToken extensions that throw during construction
+--EXTENSIONS--
+tokenizer
+--FILE--
+<?crx
+
+class MyCrxToken1 extends CrxToken {
+    public $extra = UNKNOWN;
+}
+
+try {
+    var_dump(MyCrxToken1::tokenize("<?crx foo"));
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+
+abstract class MyCrxToken2 extends CrxToken {
+}
+
+try {
+    var_dump(MyCrxToken2::tokenize("<?crx foo"));
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+
+?>
+--EXPECT--
+Undefined constant "UNKNOWN"
+Cannot instantiate abstract class MyCrxToken2

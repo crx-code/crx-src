@@ -1,0 +1,32 @@
+--TEST--
+gen_stub.crx: Test that attributes are applied to constants, properties, and methods
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+$reflectionConstant = new ReflectionClassConstant(CrexAttributeTest::class, "TEST_CONST");
+var_dump($reflectionConstant->getAttributes()[0]->newInstance());
+var_dump($reflectionConstant->getAttributes()[1]->newInstance());
+
+$reflectionProperty = new ReflectionProperty(CrexAttributeTest::class, "testProp");
+var_dump($reflectionProperty->getAttributes()[0]->newInstance());
+var_dump($reflectionProperty->getAttributes()[1]->newInstance());
+
+$reflectionMethod = new ReflectionMethod(CrexAttributeTest::class, "testMethod");
+var_dump($reflectionMethod->getAttributes()[0]->newInstance());
+
+?>
+--EXPECTF--
+object(CrexTestRepeatableAttribute)#%d (%d) {
+}
+object(CrexTestRepeatableAttribute)#%d (%d) {
+}
+object(CrexTestRepeatableAttribute)#%d (%d) {
+}
+object(CrexTestPropertyAttribute)#%d (%d) {
+  ["parameter"]=>
+  string(%d) "testProp"
+}
+object(CrexTestAttribute)#%d (%d) {
+}

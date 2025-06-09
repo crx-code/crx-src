@@ -1,0 +1,10 @@
+--TEST--
+int connection_aborted ( void );
+--CREDITS--
+marcosptf - <marcosptf@yahoo.com.br> - #crxarty7 - @crxsp - novatec/2015 - sao paulo - br
+--FILE--
+<?crx
+var_dump(connection_aborted());
+?>
+--EXPECT--
+int(0)

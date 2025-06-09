@@ -1,0 +1,23 @@
+--TEST--
+ZE2 A class constructor must keep the signature of base class interfaces
+--FILE--
+<?crx
+interface constr
+{
+    function __main();
+}
+
+abstract class implem implements constr
+{
+}
+
+class derived extends implem
+{
+    function __main($a)
+    {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Declaration of derived::__main($a) must be compatible with constr::__main() in %s on line %d

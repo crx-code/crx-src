@@ -1,0 +1,31 @@
+--TEST--
+Crxa: delete test, zip-based crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$alias = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+$crxa = new Crxa($fname);
+$crxa['a'] = 'a';
+$crxa->setStub($file);
+$crxa->stopBuffering();
+
+echo file_get_contents($alias . '/a') . "\n";
+$crxa->delete('a');
+echo file_get_contents($alias . '/a') . "\n";
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip'); ?>
+--EXPECTF--
+a
+
+Warning: file_get_contents(crxa://%sdelete.crxa.zip/a): Failed to open stream: crxa error: "a" is not a file in crxa "%sdelete.crxa.zip" in %sdelete.crx on line %d

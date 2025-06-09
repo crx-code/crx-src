@@ -1,0 +1,10 @@
+--TEST--
+Test setrawcookie basic functionality
+--CREDITS--
+CRX TestFEst 2017 - CRXDublin, CRXSP - Joao P V Martins <jp.joao@gmail.com>
+--FILE--
+<?crx
+var_dump(setrawcookie('cookie_name', rawurlencode('cookie_content')));
+?>
+--EXPECT--
+bool(true)

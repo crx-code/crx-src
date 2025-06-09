@@ -1,0 +1,15 @@
+--TEST--
+Crxa front controller mime type override, other tar-based
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller14.crxa.crx
+REQUEST_URI=/frontcontroller14.crxa.crx/a.jpg
+PATH_INFO=/a.jpg
+--FILE_EXTERNAL--
+files/frontcontroller8.crxa.tar
+--EXPECTHEADERS--
+Content-type: foo/bar
+Content-length: 4
+--EXPECT--
+hio2

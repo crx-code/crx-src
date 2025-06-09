@@ -1,0 +1,10 @@
+--TEST--
+014: Name conflict and functions (crx name)
+--FILE--
+<?crx
+namespace test\ns1;
+
+echo strlen("Hello"),"\n";
+?>
+--EXPECT--
+5

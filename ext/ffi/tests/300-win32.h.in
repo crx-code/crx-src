@@ -1,0 +1,4 @@
+#define FFI_SCOPE "TEST_300_WIN32"
+#define FFI_LIB "CRX_DLL_NAME"
+
+size_t crx_printf(const char *format, ...);

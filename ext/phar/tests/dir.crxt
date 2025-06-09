@@ -1,0 +1,90 @@
+--TEST--
+Crxa: mkdir/rmdir test
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$pname2 = 'crxa://' . $fname2;
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+$pname3 = 'crxa://' . $fname3;
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+
+$crxa->addEmptyDir('test');
+var_dump($crxa['test']->isDir());
+var_dump($crxa['test/']->isDir());
+copy($fname, $fname2);
+mkdir($pname . '/another/dir/');
+var_dump($crxa['another/dir']->isDir());
+rmdir($pname . '/another/dir/');
+copy($fname, $fname3);
+clearstatcache();
+var_dump(file_exists($pname . '/another/dir/'));
+var_dump(file_exists($pname2 . '/test/'));
+var_dump(file_exists($pname3 . '/another/dir/'));
+ini_set('crxa.readonly', 1);
+mkdir($pname . '/fails');
+ini_set('crxa.readonly', 0);
+// create new crxa by mkdir
+mkdir('crxa://' . __DIR__ . '/ok.crxa/fails');
+mkdir('crxa://' . __DIR__ . '/ok.crxa/fails');
+file_put_contents('crxa://' . __DIR__ . '/ok.crxa/sub/directory.txt', 'hi');
+mkdir('crxa://' . __DIR__ . '/ok.crxa/sub');
+mkdir('crxa://' . __DIR__ . '/ok.crxa/sub/directory.txt');
+file_put_contents(__DIR__ . '/oops.crxa', '<?crx this should screw em up __HALT_COMPILER();');
+mkdir('crxa://' . __DIR__ . '/oops.crxa/fails');
+
+mkdir('crxa://');
+rmdir('crxa://');
+rmdir('crxa://' . __DIR__ . '/unknown.crxa/hi');
+ini_set('crxa.readonly', 1);
+rmdir($pname . '/another/dir');
+ini_set('crxa.readonly', 0);
+rmdir($pname);
+rmdir($pname . '/');
+mkdir($pname . '/');
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/ok.crxa'); ?>
+<?crx unlink(__DIR__ . '/oops.crxa'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx'); ?>
+--EXPECTF--
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+bool(false)
+
+Warning: mkdir(): crxa error: cannot create directory "crxa://%sdir.crxa.crx/fails", write operations disabled in %sdir.crx on line %d
+
+Warning: mkdir(): crxa error: cannot create directory "fails" in crxa "%sok.crxa", directory already exists in %sdir.crx on line %d
+
+Warning: mkdir(): crxa error: cannot create directory "sub" in crxa "%sok.crxa", directory already exists in %sdir.crx on line %d
+
+Warning: mkdir(): crxa error: cannot create directory "sub/directory.txt" in crxa "%sok.crxa", crxa error: path "sub/directory.txt" exists and is a not a directory in %sdir.crx on line %d
+
+Warning: mkdir(): internal corruption of crxa "%soops.crxa" (truncated manifest at stub end) in %sdir.crx on line %d
+
+Warning: mkdir(): crxa error: cannot create directory "crxa://", no crxa archive specified in %sdir.crx on line %d
+
+Warning: rmdir(): crxa error: cannot remove directory "crxa://", no crxa archive specified, or crxa archive does not exist in %sdir.crx on line %d
+
+Warning: rmdir(): crxa error: cannot remove directory "hi" in crxa "%sunknown.crxa", directory does not exist in %sdir.crx on line %d
+
+Warning: rmdir(): crxa error: cannot rmdir directory "crxa://%sdir.crxa.crx/another/dir", write operations disabled in %sdir.crx on line %d
+
+Warning: rmdir(): crxa error: cannot remove directory "" in crxa "%sdir.crxa.crx", directory does not exist in %sdir.crx on line %d
+
+Warning: rmdir(): crxa error: cannot remove directory "" in crxa "%sdir.crxa.crx", directory does not exist in %sdir.crx on line %d
+
+Warning: mkdir(): crxa error: cannot create directory "" in crxa "%sdir.crxa.crx", crxa error: invalid path "" must not be empty in %sdir.crx on line %d

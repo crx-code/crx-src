@@ -1,0 +1,23 @@
+--TEST--
+Bug #70019 Files extracted from archive may be placed outside of destination directory
+--EXTENSIONS--
+crxa
+zlib
+--FILE--
+<?crx
+$dir = __DIR__."/bug70019";
+$crxa = new CrxaData(__DIR__."/bug70019.zip");
+if(!is_dir($dir)) {
+  mkdir($dir);
+}
+$crxa->extractTo($dir);
+var_dump(file_exists("$dir/ThisIsATestFile.txt"));
+?>
+--CLEAN--
+<?crx
+$dir = __DIR__."/bug70019";
+unlink("$dir/ThisIsATestFile.txt");
+rmdir($dir);
+?>
+--EXPECT--
+bool(true)

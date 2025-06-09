@@ -1,0 +1,34 @@
+--TEST--
+Crxa::chmod
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$pname = 'crxa://hio';
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include "'.$pname.'/b.crx"; ?>';
+include 'files/crxa_test.inc';
+try {
+    $a = new Crxa($fname);
+    var_dump($a['a.crx']->isExecutable());
+    $a['a.crx']->chmod(0777);
+    var_dump($a['a.crx']->isExecutable());
+    $a['a.crx']->chmod(0666);
+    var_dump($a['a.crx']->isExecutable());
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx');
+?>
+--EXPECTF--
+bool(false)
+Cannot modify permissions for file "a.crx" in crxa "%s033a.1.crxa.crx", write operations are prohibited

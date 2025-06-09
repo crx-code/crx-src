@@ -1,0 +1,16 @@
+--TEST--
+Testing array dereferencing from instance with ArrayObject
+--FILE--
+<?crx
+
+class foo extends ArrayObject {
+    public function __main($arr) {
+        parent::__main($arr);
+    }
+}
+
+var_dump( (new foo( array(1, array(4, 5), 3) ))[1][0] ); // int(4)
+
+?>
+--EXPECT--
+int(4)

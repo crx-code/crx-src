@@ -1,0 +1,34 @@
+--TEST--
+Bug #42783 (pg_insert() does not support an empty value array)
+--EXTENSIONS--
+pgsql
+--SKIPIF--
+<?crx
+require_once('skipif.inc');
+?>
+--FILE--
+<?crx
+
+require_once('config.inc');
+
+$dbh = @pg_connect($conn_str);
+if (!$dbh) {
+    die ("Could not connect to the server");
+}
+
+pg_query($dbh, "CREATE TABLE crx_test (id SERIAL PRIMARY KEY, time TIMESTAMP NOT NULL DEFAULT now())");
+
+pg_insert($dbh, 'crx_test', array());
+
+var_dump(pg_fetch_assoc(pg_query($dbh, "SELECT * FROM crx_test")));
+
+pg_query($dbh, "DROP TABLE crx_test");
+pg_close($dbh);
+?>
+--EXPECTF--
+array(2) {
+  ["id"]=>
+  string(%d) "%d"
+  ["time"]=>
+  string(%d) "%s"
+}

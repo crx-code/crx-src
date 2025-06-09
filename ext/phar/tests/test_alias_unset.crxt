@@ -1,0 +1,43 @@
+--TEST--
+Crxa: test for the odd case where we intend to remove an archive from memory
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+$pname2 = 'crxa://' . $fname2;
+
+$crxa = new Crxa($fname);
+$crxa->setAlias('first');
+$crxa['file1.txt'] = 'hi';
+unset($crxa);
+
+$crxa2 = new Crxa($fname2);
+$crxa2->setAlias('first'); // this works because there are no references to $fname open
+$crxa2['file1.txt'] = 'hi';
+unset($crxa2);
+
+$a = fopen($pname . '/file1.txt', 'r'); // this works because there are no references to $fname2 open
+try {
+$crxa2 = new Crxa($fname2); // fails because references open to $fname
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+fclose($a);
+$crxa2 = new Crxa($fname2); // succeeds because all refs are closed
+var_dump($crxa2->getAlias());
+
+$a = file_get_contents($pname . '/file1.txt'); // this fails because $fname2 ref exists
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx'); ?>
+--EXPECTF--
+Cannot open archive "%stest_alias_unset.2.crxa.crx", alias is already in use by existing archive
+string(5) "first"
+
+Warning: file_get_contents(crxa://%sfile1.txt): Failed to open stream: Cannot open archive "%stest_alias_unset.crxa.crx", alias is already in use by existing archive in %stest_alias_unset.crx on line %d

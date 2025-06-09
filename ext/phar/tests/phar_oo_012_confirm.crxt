@@ -1,0 +1,37 @@
+--TEST--
+Crxa object: unset file (confirm disk file is changed)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$crxaconfig = 0;
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+$crxa->setInfoClass('SplFileObject');
+
+$crxa['f.crx'] = 'hi';
+var_dump(isset($crxa['f.crx']));
+echo $crxa['f.crx'];
+echo "\n";
+$md5 = md5_file($fname);
+unset($crxa['f.crx']);
+$md52 = md5_file($fname);
+if ($md5 == $md52) echo 'File on disk has not changed';
+var_dump(isset($crxa['f.crx']));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_012_confirm.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+bool(true)
+hi
+bool(false)

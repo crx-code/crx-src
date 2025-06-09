@@ -1,0 +1,45 @@
+--TEST--
+FFI 200: CRX callbacks
+--EXTENSIONS--
+ffi
+--SKIPIF--
+<?crx require_once('utils.inc'); ?>
+<?crx
+try {
+    FFI::cdef("void* crex_write;", ffi_get_crx_dll_name());
+} catch (Throwable $e) {
+    die('skip CRX symbols not available');
+}
+?>
+--INI--
+ffi.enable=1
+opcache.jit=0
+--FILE--
+<?crx
+require_once('utils.inc');
+$crex = FFI::cdef("
+    typedef size_t (*crex_write_func_t)(const char *str, size_t str_length);
+    extern crex_write_func_t crex_write;
+", ffi_get_crx_dll_name());
+
+echo "Hello World!\n";
+
+$orig_crex_write = clone $crex->crex_write;
+$crex->crex_write = function($str, $len) {
+    global $orig_crex_write;
+    $orig_crex_write("{\n\t", 3);
+    $ret = $orig_crex_write($str, $len);
+    $orig_crex_write("}\n", 2);
+    return $ret;
+};
+echo "Hello World!\n";
+$crex->crex_write = $orig_crex_write;
+
+echo "Hello World!\n";
+?>
+--EXPECT--
+Hello World!
+{
+	Hello World!
+}
+Hello World!

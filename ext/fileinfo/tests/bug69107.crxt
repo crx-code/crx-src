@@ -1,0 +1,18 @@
+--TEST--
+Bug #69107 (finfo no longer detects CRX files)
+--EXTENSIONS--
+fileinfo
+--FILE--
+<?crx
+$finfo = new finfo(FILEINFO_MIME_TYPE);
+
+var_dump($finfo->buffer("<?crx\nclass A{}"));
+var_dump($finfo->buffer("<?crx class A{}"));
+var_dump($finfo->buffer("<?crx\tclass A{}"));
+var_dump($finfo->buffer("<?crx\n\rclass A{}"));
+?>
+--EXPECT--
+string(10) "text/x-crx"
+string(10) "text/x-crx"
+string(10) "text/x-crx"
+string(10) "text/x-crx"

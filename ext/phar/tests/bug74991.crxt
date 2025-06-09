@@ -1,0 +1,24 @@
+--TEST--
+Crxa: CRX bug #74991: include_path has a 4096 char (minus "__DIR__:") limit, in some CRXA cases
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+// create a sample file in a custom include_path to lookup from the crxa later:
+mkdir('path');
+touch('path/needle.crx');
+$p = new Crxa('sample.crxa');
+// the use of a sub path is crucial, and make the include_path 1 byte larger (=OVERFLOW) than the MAXPATHLEN, the include_path will then be truncated to 4096 (MAXPATHLEN) into 'crxa://..sample.crxa/some:xx..xx:pat' so it will fail to find needle.crx:
+$p['some/file'] = "<?crx const MAXPATHLEN = 4096, OVERFLOW = 1, PATH = 'path'; set_include_path(str_repeat('x', MAXPATHLEN - strlen(__DIR__ . PATH_SEPARATOR . PATH_SEPARATOR . PATH) + OVERFLOW) . PATH_SEPARATOR . PATH); require('needle.crx');";
+$p->setStub("<?crx Crxa::mapCrxa('sample.crxa'); __HALT_COMPILER();");
+// execute the crxa code:
+require('crxa://sample.crxa/some/file');
+--CLEAN--
+<?crx
+unlink('path/needle.crx');
+unlink('sample.crxa');
+rmdir('path');
+?>
+--EXPECT--

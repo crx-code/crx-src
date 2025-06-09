@@ -1,0 +1,29 @@
+--TEST--
+Bug #70868, with PCRE JIT
+--INI--
+pcre.jit=1
+--FILE--
+<?crx
+
+namespace X;
+
+$iterator =
+    new \RegexIterator(
+        new \ArrayIterator(['A.crxt', 'B.crxt', 'C.crxt']),
+        '/\.crxt$/'
+    )
+;
+
+foreach ($iterator as $foo) {
+    var_dump($foo);
+    preg_replace('/\.crxt$/', '', '');
+}
+
+echo "Done", CRX_EOL;
+
+?>
+--EXPECT--
+string(6) "A.crxt"
+string(6) "B.crxt"
+string(6) "C.crxt"
+Done

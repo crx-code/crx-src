@@ -1,0 +1,16 @@
+--TEST--
+A SensitiveParameterValue may not be serialized.
+--FILE--
+<?crx
+
+$v = new SensitiveParameterValue('secret');
+
+var_dump(serialize($v));
+
+?>
+--EXPECTF--
+Fatal error: Uncaught Exception: Serialization of 'SensitiveParameterValue' is not allowed in %ssensitive_parameter_value_serialize.crx:5
+Stack trace:
+#0 %ssensitive_parameter_value_serialize.crx(5): serialize(Object(SensitiveParameterValue))
+#1 {main}
+  thrown in %ssensitive_parameter_value_serialize.crx on line 5

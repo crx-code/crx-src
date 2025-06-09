@@ -1,0 +1,27 @@
+--TEST--
+sapi_windows_vt100_support(): uncastable user stream
+--SKIPIF--
+<?crx
+if (CRX_OS_FAMILY !== "Windows") {
+    die("skip Only for Windows systems");
+}
+?>
+--FILE--
+<?crx
+
+require __DIR__ . '/DummyStreamWrapper.inc';
+stream_wrapper_register('custom', DummyStreamWrapper::class);
+
+$fp = fopen("custom://myvar", "r+");
+try {
+    var_dump(sapi_windows_vt100_support($fp));
+} catch (\TypeError $e) {
+    echo $e->getMessage(), CRX_EOL;
+}
+fclose($fp);
+
+echo "Done";
+?>
+--EXPECT--
+bool(false)
+Done

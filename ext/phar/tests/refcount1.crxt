@@ -1,0 +1,58 @@
+--TEST--
+Crxa: test that refcounting avoids problems with deleting a file
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a.crx'] = '<?crx echo "This is a\n"; ?>';
+$files['b.crx'] = '<?crx echo "This is b\n"; ?>';
+$files['b/c.crx'] = '<?crx echo "This is b/c\n"; ?>';
+include 'files/crxa_test.inc';
+
+$fp = fopen($pname . '/b/c.crx', 'wb');
+fwrite($fp, "extra");
+fclose($fp);
+echo "===CLOSE===\n";
+$p = new Crxa($fname);
+$b = fopen($pname . '/b/c.crx', 'rb');
+$a = $p['b/c.crx'];
+var_dump($a);
+var_dump(fread($b, 20));
+rewind($b);
+echo "===UNLINK===\n";
+unlink($pname . '/b/c.crx');
+var_dump($a);
+var_dump(fread($b, 20));
+include $pname . '/b/c.crx';
+?>
+
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+===CLOSE===
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.crx/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%d) "c.crx"
+}
+string(5) "extra"
+===UNLINK===
+
+Warning: unlink(): crxa error: "b/c.crx" in crxa "%srefcount1.crxa.crx", has open file pointers, cannot unlink in %srefcount1.crx on line %d
+object(CrxaFileInfo)#%d (2) {
+  [%spathName":%sSplFileInfo":private]=>
+  string(%d) "crxa://%srefcount1.crxa.crx/b/c.crx"
+  [%sfileName":%sSplFileInfo":private]=>
+  string(%s) "c.crx"
+}
+string(5) "extra"
+extra

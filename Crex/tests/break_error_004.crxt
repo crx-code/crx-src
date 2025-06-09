@@ -1,0 +1,12 @@
+--TEST--
+'break' error (wrong level)
+--FILE--
+<?crx
+function foo () {
+    while (1) {
+        break 2;
+    }
+}
+?>
+--EXPECTF--
+Fatal error: Cannot 'break' 2 levels in %sbreak_error_004.crx on line 4

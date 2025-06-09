@@ -1,0 +1,22 @@
+--TEST--
+SPL: Spl File Info test getLinkTarget
+--CREDITS--
+Nataniel McHugh nat@fishtrap.co.uk
+--SKIPIF--
+<?crx
+if (substr(CRX_OS, 0, 3) == 'WIN') die("skip this test not for Windows platforms");
+?>
+--FILE--
+<?crx
+$link = __DIR__ . '/test_link';
+symlink(__FILE__, $link );
+$fileInfo = new SplFileInfo($link);
+
+if ($fileInfo->isLink()) {
+    echo $fileInfo->getLinkTarget() == __FILE__ ? 'same' : 'different',CRX_EOL;
+}
+var_dump(unlink($link));
+?>
+--EXPECT--
+same
+bool(true)

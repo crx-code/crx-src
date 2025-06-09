@@ -1,0 +1,132 @@
+--TEST--
+Observer: Show backtrace on init
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+crex_test.observer.show_init_backtrace=1
+--FILE--
+<?crx
+class TestClass
+{
+    private function bar($number)
+    {
+        return $number + 2;
+    }
+
+    public function foo()
+    {
+        return array_map(function ($value) {
+            return $this->bar($value);
+        }, [40, 1335]);
+    }
+}
+
+function gen()
+{
+    $test = new TestClass();
+    yield $test->foo();
+}
+
+function foo()
+{
+    return gen()->current();
+}
+
+var_dump(foo());
+?>
+--EXPECTF--
+<!-- init '%s%eobserver_backtrace_%d.crx' -->
+<!--
+    {main} %s%eobserver_backtrace_%d.crx
+-->
+<file '%s%eobserver_backtrace_%d.crx'>
+  <!-- init foo() -->
+  <!--
+      foo()
+      {main} %s%eobserver_backtrace_%d.crx
+  -->
+  <foo>
+    <!-- init Generator::current() -->
+    <!--
+        Generator::current()
+        foo()
+        {main} %s%eobserver_backtrace_%d.crx
+    -->
+    <Generator::current>
+      <!-- init gen() -->
+      <!--
+          gen()
+          Generator::current()
+          foo()
+          {main} %s%eobserver_backtrace_%d.crx
+      -->
+      <gen>
+        <!-- init TestClass::foo() -->
+        <!--
+            TestClass::foo()
+            gen()
+            Generator::current()
+            foo()
+            {main} %s%eobserver_backtrace_%d.crx
+        -->
+        <TestClass::foo>
+          <!-- init array_map() -->
+          <!--
+              array_map()
+              TestClass::foo()
+              gen()
+              Generator::current()
+              foo()
+              {main} %s%eobserver_backtrace_%d.crx
+          -->
+          <array_map>
+            <!-- init TestClass::{closure}() -->
+            <!--
+                TestClass::{closure}()
+                array_map()
+                TestClass::foo()
+                gen()
+                Generator::current()
+                foo()
+                {main} %s%eobserver_backtrace_%d.crx
+            -->
+            <TestClass::{closure}>
+              <!-- init TestClass::bar() -->
+              <!--
+                  TestClass::bar()
+                  TestClass::{closure}()
+                  array_map()
+                  TestClass::foo()
+                  gen()
+                  Generator::current()
+                  foo()
+                  {main} %s%eobserver_backtrace_%d.crx
+              -->
+              <TestClass::bar>
+              </TestClass::bar>
+            </TestClass::{closure}>
+            <TestClass::{closure}>
+              <TestClass::bar>
+              </TestClass::bar>
+            </TestClass::{closure}>
+          </array_map>
+        </TestClass::foo>
+      </gen>
+    </Generator::current>
+  </foo>
+  <!-- init var_dump() -->
+  <!--
+      var_dump()
+      {main} %s%eobserver_backtrace_%d.crx
+  -->
+  <var_dump>
+array(2) {
+  [0]=>
+  int(42)
+  [1]=>
+  int(1337)
+}
+  </var_dump>
+</file '%s%eobserver_backtrace_%d.crx'>

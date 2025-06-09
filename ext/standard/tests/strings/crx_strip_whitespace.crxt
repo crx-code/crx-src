@@ -1,0 +1,48 @@
+--TEST--
+crx_strip_whitespace() tests
+--FILE--
+<?crx
+
+$filename = __DIR__."/crx_strip_whitespace.dat";
+
+var_dump(crx_strip_whitespace($filename));
+
+$data = '/* test comment */';
+file_put_contents($filename, $data);
+var_dump(crx_strip_whitespace($filename));
+
+$data = '<?crx /* test comment */ ?>';
+file_put_contents($filename, $data);
+var_dump(crx_strip_whitespace($filename));
+
+$data = '<?crx
+/* test class */
+class test {
+
+    /* function foo () */
+
+    function foo () /* {{{ */
+    {
+
+
+        echo $var; //does not exist
+    }
+    /* }}} */
+
+}
+?>';
+
+file_put_contents($filename, $data);
+var_dump(crx_strip_whitespace($filename));
+
+@unlink($filename);
+echo "Done\n";
+?>
+--EXPECTF--
+Warning: crx_strip_whitespace(%scrx_strip_whitespace.dat): Failed to open stream: No such file or directory in %s on line %d
+string(0) ""
+string(18) "/* test comment */"
+string(9) "<?crx  ?>"
+string(55) "<?crx
+ class test { function foo () { echo $var; } } ?>"
+Done

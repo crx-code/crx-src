@@ -1,0 +1,23 @@
+--TEST--
+Internal constant deprecation
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+var_dump(CREX_TEST_DEPRECATED);
+var_dump(constant('CREX_TEST_DEPRECATED'));
+
+const X = CREX_TEST_DEPRECATED;
+var_dump(X);
+
+?>
+--EXPECTF--
+Deprecated: Constant CREX_TEST_DEPRECATED is deprecated in %s on line %d
+int(42)
+
+Deprecated: Constant CREX_TEST_DEPRECATED is deprecated in %s on line %d
+int(42)
+
+Deprecated: Constant CREX_TEST_DEPRECATED is deprecated in %s on line %d
+int(42)

@@ -1,0 +1,29 @@
+--TEST--
+Crxa object: iterate test with sub-directories and RecursiveIteratorIterator
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+
+$crxa = new Crxa($fname);
+$crxa['top.txt'] = 'hi';
+$crxa['sub/top.txt'] = 'there';
+$crxa['another.file.txt'] = 'wowee';
+$newcrxa = new Crxa($fname);
+foreach (new RecursiveIteratorIterator($newcrxa) as $path => $obj) {
+    var_dump($obj->getPathName());
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+string(%d) "crxa://%scrxa_dir_iterate.crxa.crx%canother.file.txt"
+string(%d) "crxa://%scrxa_dir_iterate.crxa.crx/sub%ctop.txt"
+string(%d) "crxa://%scrxa_dir_iterate.crxa.crx%ctop.txt"

@@ -1,0 +1,98 @@
+--TEST--
+Crxa context
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = '<?crx __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+
+$context = stream_context_create(array('crxa'=> array('compress'=>Crxa::GZ, 'metadata' => array(2, 'hi' => 3))));
+$context2 = stream_context_create(array('crxa' => array('metadata' => array(4))));
+
+file_put_contents($pname . '/a', 'new a', 0); // no compression
+file_put_contents($pname . '/b', 'new b', 0, $context);
+file_put_contents($pname . '/d', 'new d', 0, $context2);
+
+$crxa = new Crxa($fname);
+var_dump(file_get_contents($pname . '/a'));
+var_dump($crxa['a']->isCompressed());
+var_dump($crxa['a']->getMetaData());
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump($crxa['b']->getMetaData());
+var_dump(file_get_contents($pname . '/c'));
+var_dump($crxa['c']->isCompressed());
+var_dump($crxa['c']->getMetaData());
+var_dump(file_get_contents($pname . '/d'));
+var_dump($crxa['d']->isCompressed());
+var_dump($crxa['d']->getMetaData());
+$context2 = stream_context_create(array('crxa' => array('metadata' => array(4))));
+$fp = fopen($pname . '/b', 'r+', 0, $context2);
+fclose($fp);
+?>
+==AFTER==
+<?crx
+var_dump(file_get_contents($pname . '/b'));
+var_dump($crxa['b']->isCompressed());
+var_dump($crxa['b']->getMetaData());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+?>
+--EXPECT--
+string(1) "a"
+bool(false)
+string(1) "b"
+bool(false)
+string(1) "c"
+bool(false)
+string(5) "new a"
+bool(false)
+NULL
+string(5) "new b"
+bool(true)
+array(2) {
+  [0]=>
+  int(2)
+  ["hi"]=>
+  int(3)
+}
+string(1) "c"
+bool(false)
+NULL
+string(5) "new d"
+bool(false)
+array(1) {
+  [0]=>
+  int(4)
+}
+==AFTER==
+string(5) "new b"
+bool(true)
+array(1) {
+  [0]=>
+  int(4)
+}

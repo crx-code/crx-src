@@ -1,0 +1,45 @@
+--TEST--
+Observer: Basic magic method observability
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+--FILE--
+<?crx
+class MagicTest
+{
+    public function __call($name, $args)
+    {
+        echo '__call()' . CRX_EOL;
+        $this->foo($name);
+    }
+
+    public function foo($name)
+    {
+        echo $name . CRX_EOL;
+    }
+}
+
+$test = new MagicTest();
+$test->foo('test');
+$test->bar();
+
+echo 'DONE' . CRX_EOL;
+?>
+--EXPECTF--
+<!-- init '%s%eobserver_magic_01.crx' -->
+<file '%s%eobserver_magic_01.crx'>
+  <!-- init MagicTest::foo() -->
+  <MagicTest::foo>
+test
+  </MagicTest::foo>
+  <!-- init MagicTest::__call() -->
+  <MagicTest::__call>
+__call()
+    <MagicTest::foo>
+bar
+    </MagicTest::foo>
+  </MagicTest::__call>
+DONE
+</file '%s%eobserver_magic_01.crx'>

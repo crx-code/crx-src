@@ -1,0 +1,17 @@
+--TEST--
+$this re-assign
+--FILE--
+<?crx
+function foo() {
+    $a = "this";
+    $$a = 0;
+    var_dump($$a);
+}
+foo();
+?>
+--EXPECTF--
+Fatal error: Uncaught Error: Cannot re-assign $this in %sthis_reassign.crx:4
+Stack trace:
+#0 %sthis_reassign.crx(7): foo()
+#1 {main}
+  thrown in %sthis_reassign.crx on line 4

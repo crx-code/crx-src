@@ -1,0 +1,18 @@
+--TEST--
+Resume terminated fiber
+--FILE--
+<?crx
+
+$fiber = new Fiber(fn() => null);
+
+$fiber->start();
+
+$fiber->resume();
+
+?>
+--EXPECTF--
+Fatal error: Uncaught FiberError: Cannot resume a fiber that is not suspended in %sresume-terminated-fiber.crx:%d
+Stack trace:
+#0 %sresume-terminated-fiber.crx(%d): Fiber->resume()
+#1 {main}
+  thrown in %sresume-terminated-fiber.crx on line %d

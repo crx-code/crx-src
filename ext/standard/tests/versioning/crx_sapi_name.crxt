@@ -1,0 +1,9 @@
+--TEST--
+crx_sapi_name test
+--FILE--
+<?crx
+
+var_dump(crx_sapi_name());
+?>
+--EXPECTF--
+string(3) "c%ci"

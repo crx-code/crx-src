@@ -1,0 +1,38 @@
+--TEST--
+Bug #61679 (Error on non-standard HTTP methods)
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+crx_cli_server_start(<<<'CRX'
+echo "This should never echo";
+CRX
+);
+
+$host = CRX_CLI_SERVER_HOSTNAME;
+$fp = crx_cli_server_connect();
+
+// Send a request with a fictitious request method,
+// I like smurfs, the smurf everything.
+if(fwrite($fp, <<<HEADER
+SMURF / HTTP/1.1
+Host: {$host}
+
+
+HEADER
+)) {
+    while (!feof($fp)) {
+        echo fgets($fp);
+        // Only echo the first line from the response,
+        // the rest is not interesting
+        break;
+    }
+}
+
+fclose($fp);
+?>
+--EXPECT--
+HTTP/1.1 501 Not Implemented

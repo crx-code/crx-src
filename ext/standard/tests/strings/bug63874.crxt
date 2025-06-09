@@ -1,0 +1,16 @@
+--TEST--
+Bug #63874 (Segfault if crx_strip_whitespace has heredoc)
+--FILE--
+<?crx
+echo crx_strip_whitespace(__FILE__);
+
+return <<<A
+a
+A;
+?>
+--EXPECT--
+<?crx
+echo crx_strip_whitespace(__FILE__); return <<<A
+a
+A;
+?>

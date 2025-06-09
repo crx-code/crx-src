@@ -1,0 +1,14 @@
+--TEST--
+Crxa: corrupted zip (central directory offset incorrect)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/cdir_offset.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: corrupted central directory entry, no magic signature in zip-based crxa "%scdir_offset.zip"

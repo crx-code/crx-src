@@ -1,0 +1,16 @@
+--TEST--
+There should be no namespace fallback when using the defined() function
+--FILE--
+<?crx
+
+namespace Foo;
+
+var_dump(\defined('Foo\CRX_INT_MAX'));
+
+$const = 'Foo\CRX_INT_MAX';
+var_dump(\defined($const));
+
+?>
+--EXPECT--
+bool(false)
+bool(false)

@@ -1,0 +1,22 @@
+--TEST--
+GH-8810: Fix reported line number of multi-line new call
+--FILE--
+<?crx
+
+class A {
+    public function __main() {
+        throw new Exception();
+    }
+}
+
+new
+    A
+    ();
+
+?>
+--EXPECTF--
+Fatal error: Uncaught Exception in %s:5
+Stack trace:
+#0 %s(10): A->__main()
+#1 {main}
+  thrown in %s on line 5

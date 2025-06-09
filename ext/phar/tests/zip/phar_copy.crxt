@@ -1,0 +1,54 @@
+--TEST--
+Crxa: copy() zip-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=1
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip.crx';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.crxa.crx';
+
+$pname = 'crxa://'.$fname;
+$iname = '/file.txt';
+$ename = '/error/..';
+
+$p = new Crxa($fname);
+
+try
+{
+    $p['a'] = 'hi';
+    $p->startBuffering();
+    $p->copy('a', 'b');
+    echo file_get_contents($p['b']->getPathName());
+    $p->copy('b', 'c');
+    $p->stopBuffering();
+    echo file_get_contents($p['c']->getPathName());
+    copy($fname, $fname2);
+    var_dump($p->isFileFormat(Crxa::ZIP));
+    $p->copy('a', $ename);
+}
+catch(Exception $e)
+{
+    echo $e->getMessage() . "\n";
+}
+ini_set('crxa.readonly',1);
+$p2 = new Crxa($fname2);
+var_dump($p2->isFileFormat(Crxa::ZIP));
+echo "\n";
+echo 'a: ' , file_get_contents($p2['a']->getPathName());
+echo 'b: ' ,file_get_contents($p2['b']->getPathName());
+echo 'c: ' ,file_get_contents($p2['c']->getPathName());
+?>
+===DONE===
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa.crx'); ?>
+--EXPECTF--
+hihibool(true)
+file "/error/.." contains invalid characters upper directory reference, cannot be copied from "a" in crxa %s
+bool(true)
+
+a: hib: hic: hi===DONE===

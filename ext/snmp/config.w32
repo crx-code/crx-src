@@ -1,0 +1,17 @@
+// vim:ft=javascript
+
+ARG_WITH("snmp", "SNMP support", "no");
+
+if (CRX_SNMP != "no") {
+	if (CHECK_HEADER_ADD_INCLUDE("snmp.h", "CFLAGS_SNMP", CRX_CRX_BUILD + "\\include\\net-snmp;" + CRX_SNMP) &&
+		SETUP_OPENSSL("snmp", CRX_SNMP) > 0) {
+		if (CHECK_LIB("netsnmp.lib", "snmp", CRX_SNMP)) {
+			EXTENSION('snmp', 'snmp.c');
+			AC_DEFINE('HAVE_SNMP', 1);
+		} else {
+			WARNING("snmp not enabled; libraries and headers not found");
+		}
+	} else {
+		WARNING("snmp not enabled; libraries and headers not found");
+	}
+}

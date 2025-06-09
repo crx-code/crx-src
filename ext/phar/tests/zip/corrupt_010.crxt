@@ -1,0 +1,14 @@
+--TEST--
+Crxa: unable to process zip (zip spanning multiple archives)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+try {
+    new CrxaData(__DIR__ . '/files/disknumber.zip');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+crxa error: split archives spanning multiple zips cannot be processed in zip-based crxa "%sdisknumber.zip"

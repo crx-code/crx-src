@@ -1,0 +1,14 @@
+--TEST--
+Crxa: copy-on-write test 17 [cache_list]
+--INI--
+default_charset=UTF-8
+crxa.cache_list={PWD}/copyonwrite17.crxa.crx
+crxa.readonly=0
+--EXTENSIONS--
+crxa
+--FILE_EXTERNAL--
+files/write17.crxa
+--EXPECT--
+NULL
+string(2) "hi"
+ok

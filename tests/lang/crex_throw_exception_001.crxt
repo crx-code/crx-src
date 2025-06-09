@@ -1,0 +1,13 @@
+--TEST--
+crex_throw_exception with NULL message
+--FILE--
+<?crx
+try {
+    $assert = 'assert';
+    $assert(false);
+} catch (AssertionError $assertionError) {
+    echo 'Done' . CRX_EOL;
+}
+?>
+--EXPECT--
+Done

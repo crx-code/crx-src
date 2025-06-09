@@ -1,0 +1,52 @@
+--TEST--
+Crxa object: ArrayAccess and isset
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$crxaconfig = 0;
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+
+var_dump(isset($crxa['a.crx']));
+var_dump(isset($crxa['b.crx']));
+var_dump(isset($crxa['b/c.crx']));
+var_dump(isset($crxa['b/d.crx']));
+var_dump(isset($crxa['e.crx']));
+
+?>
+===DIR===
+<?crx
+var_dump(isset($crxa['b']));
+?>
+===NA===
+<?crx
+var_dump(isset($crxa['a']));
+var_dump(isset($crxa['b/c']));
+var_dump(isset($crxa[12]));
+var_dump(isset($crxa['b']));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_010.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+===DIR===
+bool(true)
+===NA===
+bool(false)
+bool(false)
+bool(false)
+bool(true)

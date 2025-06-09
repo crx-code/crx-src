@@ -1,0 +1,45 @@
+--TEST--
+Crxa: mkdir/rmdir test tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar.crx';
+$pname = 'crxa://' . $fname;
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$pname2 = 'crxa://' . $fname2;
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.crx';
+$pname3 = 'crxa://' . $fname3;
+$crxa = new Crxa($fname);
+var_dump($crxa->isFileFormat(Crxa::TAR));
+
+$crxa->addEmptyDir('test');
+var_dump(isset($crxa['.crxa/stub.crx']));
+var_dump($crxa['test']->isDir());
+var_dump($crxa['test/']->isDir());
+copy($fname, $fname2);
+mkdir($pname . '/another/dir/');
+var_dump($crxa['another/dir']->isDir());
+rmdir($pname . '/another/dir/');
+copy($fname, $fname3);
+clearstatcache();
+var_dump(file_exists($pname . '/another/dir/'));
+var_dump(file_exists($pname2 . '/test/'));
+var_dump(file_exists($pname3 . '/another/dir/'));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx'); ?>
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.crx'); ?>
+--EXPECT--
+bool(true)
+bool(false)
+bool(true)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+bool(false)

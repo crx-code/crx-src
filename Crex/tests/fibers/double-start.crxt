@@ -1,0 +1,20 @@
+--TEST--
+Start on already running fiber
+--FILE--
+<?crx
+
+$fiber = new Fiber(function (): void {
+    Fiber::suspend();
+});
+
+$fiber->start();
+
+$fiber->start();
+
+?>
+--EXPECTF--
+Fatal error: Uncaught FiberError: Cannot start a fiber that has already been started in %sdouble-start.crx:%d
+Stack trace:
+#0 %sdouble-start.crx(%d): Fiber->start()
+#1 {main}
+  thrown in %sdouble-start.crx on line %d

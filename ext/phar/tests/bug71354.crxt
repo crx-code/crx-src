@@ -1,0 +1,13 @@
+--TEST--
+Crxa: bug #71354: Heap corruption in tar/zip/crxa parser.
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$p = new CrxaData(__DIR__."/bug71354.tar");
+var_dump($p['aaaa']->getContent());
+?>
+DONE
+--EXPECT--
+string(0) ""
+DONE

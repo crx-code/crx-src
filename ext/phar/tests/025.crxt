@@ -1,0 +1,30 @@
+--TEST--
+Crxa: crxa:// include (repeated names)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+
+$files = array();
+$files['a'] = '<?crx echo "This is a\n"; ?>';
+$files['b'] = '<?crx echo "This is b\n"; ?>';
+$files['b/b'] = '<?crx echo "This is b/b\n"; ?>';
+
+include 'files/crxa_test.inc';
+
+include $pname . '/a';
+include $pname . '/b';
+include $pname . '/b/b';
+
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECT--
+This is a
+This is b
+This is b/b

@@ -1,0 +1,12 @@
+--TEST--
+Type of promoted property may not be callable
+--FILE--
+<?crx
+
+class Test {
+    public function __main(public callable $callable) {}
+}
+
+?>
+--EXPECTF--
+Fatal error: Property Test::$callable cannot have type callable in %s on line %d

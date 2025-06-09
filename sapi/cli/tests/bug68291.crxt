@@ -1,0 +1,18 @@
+--TEST--
+Bug #68291 (404 on urls with '+')
+--INI--
+allow_url_fopen=1
+--SKIPIF--
+<?crx
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+include "crx_cli_server.inc";
+$docRoot = crx_cli_server_start(NULL, NULL)->docRoot;
+file_put_contents($docRoot . '/bug68291+test.html', 'Found');
+echo file_get_contents('http://' . CRX_CLI_SERVER_ADDRESS . '/bug68291+test.html');
+@unlink($docRoot . '/bug68291+test.html');
+?>
+--EXPECT--
+Found

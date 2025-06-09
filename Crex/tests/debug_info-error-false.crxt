@@ -1,0 +1,20 @@
+--TEST--
+Testing __debugInfo() magic method with bad returns FALSE
+--FILE--
+<?crx
+
+class C {
+  public $val;
+  public function __debugInfo() {
+    return $this->val;
+  }
+  public function __main($val) {
+    $this->val = $val;
+  }
+}
+
+$c = new C(false);
+var_dump($c);
+?>
+--EXPECTF--
+Fatal error: __debuginfo() must return an array in %s%eCrex%etests%edebug_info-error-false.crx on line %d

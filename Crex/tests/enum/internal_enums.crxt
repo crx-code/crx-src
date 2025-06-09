@@ -1,0 +1,96 @@
+--TEST--
+Internal enums
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+
+var_dump($bar = CrexTestUnitEnum::Bar);
+var_dump($bar === CrexTestUnitEnum::Bar);
+var_dump($bar instanceof UnitEnum);
+
+var_dump($foo = crex_get_unit_enum());
+var_dump($foo === CrexTestUnitEnum::Foo);
+
+var_dump(CrexTestUnitEnum::cases());
+echo "\n";
+
+var_dump($foo = CrexTestStringEnum::Foo);
+var_dump($foo instanceof BackedEnum);
+var_dump(CrexTestStringEnum::Foo->value);
+var_dump($bar = CrexTestStringEnum::from("Test2"));
+var_dump($bar === CrexTestStringEnum::Bar);
+var_dump(CrexTestStringEnum::tryFrom("Test3"));
+var_dump(CrexTestStringEnum::tryFrom(42));
+var_dump(CrexTestStringEnum::tryFrom(43));
+var_dump(CrexTestStringEnum::tryFrom(0));
+var_dump(CrexTestStringEnum::cases());
+
+var_dump($s = serialize($foo));
+var_dump(unserialize($s));
+var_dump(unserialize($s) === $foo);
+
+function test_int_enum(int|string $case) {
+    try {
+        var_dump(CrexTestIntEnum::from($case));
+    } catch (\Error $e) {
+        echo get_class($e) . ': ' . $e->getMessage() . "\n";
+    }
+    var_dump(CrexTestIntEnum::tryFrom($case));
+}
+
+test_int_enum(1);
+test_int_enum('1');
+test_int_enum(2);
+test_int_enum('2');
+test_int_enum(-1);
+test_int_enum('-1');
+
+?>
+--EXPECT--
+enum(CrexTestUnitEnum::Bar)
+bool(true)
+bool(true)
+enum(CrexTestUnitEnum::Foo)
+bool(true)
+array(2) {
+  [0]=>
+  enum(CrexTestUnitEnum::Foo)
+  [1]=>
+  enum(CrexTestUnitEnum::Bar)
+}
+
+enum(CrexTestStringEnum::Foo)
+bool(true)
+string(5) "Test1"
+enum(CrexTestStringEnum::Bar)
+bool(true)
+NULL
+enum(CrexTestStringEnum::FortyTwo)
+NULL
+NULL
+array(4) {
+  [0]=>
+  enum(CrexTestStringEnum::Foo)
+  [1]=>
+  enum(CrexTestStringEnum::Bar)
+  [2]=>
+  enum(CrexTestStringEnum::Baz)
+  [3]=>
+  enum(CrexTestStringEnum::FortyTwo)
+}
+string(30) "E:22:"CrexTestStringEnum:Foo";"
+enum(CrexTestStringEnum::Foo)
+bool(true)
+enum(CrexTestIntEnum::Foo)
+enum(CrexTestIntEnum::Foo)
+enum(CrexTestIntEnum::Foo)
+enum(CrexTestIntEnum::Foo)
+ValueError: 2 is not a valid backing value for enum CrexTestIntEnum
+NULL
+ValueError: 2 is not a valid backing value for enum CrexTestIntEnum
+NULL
+enum(CrexTestIntEnum::Baz)
+enum(CrexTestIntEnum::Baz)
+enum(CrexTestIntEnum::Baz)
+enum(CrexTestIntEnum::Baz)

@@ -1,0 +1,39 @@
+--TEST--
+Crxa::mapCrxa invalid file (gzipped file length is too short)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$file = "<?crx __HALT_COMPILER(); ?>";
+// file length is too short
+
+$files = array();
+// "hi" gzdeflated
+$files['a'] = array('cont'=>'a','comp'=> pack('H*', 'cbc80400'),'flags'=>0x00001000, 'ulen' => 1, 'clen' => 4);
+$files['b'] = $files['a'];
+$files['c'] = array('cont'=>'*');
+$files['d'] = $files['a'];
+include 'files/crxa_test.inc';
+
+var_dump(file_get_contents($pname . '/a'));
+var_dump(file_get_contents($pname . '/b'));
+var_dump(file_get_contents($pname . '/c'));
+var_dump(file_get_contents($pname . '/d'));
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+Warning: file_get_contents(crxa://%s/a): Failed to open stream: crxa error: internal corruption of crxa "%s" (actual filesize mismatch on file "a") in %s on line %d
+bool(false)
+
+Warning: file_get_contents(crxa://%s/b): Failed to open stream: crxa error: internal corruption of crxa "%s" (actual filesize mismatch on file "b") in %s on line %d
+bool(false)
+string(1) "*"
+
+Warning: file_get_contents(crxa://%s/d): Failed to open stream: crxa error: internal corruption of crxa "%s" (actual filesize mismatch on file "d") in %s on line %d
+bool(false)

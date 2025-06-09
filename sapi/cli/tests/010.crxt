@@ -1,0 +1,46 @@
+--TEST--
+executing a file with -F
+--SKIPIF--
+<?crx
+include "skipif.inc";
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+$filename = __DIR__."/010.test.crx";
+$filename_escaped = escapeshellarg($filename);
+$filename_txt = __DIR__."/010.test.txt";
+$filename_txt_escaped = escapeshellarg($filename_txt);
+
+$code = '
+<?crx
+var_dump(fread(STDIN, 10));
+?>
+';
+
+file_put_contents($filename, $code);
+
+$txt = '
+test
+hello';
+
+file_put_contents($filename_txt, $txt);
+
+var_dump(`cat $filename_txt_escaped | $crx -n -F $filename_escaped`);
+
+?>
+--CLEAN--
+<?crx
+@unlink(__DIR__."/010.test.crx");
+@unlink(__DIR__."/010.test.txt");
+?>
+--EXPECT--
+string(25) "
+string(10) "test
+hello"
+"

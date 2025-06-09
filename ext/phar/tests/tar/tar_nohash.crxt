@@ -1,0 +1,20 @@
+--TEST--
+Crxa: tar archive, require_hash=1, should not error out
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=1
+crxa.require_hash=1
+--FILE--
+<?crx
+try {
+    $crxa = new CrxaData(__DIR__ . '/files/Net_URL-1.0.15.tgz');
+    var_dump($crxa->getStub());
+} catch (Exception $e) {
+    echo $e->getMessage()."\n";
+}
+
+?>
+--EXPECT--
+string(0) ""

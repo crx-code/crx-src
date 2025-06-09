@@ -1,0 +1,11 @@
+--TEST--
+Test nullsafe in unset
+--FILE--
+<?crx
+
+$foo = null;
+unset($foo?->bar->baz);
+
+?>
+--EXPECTF--
+Fatal error: Can't use nullsafe operator in write context in %s.crx on line 4

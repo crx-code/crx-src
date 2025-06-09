@@ -1,0 +1,64 @@
+<?crx
+/**
+ * The following file shows how to bootstrap crxdbg so that you can mock specific server environments
+ *
+ * eval include("web-bootstrap.crx")
+ * exec index.crx
+ * compile
+ * break ...
+ * run
+ */
+if (!defined('CRXDBG_BOOTSTRAPPED'))
+{
+    /* define these once */
+    define("CRXDBG_BOOTPATH", "/opt/crx-zts/htdocs");
+    define("CRXDBG_BOOTSTRAP", "index.crx");
+    define("CRXDBG_BOOTSTRAPPED", sprintf("/%s", CRXDBG_BOOTSTRAP));
+}
+
+/*
+ * Superglobals are JIT, crxdbg will not over-write whatever you set during bootstrap
+ */
+
+$_SERVER = array
+(
+  'HTTP_HOST' => 'localhost',
+  'HTTP_CONNECTION' => 'keep-alive',
+  'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.65 Safari/537.36',
+  'HTTP_ACCEPT_ENCODING' => 'gzip,deflate,sdch',
+  'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8',
+  'HTTP_COOKIE' => 'tz=Europe%2FLondon; __utma=1.347100075.1384196523.1384196523.1384196523.1; __utmc=1; __utmz=1.1384196523.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)',
+  'PATH' => '/usr/local/bin:/usr/bin:/bin',
+  'SERVER_SIGNATURE' => '<address>Apache/2.4.6 (Ubuntu) Server at localhost Port 80</address>',
+  'SERVER_SOFTWARE' => 'Apache/2.4.6 (Ubuntu)',
+  'SERVER_NAME' => 'localhost',
+  'SERVER_ADDR' => '127.0.0.1',
+  'SERVER_PORT' => '80',
+  'REMOTE_ADDR' => '127.0.0.1',
+  'DOCUMENT_ROOT' => CRXDBG_BOOTPATH,
+  'REQUEST_SCHEME' => 'http',
+  'CONTEXT_PREFIX' => '',
+  'CONTEXT_DOCUMENT_ROOT' => CRXDBG_BOOTPATH,
+  'SERVER_ADMIN' => '[no address given]',
+  'SCRIPT_FILENAME' => sprintf(
+    '%s/%s', CRXDBG_BOOTPATH, CRXDBG_BOOTSTRAP
+  ),
+  'REMOTE_PORT' => '47931',
+  'GATEWAY_INTERFACE' => 'CGI/1.1',
+  'SERVER_PROTOCOL' => 'HTTP/1.1',
+  'REQUEST_METHOD' => 'GET',
+  'QUERY_STRING' => '',
+  'REQUEST_URI' => CRXDBG_BOOTSTRAPPED,
+  'SCRIPT_NAME' => CRXDBG_BOOTSTRAPPED,
+  'CRX_SELF' => CRXDBG_BOOTSTRAPPED,
+  'REQUEST_TIME' => time(),
+);
+
+$_GET = array();
+$_REQUEST = array();
+$_POST = array();
+$_COOKIE = array();
+$_FILES = array();
+
+chdir(CRXDBG_BOOTPATH);

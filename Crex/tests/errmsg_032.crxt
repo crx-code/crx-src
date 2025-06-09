@@ -1,0 +1,15 @@
+--TEST--
+errmsg: __main() cannot be static
+--FILE--
+<?crx
+
+class test {
+
+    static function __main() {
+    }
+}
+
+echo "Done\n";
+?>
+--EXPECTF--
+Fatal error: Method test::__main() cannot be static in %s on line %d

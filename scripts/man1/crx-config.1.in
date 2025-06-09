@@ -1,0 +1,81 @@
+.TH @program_prefix@crx\-config 1 "2023" "The CRX Group" "Scripting Language"
+.SH NAME
+@program_prefix@crx\-config \- get information about CRX configuration and compile options
+.SH SYNOPSIS
+.B @program_prefix@crx\-config
+[options]
+.LP
+.SH DESCRIPTION
+.B @program_prefix@crx\-config
+is a simple shell script for obtaining information about installed CRX configuration.
+.SH OPTIONS
+.TP 15
+.PD 0
+.B \-\-prefix
+Directory prefix where CRX is installed, e.g. /usr/local
+.TP
+.PD 0
+.B \-\-includes
+List of \-I options with all include files
+.TP
+.PD 0
+.B \-\-ldflags
+LD Flags which CRX was compiled with
+.TP
+.PD 0
+.B \-\-libs
+Extra libraries which CRX was compiled with
+.TP
+.PD 0
+.B \-\-man-dir
+The directory prefix where the manpages is installed
+.TP
+.PD 0
+.B \-\-extension-dir
+Directory where extensions are searched by default
+.TP
+.PD 0
+.B \-\-include-dir
+Directory prefix where header files are installed by default
+.TP
+.PD 0
+.B \-\-crx-binary
+Full path to crx CLI or CGI binary
+.TP
+.PD 0
+.B \-\-crx-sapis
+Show all SAPI modules available
+.TP
+.PD 0
+.B \-\-configure-options
+Configure options to recreate configuration of current CRX installation
+.TP
+.PD 0
+.B \-\-version
+CRX version
+.TP
+.PD 0
+.B \-\-vernum
+CRX version as integer
+.RS
+.PD 1
+.P
+.SH SEE ALSO
+.BR @program_prefix@crx (1)
+.SH VERSION INFORMATION
+This manpage describes \fBcrx\fP, version @CRX_VERSION@.
+.SH COPYRIGHT
+Copyright \(co The CRX Group
+.LP
+This source file is subject to version 3.01 of the CRX license,
+that is bundled with this package in the file LICENSE, and is
+available through the world-wide-web at the following url:
+.PD 0
+.P
+.B https://www.crx.net/license/3_01.txt
+.PD 1
+.P
+If you did not receive a copy of the CRX license and are unable to
+obtain it through the world-wide-web, please send a note to
+.B license@crx.net
+so we can mail you a copy immediately.

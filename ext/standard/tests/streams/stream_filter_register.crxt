@@ -1,0 +1,25 @@
+--TEST--
+testing the behavior of stream_filter_register
+--CREDITS--
+Robrecht Plaisier <crx@mcq8.be>
+User Group: CRX-WVL & CRXGent #CRXTestFest
+--FILE--
+<?crx
+class foo extends crx_user_filter {
+  function filter($in, $out, &$consumed, $closing): int {
+  }
+}
+
+class bar extends crx_user_filter {
+  function filter($in, $out, &$consumed, $closing): int {
+  }
+}
+
+var_dump(stream_filter_register("myfilter","foo"));
+var_dump(stream_filter_register("myfilter","bar"));
+var_dump(stream_filter_register("foo","foo"));
+?>
+--EXPECT--
+bool(true)
+bool(false)
+bool(true)

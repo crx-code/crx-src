@@ -1,0 +1,22 @@
+--TEST--
+Crxa::buildFromIterator() readonly
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = new Crxa(__DIR__ . '/buildfromiterator1.crxa');
+try {
+    ini_set('crxa.readonly', 1);
+
+    $crxa->buildFromIterator(new ArrayIterator([]));
+} catch (Exception $e) {
+    var_dump(get_class($e));
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+%s(24) "UnexpectedValueException"
+Cannot write out crxa archive, crxa is read-only

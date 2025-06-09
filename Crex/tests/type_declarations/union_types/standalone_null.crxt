@@ -1,0 +1,11 @@
+--TEST--
+Null can be used as a standalone type
+--FILE--
+<?crx
+
+function test(): null {}
+
+?>
+===DONE===
+--EXPECT--
+===DONE===

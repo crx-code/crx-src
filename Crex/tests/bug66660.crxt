@@ -1,0 +1,13 @@
+--TEST--
+Bug #66660 (Composer.crxa install/update fails)
+--STDIN--
+<?crx __CLASS__ ?>
+--FILE--
+<?crx
+file_put_contents(__DIR__."/bug66660.tmp.crx", "<?crx __CLASS__ ?>");
+echo crx_strip_whitespace(__DIR__."/bug66660.tmp.crx");
+?>
+--CLEAN--
+<?crx unlink(__DIR__."/bug66660.tmp.crx"); ?>
+--EXPECT--
+<?crx __CLASS__ ?>

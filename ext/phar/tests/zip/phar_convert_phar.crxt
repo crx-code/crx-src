@@ -1,0 +1,55 @@
+--TEST--
+Crxa::convertToCrxa() from zip
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '2.crxa';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.3.crxa';
+
+$crxa = new Crxa($fname);
+$crxa['a.txt'] = 'some text';
+$crxa->stopBuffering();
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump(strlen($crxa->getStub()));
+
+$crxa = $crxa->convertToExecutable(Crxa::ZIP);
+var_dump($crxa->isFileFormat(Crxa::ZIP));
+var_dump($crxa->getStub());
+
+$crxa['a'] = 'hi there';
+
+$crxa = $crxa->convertToExecutable(Crxa::CRXA, Crxa::NONE, '.3.crxa');
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump(strlen($crxa->getStub()));
+
+copy($fname3, $fname2);
+
+$crxa = new Crxa($fname2);
+var_dump($crxa->isFileFormat(Crxa::CRXA));
+var_dump(strlen($crxa->getStub()));
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '2.crxa');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.3.crxa');
+__HALT_COMPILER();
+?>
+--EXPECT--
+bool(false)
+int(6641)
+bool(true)
+string(60) "<?crx // zip-based crxa archive stub file
+__HALT_COMPILER();"
+bool(true)
+int(6641)
+bool(true)
+int(6641)

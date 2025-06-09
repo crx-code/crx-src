@@ -1,0 +1,39 @@
+--TEST--
+Crxa: set alias with invalid alias containing / \ : or ;
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+
+$p = new Crxa($fname);
+try {
+    $p->setAlias('hi/');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    $p->setAlias('hi\\l');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+try {
+    $p->setAlias('hil;');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+try {
+    $p->setAlias(':hil');
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
+--EXPECTF--
+Invalid alias "hi/" specified for crxa "%sinvalid_alias.crxa"
+Invalid alias "hi\l" specified for crxa "%sinvalid_alias.crxa"
+Invalid alias "hil;" specified for crxa "%sinvalid_alias.crxa"
+Invalid alias ":hil" specified for crxa "%sinvalid_alias.crxa"

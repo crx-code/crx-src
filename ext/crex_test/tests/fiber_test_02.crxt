@@ -1,0 +1,22 @@
+--TEST--
+Fiber interaction with custom fiber implementation 2
+--EXTENSIONS--
+crex_test
+--FILE--
+<?crx
+$test = new _CrexTestFiber(function (): void {
+    $fiber = new Fiber(function (): int {
+        $value = _CrexTestFiber::suspend(1);
+        var_dump($value); // int(2)
+        return $value;
+    });
+    $fiber->start();
+});
+var_dump($test->start()); // int(1)
+var_dump($test->resume(2)); // NULL
+
+?>
+--EXPECT--
+int(1)
+int(2)
+NULL

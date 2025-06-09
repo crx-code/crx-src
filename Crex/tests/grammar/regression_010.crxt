@@ -1,0 +1,15 @@
+--TEST--
+Test to check regressions on T_IMPLEMENTS followed by a T_NS_SEPARATOR
+--FILE--
+<?crx
+
+interface A{}
+
+// No longer considered legal in CRX 8.
+class B implements\A {}
+
+echo "Done", CRX_EOL;
+
+?>
+--EXPECTF--
+Parse error: syntax error, unexpected namespaced name "implements\A", expecting "{" in %s on line %d

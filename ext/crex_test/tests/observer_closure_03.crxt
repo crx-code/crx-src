@@ -1,0 +1,24 @@
+--TEST--
+Observer: Observability of closures of builtin functions
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.observer.enabled=1
+crex_test.observer.observe_all=1
+--FILE--
+<?crx
+var_dump(strlen(...)('test'));
+echo 'DONE' . CRX_EOL;
+?>
+--EXPECTF--
+<!-- init '%s' -->
+<file '%s'>
+  <!-- init strlen() -->
+  <strlen>
+  </strlen>
+  <!-- init var_dump() -->
+  <var_dump>
+int(4)
+  </var_dump>
+DONE
+</file '%s'>

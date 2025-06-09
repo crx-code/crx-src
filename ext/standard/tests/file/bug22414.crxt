@@ -1,0 +1,41 @@
+--TEST--
+Bug #22414 (passthru() does not read data correctly)
+--SKIPIF--
+<?crx
+if (getenv("SKIP_SLOW_TESTS")) die('skip slow test');
+?>
+--INI--
+output_handler=
+--FILE--
+<?crx
+
+    $crx = getenv('TEST_CRX_EXECUTABLE');
+    $crx_escaped = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+    $tmpfile = tempnam(__DIR__, 'crxt');
+    $args = ' -n ';
+
+    /* Regular Data Test */
+    passthru($crx_escaped . $args . ' -r " echo \"HELLO\"; "');
+
+    echo "\n";
+
+    /* Binary Data Test */
+    $cmd = $crx_escaped . $args . ' -r ' . escapeshellarg("readfile(@getenv('TEST_CRX_EXECUTABLE'));");
+    if (substr(CRX_OS, 0, 3) != 'WIN') {
+        $cmd = $crx_escaped . $args . ' -r ' . escapeshellarg('passthru("'.$cmd.'");') . ' > '.escapeshellarg($tmpfile);
+    } else {
+        $cmd = $crx_escaped . $args . ' -r ' . "\"passthru('".addslashes($cmd)."');\"" . ' > '.escapeshellarg($tmpfile);
+    }
+    exec($cmd);
+
+    if (md5_file($crx) == md5_file($tmpfile)) {
+        echo "Works\n";
+    } else {
+        echo "Does not work\n";
+    }
+
+    @unlink($tmpfile);
+?>
+--EXPECT--
+HELLO
+Works

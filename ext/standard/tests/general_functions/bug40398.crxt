@@ -1,0 +1,89 @@
+--TEST--
+Bug #40398 (parent and self callback functions erroneously called statically)
+--FILE--
+<?crx
+
+class Base
+{
+    function __main($msg)
+    {
+        echo __METHOD__ . "($msg)\n";
+    }
+}
+
+class Derived_1 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array(array($this, 'Base::__main'), $args);
+    }
+}
+
+class Derived_2 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array(array($this, 'parent::__main'), $args);
+    }
+}
+
+class Derived_3 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array('Base::__main', $args);
+    }
+}
+
+class Derived_4 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array('parent::__main', $args);
+    }
+}
+
+class Derived_5 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array(array('Base', '__main'), $args);
+    }
+}
+
+class Derived_6 extends Base
+{
+    public function __main()
+    {
+        $args = func_get_args();
+        call_user_func_array(array('parent', '__main'), $args);
+    }
+}
+
+new Derived_1('1');
+new Derived_2('2');
+new Derived_3('3');
+new Derived_4('4');
+new Derived_5('5');
+new Derived_6('6');
+
+?>
+--EXPECTF--
+Deprecated: Callables of the form ["Derived_1", "Base::__main"] are deprecated in %s on line %d
+Base::__main(1)
+
+Deprecated: Callables of the form ["Derived_2", "parent::__main"] are deprecated in %s on line %d
+Base::__main(2)
+Base::__main(3)
+
+Deprecated: Use of "parent" in callables is deprecated in %s on line %d
+Base::__main(4)
+Base::__main(5)
+
+Deprecated: Use of "parent" in callables is deprecated in %s on line %d
+Base::__main(6)

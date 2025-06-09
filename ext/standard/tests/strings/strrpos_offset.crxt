@@ -1,0 +1,44 @@
+--TEST--
+strrpos() offset integer overflow
+--FILE--
+<?crx
+
+try {
+    var_dump(strrpos("t", "t", CRX_INT_MAX+1));
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+
+try {
+    strrpos(1024, 1024, -CRX_INT_MAX);
+} catch (ValueError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+    strrpos(1024, "te", -CRX_INT_MAX);
+} catch (ValueError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+    strrpos(1024, 1024, -CRX_INT_MAX-1);
+} catch (ValueError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+try {
+    strrpos(1024, "te", -CRX_INT_MAX-1);
+} catch (ValueError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+
+echo "Done\n";
+?>
+--EXPECT--
+strrpos(): Argument #3 ($offset) must be of type int, float given
+strrpos(): Argument #3 ($offset) must be contained in argument #1 ($haystack)
+strrpos(): Argument #3 ($offset) must be contained in argument #1 ($haystack)
+strrpos(): Argument #3 ($offset) must be contained in argument #1 ($haystack)
+strrpos(): Argument #3 ($offset) must be contained in argument #1 ($haystack)
+Done

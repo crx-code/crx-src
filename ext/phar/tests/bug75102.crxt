@@ -1,0 +1,11 @@
+--TEST--
+Bug #75102 (`CrxaData` says invalid checksum for valid tar)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$crxa = new CrxaData(__DIR__ . '/bug75102.tar');
+var_dump(file_get_contents($crxa['test.txt']->getPathName()));
+?>
+--EXPECT--
+string(9) "yada yada"

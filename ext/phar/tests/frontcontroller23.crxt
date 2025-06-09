@@ -1,0 +1,17 @@
+--TEST--
+Crxa front controller with generic action router test
+--INI--
+default_charset=UTF-8
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller23.crx
+REQUEST_URI=/frontcontroller23.crx/hi/there
+PATH_INFO=/hi/there
+--FILE_EXTERNAL--
+files/frontcontroller14.crxa
+--EXPECTHEADERS--
+Content-type: text/html; charset=UTF-8
+--EXPECTF--
+string(9) "/hi/there"
+string(%d) "crxa://%sfrontcontroller23.crx/html/index.crx"

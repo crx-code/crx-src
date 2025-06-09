@@ -1,0 +1,12 @@
+--TEST--
+Test return nullsafe as ref
+--FILE--
+<?crx
+
+function &get_bar_ref($foo) {
+    return $foo?->bar;
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot take reference of a nullsafe chain in %s.crx on line 4

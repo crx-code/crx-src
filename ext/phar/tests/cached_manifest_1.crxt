@@ -1,0 +1,34 @@
+--TEST--
+Crxa: crxa.cache_list basic read test
+--EXTENSIONS--
+crxa
+--INI--
+crxa.cache_list={PWD}/files/nocrxa.crxa
+--FILE--
+<?crx
+$pname = 'crxa://' . dirname(__FILE__) . '/files/nocrxa.crxa';
+var_dump(file_get_contents($pname . '/b/c.crx'));
+$a = opendir($pname);
+while (false !== ($b = readdir($a))) {
+var_dump($b);
+}
+foreach (new RecursiveIteratorIterator(new Crxa($pname)) as $f) {
+    var_dump($f->getPathName());
+}
+var_dump(is_dir($pname . '/b'));
+var_dump(is_dir($pname . '/d'));
+var_dump(is_dir($pname . '/b/c.crx'));
+?>
+--EXPECTF--
+string(131) "<?crx echo "in b\n";$a = fopen("index.crx", "r", true);echo stream_get_contents($a);fclose($a);include dirname(__FILE__) . "/../d";"
+string(1) "b"
+string(1) "d"
+string(9) "index.crx"
+string(7) "web.crx"
+string(%d) "crxa://%snocrxa.crxa/b%cc.crx"
+string(%d) "crxa://%snocrxa.crxa%cd"
+string(%d) "crxa://%snocrxa.crxa%cindex.crx"
+string(%d) "crxa://%snocrxa.crxa%cweb.crx"
+bool(true)
+bool(false)
+bool(false)

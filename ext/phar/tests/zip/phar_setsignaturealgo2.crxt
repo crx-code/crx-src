@@ -1,0 +1,113 @@
+--TEST--
+Crxa::setSupportedSignatures() with hash, zip-based
+--EXTENSIONS--
+crxa
+--SKIPIF--
+<?crx
+$arr = Crxa::getSupportedSignatures();
+if (!in_array("OpenSSL", $arr)) die("skip openssl support required");
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.2.crxa.zip';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.3.crxa.zip';
+$fname4 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.4.crxa.zip';
+$fname5 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.5.crxa.zip';
+$fname6 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.6.crxa.zip';
+$p = new Crxa($fname);
+$p['file1.txt'] = 'hi';
+var_dump($p->getSignature());
+$p->setSignatureAlgorithm(Crxa::MD5);
+
+copy($fname, $fname2);
+$p = new Crxa($fname2);
+var_dump($p->getSignature());
+
+$p->setSignatureAlgorithm(Crxa::SHA1);
+
+copy($fname2, $fname3);
+$p = new Crxa($fname3);
+var_dump($p->getSignature());
+
+try {
+$p->setSignatureAlgorithm(Crxa::SHA256);
+copy($fname3, $fname4);
+$p = new Crxa($fname4);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+try {
+$p->setSignatureAlgorithm(Crxa::SHA512);
+copy($fname4, $fname5);
+$p = new Crxa($fname5);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+try {
+$config = __DIR__ . '/../files/openssl.cnf';
+$config_arg = array('config' => $config);
+$keys=openssl_pkey_new($config_arg);
+openssl_pkey_export($keys, $privkey, NULL, $config_arg);
+$pubkey=openssl_pkey_get_details($keys);
+$p->setSignatureAlgorithm(Crxa::OPENSSL, $privkey);
+
+copy($fname5, $fname6);
+file_put_contents($fname6 . '.pubkey', $pubkey['key']);
+$p = new Crxa($fname6);
+var_dump($p->getSignature());
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.2.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.3.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.4.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.5.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.6.crxa.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.6.crxa.zip.pubkey');
+?>
+--EXPECTF--
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-256"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(3) "MD5"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(5) "SHA-1"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-256"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "SHA-512"
+}
+array(2) {
+  ["hash"]=>
+  string(%d) "%s"
+  ["hash_type"]=>
+  string(7) "OpenSSL"
+}

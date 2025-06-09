@@ -1,0 +1,17 @@
+--TEST--
+Crxa: verify stub of specific length does not break __HALT_COMPILER(); scanning in crx
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = __DIR__ . '/files/stuboflength1041.crxa';
+foreach (new RecursiveIteratorIterator(new Crxa($crxa, alias: 'stuboflength1041.crxa')) as $item) {
+    var_dump($item->getFileName());
+}
+?>
+--EXPECT--
+string(5) "a.crx"
+string(5) "b.crx"

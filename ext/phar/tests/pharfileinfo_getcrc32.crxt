@@ -1,0 +1,47 @@
+--TEST--
+Crxa: CrxaFileInfo::getCRC32
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa';
+$pname = 'crxa://' . $fname;
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+
+// compressed file length does not match incompressed length for an uncompressed file
+
+$files = array();
+$files['a/subdir/here'] = array('cont'=>'a','ulen'=>1,'clen'=>1);
+include 'files/crxa_test.inc';
+
+$b = new CrxaFileInfo($pname . '/a/subdir');
+try {
+var_dump($b->getCRC32());
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+
+$b = new CrxaFileInfo($pname . '/a/subdir/here');
+try {
+var_dump($b->getCRC32());
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+$a = file_get_contents($pname . '/a/subdir/here');
+try {
+var_dump($b->getCRC32());
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa'); ?>
+--EXPECTF--
+Crxa entry is a directory, does not have a CRC
+Crxa entry was not CRC checked
+int(%s)

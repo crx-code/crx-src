@@ -1,0 +1,36 @@
+--TEST--
+CLI crx -i
+--SKIPIF--
+<?crx
+include "skipif.inc";
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+?>
+--FILE--
+<?crx
+
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+
+
+echo `$crx -n -i`;
+
+echo "\nDone\n";
+?>
+--EXPECTF--
+crxinfo()
+CRX Version => %s
+%a
+CRX License
+This program is free software; you can redistribute it and/or modify
+it under the terms of the CRX License as published by the CRX Group
+and included in the distribution in the file:  LICENSE
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+If you did not receive a copy of the CRX license, or have any
+questions about CRX licensing, please contact license@crx.net.
+
+Done

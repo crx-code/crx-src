@@ -1,0 +1,13 @@
+--TEST--
+Test ini setting with invalid quantity
+--EXTENSIONS--
+crex_test
+--INI--
+crex_test.quantity_value=1MB
+--FILE--
+<?crx
+
+var_dump(ini_get("crex_test.quantity_value"));
+--EXPECTF--
+Warning: Invalid "crex_test.quantity_value" setting. Invalid quantity "1MB": unknown multiplier "B", interpreting as "1" for backwards compatibility in %s on line %d
+string(3) "1MB"

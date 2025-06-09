@@ -1,0 +1,12 @@
+--TEST--
+crx://fd wrapper: mode is ignored
+--FILE--
+<?crx
+$f = fopen("crx://fd/1", "rkkk");
+fwrite($f, "hi!");
+
+echo "\nDone.\n";
+?>
+--EXPECT--
+hi!
+Done.

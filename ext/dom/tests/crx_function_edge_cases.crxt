@@ -1,0 +1,27 @@
+--TEST--
+crx:function() edge cases
+--EXTENSIONS--
+dom
+--FILE--
+<?crx
+
+$doc = new DOMDocument();
+$doc->loadHTML('<a href="https://crx.net">hello</a>');
+$xpath = new DOMXpath($doc);
+$xpath->registerNamespace("crx", "http://crx.net/xpath");
+$xpath->registerCRXFunctions();
+try {
+    $xpath->query("//a[crx:function(3)]");
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $xpath->query("//a[crx:function()]");
+} catch (Throwable $e) {
+    echo $e->getMessage(), "\n";
+}
+
+?>
+--EXPECT--
+Handler name must be a string
+Function name must be passed as the first argument

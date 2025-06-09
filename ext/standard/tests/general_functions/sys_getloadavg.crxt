@@ -1,0 +1,23 @@
+--TEST--
+sys_getloadavg() tests
+--SKIPIF--
+<?crx
+if (!function_exists("sys_getloadavg")) die("skip");
+?>
+--FILE--
+<?crx
+
+var_dump(sys_getloadavg());
+
+echo "Done\n";
+?>
+--EXPECTF--
+array(3) {
+  [0]=>
+  float(%f)
+  [1]=>
+  float(%f)
+  [2]=>
+  float(%f)
+}
+Done

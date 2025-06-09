@@ -1,0 +1,38 @@
+--TEST--
+Crxa::setStub()/stopBuffering()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$p = new Crxa(__DIR__ . '/crxa_commitwrite.crxa', 0, 'crxa_commitwrite.crxa');
+$p['file1.txt'] = 'hi';
+$p->stopBuffering();
+var_dump(strlen($p->getStub()));
+$p->setStub("<?crx
+spl_autoload_register(function(\$class) {
+    include 'crxa://' . str_replace('_', '/', \$class);
+});
+Crxa::mapCrxa('crxa_commitwrite.crxa');
+include 'crxa://crxa_commitwrite.crxa/startup.crx';
+__HALT_COMPILER();
+?>");
+var_dump($p->getStub());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/crxa_commitwrite.crxa');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+int(6641)
+string(%d) "<?crx
+spl_autoload_register(function($class) {
+    include 'crxa://' . str_replace('_', '/', $class);
+});
+Crxa::mapCrxa('crxa_commitwrite.crxa');
+include 'crxa://crxa_commitwrite.crxa/startup.crx';
+__HALT_COMPILER(); ?>
+"

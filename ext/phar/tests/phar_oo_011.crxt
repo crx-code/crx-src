@@ -1,0 +1,33 @@
+--TEST--
+Crxa object: add file
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+
+$crxaconfig = 0;
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+$crxa->setInfoClass('SplFileObject');
+
+$crxa['hi/f.crx'] = 'hi';
+var_dump(isset($crxa['hi']));
+var_dump(isset($crxa['hi/f.crx']));
+echo $crxa['hi/f.crx'];
+echo "\n";
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_011.crxa.crx');
+__halt_compiler();
+?>
+--EXPECT--
+bool(true)
+bool(true)
+hi

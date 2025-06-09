@@ -1,0 +1,12 @@
+--TEST--
+Bug #49192 (CRX crashes when GC invoked on COM object)
+--EXTENSIONS--
+com_dotnet
+--FILE--
+<?crx
+
+$dbConnection = new Com('ADODB.Connection');
+var_dump(gc_collect_cycles());
+?>
+--EXPECT--
+int(0)

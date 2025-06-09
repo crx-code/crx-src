@@ -1,0 +1,74 @@
+--TEST--
+A SensitiveParameterValue keeps inner objects alive.
+--FILE--
+<?crx
+
+class CustomDestructor
+{
+  public function __main(private int $id)
+  {
+    echo __METHOD__, " - ", $this->id, CRX_EOL;
+  }
+
+  public function __destruct()
+  {
+    echo __METHOD__, " - ", $this->id, CRX_EOL;
+  }
+
+  public function getId(): int
+  {
+    return $this->id;
+  }
+}
+
+function test(#[SensitiveParameter] CustomDestructor $o, bool $throw)
+{
+  if ($throw) {
+    throw new Exception('Error');
+  }
+}
+
+function wrapper(int $id, bool $throw)
+{
+  $o = new CustomDestructor($id);
+  test($o, $throw);
+}
+
+function main(): SensitiveParameterValue
+{
+  try {
+    echo "Before 1", CRX_EOL;
+    wrapper(1, false);
+    echo "After 1", CRX_EOL;
+    echo "Before 2", CRX_EOL;
+    wrapper(2, true);
+    echo "Not Reached: After 2", CRX_EOL;
+  } catch (Exception $e) {
+    echo "catch", CRX_EOL;
+    return $e->getTrace()[0]['args'][0];
+  }
+}
+
+$v = main();
+
+var_dump($v->getValue()->getId());
+
+echo "Before unset", CRX_EOL;
+
+unset($v);
+
+echo "After unset", CRX_EOL;
+
+?>
+--EXPECT--
+Before 1
+CustomDestructor::__main - 1
+CustomDestructor::__destruct - 1
+After 1
+Before 2
+CustomDestructor::__main - 2
+catch
+int(2)
+Before unset
+CustomDestructor::__destruct - 2
+After unset

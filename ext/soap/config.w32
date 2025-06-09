@@ -1,0 +1,21 @@
+// vim:ft=javascript
+
+ARG_ENABLE("soap", "SOAP support", "no");
+
+if (CRX_SOAP != "no") {
+	if (CRX_LIBXML == "yes" &&
+		ADD_EXTENSION_DEP('soap', 'libxml') &&
+		CHECK_HEADER_ADD_INCLUDE("libxml/parser.h", "CFLAGS_SOAP", CRX_CRX_BUILD + "\\include\\libxml2") &&
+		CHECK_HEADER_ADD_INCLUDE("libxml/tree.h", "CFLAGS_SOAP", CRX_CRX_BUILD + "\\include\\libxml2")
+		) {
+		EXTENSION('soap', 'soap.c crx_encoding.c crx_http.c crx_packet_soap.c crx_schema.c crx_sdl.c crx_xml.c', null, "/DCREX_ENABLE_STATIC_TSRMLS_CACHE=1");
+		AC_DEFINE('HAVE_CRX_SOAP', 1, "SOAP support");
+
+		if (!CRX_SOAP_SHARED) {
+			ADD_FLAG('CFLAGS_SOAP', "/D LIBXML_STATIC ");
+		}
+	} else {
+			WARNING("soap not enabled, libxml not found");
+			CRX_SOAP = "no"
+	}
+}

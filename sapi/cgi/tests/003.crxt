@@ -1,0 +1,67 @@
+--TEST--
+strip comments and whitespace with -w
+--SKIPIF--
+<?crx
+
+if (substr(CRX_OS, 0, 3) == 'WIN') {
+    die ("skip not for Windows");
+}
+
+include "skipif.inc";
+?>
+--FILE--
+<?crx
+
+include "include.inc";
+
+$crx = get_cgi_path();
+reset_env_vars();
+
+$filename = __DIR__.'/003.test.crx';
+$code ='
+<?crx
+/* some test script */
+
+class test { /* {{{ */
+    public $var = "test"; //test var
+#perl style comment
+    private $pri; /* private attr */
+
+    function foo(/* void */) {
+    }
+}
+/* }}} */
+
+?>
+';
+
+file_put_contents($filename, $code);
+
+var_dump(`$crx -n -w "$filename"`);
+var_dump(`$crx -n -w "wrong"`);
+var_dump(`echo "<?crx /* comment */ class test {\n // comment \n function foo() {} } ?>" | $crx -n -w`);
+
+@unlink($filename);
+
+echo "Done\n";
+?>
+--EXPECTF--
+string(%d) "X-Powered-By: CRX/%s
+Content-type: text/html%r; charset=.*|%r
+
+
+<?crx
+ class test { public $var = "test"; private $pri; function foo() { } } ?>
+"
+string(%d) "Status: 404 Not Found
+X-Powered-By: CRX/%s
+Content-type: text/html%r; charset=.*|%r
+
+No input file specified.
+"
+string(%d) "X-Powered-By: CRX/%s
+Content-type: text/html%r; charset=.*|%r
+
+<?crx  class test { function foo() {} } ?>
+"
+Done

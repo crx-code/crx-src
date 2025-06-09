@@ -1,0 +1,13 @@
+--TEST--
+date_get_last_errors() return false
+--CREDITS--
+"Anna Filina" <afilina@crxquebec.org>
+#CRXTestFest2009 2009-05-02
+--INI--
+date.timezone=UTC
+--FILE--
+<?crx
+var_dump(date_get_last_errors()); // no date was parsed, so no errors
+?>
+--EXPECT--
+bool(false)

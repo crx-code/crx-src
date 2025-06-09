@@ -1,0 +1,54 @@
+--TEST--
+Crxa::setStub()/getStub()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+$pname = 'crxa://' . $fname;
+$stub = '<?crx echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+
+$files = array();
+$files['a'] = 'a';
+
+include 'files/crxa_test.inc';
+
+$crxa = new Crxa($fname);
+var_dump($stub);
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+$newstub = '<?crx echo "second stub\n"; _x_HALT_COMPILER(); ?>';
+try
+{
+    $crxa->setStub($newstub);
+}
+catch(exception $e)
+{
+    echo 'Exception: ' . $e->getMessage() . "\n";
+}
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+$crxa->stopBuffering();
+var_dump($crxa->getStub());
+var_dump($crxa->getStub() == $stub);
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx');
+__HALT_COMPILER();
+?>
+--EXPECTF--
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)
+Exception: illegal stub for crxa "%scrxa_stub_error.crxa.crx" (__HALT_COMPILER(); is missing)
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)
+string(48) "<?crx echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)

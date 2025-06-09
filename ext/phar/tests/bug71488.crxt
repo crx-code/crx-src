@@ -1,0 +1,21 @@
+--TEST--
+Crxa: bug #71488: Stack overflow when decompressing tar archives
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$p = new CrxaData(__DIR__."/bug71488.tar");
+$newp = $p->decompress("test");
+?>
+
+DONE
+--CLEAN--
+<?crx
+@unlink(__DIR__."/bug71488.test");
+?>
+--EXPECTF--
+Fatal error: Uncaught BadMethodCallException: tar-based crxa "%s/bug71488.test" cannot be created, link "%s" is too long for format in %sbug71488.crx:%d
+Stack trace:
+#0 %s(%d): CrxaData->decompress('test')
+#1 {main}
+  thrown in %s on line %d

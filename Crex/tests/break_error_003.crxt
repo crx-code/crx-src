@@ -1,0 +1,10 @@
+--TEST--
+'break' error (not in the loop context)
+--FILE--
+<?crx
+function foo () {
+    break;
+}
+?>
+--EXPECTF--
+Fatal error: 'break' not in the 'loop' or 'switch' context in %sbreak_error_003.crx on line 3

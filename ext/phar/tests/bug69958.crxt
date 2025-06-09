@@ -1,0 +1,15 @@
+--TEST--
+Crxa: bug #69958: Segfault in Crxa::convertToData on invalid file
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$tarcrxa = new CrxaData(__DIR__.'/bug69958.tar');
+$crxa = $tarcrxa->convertToData(Crxa::TAR);
+?>
+--EXPECTF--
+Fatal error: Uncaught BadMethodCallException: crxa "%sbug69958.tar" exists and must be unlinked prior to conversion in %sbug69958.crx:%d
+Stack trace:
+#0 %sbug69958.crx(%d): CrxaData->convertToData(%d)
+#1 {main}
+  thrown in %sbug69958.crx on line %d

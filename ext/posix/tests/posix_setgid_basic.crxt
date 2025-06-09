@@ -1,0 +1,23 @@
+--TEST--
+Test function posix_setgid() by calling it with its expected arguments
+--EXTENSIONS--
+posix
+--CREDITS--
+Marco Fabbri mrfabbri@gmail.com
+Francesco Fullone ff@ideato.it
+#CRXTestFest Cesena Italia on 2009-06-20
+--FILE--
+<?crx
+
+
+echo "*** Test by calling method or function with its expected arguments ***\n";
+
+$gid = posix_getgid();
+var_dump(posix_setgid( $gid ) );
+
+
+?>
+--EXPECT--
+*** Test by calling method or function with its expected arguments ***
+bool(true)
+	

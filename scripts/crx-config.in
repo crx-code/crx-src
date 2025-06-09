@@ -1,0 +1,98 @@
+#! /bin/sh
+
+SED="@SED@"
+prefix="@prefix@"
+datarootdir="@datarootdir@"
+exec_prefix="@exec_prefix@"
+version="@CRX_VERSION@"
+vernum="@CRX_VERSION_ID@"
+include_dir="@includedir@/crx"
+includes="-I$include_dir -I$include_dir/main -I$include_dir/TSRM -I$include_dir/Crex -I$include_dir/ext -I$include_dir/ext/date/lib"
+ldflags="@CRX_LDFLAGS@"
+libs="@EXTRA_LIBS@"
+extension_dir='@EXTENSION_DIR@'
+man_dir=`eval echo @mandir@`
+program_prefix="@program_prefix@"
+program_suffix="@program_suffix@"
+exe_extension="@EXEEXT@"
+crx_cli_binary=NONE
+crx_cgi_binary=NONE
+configure_options="@CONFIGURE_OPTIONS@"
+crx_sapis="@CRX_INSTALLED_SAPIS@"
+ini_dir="@EXPANDED_CRX_CONFIG_FILE_SCAN_DIR@"
+ini_path="@EXPANDED_CRX_CONFIG_FILE_PATH@"
+
+# Set crx_cli_binary and crx_cgi_binary if available
+for sapi in $crx_sapis; do
+  case $sapi in
+  cli)
+    crx_cli_binary="@bindir@/${program_prefix}crx${program_suffix}${exe_extension}"
+    ;;
+  cgi)
+    crx_cgi_binary="@bindir@/${program_prefix}crx-cgi${program_suffix}${exe_extension}"
+    ;;
+  esac
+done
+
+# Determine which (if any) crx binary is available
+if test "$crx_cli_binary" != "NONE"; then
+  crx_binary="$crx_cli_binary"
+else
+  crx_binary="$crx_cgi_binary"
+fi
+
+# Remove quotes
+configure_options=`echo $configure_options | $SED -e "s#'##g"`
+
+case "$1" in
+--prefix)
+  echo $prefix;;
+--includes)
+  echo $includes;;
+--ldflags)
+  echo $ldflags;;
+--libs)
+  echo $libs;;
+--extension-dir)
+  echo $extension_dir;;
+--include-dir)
+  echo $include_dir;;
+--crx-binary)
+  echo $crx_binary;;
+--crx-sapis)
+  echo $crx_sapis;;
+--configure-options)
+  echo $configure_options;;
+--man-dir)
+  echo $man_dir;;
+--ini-path)
+  echo $ini_path;;
+--ini-dir)
+  echo $ini_dir;;
+--version)
+  echo $version;;
+--vernum)
+  echo $vernum;;
+*)
+  cat << EOF
+Usage: $0 [OPTION]
+Options:
+  --prefix            [$prefix]
+  --includes          [$includes]
+  --ldflags           [$ldflags]
+  --libs              [$libs]
+  --extension-dir     [$extension_dir]
+  --include-dir       [$include_dir]
+  --man-dir           [$man_dir]
+  --crx-binary        [$crx_binary]
+  --crx-sapis         [$crx_sapis]
+  --ini-path          [$ini_path]
+  --ini-dir           [$ini_dir]
+  --configure-options [$configure_options]
+  --version           [$version]
+  --vernum            [$vernum]
+EOF
+  exit 1;;
+esac
+
+exit 0

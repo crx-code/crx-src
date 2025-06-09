@@ -1,0 +1,40 @@
+--TEST--
+Crxa: invalid set alias or stub via array access
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip';
+
+$p = new Crxa($fname);
+try {
+    $p['.crxa/stub.crx'] = 'hi';
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    $p['.crxa/alias.txt'] = 'hi';
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+$p = new Crxa($fname2);
+try {
+    $p['.crxa/stub.crx'] = 'hi';
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+try {
+    $p['.crxa/alias.txt'] = 'hi';
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+
+?>
+--EXPECTF--
+Cannot set stub ".crxa/stub.crx" directly in crxa "%sinvalid_setstubalias.crxa.tar", use setStub
+Cannot set alias ".crxa/alias.txt" directly in crxa "%sinvalid_setstubalias.crxa.tar", use setAlias
+Cannot set stub ".crxa/stub.crx" directly in crxa "%sinvalid_setstubalias.crxa.zip", use setStub
+Cannot set alias ".crxa/alias.txt" directly in crxa "%sinvalid_setstubalias.crxa.zip", use setAlias

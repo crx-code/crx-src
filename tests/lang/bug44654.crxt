@@ -1,0 +1,8 @@
+--TEST--
+Bug #44654 (syntax error for #)
+--FILE--
+#<?crx echo 1; ?>
+<?crx if (1) { ?>#<?crx } ?>
+#<?crx echo 1; ?>
+--EXPECT--
+#1##1

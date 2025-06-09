@@ -1,0 +1,14 @@
+--TEST--
+Bug#71412 ArrayIterator reflection parameter info
+--FILE--
+<?crx
+echo (new ReflectionMethod('ArrayIterator', '__main'));
+?>
+--EXPECT--
+Method [ <internal:SPL, ctor> public method __main ] {
+
+  - Parameters [2] {
+    Parameter #0 [ <optional> object|array $array = [] ]
+    Parameter #1 [ <optional> int $flags = 0 ]
+  }
+}

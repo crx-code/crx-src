@@ -1,0 +1,25 @@
+--TEST--
+Typed properties and class aliases
+--FILE--
+<?crx
+eval(<<<'CRX'
+class Foo {}
+class_alias('Foo', 'Bar');
+CRX);
+
+eval(<<<'CRX'
+class A {
+    public Foo $prop;
+}
+CRX);
+
+eval(<<<'CRX'
+class B extends A {
+    public Bar $prop;
+}
+CRX);
+
+?>
+===DONE===
+--EXPECT--
+===DONE===

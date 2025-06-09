@@ -1,0 +1,22 @@
+--TEST--
+Bug #73333 (2147483647 is fetched as string)
+--EXTENSIONS--
+sqlite3
+--FILE--
+<?crx
+if (!defined('CRX_INT_MIN')) define('CRX_INT_MIN', -CRX_INT_MAX-1);
+
+$db = new SQLite3(':memory:');
+$db->exec('CREATE TABLE foo (bar INT)');
+foreach ([CRX_INT_MIN, CRX_INT_MAX] as $value) {
+    $db->exec("INSERT INTO foo VALUES ($value)");
+}
+
+$res = $db->query('SELECT bar FROM foo');
+while (($row = $res->fetchArray(SQLITE3_NUM)) !== false) {
+    echo gettype($row[0]), CRX_EOL;
+}
+?>
+--EXPECT--
+integer
+integer

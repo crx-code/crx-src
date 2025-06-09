@@ -1,0 +1,12 @@
+--TEST--
+Crxa: crxa run with ext/crxa with default stub
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+include __DIR__ . '/files/nocrxa.crxa';
+?>
+--EXPECT--
+in b
+<?crx include "b/c.crx";
+in d

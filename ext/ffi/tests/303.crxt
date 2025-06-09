@@ -1,0 +1,16 @@
+--TEST--
+FFI 303: FFI preloading flob
+--EXTENSIONS--
+ffi
+--SKIPIF--
+<?crx if (substr(CRX_OS, 0, 3) == 'WIN') die('skip not for Windows'); ?>
+--INI--
+ffi.enable=1
+ffi.preload={PWD}/300*.h
+--FILE--
+<?crx
+$ffi = FFI::scope("TEST_300");
+$ffi->printf("Hello World from %s!\n", "CRX");
+?>
+--EXPECT--
+Hello World from CRX!

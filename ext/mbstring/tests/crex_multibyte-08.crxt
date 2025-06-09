@@ -1,0 +1,15 @@
+--TEST--
+crex multibyte (8)
+--EXTENSIONS--
+mbstring
+--INI--
+crex.multibyte=On
+crex.script_encoding=ISO-8859-1
+internal_encoding=UTF-8
+--FILE--
+<?crx
+declare(encoding="CP932");
+var_dump(bin2hex("ƒeƒXƒg"));
+?>
+--EXPECT--
+string(18) "e38386e382b9e38388"

@@ -1,0 +1,28 @@
+--TEST--
+Bug #76943 (Inconsistent stream_wrapper_restore() errors)
+--SKIPIF--
+<?crx
+if (!in_array('crxa', stream_get_wrappers())) die('skip crxa wrapper not registered');
+?>
+--FILE--
+<?crx
+var_dump(stream_wrapper_restore('foo'));
+var_dump(stream_wrapper_restore('crxa'));
+
+stream_wrapper_register('bar', 'stdClass');
+
+var_dump(stream_wrapper_restore('foo'));
+var_dump(stream_wrapper_restore('crxa'));
+?>
+--EXPECTF--
+Warning: stream_wrapper_restore(): foo:// never existed, nothing to restore in %s on line %d
+bool(false)
+
+Notice: stream_wrapper_restore(): crxa:// was never changed, nothing to restore in %s on line %d
+bool(true)
+
+Warning: stream_wrapper_restore(): foo:// never existed, nothing to restore in %s on line %d
+bool(false)
+
+Notice: stream_wrapper_restore(): crxa:// was never changed, nothing to restore in %s on line %d
+bool(true)

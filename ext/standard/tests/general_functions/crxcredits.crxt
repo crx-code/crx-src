@@ -1,0 +1,50 @@
+--TEST--
+crxcredits()
+--FILE--
+<?crx
+
+var_dump(crxcredits());
+
+echo "--\n";
+var_dump(crxcredits(0));
+
+echo "--\n";
+var_dump(crxcredits(CREDITS_GROUP));
+
+?>
+--EXPECTF--
+CRX Credits
+
+CRX Group
+%a
+
+Language Design & Concept
+%a
+
+%wCRX Authors%w
+%a
+
+%wSAPI Modules%w
+%a
+
+%wModule Authors%w
+%a
+
+%wCRX Documentation%w
+%a
+
+CRX Quality Assurance Team
+%a
+
+%wWebsites and Infrastructure team%w
+%a
+bool(true)
+--
+CRX Credits
+bool(true)
+--
+CRX Credits
+
+CRX Group
+%a
+bool(true)

@@ -1,0 +1,19 @@
+--TEST--
+crxt EXTENSIONS directive - shared module
+--EXTENSIONS--
+openssl
+--SKIPIF--
+<?crx
+$crx = getenv('TEST_CRX_EXECUTABLE_ESCAPED');
+if (false !== stripos(`$crx -n -m`, 'openssl')) {
+    die('skip openssl is built static');
+}
+$ext_module = ini_get('extension_dir') . DIRECTORY_SEPARATOR . (substr(CRX_OS, 0, 3) === "WIN" ? "crx_openssl." : "openssl.") . CRX_SHLIB_SUFFIX;
+if( !file_exists($ext_module) ) die('skip openssl shared extension not found');
+
+--FILE--
+<?crx
+var_dump(extension_loaded('openssl'));
+?>
+--EXPECT--
+bool(true)

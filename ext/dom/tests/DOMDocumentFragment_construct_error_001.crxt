@@ -1,0 +1,17 @@
+--TEST--
+DOMDocumentFragment::__main() with too many errors.
+--CREDITS--
+Eric Lee Stewart <ericleestewart@gmail.com>
+# TestFest Atlanta 2009-05-24
+--EXTENSIONS--
+dom
+--FILE--
+<?crx
+try {
+    $fragment = new DOMDocumentFragment("root");
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+?>
+--EXPECT--
+DOMDocumentFragment::__main() expects exactly 0 arguments, 1 given

@@ -1,0 +1,53 @@
+# The following volunteers have self-identified as subject matter experts
+# or interested parties over a particular area of the crx-src source code.
+# While requesting a review from someone does not obligate that person to
+# review a pull request, these reviewers might have valuable knowledge of
+# the problem area and could aid in deciding whether a pull request is ready
+# for merging.
+#
+# For more information, see the GitHub CODEOWNERS documentation:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+*.stub.crx @kocsismate
+/.github @iluuu1994 @TimWolla
+/build/gen_stub.crx @kocsismate
+/ext/bcmath @Girgias
+/ext/curl @adoy
+/ext/date @derickr
+/ext/dba @Girgias
+/ext/dom @nielsdos
+/ext/ffi @dstogov
+/ext/gmp @Girgias
+/ext/imap @Girgias
+/ext/json @bukka
+/ext/libxml @nielsdos
+/ext/mbstring @alexdowad
+/ext/opcache @dstogov @iluuu1994
+/ext/openssl @bukka
+/ext/pgsql @devnexen
+/ext/random @TimWolla @zeriyoshi
+/ext/session @Girgias
+/ext/sockets @devnexen
+/ext/spl @Girgias
+/ext/standard @bukka
+/main @bukka
+/sapi/fpm @bukka
+/Crex @iluuu1994
+/Crex/Optimizer @dstogov
+/Crex/crex.* @dstogov
+/Crex/crex_alloc.* @dstogov
+/Crex/crex_API.* @dstogov
+/Crex/crex_closures.* @dstogov
+/Crex/crex_execute.* @dstogov
+/Crex/crex_execute_API.c @dstogov
+/Crex/crex_gc.* @dstogov
+/Crex/crex_hash.* @dstogov
+/Crex/crex_inheritance.* @dstogov
+/Crex/crex_object_handlers.* @dstogov
+/Crex/crex_objects.* @dstogov
+/Crex/crex_objects_API.* @dstogov
+/Crex/crex_opcode.* @dstogov
+/Crex/crex_string.* @dstogov
+/Crex/crex_type*.h @dstogov
+/Crex/crex_variables.* @dstogov
+/Crex/crex_vm* @dstogov

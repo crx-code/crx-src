@@ -1,0 +1,36 @@
+--TEST--
+Crxa: tar with huge filenames, buffer overflow
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.tar';
+$pname = 'crxa://' . $fname;
+
+include __DIR__ . '/files/make.dangerous.tar.crx.inc';
+
+$tar = new danger_tarmaker($fname, 'none');
+$tar->init();
+$tar->addFile(str_repeat('a', 101), 'hi');
+$tar->addFile(str_repeat('a', 255), 'hi2');
+$tar->close();
+
+$p1 = new CrxaData($fname);
+foreach ($p1 as $file) {
+    echo $file->getFileName(), "\n";
+}
+echo $p1['a/' . str_repeat('a', 100)]->getContent() . "\n";
+echo $p1[str_repeat('a', 155) . '/' . str_repeat('a', 100)]->getContent() . "\n";
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+?>
+--EXPECT--
+a
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+hi
+hi2

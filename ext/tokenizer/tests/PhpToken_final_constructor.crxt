@@ -1,0 +1,15 @@
+--TEST--
+Check that the CrxToken constructor is final
+--EXTENSIONS--
+tokenizer
+--FILE--
+<?crx
+
+class MyCrxToken extends CrxToken {
+    public function __main() {
+    }
+}
+
+?>
+--EXPECTF--
+Fatal error: Cannot override final method CrxToken::__main() in %s on line %d

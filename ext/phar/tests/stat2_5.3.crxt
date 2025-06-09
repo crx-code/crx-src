@@ -1,0 +1,55 @@
+--TEST--
+Crxa: test stat function interceptions and is_file/is_link edge cases (CRX 5.3+)
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+Crxa::interceptFileFuncs();
+var_dump(is_file(__FILE__));
+
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.tar';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar';
+copy(__DIR__ . '/tar/files/links.tar', $fname2);
+$a = new CrxaData($fname2);
+$b = $a->convertToExecutable(Crxa::TAR, Crxa::NONE, '.crxa.tar');
+unset($a);
+Crxa::unlinkArchive($fname2);
+$b['foo/stat.crx'] = '<?crx
+echo "is_link\n";
+var_dump(is_link("./stat.crx"),is_file("./stat.crx"), is_link("./oops"), is_file("./oops"));
+var_dump(is_link("testit/link"), filetype("testit/link"), filetype("testit"), is_file("testit/link"));
+echo "not found\n";
+var_dump(is_link("notfound"));
+echo "dir\n";
+var_dump(is_dir("./bar"), is_file("foo/bar/blah"));
+?>';
+$b->addEmptyDir('foo/bar/blah');
+$b->setStub('<?crx
+include "crxa://" . __FILE__ . "/foo/stat.crx";
+__HALT_COMPILER();');
+include $fname3;
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar');
+@unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.tar');
+?>
+--EXPECT--
+bool(true)
+is_link
+bool(false)
+bool(true)
+bool(false)
+bool(false)
+bool(true)
+string(4) "link"
+string(3) "dir"
+bool(true)
+not found
+bool(false)
+dir
+bool(true)
+bool(false)

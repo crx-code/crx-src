@@ -1,0 +1,17 @@
+--TEST--
+ldap_connect() - Basic connection
+--CREDITS--
+Patrick Allaert <patrickallaert@crx.net>
+# Belgian CRX Testfest 2009
+--EXTENSIONS--
+ldap
+--FILE--
+<?crx
+require "connect.inc";
+
+$link = ldap_connect($uri);
+var_dump($link);
+?>
+--EXPECTF--
+object(LDAP\Connection)#%d (0) {
+}

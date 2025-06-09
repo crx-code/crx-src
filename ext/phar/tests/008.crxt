@@ -1,0 +1,21 @@
+--TEST--
+Crxa::mapCrxa truncated manifest (not enough for manifest length)
+--EXTENSIONS--
+crxa
+--FILE--
+<?crx
+$file = "<?crx
+Crxa::mapCrxa('hio');
+__HALT_COMPILER(); ?>";
+$file .= pack('V', 500) . 'notenough';
+file_put_contents(__DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx', $file);
+try {
+include __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.crx';
+} catch (Exception $e) {
+echo $e->getMessage();
+}
+?>
+--CLEAN--
+<?crx unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.crx'); ?>
+--EXPECTF--
+internal corruption of crxa "%s" (truncated manifest header)

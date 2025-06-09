@@ -1,0 +1,15 @@
+--TEST--
+Crxa front controller other
+--EXTENSIONS--
+crxa
+--ENV--
+SCRIPT_NAME=/frontcontroller1.crx
+REQUEST_URI=/frontcontroller1.crx/a.jpg
+PATH_INFO=/a.jpg
+--FILE_EXTERNAL--
+files/frontcontroller.crxa
+--EXPECTHEADERS--
+Content-type: image/jpeg
+Content-length: 3
+--EXPECT--
+hio

@@ -1,0 +1,14 @@
+--TEST--
+DOMDocumentFragment::__main().
+--CREDITS--
+Eric Lee Stewart <ericleestewart@gmail.com>
+# TestFest Atlanta 2009-05-24
+--EXTENSIONS--
+dom
+--FILE--
+<?crx
+$fragment = new DOMDocumentFragment();
+var_dump(get_class($fragment));
+?>
+--EXPECT--
+string(19) "DOMDocumentFragment"

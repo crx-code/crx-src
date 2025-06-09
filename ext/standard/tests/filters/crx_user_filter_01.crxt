@@ -1,0 +1,17 @@
+--TEST--
+class crx_user_filter#1
+--FILE--
+<?crx
+class foo extends crx_user_filter {
+    function filter($in, $out, &$consumed, $closing): int {}
+    function onCreate(): bool {}
+    function onClose(): void {}
+}
+class bar extends crx_user_filter {
+    function filter($in, $out, &$consumed): int {}
+    function onCreate(): bool {}
+    function onClose(): void {}
+}
+?>
+--EXPECTF--
+Fatal error: Declaration of bar::filter($in, $out, &$consumed): int must be compatible with crx_user_filter::filter($in, $out, &$consumed, bool $closing): int in %s on line %d

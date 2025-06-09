@@ -1,0 +1,21 @@
+--TEST--
+Crxa: create a completely new zip-based crxa
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=1
+crxa.require_hash=1
+--FILE--
+<?crx
+
+file_put_contents('crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip/a.crx',
+    'brand new!');
+include 'crxa://' . __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.zip/a.crx';
+?>
+--EXPECTF--
+Warning: file_put_contents(crxa://%screate_new_crxa_b.crxa.zip/a.crx): Failed to open stream: crxa error: write operations disabled by the crx.ini setting crxa.readonly in %screate_new_crxa_b.crx on line %d
+
+Warning: include(crxa://%screate_new_crxa_b.crxa.zip/a.crx): Failed to open stream: %s in %screate_new_crxa_b.crx on line %d
+
+Warning: include(): Failed opening 'crxa://%screate_new_crxa_b.crxa.zip/a.crx' for inclusion (include_path='%s') in %screate_new_crxa_b.crx on line %d
+

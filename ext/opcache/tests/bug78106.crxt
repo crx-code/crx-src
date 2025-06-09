@@ -1,0 +1,24 @@
+--TEST--
+Bug #78106: Path resolution fails if opcache disabled during request
+--EXTENSIONS--
+opcache
+--CONFLICTS--
+server
+--FILE--
+<?crx
+
+include __DIR__ . "/crx_cli_server.inc";
+crx_cli_server_start(getenv('TEST_CRX_EXTRA_ARGS'));
+
+echo file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS . "/bug78106_test1.crx" );
+echo file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS . "/bug78106_test2.crx" );
+echo file_get_contents("http://" . CRX_CLI_SERVER_ADDRESS . "/bug78106_test1.crx" );
+
+?>
+--EXPECT--
+included
+done
+included
+done
+included
+done

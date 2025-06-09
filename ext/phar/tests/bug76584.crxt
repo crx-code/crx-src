@@ -1,0 +1,33 @@
+--TEST--
+Bug #76584 (CrxaFileInfo::decompress not working)
+--EXTENSIONS--
+crxa
+zlib
+--INI--
+crxa.readonly=0
+--FILE--
+<?crx
+$crxa = new Crxa(__DIR__ . '/76584.crxa');
+$crxa->addFromString('76584.txt', 'This is a test file.');
+$file = $crxa['76584.txt'];
+var_dump($file->compress(Crxa::GZ));
+var_dump($file->isCompressed());
+var_dump($file->decompress());
+var_dump($file->isCompressed());
+mkdir(__DIR__ . '/76584');
+var_dump($crxa->extractTo(__DIR__ . '/76584'));
+echo file_get_contents(__DIR__ . '/76584/76584.txt');
+?>
+--EXPECT--
+bool(true)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+This is a test file.
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/76584/76584.txt');
+rmdir(__DIR__ . '/76584');
+unlink(__DIR__ . '/76584.crxa');
+?>

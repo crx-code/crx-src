@@ -1,0 +1,42 @@
+--TEST--
+Crxa object: entry & openFile()
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+--FILE--
+<?crx
+
+require_once 'files/crxa_oo_test.inc';
+
+$crxa = new Crxa($fname);
+$crxa->setInfoClass();
+foreach($crxa as $name => $ent)
+{
+    var_dump($ent->getFilename());
+    if ($ent->isDir()) {
+        var_dump('DIR');
+    } else {
+        var_dump($ent->openFile()->fgets());
+        include $ent->getPathName();
+    }
+}
+
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/files/crxa_oo_003.crxa.crx');
+__halt_compiler();
+?>
+--EXPECTF--
+string(5) "a.crx"
+string(32) "<?crx echo "This is a.crx\n"; ?>"
+This is a.crx
+string(1) "b"
+%s(3) "DIR"
+string(5) "b.crx"
+string(32) "<?crx echo "This is b.crx\n"; ?>"
+This is b.crx
+string(5) "e.crx"
+string(32) "<?crx echo "This is e.crx\n"; ?>"
+This is e.crx

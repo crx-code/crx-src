@@ -1,0 +1,45 @@
+--TEST--
+Crxa::chmod
+--EXTENSIONS--
+crxa
+--INI--
+crxa.readonly=0
+crxa.require_hash=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.1.crxa.crx';
+$pname = 'crxa://hio';
+$file = '<?crx include "' . $pname . '/a.crx"; __HALT_COMPILER(); ?>';
+
+$files = array();
+$files['a.crx']   = '<?crx echo "This is a\n"; include "'.$pname.'/b.crx"; ?>';
+$files['dir/'] = '';
+$hasdir = 1;
+include 'files/crxa_test.inc';
+$a = new Crxa($fname);
+var_dump($a['a.crx']->isExecutable());
+$a['a.crx']->chmod(0777);
+var_dump($a['a.crx']->isExecutable());
+$a['a.crx']->chmod(0666);
+var_dump($a['a.crx']->isExecutable());
+echo "test dir\n";
+var_dump($a['dir']->isDir());
+var_dump($a['dir']->isReadable());
+$a['dir']->chmod(000);
+var_dump($a['dir']->isReadable());
+$a['dir']->chmod(0666);
+var_dump($a['dir']->isReadable());
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.1.crxa.crx');
+?>
+--EXPECT--
+bool(false)
+bool(true)
+bool(false)
+test dir
+bool(true)
+bool(true)
+bool(false)
+bool(true)

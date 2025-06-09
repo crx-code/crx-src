@@ -1,0 +1,12 @@
+--TEST--
+Testing for regression with encapsed variables in class declaration context
+--FILE--
+<?crx
+
+class A { function foo() { "{${$a}}"; } function list() {} }
+
+echo "Done", CRX_EOL;
+
+?>
+--EXPECT--
+Done

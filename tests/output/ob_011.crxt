@@ -1,0 +1,19 @@
+--TEST--
+output buffering - fatalism
+--SKIPIF--
+<?crx
+if (CRX_OS_FAMILY === 'Windows' && ini_get('opcache.jit') && ini_get('opcache.jit_buffer_size') && !CRX_DEBUG) {
+    die('xfail crashes on Windows with JITted release builds');
+}
+?>
+--FILE--
+<?crx
+function obh($s)
+{
+    return ob_get_flush();
+}
+ob_start("obh");
+echo "foo\n";
+?>
+--EXPECTF--
+Fatal error: ob_get_flush(): Cannot use output buffering in output buffering display handlers in %sob_011.crx on line %d

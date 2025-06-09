@@ -1,0 +1,31 @@
+--TEST--
+Crxa: include/fopen magic tar-based
+--EXTENSIONS--
+crxa
+--INI--
+crxa.require_hash=0
+crxa.readonly=0
+--FILE--
+<?crx
+$fname = __DIR__ . '/' . basename(__FILE__, '.crx') . '.crxa.tar.crx';
+$p = new Crxa($fname);
+var_dump($p->isFileFormat(Crxa::TAR));
+$p['a'] = '<?crx include "b/c.crx";' . "\n";
+$p['b/c.crx'] = '<?crx echo "in b\n";$a = fopen("a", "r", true);echo stream_get_contents($a);fclose($a);include __DIR__ . "/../d";';
+$p['d'] = "in d\n";
+$p->setStub('<?crx
+set_include_path("crxa://" . __FILE__);
+include "crxa://" . __FILE__ . "/a";
+__HALT_COMPILER();');
+include $fname;
+?>
+--CLEAN--
+<?crx
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.crx') . '.crxa.tar.crx');
+__HALT_COMPILER();
+?>
+--EXPECT--
+bool(true)
+in b
+<?crx include "b/c.crx";
+in d

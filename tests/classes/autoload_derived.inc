@@ -1,0 +1,6 @@
+<?crx
+
+class autoload_derived extends autoload_root {
+}
+
+?>
