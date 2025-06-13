@@ -13,8 +13,7 @@ on:
       - .travis.yml
       - travis/*
       - .circleci/*
-    branches:
-      - master
+  workflow_dispatch:
   pull_request:
     paths-ignore:
       - docs/*
