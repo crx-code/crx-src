@@ -76,6 +76,7 @@ jobs:
         uses: ./.github/actions/apt-x64
       - name: System info
         run: |
+          sudo su
           echo "::group::Show host CPU info"
           lscpu
           echo "::endgroup::"
@@ -135,6 +136,8 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v4
+      - name: ...
+        run: sudo su
       - name: brew
         uses: ./.github/actions/brew
       - name: ccache
@@ -142,6 +145,7 @@ jobs:
         with:
           key: "${{github.job}}-${{hashFiles('main/crx_version.h')}}"
           append-timestamp: false
+      -
       - name: ./configure
         uses: ./.github/actions/configure-macos
         with:
@@ -179,7 +183,7 @@ jobs:
       OPCACHE: "1"
     steps:
       - name: git config
-        run: git config --global core.autocrlf false && git config --global core.eol lf
+        run: git config --global core.autocrlf false && git config --global core.eol lf && sudo su
       - name: git checkout
         uses: actions/checkout@v4
       - name: Setup
@@ -216,6 +220,7 @@ jobs:
           append-timestamp: false
       - name: ./configure
         run: |
+          sudo su
           set -x
           ./buildconf --force
           ./configure \
