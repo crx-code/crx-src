@@ -145,7 +145,6 @@ jobs:
         with:
           key: "${{github.job}}-${{hashFiles('main/crx_version.h')}}"
           append-timestamp: false
-      -
       - name: ./configure
         uses: ./.github/actions/configure-macos
         with:
