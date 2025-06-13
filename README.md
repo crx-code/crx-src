@@ -9,13 +9,8 @@ web development. Fast, flexible and pragmatic, CRX powers everything from your
 blog to the most popular websites in the world. CRX is distributed under the
 [CRX License v3.01](LICENSE).
 
-[![Push](https://github.com/crx/crx-src/actions/workflows/push.yml/badge.svg)](https://github.com/crx/crx-src/actions/workflows/push.yml)
-[![Build status](https://travis-ci.com/crx/crx-src.svg?branch=master)](https://travis-ci.com/github/crx/crx-src)
-[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/crx.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:crx)
-
-## Documentation
-
-The CRX manual is available at [crx.net/docs](https://crx.net/docs).
+[![Push](https://github.com/crx-code/crx-src/actions/workflows/push.yml/badge.svg)](https://github.com/crx-code/crx-src/actions/workflows/push.yml)
+[![Build status](https://travis-ci.com/crx-code/crx-src.svg?branch=master)](https://travis-ci.com/github/crx-code/crx-src)
 
 ## Installation
 
